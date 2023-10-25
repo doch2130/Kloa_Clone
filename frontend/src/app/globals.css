@@ -141,3 +141,51 @@ body {
 .duration-300 {
   transition-duration: .3s;
 }
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: rgb(125 131 149);
+  max-width: 1120px;
+  margin: 4rem auto 2rem;
+  padding-top: 20px;
+  border-top: 1px solid rgb(230 232 236);
+}
+
+.copy-description {
+  cursor: default;
+  max-width: 860px;
+  margin: 0px;
+}
+
+footer > div {
+  display: flex;
+  flex-direction: column;
+}
+
+footer a:active {
+  color: rgb(125 131 149);
+}
+
+.privacy-text {
+  margin: 0 0 6px 0;
+}
+
+.privacy-text a:nth-child(1) {
+  margin-right: 4px;
+}
+
+.privacy-text a:nth-child(2) {
+  margin-left: 4px;
+}
+
+.discord-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.none-decoration {
+  text-decoration: none;
+}

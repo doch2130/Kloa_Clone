@@ -1,14 +1,8 @@
 import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
 import './globals.css'
-import Image from 'next/image'
-import Link from 'next/link'
-import Kloa1Icon from '/public/Logo/kloa1.webp'
-import Kloa2Icon from '/public/Logo/kloa2.webp'
-import NavSearchForm from './NavSearchForm'
-import SearchIcon from '/public/Icon/search.svg'
-import SunModeIcon from '/public/Icon/sun.svg'
-import MoonModeIcon from '/public/Icon/moon.svg'
+import Footer from '@/components/Footer'
+import Header from '@/components/Header'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -25,33 +19,9 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <div className='nav-bar'>
-          <div className='nav-left'>
-            <Link href='/'>
-              <Image src={Kloa1Icon} alt='KLOA ICON' width={100} height={30} />
-            </Link>
-          </div>
-          <div className='nav-center'>
-            <div className='nav-list'>
-              <Link href='/notices' className='drop-in-underline duration-300'>공지사항</Link>
-              <Link href='/characters' className='drop-in-underline duration-300'>전투정보실</Link>
-              <Link href='/merchant' className='drop-in-underline duration-300'>떠돌이 상인</Link>
-              <Link href='/sell' className='drop-in-underline duration-300'>아이템 거래</Link>
-              <Link href='/crow' className='drop-in-underline duration-300'>계산기</Link>
-            </div>
-            <div className='nav-search'>
-              <Image src={SearchIcon} alt='SearchIcon' />
-              <NavSearchForm />
-            </div>
-          </div>
-          <div className='nav-right'>
-            <button type='button' className='duration-300'>
-              <Image src={MoonModeIcon} alt='MoonMode' />
-            </button>
-            <Link href='/' className='duration-300'>로그인</Link>
-          </div>
-        </div>
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   )
