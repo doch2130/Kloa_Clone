@@ -1,0 +1,81 @@
+body {
+  margin: 8px 0px;
+}
+
+.nav-bar {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  align-items: center;
+  height: 68px;
+  border-bottom: 2px solid rgb(230 232 236);
+}
+
+.nav-bar a {
+  text-decoration: none;
+}
+
+.nav-left, .nav-right {
+  flex-basis: 400px;
+  flex-shrink: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-right button {
+  background-color: white;
+  border: none;
+}
+
+.nav-center {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  flex-basis: 1120px;
+  flex-shrink: 1;
+}
+
+.nav-list {
+  min-width: 400px;
+}
+
+.nav-search {
+  width: 300px;
+  border: 2px solid rgb(230 232 236);
+  border-radius: 10px;
+  padding: 0.25rem 0px;
+  display: flex;
+}
+
+.nav-search img {
+  margin: 0 10px;
+}
+
+.nav-search input {
+  border: none;
+  font-weight: 600;
+  color: rgb(53 57 69);
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 230px;
+  font-size: 0.9rem;
+  padding: 4px 0px;
+}
+
+.nav-list a {
+  margin: 0px 10px;
+}
+
+.nav-right a {
+  color: #8045dd;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+/* 로그인 버튼 클릭했을 때 생기는 배경 css */
+/* 
+background-color: #cbcdd4;
+    border-radius: 3px;
+    height: 10%; */

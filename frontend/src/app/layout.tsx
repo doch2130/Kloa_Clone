@@ -3,7 +3,12 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Image from 'next/image'
 import Link from 'next/link'
-import NavSearch from './NavSearch'
+import Kloa1Icon from '/public/Logo/kloa1.webp'
+import Kloa2Icon from '/public/Logo/kloa2.webp'
+import NavSearchForm from './NavSearchForm'
+import SearchIcon from '/public/Icon/search.svg'
+import SunModeIcon from '/public/Icon/sun.svg'
+import MoonModeIcon from '/public/Icon/moon.svg'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -21,27 +26,29 @@ export default function RootLayout({
     <html>
       <body>
         <div className='nav-bar'>
-          <div className='nav-icon'>
-            <Image src='' alt='KLOA ICON' />
+          <div className='nav-left'>
+            <Link href='/'>
+              <Image src={Kloa1Icon} alt='KLOA ICON' width={100} height={30} />
+            </Link>
           </div>
           <div className='nav-center'>
             <div className='nav-list'>
-              <Link href='/'>공지사항</Link>
-              <Link href='/'>전투정보실</Link>
-              <Link href='/'>떠돌이 상인</Link>
-              <Link href='/'>아이템 거래</Link>
-              <Link href='/'>계산기</Link>
+              <Link href='/notices'>공지사항</Link>
+              <Link href='/characters'>전투정보실</Link>
+              <Link href='/merchant'>떠돌이 상인</Link>
+              <Link href='/sell'>아이템 거래</Link>
+              <Link href='/crow'>계산기</Link>
             </div>
             <div className='nav-search'>
-              <div>
-                돋보기 svg 이미지
-              </div>
-              <NavSearch />
+              <Image src={SearchIcon} alt='SearchIcon' />
+              <NavSearchForm />
             </div>
-            <div className='nav-right'>
-              <div>darkMode</div>
-              <div>로그인</div>
-            </div>
+          </div>
+          <div className='nav-right'>
+            <button type='button'>
+              <Image src={MoonModeIcon} alt='MoonMode' />
+            </button>
+            <Link href='/'>로그인</Link>
           </div>
         </div>
         {children}
