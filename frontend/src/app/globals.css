@@ -1,10 +1,9 @@
 body {
-  margin: 8px 0px;
+  margin: 0px;
 }
 
 .nav-bar {
   display: flex;
-  /* flex-wrap: wrap; */
   justify-content: space-between;
   align-items: center;
   height: 68px;
@@ -19,7 +18,16 @@ body {
   flex-basis: 400px;
   flex-shrink: 2;
   display: flex;
-  justify-content: center;
+}
+
+.nav-left {
+  justify-content: flex-start;
+  padding-left: 2rem;
+}
+
+.nav-right {
+  justify-content: flex-end;
+  padding-right: 2rem;
 }
 
 .nav-right button {
@@ -29,7 +37,6 @@ body {
 
 .nav-center {
   display: flex;
-  /* flex-wrap: wrap; */
   justify-content: space-between;
   flex-basis: 1120px;
   flex-shrink: 1;
@@ -37,6 +44,45 @@ body {
 
 .nav-list {
   min-width: 400px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-list a {
+  margin-left: 2.5rem;
+  color: rgb(125 131 149);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.nav-list a:nth-child(1) {
+  margin-left: 0px;
+}
+
+.nav-list a:hover {
+  /* color: rgb(128 69 221); */
+  color: #8045dd;
+}
+
+.drop-in-underline {
+  position: relative;
+}
+
+.drop-in-underline:before {
+  background-color: #8045dd;
+  content: "";
+  height: 2px;
+  left: 0;
+  margin-top: 44px;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  transition: opacity .2s;
+}
+
+.drop-in-underline:hover:before {
+  opacity: 1;
+  transition: opacity .2s;
 }
 
 .nav-search {
@@ -64,18 +110,34 @@ body {
   padding: 4px 0px;
 }
 
-.nav-list a {
-  margin: 0px 10px;
+.nav-right button {
+  cursor: pointer;
+  padding: 0.5rem;
+  height: 36px;
+  border-radius: 9999px;
+  margin: 0 1rem 0 0.5rem;
+}
+
+.nav-right button:hover {
+  background-color: rgb(230 232 236);
+  color: rgb(128 69 221);
 }
 
 .nav-right a {
   color: #8045dd;
   font-size: 1rem;
   font-weight: 800;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: 0.25rem;
 }
 
-/* 로그인 버튼 클릭했을 때 생기는 배경 css */
-/* 
-background-color: #cbcdd4;
-    border-radius: 3px;
-    height: 10%; */
+.nav-right a:hover {
+  background-color: rgb(230 232 236);
+  border-radius: 3px;
+  height: 10%;  
+}
+
+.duration-300 {
+  transition-duration: .3s;
+}

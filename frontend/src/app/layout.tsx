@@ -33,11 +33,11 @@ export default function RootLayout({
           </div>
           <div className='nav-center'>
             <div className='nav-list'>
-              <Link href='/notices'>공지사항</Link>
-              <Link href='/characters'>전투정보실</Link>
-              <Link href='/merchant'>떠돌이 상인</Link>
-              <Link href='/sell'>아이템 거래</Link>
-              <Link href='/crow'>계산기</Link>
+              <Link href='/notices' className='drop-in-underline duration-300'>공지사항</Link>
+              <Link href='/characters' className='drop-in-underline duration-300'>전투정보실</Link>
+              <Link href='/merchant' className='drop-in-underline duration-300'>떠돌이 상인</Link>
+              <Link href='/sell' className='drop-in-underline duration-300'>아이템 거래</Link>
+              <Link href='/crow' className='drop-in-underline duration-300'>계산기</Link>
             </div>
             <div className='nav-search'>
               <Image src={SearchIcon} alt='SearchIcon' />
@@ -45,10 +45,10 @@ export default function RootLayout({
             </div>
           </div>
           <div className='nav-right'>
-            <button type='button'>
+            <button type='button' className='duration-300'>
               <Image src={MoonModeIcon} alt='MoonMode' />
             </button>
-            <Link href='/'>로그인</Link>
+            <Link href='/' className='duration-300'>로그인</Link>
           </div>
         </div>
         {children}
