@@ -7,6 +7,9 @@ import styled from './Home.module.css';
 import Link from 'next/link';
 import LeftArrow from '/public/Icon/leftArrow.svg'
 import RightArrow from '/public/Icon/rightArrow.svg'
+import BossOn from '/public/Icon/boss_on.png'
+import ChaosGateOn from '/public/Icon/chaosGate_on.png'
+import BattleArenaOn from '/public/Icon/battleArena_on.png'
 
 export default function Home() {
   const temp = [1,2,3,4,5];
@@ -22,6 +25,41 @@ export default function Home() {
             <Image src={LeftArrow} alt='left arrow' />
             <p>2023년 10월</p>
             <Image src={RightArrow} alt='right arrow' />
+          </div>
+        </div>
+        <div className={styled.scheduleTable}>
+          <div>
+            1,2,3,4
+          </div>
+          <hr />
+          <div className={styled.scheduleEtc}>
+            <div className={styled.scheduleEtcRow + ' ' + styled.fieldBoss}>
+              <div className={styled.scheduleName}>
+                <Image src={BossOn} alt='field boss icon on' />
+                <span>필드보스</span>
+              </div>
+              <div className={styled.scheduleTime}>
+                00:00:00
+              </div>
+            </div>
+            <div className={styled.scheduleEtcRow + ' ' + styled.chaosGate}>
+              <div className={styled.scheduleName}>
+                <Image src={ChaosGateOn} alt='chaos gate icon on' />
+                <span>카오스게이트</span>
+              </div>
+              <div className={styled.scheduleTime}>
+                00:00:00
+              </div>
+            </div>
+            <div className={styled.scheduleEtcRow + ' ' + styled.battleArena}>
+              <div className={styled.scheduleName}>
+                <Image src={BattleArenaOn} alt='battle arena icon on' />
+                <span>태초의 섬</span>
+              </div>
+              <div className={styled.scheduleTime}>
+                00:00:00
+              </div>
+            </div>
           </div>
         </div>
       </section>

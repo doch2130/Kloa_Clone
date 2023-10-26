@@ -39,6 +39,67 @@
   cursor: pointer;
 }
 
+.scheduleTable {
+  background-color: white;
+  border: 2px solid rgb(230 232 236);
+  border-radius: 10px;
+  padding: 20px 30px;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.scheduleTable hr {
+  margin: 1.25rem 0;
+}
+
+.scheduleEtc {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.scheduleEtcRow {
+  display: flex;
+  width: 100%;
+  max-width: 340px;
+}
+
+.scheduleName {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  align-items: center;
+}
+
+.scheduleName img {
+  width: 20px;
+  height: 20px;
+}
+
+.scheduleEtcRow span {
+  margin-left: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.scheduleTime {
+  font-weight: 600;
+}
+
+.fieldBoss .scheduleTime {
+  color: rgb(213 145 55);
+}
+
+.chaosGate .scheduleTime{
+  color: rgb(185 20 4);
+}
+
+.battleArena .scheduleTime {
+  color: #685743;
+}
+
+
 .notices {
   margin-top: 2.5rem;
 }
