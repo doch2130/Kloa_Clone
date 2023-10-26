@@ -10,7 +10,7 @@ import MoonModeIcon from '/public/Icon/moon.svg'
 
 export default function Header() {
   return (
-    <header>
+    <header style={{backgroundColor: 'white'}}>
       <nav className='nav-bar'>
         <div className='nav-left'>
           <Link href='/'>

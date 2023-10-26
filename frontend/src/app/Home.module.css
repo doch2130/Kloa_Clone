@@ -1,4 +1,108 @@
-.bodyImage {
- width: 1120px;
- margin: auto; 
+.bodySection {
+  max-width: 1120px;
+  margin: auto;
+}
+
+.schedule {
+  margin-top: 2.5rem;
+}
+
+.schedule .subTitle {
+  display: flex;
+  justify-content: space-between;
+  cursor: default;
+  margin-right: 1.25rem;
+}
+
+.schedule .subTitle > div:nth-child(1) {
+  display: flex;
+}
+
+.scheduleTime {
+  margin: 0px;
+  margin-left: 8px;
+  color: rgb(128 69 221);
+}
+
+.scheduleDateChange {
+  display: flex;
+  align-items: center;
+}
+
+.scheduleDateChange p {
+  margin: 0px;
+}
+
+.scheduleDateChange img {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.notices {
+  margin-top: 2.5rem;
+}
+
+.notices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.notices a {
+  text-decoration: none;
+}
+
+.notices a:visited {
+  color: black;
+}
+
+.lostarkNotice, .kloaNotice {
+  width: 100%;
+  max-width: 550px;
+}
+
+.subTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-left: 1.25rem;
+  margin-bottom: 0.875rem;
+}
+
+.noticeTable {
+  background-color: white;
+  border: 2px solid rgb(230 232 236);
+  border-radius: 10px;
+  padding: 20px 30px;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.noticeTableRow {
+  display: flex;
+  width: 100%;
+}
+
+.noticeTableRow:not(:nth-child(1)) {
+  margin-top: 20px;
+}
+
+.noticeTableCategory {
+  width: 60px;
+  height: 26px;
+  border: 1px solid rgb(230 232 236);
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+}
+
+.noticeTableRow a {
+  margin-left: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-self: center;
 }
