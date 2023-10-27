@@ -54,7 +54,7 @@ body {
   margin-left: 2.5rem;
   color: rgb(125 131 149);
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .nav-list a:nth-child(1) {
@@ -62,7 +62,6 @@ body {
 }
 
 .nav-list a:hover {
-  /* color: rgb(128 69 221); */
   color: #8045dd;
 }
 

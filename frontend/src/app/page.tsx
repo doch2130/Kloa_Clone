@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import MainImage1 from '/public/Main/main_image_1.webp'
-import MainImage2 from '/public/Main/main_image_2.webp'
-import MainImage3 from '/public/Main/main_image_3.webp'
-import MainImage4 from '/public/Main/main_image_4.webp'
+import SlideImage1 from '/public/SlideImage/main_image_1.webp'
+import SlideImage2 from '/public/SlideImage/main_image_2.webp'
+import SlideImage3 from '/public/SlideImage/main_image_3.webp'
+import SlideImage4 from '/public/SlideImage/main_image_4.webp'
 import styled from './Home.module.css';
 import Link from 'next/link';
 import LeftArrow from '/public/Icon/leftArrow.svg'
@@ -12,6 +12,7 @@ import ChaosGateOn from '/public/Icon/chaosGate_on.png'
 import BattleArenaOn from '/public/Icon/battleArena_on.png'
 import DeathValley from '/public/Island/deathvalley.png'
 import CardPack from '/public/Icon/Item/ico_island_cardpack.png'
+import SlideImage from '@/components/SlideImage';
 
 export default function Home() {
   const tempIsland = [1,2,3];
@@ -19,7 +20,7 @@ export default function Home() {
   return (
     <div className={styled.bodySection}>
       <section className={styled.slideImage}>
-        <Image src={MainImage1} alt='KLOA ICON' placeholder='blur' />
+        <SlideImage />
       </section>
       <section className={styled.schedule}>
         <div className={styled.subTitle}>
