@@ -10,8 +10,11 @@ import RightArrow from '/public/Icon/rightArrow.svg'
 import BossOn from '/public/Icon/boss_on.png'
 import ChaosGateOn from '/public/Icon/chaosGate_on.png'
 import BattleArenaOn from '/public/Icon/battleArena_on.png'
+import DeathValley from '/public/Island/deathvalley.png'
+import CardPack from '/public/Icon/Item/ico_island_cardpack.png'
 
 export default function Home() {
+  const tempIsland = [1,2,3];
   const temp = [1,2,3,4,5];
   return (
     <div className={styled.bodySection}>
@@ -29,7 +32,7 @@ export default function Home() {
         </div>
         <div className={styled.scheduleTable}>
           <div>
-            1,2,3,4
+            날짜 선택 창 1,2,3,4
           </div>
           <hr />
           <div className={styled.scheduleEtc}>
@@ -61,6 +64,32 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <div className={styled.scheduleIsland}>
+            <div className={styled.scheduleIslandRow}>
+              {tempIsland.map((el:number) => {
+                return (
+                  <div className={styled.scheduleIslandBox} key={el}>
+                    <Image src={DeathValley} alt='death valley' className={styled.scheduleIslandImage} />
+                    <div className={styled.scheduleIslandBoxWrap}>
+                      <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandBoxTitle}>
+                        <div className={styled.scheduleIslandCategory}>카드</div>
+                        <div className={styled.scheduleIslandName}>죽음의 협곡</div>
+                      </div>
+                      <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandCompensationImage}>
+                        <Image src={CardPack} alt='Island Card Pack' />
+                        <Image src={CardPack} alt='Island Card Pack' />
+                        <Image src={CardPack} alt='Island Card Pack' />
+                        <Image src={CardPack} alt='Island Card Pack' />
+                        <Image src={CardPack} alt='Island Card Pack' />
+                        <Image src={CardPack} alt='Island Card Pack' />
+                        <Image src={CardPack} alt='Island Card Pack' />
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+              </div>
+          </div>
         </div>
       </section>
       <section className={styled.notices}>
@@ -73,7 +102,7 @@ export default function Home() {
               return (
                 <div className={styled.noticeTableRow} key={el}>
                   <div className={styled.noticeTableCategory}>공지</div>
-                  <Link href='https://lostark.game.onstove.com/News/Notice/Views/2586'>10월 26일(목) 로스트아크 임시 점검 완료 및 수정 사항 안내</Link>
+                  <Link href='https://lostark.game.onstove.com/News/Notice/Views/2586' target="_blank">10월 26일(목) 로스트아크 임시 점검 완료 및 수정 사항 안내</Link>
                 </div>
               )
             })}
@@ -88,7 +117,7 @@ export default function Home() {
               return (
                 <div className={styled.noticeTableRow} key={el}>
                   <div className={styled.noticeTableCategory}>공지</div>
-                  <Link href='https://lostark.game.onstove.com/News/Notice/Views/2586'>10월 26일(목) 로스트아크 임시 점검 완료 및 수정 사항 안내</Link>
+                  <Link href='https://lostark.game.onstove.com/News/Notice/Views/2586' target="_blank">10월 26일(목) 로스트아크 임시 점검 완료 및 수정 사항 안내</Link>
                 </div>
               )
             })}

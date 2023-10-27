@@ -3,6 +3,8 @@
   margin: auto;
 }
 
+/* 스케줄 타이틀 */
+
 .schedule {
   margin-top: 2.5rem;
 }
@@ -10,7 +12,6 @@
 .schedule .subTitle {
   display: flex;
   justify-content: space-between;
-  cursor: default;
   margin-right: 1.25rem;
 }
 
@@ -39,6 +40,8 @@
   cursor: pointer;
 }
 
+/* 모험 섬 표 */
+
 .scheduleTable {
   background-color: white;
   border: 2px solid rgb(230 232 236);
@@ -52,6 +55,8 @@
 .scheduleTable hr {
   margin: 1.25rem 0;
 }
+
+/* 이벤트 (필보, 카게, 태초) */
 
 .scheduleEtc {
   display: flex;
@@ -99,7 +104,67 @@
   color: #685743;
 }
 
+/* 모험 섬 */
 
+.scheduleIsland {
+  margin-top: 28px;
+}
+
+.scheduleIslandRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.scheduleIslandBox {
+  width: 100%;
+  height: 90px;
+  max-width: 340px;
+  background-color: rgb(245 246 247);
+  display: flex;
+}
+
+.scheduleIslandImage {
+  height: 64px;
+  border-radius: 10px;
+  margin: 13px 14px;
+  margin-right: 0px;
+}
+
+.scheduleIslandBoxWrap {
+  margin: 13px 14px;
+  width: 100%;
+}
+
+.scheduleIslandBoxRow {
+  display: flex;
+}
+
+.scheduleIslandCategory {
+  color: rgb(243 143 0);
+  font-size: 0.875rem;
+  padding: 2px 8px;
+  text-align: center;
+  background-color: rgb(243 143 0/0.2);
+  border-radius: 4px;
+}
+
+.scheduleIslandName {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-left: 0.625rem
+}
+
+.scheduleIslandCompensationImage {
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.scheduleIslandCompensationImage img:not(:nth-child(1)) {
+  margin-left: 5px;
+}
+
+/* 공지사항 */
 .notices {
   margin-top: 2.5rem;
 }
@@ -112,6 +177,7 @@
 
 .notices a {
   text-decoration: none;
+  color: black;
 }
 
 .notices a:visited {

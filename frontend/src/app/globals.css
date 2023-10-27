@@ -1,6 +1,7 @@
 body {
   margin: 0px;
   background-color: rgb(245 246 247);
+  cursor: default;
 }
 
 .nav-bar {
@@ -156,7 +157,6 @@ footer {
 }
 
 .copy-description {
-  cursor: default;
   max-width: 860px;
   margin: 0px;
 }
