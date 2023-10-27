@@ -13,6 +13,7 @@ import BattleArenaOn from '/public/Icon/battleArena_on.png'
 import DeathValley from '/public/Island/deathvalley.png'
 import CardPack from '/public/Icon/Item/ico_island_cardpack.png'
 import SlideImage from '@/components/SlideImage';
+import Calendar from '@/components/Calendar';
 
 export default function Home() {
   const tempIsland = [1,2,3];
@@ -33,7 +34,7 @@ export default function Home() {
         </div>
         <div className={styled.scheduleTable}>
           <div>
-            날짜 선택 창 1,2,3,4
+            <Calendar />
           </div>
           <hr />
           <div className={styled.scheduleEtc}>
