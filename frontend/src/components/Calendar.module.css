@@ -32,6 +32,7 @@
 .calendarDay {
   color: rgb(125 131 14);
   margin: 0px;
+  text-align: center;
 }
 
 .calendarDate {
@@ -39,4 +40,32 @@
   font-weight: 700;
   width: 20px;
   font-size: 1rem;
+  text-align: center;
+}
+
+.calendarToday {
+  --tw-gradient-to: #8045dd var(--tw-gradient-to-position);
+  --tw-gradient-to-position: ;
+  --tw-gradient-from: #5865f2 var(--tw-gradient-from-position);
+  --tw-gradient-from-position: ;
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
+  background-image: linear-gradient(to bottom,var(--tw-gradient-stops));
+}
+
+.calendarToday p,
+.calendarActiveDate p {
+  color: white;
+}
+
+.calendarSunday {
+  color: rgb(249 81 38);
+}
+
+.calendarActiveDate {
+  --tw-gradient-to: #45dd54 var(--tw-gradient-to-position);
+  --tw-gradient-to-position: ;
+  --tw-gradient-from: #58d3f2 var(--tw-gradient-from-position);
+  --tw-gradient-from-position: ;
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
+  background-image: linear-gradient(to bottom,var(--tw-gradient-stops));
 }
