@@ -1,0 +1,154 @@
+.subTitle {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 1.25rem;
+}
+
+.subTitle > div:nth-child(1) {
+  display: flex;
+}
+
+.scheduleTime {
+  margin: 0px;
+  margin-left: 8px;
+  color: rgb(128 69 221);
+}
+
+.scheduleDateChange {
+  display: flex;
+  align-items: center;
+}
+
+.scheduleDateChange p {
+  margin: 0px;
+}
+
+.scheduleDateChange img {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+/* 모험 섬 표 */
+
+.scheduleTable {
+  background-color: white;
+  border: 2px solid rgb(230 232 236);
+  border-radius: 10px;
+  padding: 1.5rem 1rem;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.scheduleTable hr {
+  margin: 1.25rem 0;
+}
+
+/* 이벤트 (필보, 카게, 태초) */
+
+.scheduleEtc {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.scheduleEtcRow {
+  display: flex;
+  width: 100%;
+  max-width: 340px;
+}
+
+.scheduleName {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  align-items: center;
+}
+
+.scheduleName img {
+  width: 20px;
+  height: auto;
+}
+
+.scheduleEtcRow span {
+  margin-left: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.scheduleTime {
+  font-weight: 600;
+}
+
+.fieldBoss .scheduleTime {
+  color: rgb(213 145 55);
+}
+
+.chaosGate .scheduleTime{
+  color: rgb(185 20 4);
+}
+
+.battleArena .scheduleTime {
+  color: #685743;
+}
+
+/* 모험 섬 */
+
+.scheduleIsland {
+  margin-top: 28px;
+}
+
+.scheduleIslandRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.scheduleIslandBox {
+  width: 100%;
+  height: 90px;
+  max-width: 340px;
+  background-color: rgb(245 246 247);
+  display: flex;
+}
+
+.scheduleIslandImage {
+  height: 64px;
+  border-radius: 10px;
+  margin: 13px 14px;
+  margin-right: 0px;
+}
+
+.scheduleIslandBoxWrap {
+  margin: 13px 14px;
+  width: 100%;
+}
+
+.scheduleIslandBoxRow {
+  display: flex;
+}
+
+.scheduleIslandCategory {
+  color: rgb(243 143 0);
+  font-size: 0.875rem;
+  padding: 2px 8px;
+  text-align: center;
+  background-color: rgb(243 143 0/0.2);
+  border-radius: 4px;
+}
+
+.scheduleIslandName {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-left: 0.625rem
+}
+
+.scheduleIslandCompensationImage {
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.scheduleIslandCompensationImage img:not(:nth-child(1)) {
+  margin-left: 5px;
+}
