@@ -1,15 +1,17 @@
 'use client'
 import React, { useState } from 'react'
 import Image from 'next/image';
-import styled from './Schedule.module.css'
-import LeftArrow from '/public/Icon/leftArrow.svg'
-import RightArrow from '/public/Icon/rightArrow.svg'
-import BossOn from '/public/Icon/boss_on.png'
-import ChaosGateOn from '/public/Icon/chaosGate_on.png'
-import BattleArenaOn from '/public/Icon/battleArena_on.png'
-import DeathValley from '/public/Island/deathvalley.png'
-import CardPack from '/public/Icon/Item/ico_island_cardpack.png'
 import ScheduleCalendar from './ScheduleCalendar';
+import styled from './Schedule.module.css'
+
+import LeftArrow from '@/assets/Icon/leftArrow.svg'
+import RightArrow from '@/assets/Icon/rightArrow.svg'
+import BossOn from '@/assets/Icon/boss_on.png'
+import ChaosGateOn from '@/assets/Icon/chaosGate_on.png'
+import BattleArenaOn from '@/assets/Icon/battleArena_on.png'
+import DeathValley from '@/assets/Island/deathvalley.png'
+import CardPack from '@/assets/Icon/Item/ico_island_cardpack.png'
+
 
 export default function Schedule() {
   const tempIsland = [1,2,3];

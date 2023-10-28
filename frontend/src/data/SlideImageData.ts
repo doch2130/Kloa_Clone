@@ -1,8 +1,8 @@
 import { StaticImageData } from 'next/image'
-import SlideImage1 from '/public/SlideImage/main_image_1.webp'
-import SlideImage2 from '/public/SlideImage/main_image_2.webp'
-import SlideImage3 from '/public/SlideImage/main_image_3.webp'
-import SlideImage4 from '/public/SlideImage/main_image_4.webp'
+import SlideImage1 from '@/assets/SlideImage/main_image_1.webp'
+import SlideImage2 from '@/assets/SlideImage/main_image_2.webp'
+import SlideImage3 from '@/assets/SlideImage/main_image_3.webp'
+import SlideImage4 from '@/assets/SlideImage/main_image_4.webp'
 
 type slideImageListType = {
   id: number;

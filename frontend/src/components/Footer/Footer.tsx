@@ -1,7 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import DiscordIcon from '/public/Icon/discord.svg'
+
+import DiscordIcon from '@/assets/Icon/discord.svg'
 
 export default function Footer() {
   return (

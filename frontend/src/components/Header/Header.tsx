@@ -1,12 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import Kloa1Icon from '/public/Logo/kloa1.webp'
-import Kloa2Icon from '/public/Logo/kloa2.webp'
 import NavSearchForm from './NavSearchForm'
-import SearchIcon from '/public/Icon/search.svg'
-import SunModeIcon from '/public/Icon/sun.svg'
-import MoonModeIcon from '/public/Icon/moon.svg'
+
+import Kloa1Icon from '@/assets/Logo/kloa1.webp'
+import Kloa2Icon from '@/assets/Logo/kloa2.webp'
+import SearchIcon from '@/assets/Icon/search.svg'
+import SunModeIcon from '@/assets/Icon/sun.svg'
+import MoonModeIcon from '@/assets/Icon/moon.svg'
 
 export default function Header() {
   return (
