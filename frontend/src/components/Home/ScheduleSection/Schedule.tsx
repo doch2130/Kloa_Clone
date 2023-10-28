@@ -1,7 +1,7 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
 import Image from 'next/image';
 import styled from './Schedule.module.css'
-import Calendar from '@/components/Calendar';
 import LeftArrow from '/public/Icon/leftArrow.svg'
 import RightArrow from '/public/Icon/rightArrow.svg'
 import BossOn from '/public/Icon/boss_on.png'
@@ -9,22 +9,50 @@ import ChaosGateOn from '/public/Icon/chaosGate_on.png'
 import BattleArenaOn from '/public/Icon/battleArena_on.png'
 import DeathValley from '/public/Island/deathvalley.png'
 import CardPack from '/public/Icon/Item/ico_island_cardpack.png'
+import ScheduleCalendar from './ScheduleCalendar';
 
 export default function Schedule() {
   const tempIsland = [1,2,3];
+  const today = new Date();
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  const changeYear = (date:Date, year:number):Date => {
+    const clone = new Date(date);
+    clone.setFullYear(date.getFullYear() + year)
+    return clone;
+  }
+
+  const changeMonth = (date:Date, month:number):void => {
+    const clone = new Date(date);
+    clone.setMonth(date.getMonth() + month)
+    setCurrentDate(clone);
+    return ;
+  }
+
+  const changeDays = (date:Date, days:number):Date => {
+    const clone = new Date(date);
+    clone.setDate(date.getDate() + days)
+    return clone;
+  }
+
+  const changeDate = (date:Date):void => {
+    setCurrentDate(date);
+    return ;
+  }
+
   return (
     <>
     <div className={styled.subTitle}>
       <div>모험 섬<p className={styled.scheduleTime}>00:00:00</p></div>
       <div className={styled.scheduleDateChange}>
-        <Image src={LeftArrow} alt='left arrow' />
-        <p>2023년 10월</p>
-        <Image src={RightArrow} alt='right arrow' />
+        <Image src={LeftArrow} alt='left arrow' onClick={() => changeMonth(currentDate, -1)}/>
+        <p>{`${currentDate.getFullYear()}년 ${currentDate.getMonth()+1}월`}</p>
+        <Image src={RightArrow} alt='right arrow' onClick={() => changeMonth(currentDate, 1)} />
       </div>
     </div>
     <div className={styled.scheduleTable}>
       <div>
-        <Calendar />
+        <ScheduleCalendar today={today} currentDate={currentDate} changeDate={changeDate} />
       </div>
       <hr />
       <div className={styled.scheduleEtc}>
