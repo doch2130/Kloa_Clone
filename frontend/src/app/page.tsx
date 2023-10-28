@@ -8,7 +8,7 @@ import ChaosGateOn from '/public/Icon/chaosGate_on.png'
 import BattleArenaOn from '/public/Icon/battleArena_on.png'
 import DeathValley from '/public/Island/deathvalley.png'
 import CardPack from '/public/Icon/Item/ico_island_cardpack.png'
-import SlideImage from '@/components/SlideImage';
+import SlideImage from '@/components/Home/SlideImageSection/SlideImage';
 import Calendar from '@/components/Calendar';
 
 export default function Home() {

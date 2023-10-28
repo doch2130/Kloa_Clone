@@ -104,16 +104,6 @@ export default function Calendar() {
               </div>
             )
           }
-
-          
-          // return (
-          //   <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
-          //   activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
-          //   key={el} onClick={() => changeDate(clone)}>
-          //     <p className={styled.calendarDay}>{dayParsing[clone.getDay()]}</p>
-          //     <p className={`${styled.calendarDate} ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
-          //   </div>
-          // )
         })}
       </div>
     </div>

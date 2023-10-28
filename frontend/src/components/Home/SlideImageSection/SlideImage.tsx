@@ -2,7 +2,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import SlideImageData from '../data/SlideImageData'
+import SlideImageData from '../../../data/SlideImageData'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
