@@ -37,28 +37,6 @@ export default function Calendar() {
      && date1.getDate() === date2.getDate();
   }
 
-
-  function dateRange(tDate:Date, curDate:Date) {
-    // tDate = today
-    // curDate = currentDate
-    const minDate = new Date(tDate);
-    minDate.setDate(tDate.getDate()-8);
-    const maxDate = new Date(tDate);
-    maxDate.setDate(tDate.getDate()+7);
-
-    if(minDate >= curDate) {
-      console.log('작은 값');
-    } else if(maxDate <= curDate) {
-      console.log('큰 값');
-    } else {
-      console.log('같음');
-    }
-  }
-
-  dateRange(today, currentDate);
-
-
-
   return (
     <div className={styled.calendarWrap}>
       <div className={styled.calendarRow}>
@@ -69,30 +47,54 @@ export default function Calendar() {
           const todayStyled = isSameDate(today, clone);
           const activeStyled = isSameDate(currentDate, clone);
 
-
           const minDate = new Date(today);
           minDate.setDate(today.getDate()-8);
           const maxDate = new Date(today);
           maxDate.setDate(today.getDate()+7);
       
           if(minDate >= currentDate) {
-            // console.log('작은 값');
-            return (
-              <></>
-            )
-          } else if(maxDate <= currentDate) {
-            // console.log('큰 값');
-            if(el === -7) {
+            // 선택 날짜가 현재 날짜 -8 이하인 경우
+            console.log('작은 값');
+            if(el === 7) {
               return (
-                <></>
+                <div className={`${styled.calendarDateWrap} ${styled.calendarToday}`}
+                  key={el} onClick={() => changeDate(today)}>
+                  <p className={styled.calendarDay}>{dayParsing[today.getDay()]}</p>
+                  <p className={`${styled.calendarDate}`}>{today.getDate()}</p>
+                </div>
               )
             } else {
               return (
-                <></>
+                <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
+                  activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
+                  key={el} onClick={() => changeDate(clone)}>
+                  <p className={styled.calendarDay}>{dayParsing[clone.getDay()]}</p>
+                  <p className={`${styled.calendarDate} ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
+                </div>
+              )
+            }
+          } else if(maxDate <= currentDate) {
+            // 선택 날짜가 현재 날짜 +8 이상인 경우
+            if(el === -7) {
+              return (
+                <div className={`${styled.calendarDateWrap} ${styled.calendarToday}`}
+                key={el} onClick={() => changeDate(today)}>
+                  <p className={styled.calendarDay}>{dayParsing[today.getDay()]}</p>
+                  <p className={`${styled.calendarDate}`}>{today.getDate()}</p>
+                </div>
+              )
+            } else {
+              return (
+                <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
+                activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
+                key={el} onClick={() => changeDate(clone)}>
+                  <p className={styled.calendarDay}>{dayParsing[clone.getDay()]}</p>
+                  <p className={`${styled.calendarDate} ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
+                </div>
               )
             }
           } else {
-            // console.log('같음');
+            // 현재 날짜가 -7~+7범위에 있는 경우
             return (
               <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
               activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
