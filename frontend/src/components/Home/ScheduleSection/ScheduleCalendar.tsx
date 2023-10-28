@@ -5,11 +5,11 @@ import styled from './ScheduleCalendar.module.css'
 type ScheduleCalendarProps = {
   today: Date;
   currentDate: Date;
-  changeDate: Function;
+  changeDateHandler: Function;
 };
 
 export default function ScheduleCalendar(props:ScheduleCalendarProps) {
-  const { today, currentDate, changeDate } = props;
+  const { today, currentDate, changeDateHandler } = props;
   const dateCalArray = [-7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7];
   const dayParsing = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -39,7 +39,7 @@ export default function ScheduleCalendar(props:ScheduleCalendarProps) {
             if(el === 7) {
               return (
                 <div className={`${styled.calendarDateWrap} ${styled.calendarToday}`}
-                  key={el} onClick={() => changeDate(today)}>
+                  key={el} onClick={() => changeDateHandler(today)}>
                   <p className={styled.calendarDay}>{dayParsing[today.getDay()]}</p>
                   <p className={`${styled.calendarDate}`}>{today.getDate()}</p>
                 </div>
@@ -48,7 +48,7 @@ export default function ScheduleCalendar(props:ScheduleCalendarProps) {
               return (
                 <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
                   activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
-                  key={el} onClick={() => changeDate(clone)}>
+                  key={el} onClick={() => changeDateHandler(clone)}>
                   <p className={styled.calendarDay}>{dayParsing[clone.getDay()]}</p>
                   <p className={`${styled.calendarDate} ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
                 </div>
@@ -59,7 +59,7 @@ export default function ScheduleCalendar(props:ScheduleCalendarProps) {
             if(el === -7) {
               return (
                 <div className={`${styled.calendarDateWrap} ${styled.calendarToday}`}
-                key={el} onClick={() => changeDate(today)}>
+                key={el} onClick={() => changeDateHandler(today)}>
                   <p className={styled.calendarDay}>{dayParsing[today.getDay()]}</p>
                   <p className={`${styled.calendarDate}`}>{today.getDate()}</p>
                 </div>
@@ -68,7 +68,7 @@ export default function ScheduleCalendar(props:ScheduleCalendarProps) {
               return (
                 <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
                 activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
-                key={el} onClick={() => changeDate(clone)}>
+                key={el} onClick={() => changeDateHandler(clone)}>
                   <p className={styled.calendarDay}>{dayParsing[clone.getDay()]}</p>
                   <p className={`${styled.calendarDate} ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
                 </div>
@@ -79,7 +79,7 @@ export default function ScheduleCalendar(props:ScheduleCalendarProps) {
             return (
               <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
               activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
-              key={el} onClick={() => changeDate(clone)}>
+              key={el} onClick={() => changeDateHandler(clone)}>
                 <p className={styled.calendarDay}>{dayParsing[clone.getDay()]}</p>
                 <p className={`${styled.calendarDate} ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
               </div>

@@ -52,7 +52,7 @@ export default function Schedule() {
     </div>
     <div className={styled.scheduleTable}>
       <div>
-        <ScheduleCalendar today={today} currentDate={currentDate} changeDate={changeDate} />
+        <ScheduleCalendar today={today} currentDate={currentDate} changeDateHandler={changeDate} />
       </div>
       <hr />
       <div className={styled.scheduleEtc}>
