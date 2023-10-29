@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image';
 import ScheduleCalendar from './ScheduleCalendar';
+import ScheduleItemList from './ScheduleItemList';
 import styled from './Schedule.module.css'
 
 import LeftArrow from '@/assets/Icon/leftArrow.svg'
@@ -10,14 +11,23 @@ import BossOn from '@/assets/Icon/boss_on.png'
 import ChaosGateOn from '@/assets/Icon/chaosGate_on.png'
 import BattleArenaOn from '@/assets/Icon/battleArena_on.png'
 import DeathValley from '@/assets/Island/deathvalley.png'
-import CardPack from '@/assets/Icon/Item/ico_island_cardpack.png'
-import LeftDoubleArrow from '@/assets/Icon/leftDoubleArrow.svg'
-import RightDoubleArrow from '@/assets/Icon/rightDoubleArrow.svg'
 
 
 export default function Schedule() {
-  const tempIsland = [1,2,3];
-  const tempIsladnItem = [1,2,3,4,5,6,7,8];
+  const tempIsland = [
+    {
+      id: 1,
+      itemList: [1,2,3,4,5,6,7,8,9]
+    },
+    {
+      id: 2,
+      itemList: [1,2,3]
+    },
+    {
+      id: 3,
+      itemList: [1,2,3,4,5,6,7]
+    }
+  ];
   const today = new Date();
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -91,9 +101,9 @@ export default function Schedule() {
       </div>
       <div className={styled.scheduleIsland}>
         <div className={styled.scheduleIslandRow}>
-          {tempIsland.map((el:number) => {
+          {tempIsland.map((el:{id:number, itemList: number[]}) => {
             return (
-              <div className={styled.scheduleIslandBox} key={el}>
+              <div className={styled.scheduleIslandBox} key={el.id}>
                 <Image src={DeathValley} alt='death valley' className={styled.scheduleIslandImage} />
                 <div className={styled.scheduleIslandBoxWrap}>
                   <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandBoxTitle}>
@@ -101,21 +111,9 @@ export default function Schedule() {
                     <div className={styled.scheduleIslandName}>죽음의 협곡</div>
                   </div>
                   <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandCompensationImage}>
-                    {/* {tempIsladnItem.map((el2:number) => {
-                      return (
-                        <>
-                        <Image src={CardPack} alt='Island Card Pack' />
-                        </>
-                      )
-                    })} */}
-                    <Image src={CardPack} alt='Island Card Pack' />
-                    <Image src={CardPack} alt='Island Card Pack' />
-                    <Image src={CardPack} alt='Island Card Pack' />
-                    <Image src={CardPack} alt='Island Card Pack' />
-                    <Image src={CardPack} alt='Island Card Pack' />
-                    <Image src={CardPack} alt='Island Card Pack' />
-                    <Image src={CardPack} alt='Island Card Pack' />
-                    <Image src={CardPack} alt='Island Card Pack' />
+                    {
+                      <ScheduleItemList itemList={el.itemList} />
+                    }
                   </div>
                 </div>
               </div>

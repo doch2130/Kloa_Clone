@@ -153,6 +153,6 @@
   margin-top: 10px;
 }
 
-.scheduleIslandCompensationImage img:not(:nth-child(1)) {
+.scheduleIslandCompensationImage > div:not(:nth-child(1)) > img {
   margin-left: 5px;
 }
