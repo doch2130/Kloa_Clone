@@ -12,7 +12,6 @@ import ChaosGateOn from '@/assets/Icon/chaosGate_on.png'
 import BattleArenaOn from '@/assets/Icon/battleArena_on.png'
 import DeathValley from '@/assets/Island/deathvalley.png'
 
-
 export default function Schedule() {
   const tempIsland = [
     {
@@ -79,23 +78,41 @@ export default function Schedule() {
     //     console.log('frontend ', res);
     //   })
 
-    fetch('/api/notices', {
-      method: 'GET'
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Network response was not ok');
-        }
-      })
-      .then((data) => {
-        // 데이터를 사용하는 코드를 여기에 작성
-        console.log('Data from API:', data);
-      })
-      .catch((error) => {
-        console.error('Fetch error:', error);
-      });
+    // fetch('/api/notices', {
+    //   method: 'GET'
+    // })
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       return response.json();
+    //     } else {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //   })
+    //   .then((data) => {
+    //     // 데이터를 사용하는 코드를 여기에 작성
+    //     console.log('Data from API:', data);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Fetch error:', error);
+    //   });
+
+    // fetch('http://localhost:9999/notices', {
+    //   method: 'GET'
+    // })
+    //   .then(res => res.json())
+    //   .then(result => {
+    //     console.log('result ' , result);
+    //     const noticeList = [];
+    //     for(let i = 0; i < 5; i++) {
+    //       noticeList.push(result[i]);
+    //     }
+    //     // console.log('noticeList ', noticeList);
+    //     setLostarkNotice(noticeList);
+    //   })
+    //   .catch((error) => {
+    //     console.error('error ', error);
+    //   });
+
   }, [])
 
   return (

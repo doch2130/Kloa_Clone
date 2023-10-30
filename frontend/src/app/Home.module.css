@@ -70,6 +70,18 @@
   font-weight: 600;
 }
 
+.noticeTableCategoryShop {
+  color: #05b9b3;
+}
+
+.noticeTableCategoryCheck {
+  color: #687de5;
+}
+
+.noticeTableCategoryEvent {
+  color: #9c69bf;
+}
+
 .noticeTableRow a {
   margin-left: 10px;
   white-space: nowrap;
