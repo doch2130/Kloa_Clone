@@ -1,0 +1,55 @@
+.managerWrap {
+  background-color: white;
+  max-width: 1120px;
+  height: 200px;
+  margin: auto;
+  padding-top: 1rem;
+}
+
+.managerWrap h1 {
+  text-align: center;
+}
+
+.managerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 500px;
+  margin: auto;
+}
+
+.managerNotice p,
+.managerSchedule p {
+  margin: 0;
+}
+
+.managerRow span {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.managerButtonGroup > button {
+  width: 80px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition-duration: 0.15s;
+  --tw-gradient-to: #8045dd var(--tw-gradient-to-position);
+  --tw-gradient-to-position: ;
+  --tw-gradient-from: #5865f2 var(--tw-gradient-from-position);
+  --tw-gradient-from-position: ;
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
+  background-image: linear-gradient(to bottom,var(--tw-gradient-stops));
+  color: white;
+  font-size: 1rem;
+}
+
+.managerButtonGroup > button:nth-child(2) {
+  margin-left: 1rem;
+}
+
+.managerButtonGroup > button:hover {
+  border: 1px solid black;
+}
