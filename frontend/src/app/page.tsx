@@ -21,7 +21,7 @@ type noticesTopListType = {
 export default async function Home() {
   const resp = await fetch('http://localhost:9999/notices', { cache: 'no-store' });
   const noticesList = await resp.json();
-  const noticesTopList = noticesList.slice(0, 5);
+  const noticesTopList = noticesList[0];
   const temp = [1,2,3,4,5];
   return (
     <div className={styled.bodySection}>

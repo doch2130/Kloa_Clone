@@ -55,7 +55,7 @@ const updateNoticeList = (data:noticeData[]) => {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(data.slice(0, 5))
   })
     .then(res => res.json())
     .then(result => {
