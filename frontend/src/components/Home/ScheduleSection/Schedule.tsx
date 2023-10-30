@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import ScheduleCalendar from './ScheduleCalendar';
 import ScheduleItemList from './ScheduleItemList';
@@ -54,6 +54,49 @@ export default function Schedule() {
     setCurrentDate(date);
     return ;
   }
+
+  useEffect(() => {
+    // const url = 'https://developer-lostark.game.onstove.com/news/notices';
+    // fetch(url, {
+    //   method: 'GET',
+    //   cache: 'no-cache',
+    //   headers: {
+    //     'accept': 'application/json',
+    //     'authorization': `bearer ${process.env.NEXT_PUBLIC_LOSTARK_API}`
+    //   },
+    // })
+    //   .then(resp => resp.json())
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log('err ', err);
+    //   });
+    // fetch('/api/notices', {
+    //   method: 'GET'
+    // })
+    //   .then((res) => {
+    //     console.log('frontend ', res);
+    //   })
+
+    fetch('/api/notices', {
+      method: 'GET'
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .then((data) => {
+        // 데이터를 사용하는 코드를 여기에 작성
+        console.log('Data from API:', data);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+      });
+  }, [])
 
   return (
     <>
