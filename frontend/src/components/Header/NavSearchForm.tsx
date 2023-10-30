@@ -6,7 +6,7 @@ export default function NavSearchForm() {
   }
   return (
     <form style={{display: 'inline-block'}}>
-      <input type='text' placeholder='캐릭터명을 입력하세요' maxLength={12} value='' onChange={() => textChange}/>
+      <input id='characterName' type='text' placeholder='캐릭터명을 입력하세요' maxLength={12} value='' onChange={() => textChange}/>
     </form>
   )
 }
