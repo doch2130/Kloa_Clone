@@ -19,17 +19,20 @@ type noticesTopListType = {
 }
 
 export default async function Home() {
-  const resp = await fetch('http://localhost:9999/notices', { cache: 'no-store' });
-  const noticesList = await resp.json();
+  const noticesResp = await fetch('http://localhost:9999/notices', { cache: 'no-store' });
+  const noticesList = await noticesResp.json();
   const noticesTopList = noticesList[0];
-  const temp = [1,2,3,4,5];
+
+  const chaosgateResp = await fetch('http://localhost:9999/chaosgate', { cache: 'no-cache' });
+  const chaosgateData = await chaosgateResp.json();
+
   return (
     <div className={styled.bodySection}>
       <section className={styled.slideImage}>
         <SlideImage />
       </section>
       <section className={styled.schedule}>
-        <Schedule />
+        <Schedule chaosgateData={chaosgateData[0]} />
       </section>
       <section className={styled.notices}>
         <div className={styled.lostarkNotice}>
@@ -53,14 +56,15 @@ export default async function Home() {
             <Link href='/notices'>클로아 공지사항</Link>
           </div>
           <div className={styled.noticeTable}>
-            {temp.map((el:number) => {
-              return (
-                <div className={styled.noticeTableRow} key={el}>
-                  <div className={styled.noticeTableCategory}>공지</div>
-                  <Link href='https://lostark.game.onstove.com/News/Notice/Views/2586' target="_blank">10월 26일(목) 로스트아크 임시 점검 완료 및 수정 사항 안내</Link>
+            {
+              noticesTopList.map((el:noticesTopListType, index:number) => 
+              (
+                <div className={styled.noticeTableRow} key={index}>
+                  <div className={`${styled.noticeTableCategory} ${categoryClassMap[el.Type]}`}>{el.Type}</div>
+                  <Link href={el.Link} target="_blank">{el.Title}</Link>
                 </div>
-              )
-            })}
+              ))
+            }
           </div>
         </div>
       </section>
