@@ -36,7 +36,7 @@ async function calendarAdventureFilter(data:any) {
     }
   });
   // console.log('adventureIsland ', adventureIsland);
-  // console.log('adventureIsland[0].RewardItems ', adventureIsland[0].RewardItems);
+  // console.log('adventureIsland[0].RewardItems ', adventureIsland[8].RewardItems);
 
   // RewardItems 불필요한 데이터 제거
   adventureIsland.map((el:any) => {
