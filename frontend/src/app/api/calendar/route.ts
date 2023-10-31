@@ -49,7 +49,41 @@ async function calendarAdventureFilter(data:any) {
       })
     )
   });
+
   return adventureIsland;
+
+
+  // 날짜별로 정리해서 DB.json에 들어가기는 하지만, 데이터가 중복되어 들어 감, 사용 보류
+
+  // // 정리된 데이터를 저장할 객체
+  // const sortedData:any = {};
+
+  // // 주어진 데이터를 날짜 기준으로 정리
+
+  // adventureIsland.forEach((item:any) => {
+  //   item.StartTimes.forEach((startTime:any) => {
+  //     // 날짜를 키로 사용
+  //     const dateKey = startTime.substring(0, 10);
+      
+  //     // 날짜 키가 없으면 빈 배열로 초기화
+  //     if (!sortedData[dateKey]) {
+  //       sortedData[dateKey] = [];
+  //     }
+
+  //     // 해당 날짜에 데이터 추가
+  //     sortedData[dateKey].push({
+  //       CategoryName: item.CategoryName,
+  //       ContentsName: item.ContentsName,
+  //       ContentsIcon: item.ContentsIcon,
+  //       MinItemLevel: item.MinItemLevel,
+  //       StartTimes: item.StartTimes,
+  //       Location: item.Location,
+  //       RewardItems: item.RewardItems,
+  //     });
+  //   });
+  // });
+
+  // return sortedData;
 }
 
 
