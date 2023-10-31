@@ -32,11 +32,11 @@ const getCalendarList = () => {
     })
     .then((data) => {
       // 데이터를 사용하는 코드를 여기에 작성
-      console.log('Data from API:', data);
+      // console.log('Data from API:', data);
       alert('데이터 갱신이 완료되었습니다.');
     })
     .catch((error) => {
-      console.error('Fetch error: ', error);
+      // console.error('Fetch error: ', error);
       alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
     });
 }
@@ -58,7 +58,7 @@ const getNoticeList = () => {
       updateNoticeList(data);
     })
     .catch((error) => {
-      console.error('Fetch error: ', error);
+      // console.error('Fetch error: ', error);
       alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
     });
 }
@@ -84,7 +84,7 @@ const updateNoticeList = (data:noticeData[]) => {
       alert('데이터 갱신이 완료되었습니다.');
     })
     .catch((error) => {
-      console.error('Update error: ', error);
+      // console.error('Update error: ', error);
       alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
     });
 }
