@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image';
 import ScheduleCalendar from './ScheduleCalendar';
 import ScheduleItemList from './ScheduleItemList';
@@ -10,9 +10,20 @@ import RightArrow from '@/assets/Icon/rightArrow.svg'
 import BossOn from '@/assets/Icon/boss_on.png'
 import ChaosGateOn from '@/assets/Icon/chaosGate_on.png'
 import BattleArenaOn from '@/assets/Icon/battleArena_on.png'
+import BossOff from '@/assets/Icon/boss_off.png'
+import ChaosGateOff from '@/assets/Icon/chaosGate_off.png'
+import BattleArenaOff from '@/assets/Icon/battleArena_off.png'
 import DeathValley from '@/assets/Island/deathvalley.png'
 
-export default function Schedule() {
+
+type chaosgateTimeType = string | number;
+
+type scheduleProps = {
+  chaosgateData: string[]
+}
+
+export default function Schedule(props: scheduleProps) {
+  const { chaosgateData } = props;
   const tempIsland = [
     {
       id: 1,
@@ -28,7 +39,12 @@ export default function Schedule() {
     }
   ];
   const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [chaosgateTime, setChaosgateTime] = useState<chaosgateTimeType>('자리비움');
+  // console.log('chaosgateData ', chaosgateData);
 
   const changeYear = (date:Date, year:number):Date => {
     const clone = new Date(date);
@@ -53,67 +69,6 @@ export default function Schedule() {
     setCurrentDate(date);
     return ;
   }
-
-  useEffect(() => {
-    // const url = 'https://developer-lostark.game.onstove.com/news/notices';
-    // fetch(url, {
-    //   method: 'GET',
-    //   cache: 'no-cache',
-    //   headers: {
-    //     'accept': 'application/json',
-    //     'authorization': `bearer ${process.env.NEXT_PUBLIC_LOSTARK_API}`
-    //   },
-    // })
-    //   .then(resp => resp.json())
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log('err ', err);
-    //   });
-    // fetch('/api/notices', {
-    //   method: 'GET'
-    // })
-    //   .then((res) => {
-    //     console.log('frontend ', res);
-    //   })
-
-    // fetch('/api/notices', {
-    //   method: 'GET'
-    // })
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       return response.json();
-    //     } else {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //   })
-    //   .then((data) => {
-    //     // 데이터를 사용하는 코드를 여기에 작성
-    //     console.log('Data from API:', data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Fetch error:', error);
-    //   });
-
-    // fetch('http://localhost:9999/notices', {
-    //   method: 'GET'
-    // })
-    //   .then(res => res.json())
-    //   .then(result => {
-    //     console.log('result ' , result);
-    //     const noticeList = [];
-    //     for(let i = 0; i < 5; i++) {
-    //       noticeList.push(result[i]);
-    //     }
-    //     // console.log('noticeList ', noticeList);
-    //     setLostarkNotice(noticeList);
-    //   })
-    //   .catch((error) => {
-    //     console.error('error ', error);
-    //   });
-
-  }, [])
 
   return (
     <>
@@ -145,6 +100,7 @@ export default function Schedule() {
             <Image src={ChaosGateOn} alt='chaos gate icon on' />
             <span>카오스게이트</span>
           </div>
+          {/* 목 토 일 월 / 0 1 4 6 */}
           <div className={styled.scheduleTime}>
             00:00:00
           </div>
