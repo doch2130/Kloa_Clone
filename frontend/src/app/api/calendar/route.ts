@@ -27,19 +27,19 @@ async function calendarFilter(data:any) {
   return [ fieldBossTime, chaosGateTime ];
 }
 
-async function calendarAdvantureFilter(data:any) {
-  // advanture는 필드보스, 카오스게이트랑 달리 여러 개의 데이터가 필요하기 때문에 따로 분리
-  const advantureIsland:any = [];
+async function calendarAdventureFilter(data:any) {
+  // adventure는 필드보스, 카오스게이트랑 달리 여러 개의 데이터가 필요하기 때문에 따로 분리
+  const adventureIsland:any = [];
   data.forEach((el:any) => {
     if(el.CategoryName === '모험 섬') {
-      advantureIsland.push(el);
+      adventureIsland.push(el);
     }
   });
-  // console.log('advantureIsland ', advantureIsland);
-  // console.log('advantureIsland[0].RewardItems ', advantureIsland[0].RewardItems);
+  // console.log('adventureIsland ', adventureIsland);
+  // console.log('adventureIsland[0].RewardItems ', adventureIsland[0].RewardItems);
 
   // RewardItems 불필요한 데이터 제거
-  advantureIsland.map((el:any) => {
+  adventureIsland.map((el:any) => {
     return (
       el.RewardItems = el.RewardItems.map((element:any) => {
         return {
@@ -49,20 +49,20 @@ async function calendarAdvantureFilter(data:any) {
       })
     )
   });
-  return advantureIsland;
+  return adventureIsland;
 }
 
 
 
 
-const updateCalendar = async (advantureIsland:any, fieldBossTime:any, chaosGateTime:any) => {
+const updateCalendar = async (adventureIsland:any, fieldBossTime:any, chaosGateTime:any) => {
     try{
       const adventureIslandResult = await fetch('http://localhost:9999/adventureIsland', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(advantureIsland),
+        body: JSON.stringify(adventureIsland),
       });
 
       const fieldbossResult = await fetch('http://localhost:9999/fieldboss', {
@@ -106,8 +106,8 @@ export async function GET(request: NextRequest) {
     if (response.ok) {
       const data = await response.json();
       const [ fieldBossTime, chaosGateTime ] = await calendarFilter(data);
-      const advantureIsland = await calendarAdvantureFilter(data);
-      updateCalendar(advantureIsland, fieldBossTime, chaosGateTime);
+      const adventureIsland = await calendarAdventureFilter(data);
+      updateCalendar(adventureIsland, fieldBossTime, chaosGateTime);
       return new Response(JSON.stringify(data), {
         status: response.status,
         headers: {
