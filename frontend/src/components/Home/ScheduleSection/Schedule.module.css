@@ -98,6 +98,7 @@
 }
 
 .battleArenaOff {
+  /* off 이미지가 투명화? 작업이 애매하게 되서 css 설정 */
   opacity: 0.4;
 }
 
