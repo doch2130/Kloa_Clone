@@ -16,7 +16,7 @@ export async function GET(request: Request) {
         'authorization': `bearer ${process.env.NEXT_PUBLIC_LOSTARK_API}`
       },
     });
-
+    
     if (response.ok) {
       const data = await response.json();
       return new Response(JSON.stringify(data), {
