@@ -21,21 +21,26 @@ type fieldbossTimeType = string | number;
 type battlearenaTimeType = string | number;
 type adventureTimeType = string | number;
 
-export default function Schedule() {
-  const tempIsland = [
-    {
-      id: 1,
-      itemList: [1,2,3,4,5,6,7,8,9]
-    },
-    {
-      id: 2,
-      itemList: [1,2,3]
-    },
-    {
-      id: 3,
-      itemList: [1,2,3,4,5,6,7]
-    }
-  ];
+type ScheduleProps = {
+  adventureIslandList: any;
+}
+
+
+type rewardItem = {
+  Name: string;
+  Icon: string;
+}
+
+type adventureType = {
+  ContentsIcon: string;
+  ContentsName: string;
+  RewardItemType: string;
+  RewardItems: rewardItem[]
+  StartTimes: string[];
+}
+
+export default function Schedule(props:ScheduleProps) {
+  const { adventureIslandList } = props;
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -49,6 +54,17 @@ export default function Schedule() {
   const [fieldbossTime, setFieldbossTime] = useState<fieldbossTimeType>('00:00:00');
   const [battleArenaTime, setBattleArenaTime] = useState<battlearenaTimeType>('00:00:00');
   const [adventureTime, setAdventureTime] = useState<adventureTimeType>('00:00:00');
+  
+  const [adventureList, setAdventureList] = useState<adventureType[]>([]);
+
+  useEffect(() => {
+    // console.log('adventureIslandList ', adventureIslandList);
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const dateFormat = `${year}-${month}-${day}`;
+    setAdventureList(adventureIslandList[dateFormat]);
+  }, [adventureIslandList, currentDate]);
 
   function calculateTimeToNextHour() {
     const now:Date = new Date(); // 현재 시간을 얻습니다.
@@ -285,24 +301,26 @@ export default function Schedule() {
       </div>
       <div className={styled.scheduleIsland}>
         <div className={styled.scheduleIslandRow}>
-          {tempIsland.map((el:{id:number, itemList: number[]}) => {
-            return (
-              <div className={styled.scheduleIslandBox} key={el.id}>
-                <Image src={DeathValley} alt='death valley' className={styled.scheduleIslandImage} />
-                <div className={styled.scheduleIslandBoxWrap}>
-                  <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandBoxTitle}>
-                    <div className={styled.scheduleIslandCategory}>카드</div>
-                    <div className={styled.scheduleIslandName}>죽음의 협곡</div>
-                  </div>
-                  <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandCompensationImage}>
-                    {
-                      <ScheduleItemList itemList={el.itemList} />
-                    }
+          {
+            adventureList?.map((el:adventureType) => {
+              return (
+                <div className={styled.scheduleIslandBox} key={el.ContentsName}>
+                  <Image src={el.ContentsIcon} alt={el.ContentsName} className={styled.scheduleIslandImage} width={64} height={64} />
+                  <div className={styled.scheduleIslandBoxWrap}>
+                    <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandBoxTitle}>
+                      <div className={styled.scheduleIslandCategory}>{el.RewardItemType}</div>
+                      <div className={styled.scheduleIslandName}>{el.ContentsName}</div>
+                    </div>
+                    <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandCompensationImage}>
+                      {
+                        <ScheduleItemList itemList={el.RewardItems} />
+                      }
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })
+          }
           </div>
       </div>
     </div>

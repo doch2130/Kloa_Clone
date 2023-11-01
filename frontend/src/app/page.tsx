@@ -19,9 +19,26 @@ type noticesTopListType = {
 }
 
 export default async function Home() {
-  const noticesResp = await fetch('http://localhost:9999/notices', { cache: 'no-store' });
+  const noticesResp = await fetch('http://localhost:9999/notices',
+  { 
+    cache: 'force-cache',
+    headers: {
+      // 캐시 유효 시간을 1시간으로 설정
+      'Cache-Control': 'max-age=3600',
+    }
+  });
   const noticesList = await noticesResp.json();
   const noticesTopList = noticesList[0];
+
+  const adventureResp = await fetch('http://localhost:9999/adventureIsland',
+  {
+    cache: 'force-cache',
+    headers: {
+      // 캐시 유효 시간을 1시간으로 설정
+      'Cache-Control': 'max-age=3600',
+    }
+  });
+  const adventureIslandList = await adventureResp.json();
 
   return (
     <div className={styled.bodySection}>
@@ -29,7 +46,7 @@ export default async function Home() {
         <SlideImage />
       </section>
       <section className={styled.schedule}>
-        <Schedule />
+        <Schedule adventureIslandList={adventureIslandList[0]} />
       </section>
       <section className={styled.notices}>
         <div className={styled.lostarkNotice}>
