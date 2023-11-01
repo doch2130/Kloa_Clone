@@ -2,11 +2,12 @@
 import React, { useState } from 'react'
 import Image from 'next/image';
 
-import CardPack from '@/assets/Icon/Item/ico_island_cardpack.png'
 import LeftDoubleArrow from '@/assets/Icon/leftDoubleArrow.svg'
 import RightDoubleArrow from '@/assets/Icon/rightDoubleArrow.svg'
+import itemFilter from '@/data/AdventureIslandData';
 
 type ScheduleItemListProps = {
+  islandName: string;
   itemList: rewardItem[]
 }
 
@@ -15,9 +16,8 @@ type rewardItem = {
   Icon: string;
 }
 
-
 export default function ScheduleItemList(props:ScheduleItemListProps) {
-  const { itemList } = props;
+  const { islandName, itemList } = props;
   const [ arrowIndex, setArrowIndex ] = useState(true);
 
   const itemListChange = () => {
@@ -26,9 +26,11 @@ export default function ScheduleItemList(props:ScheduleItemListProps) {
 
   return (
     <>
-      {itemList.map((el: rewardItem, index: number) => (
+      {itemList.map((el: rewardItem, index: number) => {
+        const itemSrc = itemFilter(el.Name, islandName);
+        return (
         <div key={index}>
-          {index < 6 ? (arrowIndex && <Image src={el.Icon} alt={el.Name} width={30} height={30} />)
+          {index < 6 ? (arrowIndex && <Image src={itemSrc} alt={el.Name} width={30} height={30} />)
           :
           index === 6 ? (
             arrowIndex ? (
@@ -36,12 +38,13 @@ export default function ScheduleItemList(props:ScheduleItemListProps) {
             ) : (
               <>
                 <Image src={LeftDoubleArrow} alt='Island Item List Left Arrow' width={30} height={30} onClick={itemListChange} />
-                <Image src={el.Icon} alt={el.Name} width={30} height={30} />
+                <Image src={itemSrc} alt={el.Name} width={30} height={30} />
               </>
             )
-          ) : index > 7 && (!arrowIndex && <Image src={el.Icon} alt={el.Name} width={30} height={30} />)}
+          ) : index > 7 && (!arrowIndex && <Image src={itemSrc} alt={el.Name} width={30} height={30} />)}
         </div>
-      ))}
+      )
+      })}
     </>
   )
 }

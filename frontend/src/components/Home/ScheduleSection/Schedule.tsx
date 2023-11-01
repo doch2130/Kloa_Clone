@@ -243,15 +243,14 @@ export default function Schedule(props:ScheduleProps) {
         <div className={styled.scheduleEtcRow + ' ' + styled.fieldBoss}>
           <div className={styled.scheduleName}>
             <Image src={
-              fieldbossDate.getDay() === 3 || fieldbossDate.getDay() === 2 || fieldbossDate.getDay() === 5
+              fieldbossDate.getDay() === 0 || fieldbossDate.getDay() === 2 || fieldbossDate.getDay() === 5
               ? BossOn : BossOff} alt='field boss icon' />
-              {fieldbossDate.getDay() === 3 || fieldbossDate.getDay() === 2 || fieldbossDate.getDay() === 5 
+              {fieldbossDate.getDay() === 0 || fieldbossDate.getDay() === 2 || fieldbossDate.getDay() === 5 
               ? <span className={styled.scheduleAppearFont}>필드보스</span> : <span className={styled.scheduleLeaveFont}>필드보스</span>}
           </div>
           {/* 일 화 금 / 0 2 5 */}
-          {/* 임시로 0 대신 3 입력 */}
           <div className={styled.scheduleTime}>
-            {fieldbossDate.getDay() === 3 || fieldbossDate.getDay() === 3 || fieldbossDate.getDay() === 6 
+            {fieldbossDate.getDay() === 0 || fieldbossDate.getDay() === 2 || fieldbossDate.getDay() === 5
             ? (isSameDate(today, currentDate) ?
             <p className={styled.scheduleAppearFont}>{fieldbossTime}</p>
               : <p className={styled.scheduleAppearFont}>등장 예정</p>)
@@ -261,15 +260,14 @@ export default function Schedule(props:ScheduleProps) {
         <div className={styled.scheduleEtcRow + ' ' + styled.chaosGate}>
           <div className={styled.scheduleName}>
             <Image src={
-              chaosgateDate.getDay() === 3 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
+              chaosgateDate.getDay() === 0 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
               ? ChaosGateOn : ChaosGateOff} alt='chaos gate icon' />
-              {chaosgateDate.getDay() === 3 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
+              {chaosgateDate.getDay() === 0 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
               ? <span className={styled.scheduleAppearFont}>카오스게이트</span> : <span className={styled.scheduleLeaveFont}>카오스게이트</span>}
           </div>
           {/* 목 토 일 월 / 0 1 4 6 */}
-          {/* 임시로 0 대신 3 입력 */}
           <div className={styled.scheduleTime}>
-            {chaosgateDate.getDay() === 3 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
+            {chaosgateDate.getDay() === 0 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
             ? (isSameDate(today, currentDate) ?
             <p className={styled.scheduleAppearFont}>{chaosgateTime}</p>
               : <p className={styled.scheduleAppearFont}>등장 예정</p>)
@@ -279,19 +277,18 @@ export default function Schedule(props:ScheduleProps) {
         <div className={styled.scheduleEtcRow + ' ' + styled.battleArena}>
           <div className={styled.scheduleName}>
             <Image src={
-              battleArenaDate.getDay() === 3 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
+              battleArenaDate.getDay() === 2 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
               ? BattleArenaOn : BattleArenaOff} alt='battle arena icon' 
               className={
-                battleArenaDate.getDay() === 3 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
+                battleArenaDate.getDay() === 2 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
                 ? '' : styled.battleArenaOff}
               />
-              {battleArenaDate.getDay() === 3 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
+              {battleArenaDate.getDay() === 2 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
               ? <span className={styled.scheduleAppearFont}>태초의 섬</span> : <span className={styled.scheduleLeaveFont}>태초의 섬</span>}
           </div>
           {/* 화 목 토 / 2 4 6 */}
-          {/* 임시로 2 대신 3 입력 */}
           <div className={styled.scheduleTime}>
-            {battleArenaDate.getDay() === 3 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
+            {battleArenaDate.getDay() === 2 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
             ? (isSameDate(today, currentDate) ?
             <p className={styled.scheduleAppearFont}>{battleArenaTime}</p>
               : <p className={styled.scheduleAppearFont}>등장 예정</p>)
@@ -308,12 +305,15 @@ export default function Schedule(props:ScheduleProps) {
                   <Image src={el.ContentsIcon} alt={el.ContentsName} className={styled.scheduleIslandImage} width={64} height={64} />
                   <div className={styled.scheduleIslandBoxWrap}>
                     <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandBoxTitle}>
-                      <div className={styled.scheduleIslandCategory}>{el.RewardItemType}</div>
+                      <div className={el.RewardItemType === '카드' ? `${styled.scheduleIslandCategory} ${styled.scheduleIslandCategoryCard}`
+                      : el.RewardItemType === '주화' ? `${styled.scheduleIslandCategory} ${styled.scheduleIslandCategoryCoin}`
+                      : el.RewardItemType === '골드' ? `${styled.scheduleIslandCategory} ${styled.scheduleIslandCategoryGold}`
+                      : `${styled.scheduleIslandCategory} ${styled.scheduleIslandCategoryShilling}`}>{el.RewardItemType}</div>
                       <div className={styled.scheduleIslandName}>{el.ContentsName}</div>
                     </div>
                     <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandCompensationImage}>
                       {
-                        <ScheduleItemList itemList={el.RewardItems} />
+                        <ScheduleItemList itemList={el.RewardItems} islandName={el.ContentsName} />
                       }
                     </div>
                   </div>

@@ -139,17 +139,37 @@
 }
 
 .scheduleIslandCategory {
-  color: rgb(243 143 0);
+  /* color: rgb(243 143 0); */
   font-size: 0.875rem;
   padding: 2px 8px;
   text-align: center;
-  background-color: rgb(243 143 0/0.2);
+  /* background-color: rgb(243 143 0/0.2); */
   border-radius: 4px;
+}
+
+.scheduleIslandCategoryCard {
+  color: rgb(243 143 0);
+  background-color: rgb(243 143 0/0.2);
+}
+
+.scheduleIslandCategoryCoin {
+  color: rgb(170 55 209);
+  background-color: rgb(206 67 252/0.2);
+}
+
+.scheduleIslandCategoryGold {
+  color: rgb(220 160 0);
+  background-color: rgb(232 184 56/0.2);
+}
+
+.scheduleIslandCategoryShilling {
+  color: rgb(125 131 149);
+  background-color: rgb(125 131 149/0.2);
 }
 
 .scheduleIslandName {
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-left: 0.625rem
 }
 
