@@ -8,9 +8,9 @@ const nextConfig = {
         hostname: "localhost",
       },
       {
-        protocol: "https",
-        hostname: "via.placeholder.com",
-      },
+        protocol: 'https',
+        hostname: 'cdn-lostark.game.onstove.com',
+      }
     ],
   },
 }
