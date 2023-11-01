@@ -23,16 +23,13 @@ export default async function Home() {
   const noticesList = await noticesResp.json();
   const noticesTopList = noticesList[0];
 
-  const chaosgateResp = await fetch('http://localhost:9999/chaosgate', { cache: 'no-cache' });
-  const chaosgateData = await chaosgateResp.json();
-
   return (
     <div className={styled.bodySection}>
       <section className={styled.slideImage}>
         <SlideImage />
       </section>
       <section className={styled.schedule}>
-        <Schedule chaosgateData={chaosgateData[0]} />
+        <Schedule />
       </section>
       <section className={styled.notices}>
         <div className={styled.lostarkNotice}>
