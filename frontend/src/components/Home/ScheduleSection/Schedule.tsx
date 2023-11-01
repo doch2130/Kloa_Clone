@@ -109,6 +109,30 @@ export default function Schedule() {
       }
     }
 
+    // 일단 임시 보류
+    // let timer:NodeJS.Timeout;
+    // if(nextHour.getHours() >= 17) {
+    //   setBattleArenaTime('종료'); // 시간이 종료되면 초기화합니다.
+    //   setAdventureTime('종료'); // 시간이 종료되면 초기화합니다.
+    // } else {
+    //   // 타이머를 설정하여 1초마다 시간을 갱신합니다.
+    //   // const timer = setInterval(() => {
+    //     timer = setInterval(() => {
+    //     const timeDifference: number = nextHour.getTime() - new Date().getTime();
+    //     const hours = String(Math.floor(timeDifference / (1000 * 60 * 60))).padStart(2, '0');
+    //     const minutes = String(Math.floor(timeDifference / (1000 * 60) % 60)).padStart(2, '0');
+    //     const seconds = String(Math.floor((timeDifference / 1000) % 60)).padStart(2, '0');
+    //     setBattleArenaTime(`${hours}:${minutes}:${seconds}`);
+    //     setAdventureTime(`${hours}:${minutes}:${seconds}`);
+
+    //     if (timeDifference <= 0) {
+    //       clearInterval(timer); // 타이머를 멈춥니다.
+    //       setBattleArenaTime('출현'); // 시간이 종료되면 초기화합니다.
+    //       setAdventureTime('출현'); // 시간이 종료되면 초기화합니다.
+    //     }
+    //   }, 1000); // 1초마다 실행
+    // }
+
     // 타이머를 설정하여 1초마다 시간을 갱신합니다.
     const timer = setInterval(() => {
       const timeDifference: number = nextHour.getTime() - new Date().getTime();
