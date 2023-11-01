@@ -32,7 +32,7 @@ const getCalendarList = () => {
     })
     .then((data) => {
       // 데이터를 사용하는 코드를 여기에 작성
-      // console.log('Data from API:', data);
+      console.log('Data from API:', data);
       alert('데이터 갱신이 완료되었습니다.');
     })
     .catch((error) => {
