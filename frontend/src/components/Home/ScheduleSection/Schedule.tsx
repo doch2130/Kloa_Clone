@@ -17,6 +17,7 @@ import DeathValley from '@/assets/Island/deathvalley.png'
 
 
 type chaosgateTimeType = string | number;
+type fieldbossTimeType = string | number;
 
 type scheduleProps = {
   chaosgateData: string[]
@@ -44,7 +45,9 @@ export default function Schedule(props: scheduleProps) {
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [chaosgateDate, setChaosgateDate] = useState(new Date());
+  const [fieldbossDate, setFieldbossDate] = useState(new Date());
   const [chaosgateTime, setChaosgateTime] = useState<chaosgateTimeType>('00:00:00');
+  const [fieldbossTime, setFieldbossTime] = useState<fieldbossTimeType>('00:00:00');
 
   function calculateTimeToNextHour() {
     const now:Date = new Date(); // 현재 시간을 얻습니다.
@@ -57,10 +60,12 @@ export default function Schedule(props: scheduleProps) {
       const minutes = String(Math.floor(timeDifference / (1000 * 60) % 60)).padStart(2, '0');
       const seconds = String(Math.floor((timeDifference / 1000) % 60)).padStart(2, '0');
       setChaosgateTime(`00:${minutes}:${seconds}`);
+      setFieldbossTime(`00:${minutes}:${seconds}`);
 
       if (timeDifference <= 0) {
         clearInterval(timer); // 타이머를 멈춥니다.
         setChaosgateTime('출현'); // 시간이 종료되면 초기화합니다.
+        setFieldbossTime('출현'); // 시간이 종료되면 초기화합니다.
       }
     }, 1000); // 1초마다 실행
 
@@ -80,6 +85,7 @@ export default function Schedule(props: scheduleProps) {
     const clone = new Date(currentDate);
     clone.setHours(currentDate.getHours() - 6);
     setChaosgateDate(clone);
+    setFieldbossDate(clone);
   }, [currentDate]);
 
   const changeYear = (date:Date, year:number):Date => {
@@ -130,11 +136,20 @@ export default function Schedule(props: scheduleProps) {
       <div className={styled.scheduleEtc}>
         <div className={styled.scheduleEtcRow + ' ' + styled.fieldBoss}>
           <div className={styled.scheduleName}>
-            <Image src={BossOn} alt='field boss icon on' />
-            <span>필드보스</span>
+            <Image src={
+              fieldbossDate.getDay() === 3 || fieldbossDate.getDay() === 2 || fieldbossDate.getDay() === 5
+              ? BossOn : BossOff} alt='field boss icon' />
+              {fieldbossDate.getDay() === 3 || fieldbossDate.getDay() === 2 || fieldbossDate.getDay() === 5 
+              ? <span className={styled.scheduleAppearFont}>필드보스</span> : <span className={styled.scheduleLeaveFont}>필드보스</span>}
           </div>
+          {/* 일 화 금 / 0 2 5 */}
+          {/* 임시로 0 대신 3 입력 */}
           <div className={styled.scheduleTime}>
-            00:00:00
+            {fieldbossDate.getDay() === 3 || fieldbossDate.getDay() === 3 || fieldbossDate.getDay() === 6 
+            ? (isSameDate(today, currentDate) ?
+            <p className={styled.scheduleAppearFont}>{fieldbossTime}</p>
+              : <p className={styled.scheduleAppearFont}>등장 예정</p>)
+            : <p className={styled.scheduleLeaveFont}>&lt;자리비움&gt;</p>}
           </div>
         </div>
         <div className={styled.scheduleEtcRow + ' ' + styled.chaosGate}>
@@ -146,8 +161,8 @@ export default function Schedule(props: scheduleProps) {
               ? <span className={styled.scheduleAppearFont}>카오스게이트</span> : <span className={styled.scheduleLeaveFont}>카오스게이트</span>}
           </div>
           {/* 목 토 일 월 / 0 1 4 6 */}
+          {/* 임시로 0 대신 3 입력 */}
           <div className={styled.scheduleTime}>
-            {/* 임시로 0 대신 3 입력 */}
             {chaosgateDate.getDay() === 3 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
             ? (isSameDate(today, currentDate) ?
             <p className={styled.scheduleAppearFont}>{chaosgateTime}</p>
@@ -160,6 +175,8 @@ export default function Schedule(props: scheduleProps) {
             <Image src={BattleArenaOn} alt='battle arena icon on' />
             <span>태초의 섬</span>
           </div>
+          {/* 화 목 토 / 2 4 6 */}
+          {/* 임시로 2 대신 3 입력 */}
           <div className={styled.scheduleTime}>
             00:00:00
           </div>
