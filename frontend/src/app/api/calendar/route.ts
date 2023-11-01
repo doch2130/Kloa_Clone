@@ -21,10 +21,12 @@ async function calendarAdventureFilter(data:any) {
 
       if (!isDuplicate) {
         let RewardItemType = '실링';
-        item.RewardItems.forEach((reward:any) => {
-          // console.log('reward ', reward);
-          if (reward.StartTimes !== null) {
 
+
+        const sortedReward:any = [];
+
+        item.RewardItems.forEach((reward:any) => {
+          if (reward.StartTimes !== null) {
             reward.StartTimes.forEach((time:any) => {
               if(time.substring(0, 10) === dateKey) {
                 if (reward.Name === '골드') {
@@ -34,10 +36,29 @@ async function calendarAdventureFilter(data:any) {
                 } else if (reward.Name === '영혼의 잎사귀') {
                   RewardItemType = '카드';
                 }
+
+                // 보상 아이템 중복 데이터 여부 확인
+                const isRewardDuplicate = sortedReward.some((dataItem: any) => dataItem.Name === reward.Name);
+                if(!isRewardDuplicate) {
+                  sortedReward.push({
+                    Name: reward.Name,
+                    Icon: reward.Icon,
+                  });
+                }
               }
             });
           }
         });
+
+        item.RewardItems.forEach((reward:any) => {
+          if (reward.StartTimes === null) {
+            sortedReward.push({
+              Name: reward.Name,
+              Icon: reward.Icon,
+            });
+          }
+        });
+
 
         const filterStartTimes = item.StartTimes.filter((time:any) => dateKey === time.substring(0, 10));
 
@@ -46,7 +67,7 @@ async function calendarAdventureFilter(data:any) {
           ContentsIcon: item.ContentsIcon,
           RewardItemType: RewardItemType,
           StartTimes: filterStartTimes,
-          RewardItems: item.RewardItems,
+          RewardItems: sortedReward,
         });
       }
 
@@ -58,7 +79,8 @@ async function calendarAdventureFilter(data:any) {
 
 const updateCalendar = async (adventureIsland:any) => {
   try {
-    const adventureIslandResult = await fetch('http://localhost:9999/adventureIsland', {
+    // const adventureIslandResult = 
+    await fetch('http://localhost:9999/adventureIsland', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -71,12 +93,6 @@ const updateCalendar = async (adventureIsland:any) => {
     // alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
   }
 }
-
-
-
-
-
-
 
 
 
@@ -98,7 +114,6 @@ export async function GET(request: NextRequest) {
       const data = await response.json();
       const adventureIsland = await calendarAdventureFilter(data);
       updateCalendar(adventureIsland);
-      // return new Response(JSON.stringify(data), {
       return new Response(JSON.stringify(adventureIsland), {
         status: response.status,
         headers: {
