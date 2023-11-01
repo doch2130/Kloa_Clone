@@ -20,12 +20,7 @@ type chaosgateTimeType = string | number;
 type fieldbossTimeType = string | number;
 type battlearenaTimeType = string | number;
 
-type scheduleProps = {
-  chaosgateData: string[]
-}
-
-export default function Schedule(props: scheduleProps) {
-  const { chaosgateData } = props;
+export default function Schedule() {
   const tempIsland = [
     {
       id: 1,
@@ -77,10 +72,66 @@ export default function Schedule(props: scheduleProps) {
     };
   }
 
+  function adventureCalculateTimeToNextHour() {
+    const now:Date = new Date(); // 현재 시간을 얻습니다.
+    const nextHour:Date = new Date(now); // 현재 시간을 복사하여 수정할 것입니다.
+
+    // 다음 출현 시(정각)을 설정합니다.
+    // 토요일인 경우 9시 추가
+    if(nextHour.getDay() === 6) {
+      if(nextHour.getHours() < 9) {
+        nextHour.setHours(9, 0, 0, 0);
+      } else if(nextHour.getHours() < 11) {
+        nextHour.setHours(11, 0, 0, 0);
+      } else if(nextHour.getHours() < 13) {
+        nextHour.setHours(13, 0, 0, 0);
+      } else if(nextHour.getHours() < 19) {
+        nextHour.setHours(19, 0, 0, 0);
+      } else if(nextHour.getHours() < 21) {
+        nextHour.setHours(21, 0, 0, 0);
+      } else if(nextHour.getHours() < 23) {
+        nextHour.setHours(23, 0, 0, 0);
+      }
+    } else {
+      if(nextHour.getHours() < 11) {
+        nextHour.setHours(11, 0, 0, 0);
+      } else if(nextHour.getHours() < 13) {
+        nextHour.setHours(13, 0, 0, 0);
+      } else if(nextHour.getHours() < 19) {
+        nextHour.setHours(19, 0, 0, 0);
+      } else if(nextHour.getHours() < 21) {
+        nextHour.setHours(21, 0, 0, 0);
+      } else if(nextHour.getHours() < 23) {
+        nextHour.setHours(23, 0, 0, 0);
+      }
+    }
+
+    // 타이머를 설정하여 1초마다 시간을 갱신합니다.
+    const timer = setInterval(() => {
+      const timeDifference: number = nextHour.getTime() - new Date().getTime();
+      const hours = String(Math.floor(timeDifference / (1000 * 60 * 60))).padStart(2, '0');
+      const minutes = String(Math.floor(timeDifference / (1000 * 60) % 60)).padStart(2, '0');
+      const seconds = String(Math.floor((timeDifference / 1000) % 60)).padStart(2, '0');
+      setBattleArenaTime(`${hours}:${minutes}:${seconds}`)
+
+      if (timeDifference <= 0) {
+        clearInterval(timer); // 타이머를 멈춥니다.
+        setBattleArenaTime('출현'); // 시간이 종료되면 초기화합니다.
+      }
+    }, 1000); // 1초마다 실행
+
+    return () => {
+      clearInterval(timer); // 컴포넌트가 언마운트될 때 타이머를 정리합니다.
+    };
+  }
+
   useEffect(() => {
     const cleanup = calculateTimeToNextHour();
+    const adventureCleanup = adventureCalculateTimeToNextHour();
     return () => {
-      cleanup(); // 컴포넌트가 언마운트될 때 타이머를 정리합니다.
+      // 컴포넌트가 언마운트될 때 타이머를 정리합니다.
+      cleanup();
+      adventureCleanup();
     };
   }, []);
   
@@ -189,7 +240,11 @@ export default function Schedule(props: scheduleProps) {
           {/* 화 목 토 / 2 4 6 */}
           {/* 임시로 2 대신 3 입력 */}
           <div className={styled.scheduleTime}>
-            00:00:00
+            {battleArenaDate.getDay() === 3 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
+            ? (isSameDate(today, currentDate) ?
+            <p className={styled.scheduleAppearFont}>{battleArenaTime}</p>
+              : <p className={styled.scheduleAppearFont}>등장 예정</p>)
+            : <p className={styled.scheduleLeaveFont}>&lt;자리비움&gt;</p>}
           </div>
         </div>
       </div>
