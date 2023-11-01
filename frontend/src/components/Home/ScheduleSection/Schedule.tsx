@@ -19,6 +19,7 @@ import DeathValley from '@/assets/Island/deathvalley.png'
 type chaosgateTimeType = string | number;
 type fieldbossTimeType = string | number;
 type battlearenaTimeType = string | number;
+type adventureTimeType = string | number;
 
 export default function Schedule() {
   const tempIsland = [
@@ -43,9 +44,11 @@ export default function Schedule() {
   const [chaosgateDate, setChaosgateDate] = useState(new Date());
   const [fieldbossDate, setFieldbossDate] = useState(new Date());
   const [battleArenaDate, setBattleArenaDate] = useState(new Date());
+  const [adventureDate, setAdventureDate] = useState(new Date());
   const [chaosgateTime, setChaosgateTime] = useState<chaosgateTimeType>('00:00:00');
   const [fieldbossTime, setFieldbossTime] = useState<fieldbossTimeType>('00:00:00');
   const [battleArenaTime, setBattleArenaTime] = useState<battlearenaTimeType>('00:00:00');
+  const [adventureTime, setAdventureTime] = useState<adventureTimeType>('00:00:00');
 
   function calculateTimeToNextHour() {
     const now:Date = new Date(); // 현재 시간을 얻습니다.
@@ -112,11 +115,13 @@ export default function Schedule() {
       const hours = String(Math.floor(timeDifference / (1000 * 60 * 60))).padStart(2, '0');
       const minutes = String(Math.floor(timeDifference / (1000 * 60) % 60)).padStart(2, '0');
       const seconds = String(Math.floor((timeDifference / 1000) % 60)).padStart(2, '0');
-      setBattleArenaTime(`${hours}:${minutes}:${seconds}`)
+      setBattleArenaTime(`${hours}:${minutes}:${seconds}`);
+      setAdventureTime(`${hours}:${minutes}:${seconds}`);
 
       if (timeDifference <= 0) {
         clearInterval(timer); // 타이머를 멈춥니다.
         setBattleArenaTime('출현'); // 시간이 종료되면 초기화합니다.
+        setAdventureTime('출현'); // 시간이 종료되면 초기화합니다.
       }
     }, 1000); // 1초마다 실행
 
@@ -176,7 +181,13 @@ export default function Schedule() {
   return (
     <>
     <div className={styled.subTitle}>
-      <div>모험 섬<p className={styled.scheduleTime}>00:00:00</p></div>
+      <div>모험 섬
+        {
+        isSameDate(today, currentDate) ?
+        <p className={styled.scheduleTime}>{adventureTime}</p>
+          : <p className={styled.scheduleTime}>등장 예정</p>
+        }
+        </div>
       <div className={styled.scheduleDateChange}>
         <Image src={LeftArrow} alt='left arrow' onClick={() => changeMonth(currentDate, -1)}/>
         <p>{`${currentDate.getFullYear()}년 ${currentDate.getMonth()+1}월`}</p>
