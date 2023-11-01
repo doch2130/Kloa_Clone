@@ -18,6 +18,7 @@ import DeathValley from '@/assets/Island/deathvalley.png'
 
 type chaosgateTimeType = string | number;
 type fieldbossTimeType = string | number;
+type battlearenaTimeType = string | number;
 
 type scheduleProps = {
   chaosgateData: string[]
@@ -46,8 +47,10 @@ export default function Schedule(props: scheduleProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [chaosgateDate, setChaosgateDate] = useState(new Date());
   const [fieldbossDate, setFieldbossDate] = useState(new Date());
+  const [battleArenaDate, setBattleArenaDate] = useState(new Date());
   const [chaosgateTime, setChaosgateTime] = useState<chaosgateTimeType>('00:00:00');
   const [fieldbossTime, setFieldbossTime] = useState<fieldbossTimeType>('00:00:00');
+  const [battleArenaTime, setBattleArenaTime] = useState<battlearenaTimeType>('00:00:00');
 
   function calculateTimeToNextHour() {
     const now:Date = new Date(); // 현재 시간을 얻습니다.
@@ -86,6 +89,7 @@ export default function Schedule(props: scheduleProps) {
     clone.setHours(currentDate.getHours() - 6);
     setChaosgateDate(clone);
     setFieldbossDate(clone);
+    setBattleArenaDate(currentDate);
   }, [currentDate]);
 
   const changeYear = (date:Date, year:number):Date => {
@@ -172,8 +176,15 @@ export default function Schedule(props: scheduleProps) {
         </div>
         <div className={styled.scheduleEtcRow + ' ' + styled.battleArena}>
           <div className={styled.scheduleName}>
-            <Image src={BattleArenaOn} alt='battle arena icon on' />
-            <span>태초의 섬</span>
+            <Image src={
+              battleArenaDate.getDay() === 3 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
+              ? BattleArenaOn : BattleArenaOff} alt='battle arena icon' 
+              className={
+                battleArenaDate.getDay() === 3 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
+                ? '' : styled.battleArenaOff}
+              />
+              {battleArenaDate.getDay() === 3 || battleArenaDate.getDay() === 4 || battleArenaDate.getDay() === 6 
+              ? <span className={styled.scheduleAppearFont}>태초의 섬</span> : <span className={styled.scheduleLeaveFont}>태초의 섬</span>}
           </div>
           {/* 화 목 토 / 2 4 6 */}
           {/* 임시로 2 대신 3 입력 */}

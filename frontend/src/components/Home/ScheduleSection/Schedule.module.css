@@ -97,6 +97,10 @@
   color: #685743;
 }
 
+.battleArenaOff {
+  opacity: 0.4;
+}
+
 /* 모험 섬 */
 
 .scheduleIsland {
