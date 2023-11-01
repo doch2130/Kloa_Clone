@@ -156,3 +156,16 @@
 .scheduleIslandCompensationImage > div:not(:nth-child(1)) > img {
   margin-left: 5px;
 }
+
+.scheduleAppearFont {
+  margin: 0px;
+  min-width: 70px;
+  font-size: 0.9rem;
+}
+
+.scheduleLeaveFont {
+  margin: 0px;
+  min-width: 70px;
+  color: rgb(177 181 195);
+  font-size: 0.8rem;
+}

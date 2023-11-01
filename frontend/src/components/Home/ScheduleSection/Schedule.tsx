@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import ScheduleCalendar from './ScheduleCalendar';
 import ScheduleItemList from './ScheduleItemList';
@@ -43,8 +43,44 @@ export default function Schedule(props: scheduleProps) {
   tomorrow.setDate(tomorrow.getDate() + 1);
 
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [chaosgateTime, setChaosgateTime] = useState<chaosgateTimeType>('자리비움');
-  // console.log('chaosgateData ', chaosgateData);
+  const [chaosgateDate, setChaosgateDate] = useState(new Date());
+  const [chaosgateTime, setChaosgateTime] = useState<chaosgateTimeType>('00:00:00');
+
+  function calculateTimeToNextHour() {
+    const now:Date = new Date(); // 현재 시간을 얻습니다.
+    const nextHour:Date = new Date(now); // 현재 시간을 복사하여 수정할 것입니다.
+    nextHour.setHours(now.getHours() + 1, 0, 0, 0); // 다음 시(정각)을 설정합니다.
+
+    // 타이머를 설정하여 1초마다 시간을 갱신합니다.
+    const timer = setInterval(() => {
+      const timeDifference: number = nextHour.getTime() - new Date().getTime();
+      const minutes = String(Math.floor(timeDifference / (1000 * 60) % 60)).padStart(2, '0');
+      const seconds = String(Math.floor((timeDifference / 1000) % 60)).padStart(2, '0');
+      setChaosgateTime(`00:${minutes}:${seconds}`);
+
+      if (timeDifference <= 0) {
+        clearInterval(timer); // 타이머를 멈춥니다.
+        setChaosgateTime('출현'); // 시간이 종료되면 초기화합니다.
+      }
+    }, 1000); // 1초마다 실행
+
+    return () => {
+      clearInterval(timer); // 컴포넌트가 언마운트될 때 타이머를 정리합니다.
+    };
+  }
+
+  useEffect(() => {
+    const cleanup = calculateTimeToNextHour();
+    return () => {
+      cleanup(); // 컴포넌트가 언마운트될 때 타이머를 정리합니다.
+    };
+  }, []);
+  
+  useEffect(() => {
+    const clone = new Date(currentDate);
+    clone.setHours(currentDate.getHours() - 6);
+    setChaosgateDate(clone);
+  }, [currentDate]);
 
   const changeYear = (date:Date, year:number):Date => {
     const clone = new Date(date);
@@ -68,6 +104,12 @@ export default function Schedule(props: scheduleProps) {
   const changeDate = (date:Date):void => {
     setCurrentDate(date);
     return ;
+  }
+
+  const isSameDate = (date1:Date, date2:Date):Boolean => {
+    return date1.getFullYear() === date2.getFullYear()
+     && date1.getMonth() === date2.getMonth()
+     && date1.getDate() === date2.getDate();
   }
 
   return (
@@ -97,12 +139,20 @@ export default function Schedule(props: scheduleProps) {
         </div>
         <div className={styled.scheduleEtcRow + ' ' + styled.chaosGate}>
           <div className={styled.scheduleName}>
-            <Image src={ChaosGateOn} alt='chaos gate icon on' />
-            <span>카오스게이트</span>
+            <Image src={
+              chaosgateDate.getDay() === 3 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
+              ? ChaosGateOn : ChaosGateOff} alt='chaos gate icon' />
+              {chaosgateDate.getDay() === 3 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
+              ? <span className={styled.scheduleAppearFont}>카오스게이트</span> : <span className={styled.scheduleLeaveFont}>카오스게이트</span>}
           </div>
           {/* 목 토 일 월 / 0 1 4 6 */}
           <div className={styled.scheduleTime}>
-            00:00:00
+            {/* 임시로 0 대신 3 입력 */}
+            {chaosgateDate.getDay() === 3 || chaosgateDate.getDay() === 1 || chaosgateDate.getDay() === 4 || chaosgateDate.getDay() === 6 
+            ? (isSameDate(today, currentDate) ?
+            <p className={styled.scheduleAppearFont}>{chaosgateTime}</p>
+              : <p className={styled.scheduleAppearFont}>등장 예정</p>)
+            : <p className={styled.scheduleLeaveFont}>&lt;자리비움&gt;</p>}
           </div>
         </div>
         <div className={styled.scheduleEtcRow + ' ' + styled.battleArena}>
