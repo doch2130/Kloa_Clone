@@ -63,6 +63,16 @@ export default function Schedule(props:ScheduleProps) {
     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
     const day = currentDate.getDate().toString().padStart(2, '0');
     const dateFormat = `${year}-${month}-${day}`;
+    // setAdventureList(adventureIslandList[dateFormat]);
+
+    // 주말 오전, 오후 섬 시간대 별 정리를 위한 sort 함수
+    if(adventureIslandList[dateFormat].length >= 6) {
+      adventureIslandList[dateFormat].sort((a:any, b:any) => {
+        const dateA = new Date(a.StartTimes[0]);
+        const dateB = new Date(b.StartTimes[0]);
+        return dateA.getTime() - dateB.getTime();
+      });
+    }
     setAdventureList(adventureIslandList[dateFormat]);
   }, [adventureIslandList, currentDate]);
 
