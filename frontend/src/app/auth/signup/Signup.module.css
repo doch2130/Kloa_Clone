@@ -1,16 +1,16 @@
-.loginWrap {
+.signWrap {
   display: flex;
   justify-content: space-between;
   background-color: white;
-  min-height: 550px;
+  min-height: 650px;
 }
 
-.loginFormWrap {
+.signFormWrap {
   width: 100%;
   display: flex;
 }
 
-.loginForm {
+.signForm {
   width: 400px;
   margin: auto;
   display: flex;
@@ -19,59 +19,90 @@
   justify-content: space-between;
 }
 
-.loginForm input {
+.signForm h1 {
+  color: rgb(53 57 69);
+  line-height: 36px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.signFormInputWrap {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.signFormInputWrap input {
   max-width: 365px;
   width: 100%;
   padding-left: 1rem;
   padding-right: 1rem;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  color: rgb(53 57 69);
   border: 2px solid rgb(230 232 236);
   min-height: 46px;
 }
 
-.loginFormInputWrap {
-  width: 100%;
-}
-
-.loginFormInputWrap div:nth-child(2) input {
-  margin-top: 1.25rem;
-}
-
-.loginStay {
-  margin-top: 1.25rem;
+.idGroup, .authNumberGroup {
   display: flex;
-  width: 100%;
+  align-items: center;
 }
 
-.loginStay svg {
+.idGroup button,
+.authNumberGroup button {
+  background-color: white;
+  border: 0 solid #e5e7eb;
+  border-top-width: 2px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  min-width: 5rem;
+  margin: 0px;
+  padding: 0px;
+  min-height: 51.2px;
+  color: rgb(125 131 149);
+}
+
+.authNumberGroup, .pwdGroup, .pwdCheckGroup, .privacyGroup, .signButton, .lastGroup {
+  margin-top: 1.25rem;
+}
+
+.pwdGroup input,
+.pwdCheckGroup input {
+  border-radius: 10px;
+}
+
+.privacyGroup {
+  display: flex;
+  align-items: center;
+}
+
+.privacyGroup a {
+  text-decoration: none;
+}
+
+.privacyGroup a {
+  color: rgb(88 101 242);
+}
+
+.privacyGroup svg {
   width: 20px;
   height: 20px;
   cursor: pointer;
   align-self: center;
 }
 
-.loginStay span {
+.privacyGroup span {
   font-weight: 600;
   font-size: .875rem;
   color: rgb(53 57 69);
   margin-left: 0.5rem;
   margin-bottom: auto;
   margin-top: auto;
-  cursor: pointer;
 }
 
-.empty {
-  width: 100%;
-  margin-bottom: 1.25rem;
-  margin-top: 1.25rem;
-}
-
-.empty div {
-  height: 60px;
-  visibility: hidden;
-}
-
-.loginButton {
+.signButton {
   color: rgb(255 255 255);
   font-weight: 600;
   font-size: 1.125rem;
@@ -92,7 +123,6 @@
 }
 
 .lastGroup {
-  margin-top: 1.25rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -105,13 +135,8 @@
   text-decoration: none;
 }
 
-.lastGroup a:nth-child(2) {
-  color: rgb(177 181 195);
-}
-
-
 @media (max-width: 1535px) {
-  .loginArt {
+  .signupArt {
     display: none;
   }
 }

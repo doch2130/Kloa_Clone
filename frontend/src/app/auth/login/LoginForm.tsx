@@ -1,7 +1,8 @@
 'use client'
 import React, { useRef, useState } from 'react'
+import { useRouter } from 'next/navigation';
 import Link from 'next/link'
-import CheckSvgComponent from './CheckSvgComponent'
+import CheckSvgComponent from '@/components/UI/CheckSvgComponent'
 
 import styled from './Login.module.css'
 
@@ -9,6 +10,7 @@ export default function LoginForm() {
   const [isCheck, setIsCheck] = useState<Boolean>(false);
   const idInputRef = useRef<HTMLInputElement>(null);
   const pwdInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const isCheckhandler = () => {
     setIsCheck(!isCheck);
@@ -30,7 +32,7 @@ export default function LoginForm() {
       return;
     }
 
-    fetch('/api/auth', {
+    fetch('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify({
         id: idInputRef.current?.value,
@@ -54,6 +56,7 @@ export default function LoginForm() {
         // console.log('data ', data);
         if(data !== false) {
           alert('로그인 성공');
+          router.push('/');
         }
       })
       .catch((error) => {
@@ -81,7 +84,7 @@ export default function LoginForm() {
       </div>
       <button type='button' className={styled.loginButton} onClick={onSubmit}>로그인</button>
       <div className={styled.lastGroup}>
-        <Link href='/'>회원가입</Link>
+        <Link href='/auth/signup'>회원가입</Link>
         <Link href='/'>앗, 비밀번호를 잊어버렸어요!</Link>
       </div>
     </form>
