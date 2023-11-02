@@ -35,7 +35,7 @@ export default function Header() {
           <button type='button' className='duration-300'>
             <Image src={MoonModeIcon} alt='MoonMode' />
           </button>
-          <Link href='/' className='duration-300'>로그인</Link>
+          <Link href='/login' className='duration-300'>로그인</Link>
         </div>
       </nav>
     </header>

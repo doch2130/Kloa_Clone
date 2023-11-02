@@ -1,0 +1,116 @@
+.loginWrap {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  min-height: 500px;
+}
+
+.loginFormWrap {
+  width: 100%;
+  display: flex;
+}
+
+.loginForm {
+  width: 400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.loginForm input {
+  max-width: 365px;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 10px;
+  border: 2px solid rgb(230 232 236);
+  min-height: 46px;
+}
+
+.loginFormInputWrap {
+  width: 100%;
+}
+
+.loginFormInputWrap div:nth-child(2) input {
+  margin-top: 1.25rem;
+}
+
+.loginStay {
+  margin-top: 1.25rem;
+  display: flex;
+  width: 100%;
+}
+
+.loginStay img {
+  margin-bottom: 2.5px;
+  color: rgb(128 69 221);
+  cursor: pointer;
+  align-self: center;
+}
+
+.loginStay span {
+  font-weight: 600;
+  font-size: .875rem;
+  color: rgb(53 57 69);
+  margin-left: 0.5rem;
+  margin-bottom: auto;
+  margin-top: auto;
+}
+
+.empty {
+  width: 100%;
+  margin-bottom: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.empty div {
+  height: 60px;
+  visibility: hidden;
+}
+
+.loginButton {
+  color: rgb(255 255 255);
+  font-weight: 600;
+  font-size: 1.125rem;
+  --tw-gradient-to-position: ;
+  --tw-gradient-from-position: ;
+  --tw-gradient-to: #8045dd var(--tw-gradient-to-position);
+  --tw-gradient-from: #5865f2 var(--tw-gradient-from-position);
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
+  background-image: linear-gradient(to right,var(--tw-gradient-stops));
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 48px;
+  width: 100%;
+  border: none;
+}
+
+.lastGroup {
+  margin-top: 1.25rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lastGroup a {
+  color: rgb(88 101 242);
+  font-size: .75rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lastGroup a:nth-child(2) {
+  color: rgb(177 181 195);
+}
+
+
+@media (max-width: 1535px) {
+  .loginArt {
+    display: none;
+  }
+}
