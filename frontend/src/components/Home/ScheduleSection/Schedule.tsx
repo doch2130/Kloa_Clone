@@ -66,7 +66,7 @@ export default function Schedule(props:ScheduleProps) {
     // setAdventureList(adventureIslandList[dateFormat]);
 
     // 주말 오전, 오후 섬 시간대 별 정리를 위한 sort 함수
-    if(adventureIslandList[dateFormat].length >= 6) {
+    if(adventureIslandList[dateFormat]?.length >= 6) {
       adventureIslandList[dateFormat].sort((a:any, b:any) => {
         const dateA = new Date(a.StartTimes[0]);
         const dateB = new Date(b.StartTimes[0]);
@@ -311,7 +311,8 @@ export default function Schedule(props:ScheduleProps) {
           {
             adventureList?.map((el:adventureType) => {
               return (
-                <div className={styled.scheduleIslandBox} key={el.ContentsName}>
+                // <div className={styled.scheduleIslandBox} key={el.ContentsName}>
+                <div className={isSameDate(today, currentDate) ? `${styled.scheduleIslandBox}` : `${styled.scheduleIslandBox} ${styled.scheduleIslandBoxOpacity}`} key={el.ContentsName}>
                   <Image src={el.ContentsIcon} alt={el.ContentsName} className={styled.scheduleIslandImage} width={64} height={64} />
                   <div className={styled.scheduleIslandBoxWrap}>
                     <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandBoxTitle}>

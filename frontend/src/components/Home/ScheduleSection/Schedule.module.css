@@ -122,6 +122,10 @@
   display: flex;
 }
 
+.scheduleIslandBoxOpacity {
+  opacity: 0.4;
+}
+
 .scheduleIslandImage {
   height: 64px;
   border-radius: 10px;
