@@ -50,6 +50,15 @@
   align-self: center;
 }
 
+.loginStay svg {
+  width: 20px;
+  height: 20px;
+  /* color: rgb(203 205 212); */
+  /* color: rgb(128 69 221); */
+  cursor: pointer;
+  align-self: center;
+}
+
 .loginStay span {
   font-weight: 600;
   font-size: .875rem;

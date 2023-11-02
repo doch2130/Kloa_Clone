@@ -1,12 +1,19 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import CheckSvgComponent from './checkSvgComponent'
 
 import LoginCheckSvg from './check.svg'
 import styled from './Login.module.css'
 
 export default function LoginForm() {
+  const [isCheck, setIsCheck] = useState<Boolean>(false);
+
+  const isCheckhandler = () => {
+    setIsCheck(!isCheck);
+  }
+
   return (
     <form className={styled.loginForm}>
       <div className={styled.loginFormInputWrap}>
@@ -18,8 +25,9 @@ export default function LoginForm() {
         </div>
       </div>
       <div className={styled.loginStay}>
-        <Image src={LoginCheckSvg} alt='login stay check button' width={20} height={20} />
-        <span>로그인 상태 유지</span>
+        {/* <Image src={LoginCheckSvg} alt='login stay check button' width={20} height={20} /> */}
+        <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />
+        <span onClick={isCheckhandler}>로그인 상태 유지</span>
       </div>
       <div className={styled.empty}>
         <div></div>
