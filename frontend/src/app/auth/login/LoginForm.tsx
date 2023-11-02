@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import CheckSvgComponent from './checkSvgComponent'
+import CheckSvgComponent from './CheckSvgComponent'
 
 import LoginCheckSvg from './check.svg'
 import styled from './Login.module.css'
