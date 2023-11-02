@@ -1,6 +1,5 @@
 'use client'
 import React, { useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import CheckSvgComponent from './CheckSvgComponent'
 
@@ -25,7 +24,6 @@ export default function LoginForm() {
         </div>
       </div>
       <div className={styled.loginStay}>
-        {/* <Image src={LoginCheckSvg} alt='login stay check button' width={20} height={20} /> */}
         <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />
         <span onClick={isCheckhandler}>로그인 상태 유지</span>
       </div>
