@@ -7,7 +7,7 @@ import styled from './Signup.module.css'
 
 export default function SignForm() {
   const [isCheck, setIsCheck] = useState<Boolean>(false);
-  const idInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
   const pwdInputRef = useRef<HTMLInputElement>(null);
   const pwdCheckInputRef = useRef<HTMLInputElement>(null);
   const authNumberInputRef = useRef<HTMLInputElement>(null);
@@ -20,59 +20,50 @@ export default function SignForm() {
   const onSubmit = (e:any) => {
     e.stopPropagation();
 
-    // if(idInputRef.current === null || pwdInputRef.current === null) {
-    //   alert('잠시 후 다시 시도해주세요.');
-    //   return ;
-    // }
-    // if(idInputRef.current?.value.trim() === '') {
-    //   alert('아이디를 입력해주세요.');
-    //   return;
-    // }
-    // if(pwdInputRef.current?.value.trim() === '') {
-    //   alert('비밀번호를 입력해주세요.');
-    //   return;
-    // }
 
-    // fetch('/api/auth/login', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     id: idInputRef.current?.value,
-    //     pwd: pwdInputRef.current?.value
-    //   })
-    // })
-    //   .then((response) => {
-    //     // console.log('response ', response);
-    //     if (response.status === 401) {
-    //       alert('사용자 정보가 일치하지 않습니다.');
-    //       return false;
-    //     }
-    //     if (response.ok) {
-    //       return response.json();
-    //     } else {
-    //       throw new Error('Network response was not ok');
-    //     }
-    //   })
-    //   .then((data) => {
-    //     // 데이터를 사용하는 코드를 여기에 작성
-    //     // console.log('data ', data);
-    //     if(data !== false) {
-    //       alert('로그인 성공');
-    //       router.push('/');
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     // console.error('Fetch error: ', error);
-    //     alert('로그인 시도에 실패하였습니다. 잠시 후 다시 시도해주세요.');
-    //   });
   }
-  
+
+  const emailAuthenticationSend = async () => {
+    if(emailInputRef.current === null) {
+      alert('잠시 후 다시 시도해주세요');
+      return ;
+    }
+    if(emailInputRef.current?.value.trim() === '') {
+      alert('이메일을 입력해주세요.');
+      return ;
+    }
+
+    const email = emailInputRef.current?.value;
+    const response = await fetch(`/api/auth/mail`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if(!response.ok) {
+      throw new Error('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
+    }
+
+    if(data.status === 200) {
+      alert('메일이 성공적으로 발송되었습니다.\r\n인증번호를 입력해주세요.');
+      return ;
+    }
+    return ;
+  }
+
   return (
     <form className={styled.signForm} onSubmit={onSubmit}>
       <h1>모코코만큼 환영합니다.<br />회원가입을 진행해 볼까요?</h1>
       <div className={styled.signFormInputWrap}>
         <div className={styled.idGroup}>
-          <input type='text' placeholder='이메일 입력' name='id' ref={idInputRef} />
-          <button type='button'>전송</button>
+          <input type='text' placeholder='이메일 입력' name='id' ref={emailInputRef} />
+          <button type='button' onClick={emailAuthenticationSend} className={styled.sendButton}>전송</button>
         </div>
         <div className={styled.authNumberGroup}>
           <input type='text' placeholder='인증번호 입력' name='authNumber' ref={authNumberInputRef} />
