@@ -189,3 +189,22 @@ footer a:active {
 .none-decoration {
   text-decoration: none;
 }
+
+
+
+
+/* 헤더 로그아웃 버튼 */
+.logoutBtn {
+  color: #8045dd;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: 0.25rem;
+}
+
+.logoutBtn:hover {
+  background-color: rgb(230 232 236);
+  border-radius: 3px;
+  height: 10%;  
+}

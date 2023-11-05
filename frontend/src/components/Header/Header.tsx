@@ -8,6 +8,7 @@ import Kloa2Icon from '@/assets/Logo/kloa2.webp'
 import SearchIcon from '@/assets/Icon/search.svg'
 import SunModeIcon from '@/assets/Icon/sun.svg'
 import MoonModeIcon from '@/assets/Icon/moon.svg'
+import HeaderLogin from './HeaderLogin'
 
 export default function Header() {
   return (
@@ -35,7 +36,8 @@ export default function Header() {
           <button type='button' className='duration-300'>
             <Image src={MoonModeIcon} alt='MoonMode' />
           </button>
-          <Link href='/auth/login' className='duration-300'>로그인</Link>
+          {/* <Link href='/auth/login' className='duration-300'>로그인</Link> */}
+          <HeaderLogin />
         </div>
       </nav>
     </header>

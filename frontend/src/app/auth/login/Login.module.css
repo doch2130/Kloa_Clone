@@ -3,6 +3,8 @@
   justify-content: space-between;
   background-color: white;
   min-height: 550px;
+  max-width: 1120px;
+  margin: auto;
 }
 
 .loginFormWrap {
@@ -114,4 +116,22 @@
   .loginArt {
     display: none;
   }
+}
+
+
+/* Auth 로그인 버튼 */
+.naverLogin {
+  margin-top: 2rem;
+  color: rgb(88 101 242);
+  font-weight: 600;
+  font-size: 1.125rem;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 48px;
+  width: 100%;
+  border: 2px solid rgb(88 101 242);
 }

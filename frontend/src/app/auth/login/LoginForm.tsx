@@ -1,6 +1,9 @@
 'use client'
 import React, { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation';
+
+import { signIn } from "next-auth/react";
+
 import Link from 'next/link'
 import CheckSvgComponent from '@/components/UI/CheckSvgComponent'
 
@@ -75,6 +78,7 @@ export default function LoginForm() {
           <input type='password' placeholder='비밀번호' name='pwd' ref={pwdInputRef} />
         </div>
       </div>
+      <button type='button' onClick={() => signIn()} className={styled.naverLogin}>SNS 로그인</button>
       <div className={styled.loginStay}>
         <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />
         <span onClick={isCheckhandler}>로그인 상태 유지</span>
