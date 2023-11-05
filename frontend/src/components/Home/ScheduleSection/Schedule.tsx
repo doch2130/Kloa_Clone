@@ -309,10 +309,24 @@ export default function Schedule(props:ScheduleProps) {
       <div className={styled.scheduleIsland}>
         <div className={styled.scheduleIslandRow}>
           {
-            adventureList?.map((el:adventureType) => {
+            adventureList?.map((el:adventureType, index:number) => {
+              let ScheduleIslandBoxStyle = `${styled.scheduleIslandBox}`;
+              if(adventureList.length > 3) {
+                if (index < 3 && currentDate.getHours() < 13) {
+                  ScheduleIslandBoxStyle = `${styled.scheduleIslandBox}`;
+                } else if (currentDate.getHours() < 13) {
+                  ScheduleIslandBoxStyle = `${styled.scheduleIslandBox} ${styled.scheduleIslandBoxOpacity}`;
+                } else if (index < 3 && currentDate.getHours() >= 13) {
+                  ScheduleIslandBoxStyle = `${styled.scheduleIslandBox} ${styled.scheduleIslandBoxOpacity}`;
+                } else if (currentDate.getHours() >= 13) {
+                  ScheduleIslandBoxStyle = `${styled.scheduleIslandBox}`;
+                }
+              }
+              
               return (
-                // <div className={styled.scheduleIslandBox} key={el.ContentsName}>
-                <div className={isSameDate(today, currentDate) ? `${styled.scheduleIslandBox}` : `${styled.scheduleIslandBox} ${styled.scheduleIslandBoxOpacity}`} key={el.ContentsName}>
+                <div className={isSameDate(today, currentDate) ?
+                ScheduleIslandBoxStyle
+                : `${styled.scheduleIslandBox} ${styled.scheduleIslandBoxOpacity}`} key={el.ContentsName}>
                   <Image src={el.ContentsIcon} alt={el.ContentsName} className={styled.scheduleIslandImage} width={64} height={64} />
                   <div className={styled.scheduleIslandBoxWrap}>
                     <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandBoxTitle}>
