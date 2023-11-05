@@ -91,27 +91,30 @@ export default function SignForm() {
       return ;
     }
 
-    try {
-      const result = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: emailInputRef.current.value,
-          pwd: pwdInputRef.current.value,
-          privacy: isCheck
-        })
-      });
-
-      alert('회원가입이 완료되었습니다.');
-      router.push('/auth/login');
-      return ;
-    } catch (err) {
-      alert('회원가입 중 에러가 발생하였습니다.');
-      return ;
+    if(window.confirm('작성한 정보로 가입하시겠습니까?')) {
+      try {
+        const result = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: emailInputRef.current.value,
+            pwd: pwdInputRef.current.value,
+            privacy: isCheck
+          })
+        });
+  
+        alert('회원가입이 완료되었습니다.');
+        router.push('/auth/login');
+        return ;
+      } catch (err) {
+        alert('회원가입 중 에러가 발생하였습니다.');
+        return ;
+      }
     }
-
+    
+    return ;
   }
 
   return (
