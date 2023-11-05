@@ -70,6 +70,15 @@
   color: rgb(88 101 242);
 }
 
+.authNumberButton {
+  cursor: not-allowed;
+}
+
+.authNumberButtonActive:hover {
+  cursor: pointer;
+  color: rgb(88 101 242);
+}
+
 .authNumberGroup, .pwdGroup, .pwdCheckGroup, .privacyGroup, .signButton, .lastGroup {
   margin-top: 1.25rem;
 }

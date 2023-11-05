@@ -25,11 +25,11 @@ export default function LoginForm() {
     }
     if(idInputRef.current?.value.trim() === '') {
       alert('아이디를 입력해주세요.');
-      return;
+      return ;
     }
     if(pwdInputRef.current?.value.trim() === '') {
       alert('비밀번호를 입력해주세요.');
-      return;
+      return ;
     }
 
     fetch('/api/auth/login', {
