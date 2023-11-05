@@ -54,10 +54,15 @@ export default function LoginForm() {
           throw new Error('Network response was not ok');
         }
       })
-      .then((data) => {
+      .then(async (data) => {
         // 데이터를 사용하는 코드를 여기에 작성
         // console.log('data ', data);
         if(data !== false) {
+          const result = await signIn('credentials', {
+            email: idInputRef.current?.value,
+            redirect: false,
+          });
+          // console.log('result ', result);
           alert('로그인 성공');
           router.push('/');
         }
