@@ -3,10 +3,30 @@ import React from 'react'
 import styeld from './Notices.module.css';
 import PageNation from './PageNation';
 
-export default function Notices() {
-  const temp = [1,2,3,4,5,6,7,8,9,10,11,12,13];
-  // const temp = [1,2,3,4,5,6,7,8,9,10];
-  // const temp = [1,2,3,4,5,6,7,8];
+export default async function Notices() {
+  const postListResp = await fetch('http://localhost:9999/mainNotices',
+  {
+    cache: 'force-cache',
+    headers: {
+      // 캐시 유효 시간을 1시간으로 설정
+      'Cache-Control': 'max-age=3600',
+    }
+  });
+
+  type postListType = {
+    category: string,
+    title: string,
+    textData: string,
+    writeTime: string,
+    viewCount: number,
+    likeCount: number,
+    id: string,
+  }
+  const postList:postListType[] = await postListResp.json();
+
+  postList.sort((a, b) => Number(new Date(b.writeTime)) - Number(new Date(a.writeTime)));
+
+  // console.log('postList ', postList);
 
   return (
     <div className={styeld.noticeBody}>
@@ -14,7 +34,7 @@ export default function Notices() {
         <div className={styeld.noticeBodyRow + ' ' + styeld.noticeBodyTitle}>
           <h2>공지사항</h2>
         </div>
-        <PageNation temp={temp} />
+        <PageNation postList={postList} />
       </div>
     </div>
   )

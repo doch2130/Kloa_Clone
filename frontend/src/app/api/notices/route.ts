@@ -2,7 +2,7 @@
 // src/app/api
 // api/hello/example.ts
 
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const url = 'https://developer-lostark.game.onstove.com/news/notices';
@@ -35,12 +35,36 @@ export async function GET(request: Request) {
 }
 
 // export async function POST(req: Request) {
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest, res:NextResponse) {
   const body = await req.json();
-  console.log(req.cookies.get('cookie'));
-  console.log(body);
-  console.log(req.headers.get('Authorization'));
+  // console.log(body);
 
-  // return new Response('OK');
-  return new Response(JSON.stringify({ hello: 'world' }));
+  const date = new Date();
+
+  try {
+    const response = await fetch('http://localhost:9999/mainNotices', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        category: body.category,
+        title: body.title,
+        textData: body.textData,
+        writeTime: date,
+        viewCount: 0,
+        likeCount: 0,
+      })
+    });
+
+    if(response.ok) {
+      const data = await response.json();
+      return new NextResponse(JSON.stringify({message: 'Success', status: response.status}));
+    } else {
+      return new NextResponse('Error Write data', { status: response.status });
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    return new NextResponse('An error occurred', { status: 500 });
+  }
 }

@@ -51,13 +51,13 @@
   justify-content: center;
 }
 
-/* // 점검 글자 색
-// color: rgb(88 101 242);
-// font-weight: 600;
+.noticeCategoryCheck {
+  color: rgb(88 101 242) !important;
+}
 
-// 이벤트 글자 색
-// color: rgb(221 69 191);
-// font-weight: 600; */
+.noticeCategoryEvent {
+  color: rgb(221 69 191) !important;
+}
 
 .noticeTitle {
   margin-left: 10px;
@@ -156,10 +156,11 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  height: 40px;
+  height: 36px;
   width: 70px;
   border: 2px solid rgb(88 101 242);
   position: absolute;
   top: 38px;
   right: 40px;
+  text-decoration: none;
 }
