@@ -1,0 +1,141 @@
+.noticeBody {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  min-height: 600px;
+  width: 100%;
+}
+
+.noticeBodyWrap {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  max-width: 1120px;
+  width: 100%;
+}
+
+.noticeBodyRow {
+  padding: 0 30px;
+}
+
+.noticeBodyTitle h2 {
+  color: rgb(53 57 69);
+}
+
+.noticeTable {}
+
+.noticeTableRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-bottom: 1px solid rgb(230 232 236);
+  height: 48px;
+  transition-duration: 0.75ms;
+  cursor: pointer;
+}
+
+.noticeTableRow:hover {
+  background-color: rgb(250 251 251);
+}
+
+.noticeCategory {
+  color: rgb(53 57 69);
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  width: 60px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* // 점검 글자 색
+// color: rgb(88 101 242);
+// font-weight: 600;
+
+// 이벤트 글자 색
+// color: rgb(221 69 191);
+// font-weight: 600; */
+
+.noticeTitle {
+  margin-left: 10px;
+  color: rgb(53 57 69);
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 688px;
+  width: 100%;
+}
+
+.noticeDate {
+  color: rgb(53 57 69);
+  font-size: 13px;
+  width: 80px;
+  height: 22px;
+}
+
+.noticeViewCount {
+ display: flex;
+ align-items: center;
+ color: rgb(53 57 69);
+ font-size: 13px;
+}
+
+.noticeViewCount span {
+  margin-left: 8px;
+}
+
+.notieLikeCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: rgb(125 131 149);
+  border: 1px solid rgb(230 232 236);
+  border-radius: 6px;
+  width: 80px;
+  height: 22px;
+}
+
+.notieLikeCount span {
+  margin-left: 6px;
+}
+
+
+.noticeTableBtnGroup {
+  display: flex;
+  justify-content: center;
+  margin: 38px 0 52px;
+}
+
+.noticeTableBtnGroup a {
+  width: 40px;
+  height: 38px;
+  cursor: pointer;
+  border: 1px solid rgb(230 232 236);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.noticeTableBtnGroup a:first-child {
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+.noticeTableBtnGroup a:last-child {
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.noticeTableBtnGroup a:not(:last-child) {
+  border-right-width: 0px;
+}
+
+.noticeTableBtnActive {
+  border: 1px solid rgb(88 101 242) !important;
+}
