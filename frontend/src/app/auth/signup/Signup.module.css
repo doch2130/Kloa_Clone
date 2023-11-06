@@ -65,10 +65,30 @@
   font-size: 1rem;
 }
 
+.authNumberGroup {
+  position: relative;
+}
+
 .sendButton:hover {
   cursor: pointer;
   color: rgb(88 101 242);
 }
+
+.sendButtonUnActive:hover {
+  cursor: not-allowed;
+}
+
+.authNumberTimer {
+  margin: 0;
+  position: absolute;
+  bottom: -1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: red;
+  text-align: center;
+  width: 100%;
+}
+
 
 .authNumberButton {
   cursor: not-allowed;

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import CheckSvgComponent from '@/components/UI/CheckSvgComponent'
@@ -8,6 +8,9 @@ import styled from './Signup.module.css'
 export default function SignForm() {
   const [isCheck, setIsCheck] = useState<Boolean>(false);
   const [authNumberBtnStatus, setAuthNumberBtnStatus] = useState<boolean>(false);
+  const [authMailStatus, setAuthMailStatus] = useState<boolean>(false);
+  const [authMailTimerView, setAuthMailTimerView] = useState<number>(300);
+  const [authMailTimer, setAuthMailTimer] = useState<NodeJS.Timeout | undefined>(undefined);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const pwdInputRef = useRef<HTMLInputElement>(null);
   const pwdCheckInputRef = useRef<HTMLInputElement>(null);
@@ -47,10 +50,65 @@ export default function SignForm() {
 
     if(data.status === 200) {
       setAuthNumberBtnStatus(true);
-      alert('메일이 성공적으로 발송되었습니다.\r\n인증번호를 입력해주세요.');
+      alert('메일이 성공적으로 발송되었습니다.\r\n5분 이내에 인증번호를 입력해주세요.');
+      setAuthMailStatus(true);
+      mailAuthStartTimer();
       return ;
     }
     return ;
+  }
+
+  const emailAuthenticationCheck = async () => {
+    // e.stopPropagation();
+    if(!authNumberInputRef.current || !emailInputRef.current) {
+      alert('잠시 후 다시 시도해주세요.');
+      return ;
+    }
+
+    if(emailInputRef.current.value.trim() === '') {
+      alert('이메일을 입력해주세요');
+      return ;
+    }
+
+    if(authNumberInputRef.current.value.trim() === '') {
+      alert('인증번호를 입력해주세요');
+      return ;
+    }
+
+    try {
+      const response = await fetch('/api/auth/mail/check', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          email: emailInputRef.current.value,
+          number: authNumberInputRef.current.value
+        })
+      });
+      
+      if(response.ok) {
+        const res = await response.json();
+
+        if(res.status === 204) {
+          alert('인증번호가 일치하지 않습니다');
+          return ;
+        } else if(res.data[0].mailNumber === authNumberInputRef.current.value) {
+          alert('메일 인증이 완료되었습니다.');
+          setAuthNumberBtnStatus(false);
+          mailAuthStopTimer();
+          expireMailNumber();
+        } else {
+          alert('인증번호가 일치하지 않습니다');
+          return ;
+        }
+        return ;
+      }
+
+    } catch (err) {
+      alert('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
+      return ;
+    }
   }
 
   const onSubmit = async (e:any) => {
@@ -67,7 +125,6 @@ export default function SignForm() {
     }
     
     if(authNumberBtnStatus === false) {
-      // 인증번호 관리 후 추가 작업 필요
       alert('이메일 인증을 완료해주세요');
       return ;
     }
@@ -117,17 +174,86 @@ export default function SignForm() {
     return ;
   }
 
+  const mailAuthStartTimer = () => {
+    const timer = setInterval(() => {
+      setAuthMailTimerView((prev) => prev - 1);
+    }, 1000);
+    setAuthMailTimer(timer);
+
+    return () => {
+      clearInterval(timer);
+    };
+  };
+
+  const mailAuthStopTimer = () => {
+    if (authMailTimer) {
+      clearInterval(authMailTimer); // 타이머 중지
+      setAuthMailTimer(undefined); // 타이머 ID 초기화
+    }
+  };
+
+  const expireMailNumber = async () => {
+    if(!emailInputRef.current) {
+      alert('잠시 후 다시 시도해주세요');
+      return ;
+    }
+
+    try {
+      const response = await fetch(`/api/auth/mail`, {
+        method: 'DELETE',
+        body: JSON.stringify({
+          email: emailInputRef.current.value
+        })
+      });
+  
+      if(response.ok) {
+        const data = await response.json();
+        if(data.status === 200 || data.status === 404) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } catch (err) {
+      return false;
+    }
+  }
+
+  useEffect(() => {
+    if (authMailTimerView === 0) {
+      expireMailNumber();
+      setAuthMailTimerView(0);
+      mailAuthStopTimer();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authMailTimerView]);
+  
+  useEffect(() => {
+    return () => {
+      if (authMailTimer !== undefined) {
+        clearInterval(authMailTimer);
+        expireMailNumber();
+      }
+    }
+  }, [authMailTimer]);
+  
+
   return (
     <form className={styled.signForm} onSubmit={onSubmit}>
       <h1>모코코만큼 환영합니다.<br />회원가입을 진행해 볼까요?</h1>
       <div className={styled.signFormInputWrap}>
         <div className={styled.idGroup}>
-          <input type='text' placeholder='이메일 입력' name='id' ref={emailInputRef} />
-          <button type='button' onClick={emailAuthenticationSend} className={styled.sendButton}>전송</button>
+          <input type='text' placeholder='이메일 입력' name='id' ref={emailInputRef} disabled={authMailStatus} />
+          <button type='button' onClick={emailAuthenticationSend} className={authMailStatus ? styled.sendButtonUnActive : styled.sendButton} disabled={authMailStatus} >전송</button>
         </div>
         <div className={styled.authNumberGroup}>
           <input type='text' placeholder='인증번호 입력' name='authNumber' ref={authNumberInputRef} disabled={!authNumberBtnStatus ? true : false} />
-          <button type='button' disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? styled.authNumberButton : styled.authNumberButtonActive} >확인</button>
+          <button type='button' 
+          disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? styled.authNumberButton : styled.authNumberButtonActive}
+          onClick={() => emailAuthenticationCheck()} >확인</button>
+          {(authMailStatus && authNumberBtnStatus) && <p className={styled.authNumberTimer}>{authMailTimerView}초</p>}
         </div>
         <div className={styled.pwdGroup}>
           <input type='password' placeholder='영어, 숫자, 특수문자를 포함한 8자리 이상 비밀번호 입력' name='pwd' ref={pwdInputRef} />

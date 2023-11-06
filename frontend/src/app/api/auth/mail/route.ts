@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
     });
 
     const emailNumberSave = await emailAuthNumberSend(body.email, number);
+    // console.log('emailNumberSave ', emailNumberSave);
 
     if(emailNumberSave === false) {
       return new NextResponse(JSON.stringify({ message: '에러가 발생하였습니다. 메일 전송을 다시 시도해주세요.', status: 500})); 
@@ -46,22 +47,79 @@ export async function POST(req: NextRequest) {
 
 }
 
-async function emailAuthNumberSend(email: string, mailNumber:string):Promise<Boolean> {
-  return fetch('http://localhost:9999/mailNumber', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email: email,
-      mailNumber: mailNumber
-    }),
-  })
-    .then(res => {
-      return true;
-    })
-    .catch(err => {
-      console.log('err ', err);
-      return false;
-    });
+async function emailAuthNumberSend(email: string, mailNumber: string):Promise<boolean> {
+  try {
+    const response = await fetch(`http://localhost:9999/mailNumber?email=${email}`);
+    const data = await response.json();
+
+    if (data.length > 0) {
+      const existingDataId = data[0].id;
+      const putResponse = await fetch(`http://localhost:9999/mailNumber/${existingDataId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          mailNumber: mailNumber
+        }),
+      });
+
+      // console.log('putResponse.status ', putResponse.status);
+      if (putResponse.status === 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      const postResponse = await fetch('http://localhost:9999/mailNumber', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          mailNumber: mailNumber
+        }),
+      });
+
+      // console.log('postResponse.status ', postResponse.status);
+
+      if (postResponse.status === 201) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  } catch (err) {
+    console.log('err', err);
+    return false;
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  const body = await req.json();
+  try {
+    const response = await fetch(`http://localhost:9999/mailNumber?email=${body.email}`);
+    const data = await response.json();
+
+    if (data.length > 0) {
+      const existingDataId = data[0].id;
+      const deleteResponse = await fetch(`http://localhost:9999/mailNumber/${existingDataId}`, {
+        method: 'DELETE',
+      });
+
+      console.log('deleteResponse.status ', deleteResponse.status);
+      if (deleteResponse.status === 200) {
+        return new NextResponse(JSON.stringify({ success: true, status: 200 }));
+      } else {
+        return new NextResponse(JSON.stringify({ success: true, status: 404 }));
+      }
+    } else {
+      return new NextResponse(JSON.stringify({ success: true, status: 404 }));
+    }
+  } catch (err) {
+    console.log('err', err);
+    return new NextResponse(JSON.stringify({ success: false, status: 500 }));
+  }
 }
