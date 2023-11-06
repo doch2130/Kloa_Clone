@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
   // 메일 옵션 정하기
   const mailOptions = {
     // 송신할 이메일 
-    from: process.env.NEXT_PUBLIC_EMAIL,
+    from: process.env.GOOGLE_EMAIL,
     to: body.email, // 수신할 이메일
   };
 
@@ -109,7 +109,7 @@ export async function DELETE(req: NextRequest) {
         method: 'DELETE',
       });
 
-      console.log('deleteResponse.status ', deleteResponse.status);
+      // console.log('deleteResponse.status ', deleteResponse.status);
       if (deleteResponse.status === 200) {
         return new NextResponse(JSON.stringify({ success: true, status: 200 }));
       } else {
