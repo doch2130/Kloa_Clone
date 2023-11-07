@@ -1191,6 +1191,51 @@
       "viewCount": 0,
       "likeCount": 0,
       "id": 7
+    },
+    {
+      "category": "공지",
+      "title": "테스트 등록 공지1",
+      "textData": "<p>테스트 등록 공지1</p><p>테스트 등록 공지1</p><p>테스트 등록 공지1</p><p>테스트 등록 공지1</p><p>테스트 등록 공지1</p>",
+      "writeTime": "2023-11-07T18:04:58.886Z",
+      "viewCount": 0,
+      "likeCount": 0,
+      "id": 8
+    },
+    {
+      "category": "점검",
+      "title": "점검 글 테스트 입니다",
+      "textData": "<p>점검 글 테스트 입니다</p><p>점검 글 테스트 입니다</p><p><strong>점검 글 테스트 입니다</strong></p><p><strong>ㅎㅎㅎ</strong></p>",
+      "writeTime": "2023-11-07T18:05:34.735Z",
+      "viewCount": 0,
+      "likeCount": 0,
+      "id": 9
+    },
+    {
+      "category": "이벤트",
+      "title": "이벤트 ㄱㄱㄱㄱㄱ",
+      "textData": "<p>이벤트 참여 해주세요</p><p><br></p>",
+      "writeTime": "2023-11-07T18:05:48.008Z",
+      "viewCount": 0,
+      "likeCount": 0,
+      "id": 10
+    },
+    {
+      "category": "이벤트",
+      "title": "ㄱㄱㄱㄱㄱㄱㄱㄱㄱ",
+      "textData": "<p>이벤트 참여 해주세요</p><p><br></p>",
+      "writeTime": "2023-11-07T19:05:48.008Z",
+      "viewCount": 0,
+      "likeCount": 0,
+      "id": 11
+    },
+    {
+      "category": "공지",
+      "title": "공지글 이지롱",
+      "textData": "<p>공지글 이지롱</p>",
+      "writeTime": "2023-11-07T19:42:48.008Z",
+      "viewCount": 0,
+      "likeCount": 0,
+      "id": 12
     }
   ]
 }
