@@ -1,0 +1,273 @@
+.postBody {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  min-height: 600px;
+  width: 100%;
+}
+
+.postBodyWrap {
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  padding-bottom: 60px;
+  max-width: 1120px;
+  width: 100%;
+}
+
+.postBodyRow {
+  padding: 0 30px;
+}
+
+.postBodyTitle h2 {
+  color: rgb(53 57 69);
+}
+
+.postBodyRow hr {
+  --tw-gradient-from-position: ;
+  --tw-gradient-to-position: ;
+  --tw-gradient-to: #8045dd var(--tw-gradient-to-position);
+  --tw-gradient-from: #5865f2 var(--tw-gradient-from-position);
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
+  background-image: linear-gradient(to bottom,var(--tw-gradient-stops));
+  height: 2px;
+  margin: 0;
+}
+
+.postTableRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-bottom: 1px solid rgb(230 232 236);
+  height: 79px;
+  transition-duration: 0.75ms;
+}
+
+.postCategory {
+  color: rgb(53 57 69);
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  width: 60px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.postCategoryCheck {
+  color: rgb(88 101 242) !important;
+}
+
+.postCategoryEvent {
+  color: rgb(221 69 191) !important;
+}
+
+.postTitle {
+  margin-left: 10px;
+  color: rgb(53 57 69);
+  font-size: 20px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 688px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.postDate {
+  color: rgb(53 57 69);
+  font-size: 13px;
+  width: 80px;
+  height: 22px;
+}
+
+.postViewCount {
+ display: flex;
+ align-items: center;
+ color: rgb(53 57 69);
+ font-size: 13px;
+}
+
+.postViewCount span {
+  margin-left: 8px;
+}
+
+
+.postBodyText {
+  margin: 40px 30px;
+  min-height: 200px;
+}
+
+.postBodyText pre {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.postBodyText pre p {
+  margin-top: 0; 
+}
+
+.postLikeCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: rgb(125 131 149);
+  border: 1px solid rgb(230 232 236);
+  border-radius: 6px;
+  width: 80px;
+  height: 46px;
+  transition-duration: .15s;
+  cursor: pointer;
+}
+
+.postLikeCount span {
+  margin-left: 6px;
+}
+
+.postLikeCount:hover {
+  background-color: rgb(250 251 251);
+}
+
+.postBodyButtonGroup {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgb(230 232 236);
+  border-bottom: 1px solid rgb(230 232 236);
+  height: 48px;
+  margin-top: 30px;
+  /* margin-bottom: 65px; */
+  padding-top: 30px;
+  padding-bottom: 65px;
+}
+
+.postBodyButtonGroup a {
+  border: 1px solid rgb(230 232 236);
+  border-radius: .375rem;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrowButtonGroup {
+  display: flex;
+  align-items: center;
+}
+
+.arrowButtonGroup a:nth-child(2) {
+  margin-left: 10px;
+}
+
+
+
+
+
+
+/* 푸터 */
+.postBodyFooter {
+  padding: 0px;
+}
+
+.postBodyFooter .postTableRow {
+  height: 48px;
+}
+
+.postBodyFooter .postTableRow:hover {
+  background-color: rgb(250 251 251);
+}
+
+.postFooterTitle {
+  margin-left: 10px;
+  color: rgb(53 57 69);
+  font-size: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 688px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.postFooterTitle a {
+  text-decoration: none;
+  color: rgb(53 57 69);
+}
+
+.postTableCurrentActive .postFooterTitle a {
+  color: rgb(128 69 221);
+}
+
+.postFooterDate {
+  color: rgb(53 57 69);
+  font-size: 13px;
+  width: 80px;
+  height: 22px;
+}
+
+.postFooterViewCount {
+ display: flex;
+ align-items: center;
+ color: rgb(53 57 69);
+ font-size: 13px;
+}
+
+.postFooterViewCount span {
+  margin-left: 8px;
+}
+
+.postFooterLikeCount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: rgb(125 131 149);
+  border: 1px solid rgb(230 232 236);
+  border-radius: 6px;
+  width: 80px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.postFooterLikeCount span {
+  margin-left: 6px;
+}
+
+
+
+/* 관리자 */
+.postManager {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.postManager a,
+.postManager span {
+  border: 1px solid rgb(230 232 236);
+  border-radius: .375rem;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(53 57 69);
+  cursor: pointer;
+}
+
+.postManager a {
+  text-decoration: none;
+}
+
+.postManager span {
+  margin-left: 10px;
+}
