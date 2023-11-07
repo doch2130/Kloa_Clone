@@ -31,7 +31,7 @@
   border-bottom: 1px solid rgb(230 232 236);
   height: 48px;
   transition-duration: 0.75ms;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .noticeTableRow:hover {
@@ -68,6 +68,15 @@
   text-overflow: ellipsis;
   max-width: 688px;
   width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.noticeTitle a {
+  text-decoration: none;
+  color: rgb(53 57 69);
 }
 
 .noticeDate {
@@ -98,6 +107,7 @@
   border-radius: 6px;
   width: 80px;
   height: 22px;
+  cursor: pointer;
 }
 
 .notieLikeCount span {

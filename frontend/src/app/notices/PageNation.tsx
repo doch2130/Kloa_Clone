@@ -75,9 +75,12 @@ export default function PageNation({ postList }:props) {
           <div className={
             postList[i].category === '점검' ? `${styled.noticeCategory} ${styled.noticeCategoryCheck}` :
             postList[i].category === '이벤트' ? `${styled.noticeCategory} ${styled.noticeCategoryEvent}`
-            : `${styled.noticeCategory}`}>{postList[i].category}
+            : `${styled.noticeCategory}`}>
+              {postList[i].category}
           </div>
-          <div className={styled.noticeTitle}>{postList[i].title}</div>
+          <div className={styled.noticeTitle}>
+            <Link href={`/notices/detail/${postList[i].id}`}>{postList[i].title}</Link>
+          </div>
           <div className={styled.noticeDate}>{writeTimeFormat}</div>
           <div className={styled.noticeViewCount}>
             <Image src={EyeIcon} alt='eye icon' />

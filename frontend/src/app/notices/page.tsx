@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styeld from './Notices.module.css';
+import styled from './Notices.module.css';
 import PageNation from './PageNation';
 
 export default async function Notices() {
@@ -13,7 +13,7 @@ export default async function Notices() {
     }
   });
 
-  type postListType = {
+  type noticePostType = {
     category: string,
     title: string,
     textData: string,
@@ -22,16 +22,16 @@ export default async function Notices() {
     likeCount: number,
     id: string,
   }
-  const postList:postListType[] = await postListResp.json();
+  const postList:noticePostType[] = await postListResp.json();
 
   postList.sort((a, b) => Number(new Date(b.writeTime)) - Number(new Date(a.writeTime)));
 
   // console.log('postList ', postList);
 
   return (
-    <div className={styeld.noticeBody}>
-      <div className={styeld.noticeBodyWrap}>
-        <div className={styeld.noticeBodyRow + ' ' + styeld.noticeBodyTitle}>
+    <div className={styled.noticeBody}>
+      <div className={styled.noticeBodyWrap}>
+        <div className={styled.noticeBodyRow + ' ' + styled.noticeBodyTitle}>
           <h2>공지사항</h2>
         </div>
         <PageNation postList={postList} />
