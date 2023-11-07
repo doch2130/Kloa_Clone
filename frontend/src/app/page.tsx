@@ -51,7 +51,7 @@ export default async function Home() {
   mainNoticesList.sort((a, b) => Number(new Date(b.writeTime)) - Number(new Date(a.writeTime)));
   const mainNoticesTopList = mainNoticesList.slice(0, 5);
 
-  
+
   const adventureResp = await fetch('http://localhost:9999/adventureIsland',
   {
     cache: 'force-cache',
@@ -97,7 +97,7 @@ export default async function Home() {
               (
                 <div className={styled.noticeTableRow} key={index}>
                   <div className={`${styled.noticeTableCategory} ${categoryClassMap[el.category]}`}>{el.category}</div>
-                  <Link href={`/notices/notices/detail/${el.id}`} target="_blank">{el.title}</Link>
+                  <Link href={`/notices/detail/${el.id}`} target="_blank">{el.title}</Link>
                 </div>
               ))
             }
