@@ -1,9 +1,9 @@
 'use client'
 import React, { ChangeEvent, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation';
 import TextEditor from '@/components/TextEditor/TextEditor'
 
 import styled from './Write.module.css'
-import { useRouter } from 'next/navigation';
 
 
 export default function Write() {
