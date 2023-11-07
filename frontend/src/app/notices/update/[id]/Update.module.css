@@ -1,0 +1,66 @@
+.body {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1120px;
+  padding-top: 30px;
+}
+
+.form {
+  min-height: 500px;
+}
+
+.form label {
+  font-weight: 700;
+  font-size: 1.2rem;
+  width: 90px;
+}
+
+.category, .title {
+  display: flex;
+  align-items: center;
+}
+
+.category select {
+  height: 26px;
+  width: 80px;
+}
+
+.title {
+  margin: 0.5rem 0 1rem;
+}
+
+.title input {
+  height: 20px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.buttonGroup {
+  margin-top: 70px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttonGroup button {
+  color: rgb(88 101 242);
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 36px;
+  width: 70px;
+  border: 2px solid rgb(88 101 242);
+}
+
+.buttonGroup button:nth-child(1) {
+  margin-right: 12px;
+}
