@@ -54,11 +54,11 @@ export default async function Home() {
 
   const adventureResp = await fetch('http://localhost:9999/adventureIsland',
   {
-    cache: 'default',
-    headers: {
-      // 캐시 유효 시간을 1시간으로 설정
-      'Cache-Control': 'max-age=3600',
-    }
+    cache: 'no-store',
+    // headers: {
+    //   // 캐시 유효 시간을 1시간으로 설정
+    //   'Cache-Control': 'max-age=3600',
+    // }
   });
   const adventureIslandList = await adventureResp.json();
 
