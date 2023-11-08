@@ -14,8 +14,7 @@ type ScheduleItemListProps = {
   itemList: RewardItem[]
 }
 
-export default function ScheduleItemList(props:ScheduleItemListProps) {
-  const { islandName, itemList } = props;
+export default function AdventureIslandScheduleItem({ islandName, itemList }:ScheduleItemListProps) {
   const [ arrowIndex, setArrowIndex ] = useState(true);
 
   const itemListChange = () => {
