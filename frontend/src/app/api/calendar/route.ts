@@ -10,68 +10,72 @@ async function calendarAdventureFilter(data:any) {
   const sortedData:any = {};
 
   adventureIsland.forEach((item:any) => {
-    item.StartTimes.forEach((startTime:any) => {
-      const dateKey = startTime.substring(0, 10);
-      if (!sortedData[dateKey]) {
-        sortedData[dateKey] = [];
-      }
+    // 모험 섬 중 출현을 안하는 경우도 있음
+    if(item.StartTimes !== null) {
 
-      // 중복 데이터 여부 확인
-      const isDuplicate = sortedData[dateKey].some((dataItem: any) => dataItem.ContentsName === item.ContentsName);
+      item.StartTimes.forEach((startTime:any) => {
+        const dateKey = startTime.substring(0, 10);
+        if (!sortedData[dateKey]) {
+          sortedData[dateKey] = [];
+        }
 
-      if (!isDuplicate) {
-        let RewardItemType = '실링';
+        // 중복 데이터 여부 확인
+        const isDuplicate = sortedData[dateKey].some((dataItem: any) => dataItem.ContentsName === item.ContentsName);
+
+        if (!isDuplicate) {
+          let RewardItemType = '실링';
 
 
-        const sortedReward:any = [];
+          const sortedReward:any = [];
 
-        item.RewardItems.forEach((reward:any) => {
-          if (reward.StartTimes !== null) {
-            reward.StartTimes.forEach((time:any) => {
-              if(time.substring(0, 10) === dateKey) {
-                if (reward.Name === '골드') {
-                  RewardItemType = '골드';
-                } else if (reward.Name === '대양의 주화 상자') {
-                  RewardItemType = '주화';
-                } else if (reward.Name === '영혼의 잎사귀') {
-                  RewardItemType = '카드';
+          item.RewardItems.forEach((reward:any) => {
+            if (reward.StartTimes !== null) {
+              reward.StartTimes.forEach((time:any) => {
+                if(time.substring(0, 10) === dateKey) {
+                  if (reward.Name === '골드') {
+                    RewardItemType = '골드';
+                  } else if (reward.Name === '대양의 주화 상자') {
+                    RewardItemType = '주화';
+                  } else if (reward.Name === '영혼의 잎사귀') {
+                    RewardItemType = '카드';
+                  }
+
+                  // 보상 아이템 중복 데이터 여부 확인
+                  const isRewardDuplicate = sortedReward.some((dataItem: any) => dataItem.Name === reward.Name);
+                  if(!isRewardDuplicate) {
+                    sortedReward.push({
+                      Name: reward.Name,
+                      Icon: reward.Icon,
+                    });
+                  }
                 }
+              });
+            }
+          });
 
-                // 보상 아이템 중복 데이터 여부 확인
-                const isRewardDuplicate = sortedReward.some((dataItem: any) => dataItem.Name === reward.Name);
-                if(!isRewardDuplicate) {
-                  sortedReward.push({
-                    Name: reward.Name,
-                    Icon: reward.Icon,
-                  });
-                }
-              }
-            });
-          }
-        });
-
-        item.RewardItems.forEach((reward:any) => {
-          if (reward.StartTimes === null) {
-            sortedReward.push({
-              Name: reward.Name,
-              Icon: reward.Icon,
-            });
-          }
-        });
+          item.RewardItems.forEach((reward:any) => {
+            if (reward.StartTimes === null) {
+              sortedReward.push({
+                Name: reward.Name,
+                Icon: reward.Icon,
+              });
+            }
+          });
 
 
-        const filterStartTimes = item.StartTimes.filter((time:any) => dateKey === time.substring(0, 10));
+          const filterStartTimes = item.StartTimes.filter((time:any) => dateKey === time.substring(0, 10));
 
-        sortedData[dateKey].push({
-          ContentsName: item.ContentsName,
-          ContentsIcon: item.ContentsIcon,
-          RewardItemType: RewardItemType,
-          StartTimes: filterStartTimes,
-          RewardItems: sortedReward,
-        });
-      }
+          sortedData[dateKey].push({
+            ContentsName: item.ContentsName,
+            ContentsIcon: item.ContentsIcon,
+            RewardItemType: RewardItemType,
+            StartTimes: filterStartTimes,
+            RewardItems: sortedReward,
+          });
+        }
 
-    });
+      });
+    }
   });
 
   return sortedData;
@@ -113,7 +117,7 @@ export async function GET(request: NextRequest) {
     if (response.ok) {
       const data = await response.json();
       const adventureIsland = await calendarAdventureFilter(data);
-      updateCalendar(adventureIsland);
+      await updateCalendar(adventureIsland);
       return new Response(JSON.stringify(adventureIsland), {
         status: response.status,
         headers: {
