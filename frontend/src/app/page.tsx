@@ -21,7 +21,7 @@ type noticesTopListType = {
 export default async function Home() {
   const noticesResp = await fetch('http://localhost:9999/notices',
   { 
-    cache: 'force-cache',
+    cache: 'default',
     headers: {
       // 캐시 유효 시간을 1시간으로 설정
       'Cache-Control': 'max-age=3600',
@@ -32,7 +32,7 @@ export default async function Home() {
 
   const mainNoticesResp = await fetch('http://localhost:9999/mainNotices',
   {
-    cache: 'force-cache',
+    cache: 'default',
     headers: {
       // 캐시 유효 시간을 1시간으로 설정
       'Cache-Control': 'max-age=3600',
@@ -54,7 +54,7 @@ export default async function Home() {
 
   const adventureResp = await fetch('http://localhost:9999/adventureIsland',
   {
-    cache: 'force-cache',
+    cache: 'default',
     headers: {
       // 캐시 유효 시간을 1시간으로 설정
       'Cache-Control': 'max-age=3600',

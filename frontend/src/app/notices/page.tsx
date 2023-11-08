@@ -6,7 +6,7 @@ import PageNation from './PageNation';
 export default async function Notices() {
   const postListResp = await fetch('http://localhost:9999/mainNotices',
   {
-    cache: 'force-cache',
+    cache: 'default',
     headers: {
       // 캐시 유효 시간을 1시간으로 설정
       'Cache-Control': 'max-age=3600',
