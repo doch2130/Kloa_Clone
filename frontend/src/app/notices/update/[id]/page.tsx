@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import TextEditor from '@/components/TextEditor/TextEditor'
 
 import styled from './Update.module.css'
+import { useSession } from 'next-auth/react';
 
 export default function Update() {
   const router = useRouter();
@@ -12,11 +13,11 @@ export default function Update() {
   const [categoryData, setCategoryData] = useState('공지');
   const [textData, setTextData] = useState('');
   const titleRef = useRef<HTMLInputElement>(null);
-
   const [loadData, setLoadData] = useState({
     id: id,
     title: '',
   });
+  const { data: session } = useSession();
 
   useEffect(() => {
     fetch(`http://localhost:9999/mainNotices/${id}`)
@@ -35,6 +36,7 @@ export default function Update() {
           id: result.id,
           title: result.title,
         });
+        return ;
 
       })
       .catch(error => {
@@ -66,8 +68,6 @@ export default function Update() {
     }
 
     if(window.confirm('작성한 내용으로 수정하시겠습니까?')) {
-
-
       fetch('/api/notices/update', {
         method: 'PATCH',
         headers: {
@@ -95,7 +95,7 @@ export default function Update() {
         .catch(err => {
           alert('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.');
           return ;
-        })
+        });
     }
 
     return ;
@@ -111,9 +111,6 @@ export default function Update() {
   return (
     <div className={styled.body}>
       <div className={styled.wrap}>
-        <div className={styled.title}>
-          <h2>공지사항 글쓰기(수정)</h2>
-        </div>
         <form className={styled.form} onSubmit={onSubmit}>
           <div className={styled.category}>
             <label htmlFor='category'>카테고리</label>

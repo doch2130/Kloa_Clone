@@ -9,7 +9,6 @@
 .postBodyWrap {
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
   padding-bottom: 60px;
   max-width: 1120px;
   width: 100%;
@@ -17,10 +16,6 @@
 
 .postBodyRow {
   padding: 0 30px;
-}
-
-.postBodyTitle h2 {
-  color: rgb(53 57 69);
 }
 
 .postBodyRow hr {

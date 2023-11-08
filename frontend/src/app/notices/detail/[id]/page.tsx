@@ -13,6 +13,7 @@ import UpArrow from '@/assets/Icon/upArrow.svg'
 import DownArrow from '@/assets/Icon/downArrow.svg'
 
 import styled from './Detail.module.css'
+import { useSession } from 'next-auth/react';
 
 
 const initPostData:NoticePost = {
@@ -26,9 +27,6 @@ const initPostData:NoticePost = {
 }
 
 export default function Detail() {
-  // 매니저 계정 임시
-  const test1 = false;
-
   const router = useRouter();
   const params = useParams();
   const id = params.id;
@@ -36,13 +34,12 @@ export default function Detail() {
   const [postData, setPostData] = useState(initPostData);
   const [nextPostData, setNextPostData] = useState(initPostData);
   const [prevPostData, setPrevPostData] = useState(initPostData);
+
+  const { data: session } = useSession();
   
   useEffect(() => {
     fetch(`http://localhost:9999/mainNotices/${id}`, {
-      cache: 'force-cache',
-      headers: {
-        'Cache-Control': 'max-age=3600',
-      }
+      cache: 'default',
     })
       .then(res => res.json())
       .then(result => {
@@ -64,19 +61,21 @@ export default function Detail() {
           writeTime: writeTimeFormat,
           viewCount: result.viewCount,
           likeCount: result.likeCount
-        })
+        });
+        return ;
       })
       .catch(error => {
         alert('페이지 로딩 중 에러가 발생하였습니다.');
         router.push('/notices?page=1');
+        return ;
       });
 
       // 다음 페이지 정보 가져오기
       fetch(`http://localhost:9999/mainNotices/${Number(id)+1}`, {
-        cache: 'force-cache',
-        headers: {
-          'Cache-Control': 'max-age=3600',
-        }
+        cache: 'default',
+        // headers: {
+        //   'Cache-Control': 'max-age=3600',
+        // }
       })
       .then(res => res.json())
       .then(result => {
@@ -96,19 +95,21 @@ export default function Detail() {
           writeTime: writeTimeFormat,
           viewCount: result.viewCount,
           likeCount: result.likeCount
-        })
+        });
+        return ;
       })
       .catch(error => {
         alert('페이지 로딩 중 에러가 발생하였습니다.');
+        return ;
       });
 
 
       // 이전 페이지 정보 가져오기
       fetch(`http://localhost:9999/mainNotices/${Number(id)-1}`, {
-        cache: 'force-cache',
-        headers: {
-          'Cache-Control': 'max-age=3600',
-        }
+        cache: 'default',
+        // headers: {
+        //   'Cache-Control': 'max-age=3600',
+        // }
       })
       .then(res => res.json())
       .then(result => {
@@ -128,10 +129,12 @@ export default function Detail() {
           writeTime: writeTimeFormat,
           viewCount: result.viewCount,
           likeCount: result.likeCount
-        })
+        });
+        return ;
       })
       .catch(error => {
         alert('페이지 로딩 중 에러가 발생하였습니다.');
+        return ;
       });
 
   }, []);
@@ -206,9 +209,6 @@ export default function Detail() {
   return (
     <div className={styled.postBody}>
       <div className={styled.postBodyWrap}>
-        <div className={styled.postBodyRow + ' ' + styled.postBodyTitle}>
-          <h2>공지사항</h2>
-        </div>
         <div className={styled.postBodyRow}>
           <hr />
         </div>
@@ -253,7 +253,7 @@ export default function Detail() {
         </div>
 
         {/* 관리자 버튼 */}
-        {!test1 && 
+        {session?.user?.email === 'test1' && 
         <div className={styled.postBodyRow + ' ' + styled.postManager}>
           <Link href={`/notices/update/${id}`}>수정</Link>
           <span onClick={postDelete}>삭제</span>

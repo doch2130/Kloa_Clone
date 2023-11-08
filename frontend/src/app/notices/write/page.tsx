@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import TextEditor from '@/components/TextEditor/TextEditor'
 
 import styled from './Write.module.css'
+import { useSession } from 'next-auth/react';
 
 
 export default function Write() {
@@ -12,9 +13,12 @@ export default function Write() {
   const titleRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const categorySelectHandler = (e:ChangeEvent<HTMLSelectElement>) => {
+  const { data: session } = useSession();
+
+  const categorySelectHandler = (e:ChangeEvent<HTMLSelectElement>):void => {
     // console.log(e.target.value);
     setCategoryData(e.target.value);
+    return ;
   }
 
   const onSubmit = (e:React.FormEvent) => {
@@ -77,9 +81,9 @@ export default function Write() {
   return (
     <div className={styled.body}>
       <div className={styled.wrap}>
-        <div className={styled.title}>
+        {/* <div className={styled.title}>
           <h2>공지사항 글쓰기</h2>
-        </div>
+        </div> */}
         <form className={styled.form} onSubmit={onSubmit}>
           <div className={styled.category}>
             <label htmlFor='category'>카테고리</label>

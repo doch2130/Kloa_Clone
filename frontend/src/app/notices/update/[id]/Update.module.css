@@ -7,11 +7,12 @@
 .wrap {
   width: 100%;
   max-width: 1120px;
-  padding-top: 30px;
+  /* padding-top: 30px; */
 }
 
 .form {
   min-height: 500px;
+  padding: 0 30px;
 }
 
 .form label {

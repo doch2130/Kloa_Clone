@@ -18,11 +18,13 @@
   padding: 0 30px;
 }
 
-.noticeBodyTitle h2 {
+.noticeBodyTitle h2 a {
   color: rgb(53 57 69);
 }
 
-.noticeTable {}
+.noticeTable {
+  min-height: 490px;
+}
 
 .noticeTableRow {
   display: flex;
@@ -31,7 +33,6 @@
   border-bottom: 1px solid rgb(230 232 236);
   height: 48px;
   transition-duration: 0.75ms;
-  /* cursor: pointer; */
 }
 
 .noticeTableRow:hover {
