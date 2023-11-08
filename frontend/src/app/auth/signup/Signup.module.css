@@ -1,15 +1,3 @@
-.signWrap {
-  display: flex;
-  justify-content: space-between;
-  background-color: white;
-  min-height: 650px;
-}
-
-.signFormWrap {
-  width: 100%;
-  display: flex;
-}
-
 .signForm {
   width: 400px;
   margin: auto;
@@ -168,10 +156,4 @@
   font-size: .75rem;
   font-weight: 600;
   text-decoration: none;
-}
-
-@media (max-width: 1535px) {
-  .signupArt {
-    display: none;
-  }
 }

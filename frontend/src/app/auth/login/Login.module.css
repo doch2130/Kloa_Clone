@@ -1,17 +1,3 @@
-.loginWrap {
-  display: flex;
-  justify-content: space-between;
-  background-color: white;
-  min-height: 550px;
-  max-width: 1120px;
-  margin: auto;
-}
-
-.loginFormWrap {
-  width: 100%;
-  display: flex;
-}
-
 .loginForm {
   width: 400px;
   margin: auto;
@@ -110,14 +96,6 @@
 .lastGroup a:nth-child(2) {
   color: rgb(177 181 195);
 }
-
-
-@media (max-width: 1535px) {
-  .loginArt {
-    display: none;
-  }
-}
-
 
 /* Auth 로그인 버튼 */
 .naverLogin {

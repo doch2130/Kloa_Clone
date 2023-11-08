@@ -1,0 +1,19 @@
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  min-height: 550px;
+  max-width: 1120px;
+  margin: auto;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+}
+
+@media (max-width: 1535px) {
+  .authArt {
+    display: none;
+  }
+}
