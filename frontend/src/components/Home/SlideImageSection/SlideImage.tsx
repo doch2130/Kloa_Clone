@@ -2,13 +2,14 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import SlideImageData from '../../../data/SlideImageData'
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
+
+import SlideImageData from '../../../data/SlideImageData'
 
 export default function SlideImage() {
   // Swiper의 경우 create element 기능을 사용하기 때문에 use client를 설정해줘야 한다.

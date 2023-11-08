@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { signOut, useSession } from "next-auth/react";
 
 export default function HeaderLogin() {
-  const { data:session } = useSession();
+  const { data: session } = useSession();
   // console.log('session ', session);
 
   const logoutHandler = () => {
