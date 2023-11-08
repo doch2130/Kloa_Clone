@@ -81,25 +81,44 @@ async function calendarAdventureFilter(data:any) {
   return sortedData;
 }
 
-const updateCalendar = async (adventureIsland:any) => {
+
+const updateCalendar = async (filterAdventureIsland:any) => {
   try {
-    // const adventureIslandResult = 
+    const adventureIslandList = await fetch('http://localhost:9999/adventureIsland');
+    const updateData = await adventureIslandList.json();
+    // console.log('updateData ', updateData);
+    // console.log('filterAdventureIsland ', filterAdventureIsland);
+
+    updateData.forEach((el:any) => {
+      for (const date in filterAdventureIsland) {
+        if (filterAdventureIsland.hasOwnProperty(date)) {
+          el[date] = filterAdventureIsland[date];
+        }
+      }
+    });
+
+    // console.log('updateData ', updateData[0]);
+
+    // 임시로 데이터 삭제 후 삽입 방식 사용
+    await fetch('http://localhost:9999/adventureIsland/1', {
+      method: 'DELETE',
+    });
+
     await fetch('http://localhost:9999/adventureIsland', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(adventureIsland),
+      body: JSON.stringify(updateData[0]),
     });
+
     console.log('Success');
+    
   } catch (error) {
     console.error('Update error: ', error);
     // alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
   }
 }
-
-
-
 
 export async function GET(request: NextRequest) {
   const url = 'https://developer-lostark.game.onstove.com/gamecontents/calendar';
@@ -116,9 +135,9 @@ export async function GET(request: NextRequest) {
 
     if (response.ok) {
       const data = await response.json();
-      const adventureIsland = await calendarAdventureFilter(data);
-      await updateCalendar(adventureIsland);
-      return new Response(JSON.stringify(adventureIsland), {
+      const filterAdventureIsland = await calendarAdventureFilter(data);
+      await updateCalendar(filterAdventureIsland);
+      return new Response(JSON.stringify(filterAdventureIsland), {
         status: response.status,
         headers: {
           'Content-Type': 'application/json',
