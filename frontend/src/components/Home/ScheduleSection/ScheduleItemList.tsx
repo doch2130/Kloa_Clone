@@ -2,6 +2,8 @@
 import React, { useState } from 'react'
 import Image from 'next/image';
 
+import { RewardItem } from '@/type/adventureIsland'
+
 import LeftDoubleArrow from '@/assets/Icon/leftDoubleArrow.svg'
 import RightDoubleArrow from '@/assets/Icon/rightDoubleArrow.svg'
 import itemFilter from '@/data/AdventureIslandData'
@@ -9,12 +11,7 @@ import styled from './ScheduleItemList.module.css'
 
 type ScheduleItemListProps = {
   islandName: string;
-  itemList: rewardItem[]
-}
-
-type rewardItem = {
-  Name: string;
-  Icon: string;
+  itemList: RewardItem[]
 }
 
 export default function ScheduleItemList(props:ScheduleItemListProps) {
@@ -27,7 +24,7 @@ export default function ScheduleItemList(props:ScheduleItemListProps) {
 
   return (
     <>
-      {itemList.map((el: rewardItem, index: number) => {
+      {itemList.map((el: RewardItem, index: number) => {
         const itemSrc = itemFilter(el.Name, islandName);
         let iconText = el.Name;
         if(el.Name === '전설 ~ 고급 카드 팩 III') {

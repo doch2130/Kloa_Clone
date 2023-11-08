@@ -17,7 +17,7 @@ export default function Write() {
     setCategoryData(e.target.value);
   }
 
-  const onSubmit = (e:any) => {
+  const onSubmit = (e:React.FormEvent) => {
     e.stopPropagation();
 
     if(titleRef.current === null) {

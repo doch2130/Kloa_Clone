@@ -48,7 +48,7 @@ export default function Update() {
     setCategoryData(e.target.value);
   }
 
-  const onSubmit = (e:any) => {
+  const onSubmit = (e:React.FormEvent) => {
     e.stopPropagation();
     if(titleRef.current === null) {
       alert('잠시 후 다시 시도해주세요.');
@@ -82,7 +82,7 @@ export default function Update() {
       })
         .then(res => res.json())
         .then(res => {
-          console.log('res ', res);
+          // console.log('res ', res);
           if(res.status === 200) {
             alert('게시글을 수정하였습니다.');
             router.push(`/notices/detail/${id}`);

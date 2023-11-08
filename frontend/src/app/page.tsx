@@ -1,4 +1,8 @@
 import Link from 'next/link';
+
+import { NoticePost, NoticesTopFive } from '@/type/notice'
+import { OrganizeAdventureIslandList } from '@/type/adventureIsland'
+
 import SlideImage from '@/components/Home/SlideImageSection/SlideImage';
 import Schedule from '@/components/Home/ScheduleSection/Schedule';
 import styled from './Home.module.css';
@@ -10,13 +14,6 @@ const categoryClassMap: { [key: string]: string } = {
   '점검': styled.noticeTableCategoryCheck,
   '이벤트': styled.noticeTableCategoryEvent,
 };
-
-type noticesTopListType = {
-  Title: string,
-  Date: string,
-  Link: string,
-  Type: string,
-}
 
 export default async function Home() {
   const noticesResp = await fetch('http://localhost:9999/notices',
@@ -38,16 +35,8 @@ export default async function Home() {
       'Cache-Control': 'max-age=3600',
     }
   });
-  type mainNoticeType = {
-    category: string,
-    title: string,
-    textData: string,
-    writeTime: string,
-    viewCount: number,
-    likeCount: number,
-    id: string,
-  }
-  const mainNoticesList:mainNoticeType[] = await mainNoticesResp.json();
+ 
+  const mainNoticesList:NoticePost[] = await mainNoticesResp.json();
   mainNoticesList.sort((a, b) => Number(new Date(b.writeTime)) - Number(new Date(a.writeTime)));
   const mainNoticesTopList = mainNoticesList.slice(0, 5);
 
@@ -55,12 +44,10 @@ export default async function Home() {
   const adventureResp = await fetch('http://localhost:9999/adventureIsland',
   {
     cache: 'no-store',
-    // headers: {
-    //   // 캐시 유효 시간을 1시간으로 설정
-    //   'Cache-Control': 'max-age=3600',
-    // }
   });
-  const adventureIslandList = await adventureResp.json();
+  const adventureIslandList:OrganizeAdventureIslandList[] = await adventureResp.json();
+  delete adventureIslandList[0].id
+  // console.log('adventureIslandList ', adventureIslandList);
 
   return (
     <div className={styled.bodySection}>
@@ -77,7 +64,7 @@ export default async function Home() {
           </div>
           <div className={styled.noticeTable}>
             {
-              noticesTopList.map((el:noticesTopListType, index:number) => 
+              noticesTopList.map((el:NoticesTopFive, index:number) => 
               (
                 <div className={styled.noticeTableRow} key={index}>
                   <div className={`${styled.noticeTableCategory} ${categoryClassMap[el.Type]}`}>{el.Type}</div>
@@ -93,7 +80,7 @@ export default async function Home() {
           </div>
           <div className={styled.noticeTable}>
             {
-              mainNoticesTopList.map((el:mainNoticeType, index:number) => 
+              mainNoticesTopList.map((el:NoticePost, index:number) => 
               (
                 <div className={styled.noticeTableRow} key={index}>
                   <div className={`${styled.noticeTableCategory} ${categoryClassMap[el.category]}`}>{el.category}</div>

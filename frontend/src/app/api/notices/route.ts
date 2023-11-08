@@ -1,10 +1,6 @@
-// 현재 api 방식
-// src/app/api
-// api/hello/example.ts
-
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET() {
   const url = 'https://developer-lostark.game.onstove.com/news/notices';
 
   try {
@@ -19,23 +15,22 @@ export async function GET(request: Request) {
     
     if (response.ok) {
       const data = await response.json();
-      return new Response(JSON.stringify(data), {
+      return new NextResponse(JSON.stringify(data), {
         status: response.status,
         headers: {
           'Content-Type': 'application/json',
         },
       });
     } else {
-      return new Response('Error fetching data', { status: response.status });
+      return new NextResponse('Error fetching data', { status: response.status });
     }
   } catch (error) {
     console.error('Error:', error);
-    return new Response('An error occurred', { status: 500 });
+    return new NextResponse('An error occurred', { status: 500 });
   }
 }
 
-// export async function POST(req: Request) {
-export async function POST(req: NextRequest, res:NextResponse) {
+export async function POST(req: NextRequest) {
   const body = await req.json();
   // console.log(body);
 

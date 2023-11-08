@@ -1,6 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
+
+import { StringOrNumber } from '@/type/adventureIsland'
+import { AdventureIsland, OrganizeAdventureIslandList } from '@/type/adventureIsland'
+
 import ScheduleCalendar from './ScheduleCalendar';
 import ScheduleItemList from './ScheduleItemList';
 import styled from './Schedule.module.css'
@@ -15,32 +19,11 @@ import ChaosGateOff from '@/assets/Icon/chaosGate_off.png'
 import BattleArenaOff from '@/assets/Icon/battleArena_off.png'
 import DeathValley from '@/assets/Island/deathvalley.png'
 
-
-type chaosgateTimeType = string | number;
-type fieldbossTimeType = string | number;
-type battlearenaTimeType = string | number;
-type adventureTimeType = string | number;
-
 type ScheduleProps = {
-  adventureIslandList: any;
+  adventureIslandList: OrganizeAdventureIslandList;
 }
 
-
-type rewardItem = {
-  Name: string;
-  Icon: string;
-}
-
-type adventureType = {
-  ContentsIcon: string;
-  ContentsName: string;
-  RewardItemType: string;
-  RewardItems: rewardItem[]
-  StartTimes: string[];
-}
-
-export default function Schedule(props:ScheduleProps) {
-  const { adventureIslandList } = props;
+export default function Schedule({ adventureIslandList }:ScheduleProps) {
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -49,13 +32,11 @@ export default function Schedule(props:ScheduleProps) {
   const [chaosgateDate, setChaosgateDate] = useState(new Date());
   const [fieldbossDate, setFieldbossDate] = useState(new Date());
   const [battleArenaDate, setBattleArenaDate] = useState(new Date());
-  const [adventureDate, setAdventureDate] = useState(new Date());
-  const [chaosgateTime, setChaosgateTime] = useState<chaosgateTimeType>('00:00:00');
-  const [fieldbossTime, setFieldbossTime] = useState<fieldbossTimeType>('00:00:00');
-  const [battleArenaTime, setBattleArenaTime] = useState<battlearenaTimeType>('00:00:00');
-  const [adventureTime, setAdventureTime] = useState<adventureTimeType>('00:00:00');
-  
-  const [adventureList, setAdventureList] = useState<adventureType[]>([]);
+  const [chaosgateTime, setChaosgateTime] = useState<StringOrNumber>('00:00:00');
+  const [fieldbossTime, setFieldbossTime] = useState<StringOrNumber>('00:00:00');
+  const [battleArenaTime, setBattleArenaTime] = useState<StringOrNumber>('00:00:00');
+  const [adventureTime, setAdventureTime] = useState<StringOrNumber>('00:00:00');
+  const [adventureList, setAdventureList] = useState<AdventureIsland[]>([]);
 
   useEffect(() => {
     // console.log('adventureIslandList ', adventureIslandList);
@@ -63,11 +44,10 @@ export default function Schedule(props:ScheduleProps) {
     const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
     const day = currentDate.getDate().toString().padStart(2, '0');
     const dateFormat = `${year}-${month}-${day}`;
-    // setAdventureList(adventureIslandList[dateFormat]);
 
     // 주말 오전, 오후 섬 시간대 별 정리를 위한 sort 함수
     if(adventureIslandList[dateFormat]?.length >= 6) {
-      adventureIslandList[dateFormat].sort((a:any, b:any) => {
+      adventureIslandList[dateFormat].sort((a, b) => {
         const dateA = new Date(a.StartTimes[0]);
         const dateB = new Date(b.StartTimes[0]);
         return dateA.getTime() - dateB.getTime();
@@ -309,7 +289,7 @@ export default function Schedule(props:ScheduleProps) {
       <div className={styled.scheduleIsland}>
         <div className={styled.scheduleIslandRow}>
           {
-            adventureList?.map((el:adventureType, index:number) => {
+            adventureList?.map((el:AdventureIsland, index:number) => {
               let ScheduleIslandBoxStyle = `${styled.scheduleIslandBox}`;
               if(adventureList.length > 3) {
                 if (index < 3 && currentDate.getHours() < 13) {

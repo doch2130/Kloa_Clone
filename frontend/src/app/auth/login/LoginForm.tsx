@@ -10,16 +10,16 @@ import CheckSvgComponent from '@/components/UI/CheckSvgComponent'
 import styled from './Login.module.css'
 
 export default function LoginForm() {
+  const router = useRouter();
   const [isCheck, setIsCheck] = useState<Boolean>(false);
   const idInputRef = useRef<HTMLInputElement>(null);
   const pwdInputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
   const isCheckhandler = () => {
     setIsCheck(!isCheck);
   }
 
-  const onSubmit = (e:any) => {
+  const onSubmit = (e:React.FormEvent) => {
     e.stopPropagation();
 
     if(idInputRef.current === null || pwdInputRef.current === null) {

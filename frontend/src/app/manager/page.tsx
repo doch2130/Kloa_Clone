@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import { NoticesTopFive } from '@/type/notice'
 import styled from './Manager.module.css'
 
 export default function Manager() {
@@ -63,14 +64,7 @@ const getNoticeList = () => {
     });
 }
 
-type noticeData = {
-  Title: string,
-  Date: Date,
-  Link: string,
-  Type: string,
-}
-
-const updateNoticeList = async (data:noticeData[]) => {
+const updateNoticeList = async (data:NoticesTopFive[]) => {
   try {
     await fetch('http://localhost:9999/notices', {
       method: 'POST',

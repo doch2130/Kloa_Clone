@@ -2,7 +2,7 @@ import React from 'react'
 
 // 슬라이드 버튼으로 사용하려 했는데 Swiper 사용하게 되서 사용하지 않게 됨
 
-type value = {
+type SlideArrowSvgProps = {
   direction: 'left'|'right';
   width: number;
   height: number;
@@ -10,7 +10,7 @@ type value = {
   onClickHandler?: Function;
 }
 
-export default function SlideArrowSvg(props:value) {
+export default function SlideArrowSvg(props:SlideArrowSvgProps) {
   return (
     <>
       {

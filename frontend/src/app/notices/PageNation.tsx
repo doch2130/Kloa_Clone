@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
+import { NoticePost } from '@/type/notice'
+
 import EyeIcon from '@/assets/Icon/eye.svg'
 import MococoIcon from '@/assets/Icon/mococo.svg'
 import LeftArrow from '@/assets/Icon/leftArrow.svg'
@@ -10,9 +12,11 @@ import RightArrow from '@/assets/Icon/rightArrow.svg'
 import styled from './Notices.module.css';
 import Link from 'next/link';
 
-type props = any;
+type PageNationProps = {
+  postList: NoticePost[];
+};
 
-export default function PageNation({ postList }:props) {
+export default function PageNation({ postList }: PageNationProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pageValue = searchParams.get('page');

@@ -1,7 +1,8 @@
 import React from 'react'
 
-import styled from './Notices.module.css';
+import { NoticePost } from '@/type/notice'
 import PageNation from './PageNation';
+import styled from './Notices.module.css';
 
 export default async function Notices() {
   const postListResp = await fetch('http://localhost:9999/mainNotices',
@@ -13,16 +14,7 @@ export default async function Notices() {
     }
   });
 
-  type noticePostType = {
-    category: string,
-    title: string,
-    textData: string,
-    writeTime: string,
-    viewCount: number,
-    likeCount: number,
-    id: string,
-  }
-  const postList:noticePostType[] = await postListResp.json();
+  const postList:NoticePost[] = await postListResp.json();
 
   postList.sort((a, b) => Number(new Date(b.writeTime)) - Number(new Date(a.writeTime)));
 

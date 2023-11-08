@@ -6,6 +6,7 @@ import CheckSvgComponent from '@/components/UI/CheckSvgComponent'
 import styled from './Signup.module.css'
 
 export default function SignForm() {
+  const router = useRouter();
   const [isCheck, setIsCheck] = useState<Boolean>(false);
   const [authNumberBtnStatus, setAuthNumberBtnStatus] = useState<boolean>(false);
   const [authMailStatus, setAuthMailStatus] = useState<boolean>(false);
@@ -15,7 +16,6 @@ export default function SignForm() {
   const pwdInputRef = useRef<HTMLInputElement>(null);
   const pwdCheckInputRef = useRef<HTMLInputElement>(null);
   const authNumberInputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
   const isCheckhandler = () => {
     setIsCheck(!isCheck);
@@ -111,7 +111,7 @@ export default function SignForm() {
     }
   }
 
-  const onSubmit = async (e:any) => {
+  const onSubmit = async (e:React.FormEvent) => {
     e.stopPropagation();
 
     if(emailInputRef.current === null || authNumberInputRef.current === null || pwdInputRef.current === null || pwdCheckInputRef.current === null) {

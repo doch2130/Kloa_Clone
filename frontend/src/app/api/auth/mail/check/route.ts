@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { transporter } from "@/config/nodemailer";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  // transperter 활용해 이메일 전송
+
   try {
     const response = await fetch(`http://localhost:9999/mailNumber?email=${body.email}&mailNumber=${body.number}`, {
       method: 'GET',

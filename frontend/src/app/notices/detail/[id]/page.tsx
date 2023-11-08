@@ -4,6 +4,8 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
+import { NoticePost } from '@/type/notice'
+
 import EyeIcon from '@/assets/Icon/eye.svg'
 import MococoIcon from '@/assets/Icon/mococo.svg'
 import ListIcon from '@/assets/Icon/list.svg'
@@ -12,52 +14,29 @@ import DownArrow from '@/assets/Icon/downArrow.svg'
 
 import styled from './Detail.module.css'
 
-type noticePostType = {
-  id: string,
-  category: string,
-  title: string,
-  textData: string,
-  writeTime: string,
-  viewCount: number,
-  likeCount: number,
+
+const initPostData:NoticePost = {
+  id: '',
+  category: '',
+  title: '',
+  textData: '',
+  writeTime: '',
+  viewCount: 0,
+  likeCount: 0
 }
 
 export default function Detail() {
   // 매니저 계정 임시
   const test1 = false;
 
-  const [postData, setPostData] = useState({
-    id: '',
-    category: '',
-    title: '',
-    textData: '',
-    writeTime: '',
-    viewCount: 0,
-    likeCount: 0
-  });
-  const [nextPostData, setNextPostData] = useState({
-    id: '',
-    category: '',
-    title: '',
-    textData: '',
-    writeTime: '',
-    viewCount: 0,
-    likeCount: 0
-  });
-  const [prevPostData, setPrevPostData] = useState({
-    id: '',
-    category: '',
-    title: '',
-    textData: '',
-    writeTime: '',
-    viewCount: 0,
-    likeCount: 0
-  });
   const router = useRouter();
   const params = useParams();
   const id = params.id;
 
-
+  const [postData, setPostData] = useState(initPostData);
+  const [nextPostData, setNextPostData] = useState(initPostData);
+  const [prevPostData, setPrevPostData] = useState(initPostData);
+  
   useEffect(() => {
     fetch(`http://localhost:9999/mainNotices/${id}`, {
       cache: 'force-cache',

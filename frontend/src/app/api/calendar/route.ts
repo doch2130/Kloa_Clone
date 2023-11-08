@@ -1,36 +1,35 @@
-// 현재 api 방식
-// src/app/api
-// api/hello/example.ts
 
-import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { ContentsCalendar, OrganizeContentsCalendar, RewardItem, OrganizeRewardItem, OrganizeAdventureIslandList } from '@/type/contentsCalendar'
 
-async function calendarAdventureFilter(data:any) {
-  const adventureIsland = data.filter((el:any) => el.CategoryName === '모험 섬');
+async function calendarAdventureFilter(data:ContentsCalendar[]) {
+  const adventureIsland = data.filter((el:ContentsCalendar) => el.CategoryName === '모험 섬');
   
-  const sortedData:any = {};
+  const sortedData:OrganizeAdventureIslandList = {};
 
-  adventureIsland.forEach((item:any) => {
+  adventureIsland.forEach((item:ContentsCalendar) => {
+    // console.log('item ', item);
     // 모험 섬 중 출현을 안하는 경우도 있음
     if(item.StartTimes !== null) {
 
-      item.StartTimes.forEach((startTime:any) => {
+      item.StartTimes.forEach((startTime:string) => {
         const dateKey = startTime.substring(0, 10);
         if (!sortedData[dateKey]) {
           sortedData[dateKey] = [];
         }
 
         // 중복 데이터 여부 확인
-        const isDuplicate = sortedData[dateKey].some((dataItem: any) => dataItem.ContentsName === item.ContentsName);
+        const isDuplicate = sortedData[dateKey].some((dataItem:OrganizeContentsCalendar) => dataItem.ContentsName === item.ContentsName);
 
         if (!isDuplicate) {
           let RewardItemType = '실링';
 
 
-          const sortedReward:any = [];
+          const sortedReward:OrganizeRewardItem[] = [];
 
-          item.RewardItems.forEach((reward:any) => {
+          item.RewardItems.forEach((reward:RewardItem) => {
             if (reward.StartTimes !== null) {
-              reward.StartTimes.forEach((time:any) => {
+              reward.StartTimes.forEach((time:string) => {
                 if(time.substring(0, 10) === dateKey) {
                   if (reward.Name === '골드') {
                     RewardItemType = '골드';
@@ -41,7 +40,7 @@ async function calendarAdventureFilter(data:any) {
                   }
 
                   // 보상 아이템 중복 데이터 여부 확인
-                  const isRewardDuplicate = sortedReward.some((dataItem: any) => dataItem.Name === reward.Name);
+                  const isRewardDuplicate = sortedReward.some((dataItem: OrganizeRewardItem) => dataItem.Name === reward.Name);
                   if(!isRewardDuplicate) {
                     sortedReward.push({
                       Name: reward.Name,
@@ -53,7 +52,7 @@ async function calendarAdventureFilter(data:any) {
             }
           });
 
-          item.RewardItems.forEach((reward:any) => {
+          item.RewardItems.forEach((reward:RewardItem) => {
             if (reward.StartTimes === null) {
               sortedReward.push({
                 Name: reward.Name,
@@ -63,15 +62,18 @@ async function calendarAdventureFilter(data:any) {
           });
 
 
-          const filterStartTimes = item.StartTimes.filter((time:any) => dateKey === time.substring(0, 10));
+          if(item.StartTimes !== null) {
+            const filterStartTimes = item.StartTimes.filter((time:string) => dateKey === time.substring(0, 10));
 
-          sortedData[dateKey].push({
-            ContentsName: item.ContentsName,
-            ContentsIcon: item.ContentsIcon,
-            RewardItemType: RewardItemType,
-            StartTimes: filterStartTimes,
-            RewardItems: sortedReward,
-          });
+            sortedData[dateKey].push({
+              ContentsName: item.ContentsName,
+              ContentsIcon: item.ContentsIcon,
+              RewardItemType: RewardItemType,
+              StartTimes: filterStartTimes,
+              RewardItems: sortedReward,
+            });
+          }
+
         }
 
       });
@@ -82,14 +84,14 @@ async function calendarAdventureFilter(data:any) {
 }
 
 
-const updateCalendar = async (filterAdventureIsland:any) => {
+const updateCalendar = async (filterAdventureIsland:OrganizeAdventureIslandList) => {
   try {
     const adventureIslandList = await fetch('http://localhost:9999/adventureIsland');
     const updateData = await adventureIslandList.json();
     // console.log('updateData ', updateData);
     // console.log('filterAdventureIsland ', filterAdventureIsland);
 
-    updateData.forEach((el:any) => {
+    updateData.forEach((el:OrganizeAdventureIslandList) => {
       for (const date in filterAdventureIsland) {
         if (filterAdventureIsland.hasOwnProperty(date)) {
           el[date] = filterAdventureIsland[date];
@@ -120,7 +122,7 @@ const updateCalendar = async (filterAdventureIsland:any) => {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const url = 'https://developer-lostark.game.onstove.com/gamecontents/calendar';
 
   try {
@@ -137,17 +139,17 @@ export async function GET(request: NextRequest) {
       const data = await response.json();
       const filterAdventureIsland = await calendarAdventureFilter(data);
       await updateCalendar(filterAdventureIsland);
-      return new Response(JSON.stringify(filterAdventureIsland), {
+      return new NextResponse(JSON.stringify(filterAdventureIsland), {
         status: response.status,
         headers: {
           'Content-Type': 'application/json',
         },
       });
     } else {
-      return new Response('Error fetching data', { status: response.status });
+      return new NextResponse('Error fetching data', { status: response.status });
     }
   } catch (error) {
     console.error('Error:', error);
-    return new Response('An error occurred', { status: 500 });
+    return new NextResponse('An error occurred', { status: 500 });
   }
 }

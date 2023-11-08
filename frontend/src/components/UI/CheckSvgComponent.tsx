@@ -1,13 +1,12 @@
 'use client'
 import React from 'react'
 
-type props = {
+type CheckSvgComponentProps = {
   isCheck: Boolean;
   isCheckhandler: Function;
 }
 
-export default function CheckSvgComponent(props:props) {
-  const { isCheck, isCheckhandler } = props;
+export default function CheckSvgComponent({ isCheck, isCheckhandler }:CheckSvgComponentProps) {
   return (
     <>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" type="checkbox"
