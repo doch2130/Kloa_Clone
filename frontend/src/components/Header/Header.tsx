@@ -21,7 +21,7 @@ export default function Header() {
         </div>
         <div className='nav-center'>
           <div className='nav-list'>
-            <Link href='/notices' className='drop-in-underline duration-300'>공지사항</Link>
+            <Link href='/notices?page=1' className='drop-in-underline duration-300'>공지사항</Link>
             <Link href='/characters' className='drop-in-underline duration-300'>전투정보실</Link>
             <Link href='/merchant' className='drop-in-underline duration-300'>떠돌이 상인</Link>
             <Link href='/sell' className='drop-in-underline duration-300'>아이템 거래</Link>
