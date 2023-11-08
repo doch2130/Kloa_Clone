@@ -157,6 +157,27 @@ export default function Detail() {
 
   }, []);
 
+  // 조회수 증가 함수
+  useEffect(() => {
+    fetch('/api/notices', {
+      method: 'PATCH',
+      body: JSON.stringify({
+        id: id
+      })
+    })
+      .then((res) => res.json())
+      .then(res => {
+        // console.log('res ', res);
+        if(res.status === 200) {
+          setPostData((prev) => ({
+            ...prev,
+            viewCount: Number(res.viewCount),
+          })
+          )
+        }
+      })
+  }, []);
+
 
   const postDelete = async () => {
     try {
