@@ -16,7 +16,7 @@ const categoryClassMap: { [key: string]: string } = {
 };
 
 export default async function Home() {
-  const noticesResp = await fetch('http://localhost:9999/notices',
+  const noticesResp = await fetch(`http://localhost:9999/notices`,
   { 
     cache: 'default',
     headers: {
@@ -24,16 +24,15 @@ export default async function Home() {
       'Cache-Control': 'max-age=3600',
     }
   });
+
   const noticesList = await noticesResp.json();
   const noticesTopList = noticesList[0];
+  // console.log('noticesTopList ', noticesTopList);
 
   const mainNoticesResp = await fetch('http://localhost:9999/mainNotices',
+  // const mainNoticesResp = await fetch(`${process.env.NEXT_PUBLIC_FIREBASE}/mainNotices.json`,
   {
-    cache: 'default',
-    headers: {
-      // 캐시 유효 시간을 1시간으로 설정
-      'Cache-Control': 'max-age=3600',
-    }
+    cache: 'no-store',
   });
  
   const mainNoticesList:NoticePost[] = await mainNoticesResp.json();
@@ -41,7 +40,8 @@ export default async function Home() {
   const mainNoticesTopList = mainNoticesList.slice(0, 5);
 
 
-  const adventureResp = await fetch('http://localhost:9999/adventureIsland',
+  // const adventureResp = await fetch('http://localhost:9999/adventureIsland',
+  const adventureResp = await fetch(`${process.env.NEXT_PUBLIC_FIREBASE}/adventureIsland.json`,
   {
     cache: 'no-store',
   });
