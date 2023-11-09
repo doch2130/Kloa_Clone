@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
 import { NoticePost } from '@/type/notice'
+import { recomendEventHandler } from '../../noticesUtils';
 
 import EyeIcon from '@/assets/Icon/eye.svg'
 import MococoIcon from '@/assets/Icon/mococo.svg'
@@ -13,7 +15,6 @@ import UpArrow from '@/assets/Icon/upArrow.svg'
 import DownArrow from '@/assets/Icon/downArrow.svg'
 
 import styled from './Detail.module.css'
-import { useSession } from 'next-auth/react';
 
 
 const initPostData:NoticePost = {
@@ -233,7 +234,7 @@ export default function Detail() {
           </pre>
         </div>
         <div className={styled.postBodyRow}>
-          <div className={styled.postRecomendCount}>
+          <div className={styled.postRecomendCount} onClick={() => recomendEventHandler(postData.id, session, postData, setPostData)}>
             <Image src={MococoIcon} alt='mococo icon' />
             <span>{postData.recomendCount}</span>
           </div>

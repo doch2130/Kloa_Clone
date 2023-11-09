@@ -1,11 +1,12 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image';
 import Link from 'next/link'
 import { useSession } from 'next-auth/react';
 
 import { NoticePost } from '@/type/notice'
+import { recomendEventHandler } from './noticesUtils';
 
 import EyeIcon from '@/assets/Icon/eye.svg'
 import MococoIcon from '@/assets/Icon/mococo.svg'
@@ -26,8 +27,8 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
   const postPerPage = 10;
   const btnTotalCount = Math.ceil(totalCount / postPerPage);
 
+  const [postData, setPostData] = useState(postList);
   const { data: session } = useSession();
-  // console.log('session ', session);
 
   const prevPageChangeHandler = ():void => {
     if (currentPage <= 1) {
@@ -88,7 +89,7 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
             <Image src={EyeIcon} alt='eye icon' />
             <span>{postList[i].viewCount}</span>
           </div>
-          <div className={styled.notieRecomendCount}>
+          <div className={styled.notieRecomendCount} onClick={() => recomendEventHandler(postList[i].id, session, postData, setPostData)}>
             <Image src={MococoIcon} alt='mococo icon' />
             <span>{postList[i].recomendCount}</span>
           </div>

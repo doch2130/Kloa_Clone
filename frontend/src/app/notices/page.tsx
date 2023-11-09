@@ -5,7 +5,7 @@ import NoticesTable from './NoticesTable';
 export default async function Notices(props:any) {
   const postListResp = await fetch('http://localhost:9999/mainNotices',
   {
-    cache: 'default',
+    cache: 'no-store',
     // headers: {
     //   // 캐시 유효 시간을 1시간으로 설정
     //   'Cache-Control': 'max-age=3600',
