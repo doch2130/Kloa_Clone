@@ -33,6 +33,13 @@ Notices, Auth 페이지의 파일 구성을 layout, page 방식으로 변경 작
 
 17일차: 공지사항 페이지 좋아요에서 추천으로 변경 및 기능 작업 완료, 기존 로그인 방식 변경(DB 통신 후 NextAuth 작업에서 바로 NextAuth 작업하면서 DB 통신 동시 진행)
 로그인 유지 기능을 위한, JWT 기능 체크
+배포 준비를 위한 FireBase 테스트 - 테스트 결과 섬 데이터는 FireBase를 사용하는게 맞는것 같지만, 다른 데이터는 DB를 사용하는게 베스트로 판단
+=> prisma + mysql로 백엔드 임시 구성해서 사용하는 방식으로 진행
+=> 섬 데이터는 FireBase OR 파일로 관리 예정
+=> Next.js에 Prisma 연동 작업 진행, bcrypt 추가 작업(패스워드 암호화)
+=> 백엔드, 프론트를 나눠서 하려고 하였는데, Next에서 prisma import 에러가 계속 발생하는 현상이 확인되어, backend 폴더를 삭제하고, 프론트에서 Next + prisma를 같이 사용하는 방식으로 설정
+=> Next + prisma + mysql 셋팅 정상 확인
+=> 변경 이후 회원가입 작동 정상 확인 (prisma, mysql 데이터 정상 확인)
 
 
 *해결사항*
