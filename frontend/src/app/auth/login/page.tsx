@@ -37,7 +37,7 @@ export default function Login() {
     try {
       const response = await signIn('credentials', {
         email: idInputRef.current?.value,
-        pwd: pwdInputRef.current?.value,
+        password: pwdInputRef.current?.value,
         redirect: false,
       });
       // console.log('response ', response);
@@ -67,7 +67,7 @@ export default function Login() {
           <input type='text' placeholder='이메일' name='id' ref={idInputRef} />
         </div>
         <div>
-          <input type='password' placeholder='비밀번호' name='pwd' ref={pwdInputRef} />
+          <input type='password' placeholder='비밀번호' name='password' ref={pwdInputRef} />
         </div>
       </div>
       <button type='button' onClick={() => signIn('naver')} className={styled.naverLogin}>NAVER 로그인</button>
