@@ -39,7 +39,12 @@ Notices, Auth 페이지의 파일 구성을 layout, page 방식으로 변경 작
 => Next.js에 Prisma 연동 작업 진행, bcrypt 추가 작업(패스워드 암호화)
 => 백엔드, 프론트를 나눠서 하려고 하였는데, Next에서 prisma import 에러가 계속 발생하는 현상이 확인되어, backend 폴더를 삭제하고, 프론트에서 Next + prisma를 같이 사용하는 방식으로 설정
 => Next + prisma + mysql 셋팅 정상 확인
-=> 변경 이후 회원가입 작동 정상 확인 (prisma, mysql 데이터 정상 확인)
+=> 회원가입 작동 정상 확인 (prisma, mysql 데이터 정상 확인)
+=> 메일 인증 기능 Prisma로 변경 완료
+=> 로그인 테스트 정상 확인
+
+=> JWT 기능 작업 부터 시작
+https://mycodings.fly.dev/blog/2023-06-03-nextauth-nextjs-tutorial-protected-route-and-jwt-token
 
 
 *해결사항*

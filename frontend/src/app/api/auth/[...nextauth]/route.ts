@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import NaverProvider from "next-auth/providers/naver"
 import CredentialsProvider from "next-auth/providers/credentials"
 import prisma from '@/app/lib/prisma'
+import * as bcrypt from 'bcrypt'
 
 const handler = NextAuth({
   providers: [
@@ -18,13 +19,13 @@ const handler = NextAuth({
 
         const findUser = await prisma.user.findFirst({
           where: {
-            email: body?.email,
-            password: body?.password
+            email: body?.email
           }
         });
 
+        // 아이디만 찾아오고 비밀번호는 여기서 검증
         // id는 string으로 해야 authorize 함수 에러가 안남
-        if(findUser) {
+        if (findUser && (await bcrypt.compare(body?.password, findUser.password))) {
           const user = { id: String(findUser.id), email: findUser.email };
           return user;
         } else {
