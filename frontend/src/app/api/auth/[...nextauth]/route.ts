@@ -10,22 +10,22 @@ const handler = NextAuth({
     }),
 
     CredentialsProvider({
-      credentials: {
-        email: { label: "email", type: "text" },
-      },
+      credentials: {}, // 빈 객체로 설정
       async authorize(credentials, req) {
-        // console.log('req ', req);
         const body = req.body;
+        // console.log('body ', body);
 
-        const user = { id: '1', email: body?.email };
-        
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
+        const response = await fetch(`http://localhost:9999/users?id=${body?.email}&pwd=${body?.pwd}`, {
+          method: 'GET',
+        });
+        const result = await response.json();
+        // console.log('result ', result);
+
+        if (result.length > 0) {
+          const user = { id: result.no, email: result.email };
           return user;
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
           return null;
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       }
     })
