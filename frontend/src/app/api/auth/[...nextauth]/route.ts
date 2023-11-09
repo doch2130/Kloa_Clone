@@ -20,9 +20,11 @@ const handler = NextAuth({
         });
         const result = await response.json();
         // console.log('result ', result);
+        // console.log('result.length ', result.length);
+        const user = { id: result[0].no, email: result[0].id };
+        // console.log('user ', user);
 
         if (result.length > 0) {
-          const user = { id: result.no, email: result.email };
           return user;
         } else {
           return null;
