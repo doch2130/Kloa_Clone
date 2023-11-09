@@ -5,7 +5,7 @@ export interface NoticePost {
   textData: string,
   writeTime: string,
   viewCount: number,
-  likeCount: number,
+  recomendCount: number,
 }
 
 export type NoticesTopFive = {

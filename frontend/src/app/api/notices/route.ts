@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         textData: body.textData,
         writeTime: date,
         viewCount: 0,
-        likeCount: 0,
+        recomendCount: 0,
       })
     });
 

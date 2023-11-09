@@ -88,9 +88,9 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
             <Image src={EyeIcon} alt='eye icon' />
             <span>{postList[i].viewCount}</span>
           </div>
-          <div className={styled.notieLikeCount}>
+          <div className={styled.notieRecomendCount}>
             <Image src={MococoIcon} alt='mococo icon' />
-            <span>{postList[i].likeCount}</span>
+            <span>{postList[i].recomendCount}</span>
           </div>
         </div>
       )

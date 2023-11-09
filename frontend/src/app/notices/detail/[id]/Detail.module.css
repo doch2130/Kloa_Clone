@@ -107,7 +107,7 @@
   margin-top: 0; 
 }
 
-.postLikeCount {
+.postRecomendCount {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,11 +121,11 @@
   cursor: pointer;
 }
 
-.postLikeCount span {
+.postRecomendCount span {
   margin-left: 6px;
 }
 
-.postLikeCount:hover {
+.postRecomendCount:hover {
   background-color: rgb(250 251 251);
 }
 
@@ -220,7 +220,7 @@
   margin-left: 8px;
 }
 
-.postFooterLikeCount {
+.postFooterRecomendCount {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +233,7 @@
   cursor: pointer;
 }
 
-.postFooterLikeCount span {
+.postFooterRecomendCount span {
   margin-left: 6px;
 }
 

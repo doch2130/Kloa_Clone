@@ -23,7 +23,7 @@ const initPostData:NoticePost = {
   textData: '',
   writeTime: '',
   viewCount: 0,
-  likeCount: 0
+  recomendCount: 0
 }
 
 export default function Detail() {
@@ -60,7 +60,7 @@ export default function Detail() {
           textData: result.textData,
           writeTime: writeTimeFormat,
           viewCount: result.viewCount,
-          likeCount: result.likeCount
+          recomendCount: result.recomendCount
         });
         return ;
       })
@@ -94,7 +94,7 @@ export default function Detail() {
           textData: result.textData,
           writeTime: writeTimeFormat,
           viewCount: result.viewCount,
-          likeCount: result.likeCount
+          recomendCount: result.recomendCount
         });
         return ;
       })
@@ -128,7 +128,7 @@ export default function Detail() {
           textData: result.textData,
           writeTime: writeTimeFormat,
           viewCount: result.viewCount,
-          likeCount: result.likeCount
+          recomendCount: result.recomendCount
         });
         return ;
       })
@@ -233,9 +233,9 @@ export default function Detail() {
           </pre>
         </div>
         <div className={styled.postBodyRow}>
-          <div className={styled.postLikeCount}>
+          <div className={styled.postRecomendCount}>
             <Image src={MococoIcon} alt='mococo icon' />
-            <span>{postData.likeCount}</span>
+            <span>{postData.recomendCount}</span>
           </div>
         </div>
         <div className={styled.postBodyRow + ' ' + styled.postBodyButtonGroup}>
@@ -279,9 +279,9 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span>{nextPostData.viewCount}</span>
             </div>
-            <div className={styled.postFooterLikeCount}>
+            <div className={styled.postFooterRecomendCount}>
               <Image src={MococoIcon} alt='mococo icon' />
-              <span>{nextPostData.likeCount}</span>
+              <span>{nextPostData.recomendCount}</span>
             </div>
           </div>
           }
@@ -302,9 +302,9 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span>{postData.viewCount}</span>
             </div>
-            <div className={styled.postFooterLikeCount}>
+            <div className={styled.postFooterRecomendCount}>
               <Image src={MococoIcon} alt='mococo icon' />
-              <span>{postData.likeCount}</span>
+              <span>{postData.recomendCount}</span>
             </div>
           </div>
 
@@ -325,9 +325,9 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span>{prevPostData.viewCount}</span>
             </div>
-            <div className={styled.postFooterLikeCount}>
+            <div className={styled.postFooterRecomendCount}>
               <Image src={MococoIcon} alt='mococo icon' />
-              <span>{prevPostData.likeCount}</span>
+              <span>{prevPostData.recomendCount}</span>
             </div>
           </div>
           }

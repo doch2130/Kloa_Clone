@@ -98,7 +98,7 @@
   margin-left: 8px;
 }
 
-.notieLikeCount {
+.notieRecomendCount {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -111,7 +111,7 @@
   cursor: pointer;
 }
 
-.notieLikeCount span {
+.notieRecomendCount span {
   margin-left: 6px;
 }
 
