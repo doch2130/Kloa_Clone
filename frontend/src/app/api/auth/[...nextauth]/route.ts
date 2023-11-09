@@ -1,6 +1,7 @@
-import NextAuth from "next-auth";
-import NaverProvider from "next-auth/providers/naver";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from "next-auth"
+import NaverProvider from "next-auth/providers/naver"
+import CredentialsProvider from "next-auth/providers/credentials"
+import prisma from '@/app/lib/prisma'
 
 const handler = NextAuth({
   providers: [
@@ -15,16 +16,16 @@ const handler = NextAuth({
         const body = req.body;
         // console.log('body ', body);
 
-        const response = await fetch(`http://localhost:9999/users?id=${body?.email}&pwd=${body?.pwd}`, {
-          method: 'GET',
+        const findUser = await prisma.user.findFirst({
+          where: {
+            email: body?.email,
+            password: body?.password
+          }
         });
-        const result = await response.json();
-        // console.log('result ', result);
-        // console.log('result.length ', result.length);
-        const user = { id: result[0].no, email: result[0].id };
-        // console.log('user ', user);
 
-        if (result.length > 0) {
+        // id는 string으로 해야 authorize 함수 에러가 안남
+        if(findUser) {
+          const user = { id: String(findUser.id), email: findUser.email };
           return user;
         } else {
           return null;
