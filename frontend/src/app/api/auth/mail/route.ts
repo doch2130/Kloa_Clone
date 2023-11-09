@@ -1,8 +1,86 @@
-import { NextRequest, NextResponse } from "next/server";
-import { transporter } from "@/config/nodemailer";
+import { NextRequest, NextResponse } from "next/server"
+import { transporter } from "@/config/nodemailer"
+import prisma from '@/app/lib/prisma'
+
+// 이메일 가입 여부 체크 (중복 검사)
+async function emailDuplicateCheck(email:string):Promise<boolean> {
+  // 중복 값 응답 코드 관련 참고 사이트
+  // https://deveric.tistory.com/62
+  try {
+    const existingDataUser = await prisma.user.findFirst({
+      where: {
+        email: email
+      }
+    });
+
+    // console.log('existingDataUser ', existingDataUser);
+
+    if(existingDataUser) {
+      return true;
+    } else {
+      return false;
+    }
+    
+  } catch (error) {
+    return false;
+  }
+}
+
+
+// 메일 인증번호 업데이트
+async function emailAuthNumberSend(email: string, mailNumber: string):Promise<boolean> {
+  try {
+    const existingDataMailUser = await prisma.mailnumber.findFirst({
+      where: {
+        email: email
+      }
+    });
+
+    if(existingDataMailUser) {
+      const userMailNumberUpdate = await prisma.mailnumber.update({
+        data: {
+          mailAuthNumber: mailNumber
+        },
+        where: {
+          email: email
+        }
+      });
+      // console.log('userMailNumberUpdate ',userMailNumberUpdate);
+      if(userMailNumberUpdate) {
+        return true;
+      } else {
+        return false;
+      }
+
+    } else {
+      const userMailNumberCreate = await prisma.mailnumber.create({
+        data: {
+          email: email,
+          mailAuthNumber: mailNumber
+        }
+      });
+      // console.log('userMailNumberCreate ',userMailNumberCreate);
+      if(userMailNumberCreate) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  } catch (err) {
+    console.log('err', err);
+    return false;
+  }
+}
+
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
+
+  const emailDuplicate = await emailDuplicateCheck(body.email);
+
+  if(emailDuplicate) {
+    return new NextResponse(JSON.stringify({ success: false, status: 409 }));
+  }
 
   // 메일 제목 형식에 활용할 fixTime 객체 선언 : 전송 시간 기록
   const fixTime = new Date().toLocaleTimeString("en-US", {
@@ -44,79 +122,27 @@ export async function POST(req: NextRequest) {
     console.log(err);
     return new NextResponse(JSON.stringify({ message: '메일 전송에 실패함', status: 500}));
   }
-
-}
-
-async function emailAuthNumberSend(email: string, mailNumber: string):Promise<boolean> {
-  try {
-    const response = await fetch(`http://localhost:9999/mailNumber?email=${email}`);
-    const data = await response.json();
-
-    if (data.length > 0) {
-      const existingDataId = data[0].id;
-      const putResponse = await fetch(`http://localhost:9999/mailNumber/${existingDataId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          mailNumber: mailNumber
-        }),
-      });
-
-      // console.log('putResponse.status ', putResponse.status);
-      if (putResponse.status === 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      const postResponse = await fetch('http://localhost:9999/mailNumber', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          mailNumber: mailNumber
-        }),
-      });
-
-      // console.log('postResponse.status ', postResponse.status);
-
-      if (postResponse.status === 201) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  } catch (err) {
-    console.log('err', err);
-    return false;
-  }
 }
 
 export async function DELETE(req: NextRequest) {
   const body = await req.json();
   try {
-    const response = await fetch(`http://localhost:9999/mailNumber?email=${body.email}`);
-    const data = await response.json();
+    const existingDataUserMail = await prisma.user.findFirst({
+      where: {
+        email: body.email
+      }
+    });
 
-    if (data.length > 0) {
-      const existingDataId = data[0].id;
-      const deleteResponse = await fetch(`http://localhost:9999/mailNumber/${existingDataId}`, {
-        method: 'DELETE',
+    if(existingDataUserMail) {
+      return new NextResponse(JSON.stringify({ success: true, status: 404 }));
+    } else {
+      const userMailNumberDelete = await prisma.mailnumber.delete({
+        where: body.email
       });
 
-      // console.log('deleteResponse.status ', deleteResponse.status);
-      if (deleteResponse.status === 200) {
-        return new NextResponse(JSON.stringify({ success: true, status: 200 }));
-      } else {
-        return new NextResponse(JSON.stringify({ success: true, status: 404 }));
-      }
-    } else {
-      return new NextResponse(JSON.stringify({ success: true, status: 404 }));
+      // console.log('userMailNumberDelete ', userMailNumberDelete);
+
+      return new NextResponse(JSON.stringify({ success: true, status: 204 }));
     }
   } catch (err) {
     console.log('err', err);

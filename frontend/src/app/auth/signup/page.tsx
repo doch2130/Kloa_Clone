@@ -24,6 +24,7 @@ export default function Signup() {
     setIsCheck(!isCheck);
   }
 
+  // 이메일 인증번호 보내기
   const emailAuthenticationSend = async () => {
     if(emailInputRef.current === null) {
       alert('잠시 후 다시 시도해주세요');
@@ -51,7 +52,10 @@ export default function Signup() {
       throw new Error('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
     }
 
-    if(data.status === 200) {
+    if(data.status === 409) {
+      alert('사용할 수 없는 이메일 입니다.');
+      return ;
+    } else if(data.status === 200) {
       setAuthNumberBtnStatus(true);
       alert('메일이 성공적으로 발송되었습니다.\r\n5분 이내에 인증번호를 입력해주세요.');
       setAuthMailStatus(true);
@@ -61,6 +65,7 @@ export default function Signup() {
     return ;
   }
 
+  // 이메일 인증번호 체크 함수
   const emailAuthenticationCheck = async () => {
     if(!authNumberInputRef.current || !emailInputRef.current) {
       alert('잠시 후 다시 시도해주세요.');

@@ -1,25 +1,21 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server"
+import prisma from '@/app/lib/prisma'
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
   try {
-    const response = await fetch(`http://localhost:9999/mailNumber?email=${body.email}&mailNumber=${body.number}`, {
-      method: 'GET',
+    const existingDataMailUser = await prisma.mailnumber.findFirst({
+      where: {
+        email: body.email,
+        mailAuthNumber: body.number
+      }
     });
 
-    if(response.ok) {
-      const data = await response.json();
-      // console.log('data ', data);
-      // console.log('data ', data.length);
-
-      if(data.length === 0) {
-        return new NextResponse(JSON.stringify({ data: data, status: 204 }));
-      } else {
-        return new NextResponse(JSON.stringify({ data: data, status: 200 }));
-      }
+    if(existingDataMailUser) {
+      return new NextResponse(JSON.stringify({ data: existingDataMailUser, status: 200 }));
     } else {
-      return new NextResponse(JSON.stringify({ message: '에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.', status: 500})); 
+      return new NextResponse(JSON.stringify({ data: existingDataMailUser, status: 204 }));
     }
 
   } catch (err) {
