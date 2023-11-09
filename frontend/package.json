@@ -7,11 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "back": "npx json-server --port 9999 --watch db.json"
+    "back": "npx json-server --port 9999 --watch db.json",
+    "format": "npx prisma format",
+    "migrate": "npx prisma migrate dev --name init",
+    "studio": "npx prisma studio"
   },
   "dependencies": {
     "@looop/quill-image-resize-module-react": "^3.1.5",
+    "@prisma/client": "^5.5.2",
     "@types/nodemailer": "^6.4.13",
+    "bcrypt": "^5.1.1",
     "next": "13.5.6",
     "next-auth": "^4.24.4",
     "nodemailer": "^6.9.7",
@@ -21,6 +26,7 @@
     "swiper": "^11.0.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -28,6 +34,7 @@
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
     "postcss": "^8",
+    "prisma": "^5.5.2",
     "tailwindcss": "^3",
     "typescript": "^5"
   }
