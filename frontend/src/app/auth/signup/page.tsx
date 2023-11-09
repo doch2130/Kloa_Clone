@@ -12,6 +12,7 @@ export default function Signup() {
   const [isCheck, setIsCheck] = useState<Boolean>(false);
   const [authNumberBtnStatus, setAuthNumberBtnStatus] = useState<boolean>(false);
   const [authMailStatus, setAuthMailStatus] = useState<boolean>(false);
+  const [authMailIsCheck, setAuthMailIsCheck] = useState<Boolean>(false);
   const [authMailTimerView, setAuthMailTimerView] = useState<number>(300);
   const [authMailTimer, setAuthMailTimer] = useState<NodeJS.Timeout | undefined>(undefined);
   const emailInputRef = useRef<HTMLInputElement>(null);
@@ -95,10 +96,11 @@ export default function Signup() {
           alert('인증번호가 일치하지 않습니다');
           return ;
         } else if(res.data[0].mailNumber === authNumberInputRef.current.value) {
-          alert('메일 인증이 완료되었습니다.');
           setAuthNumberBtnStatus(false);
+          setAuthMailIsCheck(true);
           mailAuthStopTimer();
           expireMailNumber();
+          alert('메일 인증이 완료되었습니다.');
         } else {
           alert('인증번호가 일치하지 않습니다');
           return ;
@@ -125,7 +127,7 @@ export default function Signup() {
       return ;
     }
     
-    if(authNumberBtnStatus === false) {
+    if(authMailIsCheck === false) {
       alert('이메일 인증을 완료해주세요');
       return ;
     }
@@ -158,7 +160,7 @@ export default function Signup() {
           },
           body: JSON.stringify({
             email: emailInputRef.current.value,
-            pwd: pwdInputRef.current.value,
+            password: pwdInputRef.current.value,
             privacy: isCheck
           })
         });
@@ -246,7 +248,7 @@ export default function Signup() {
       <h1>모코코만큼 환영합니다.<br />회원가입을 진행해 볼까요?</h1>
       <div className={styled.signFormInputWrap}>
         <div className={styled.idGroup}>
-          <input type='text' placeholder='이메일 입력' name='id' ref={emailInputRef} disabled={authMailStatus} />
+          <input type='text' placeholder='이메일 입력' name='email' ref={emailInputRef} disabled={authMailStatus} />
           <button type='button' onClick={emailAuthenticationSend} className={authMailStatus ? styled.sendButtonUnActive : styled.sendButton} disabled={authMailStatus} >전송</button>
         </div>
         <div className={styled.authNumberGroup}>
@@ -257,10 +259,10 @@ export default function Signup() {
           {(authMailStatus && authNumberBtnStatus) && <p className={styled.authNumberTimer}>{authMailTimerView}초</p>}
         </div>
         <div className={styled.pwdGroup}>
-          <input type='password' placeholder='영어, 숫자, 특수문자를 포함한 8자리 이상 비밀번호 입력' name='pwd' ref={pwdInputRef} />
+          <input type='password' placeholder='영어, 숫자, 특수문자를 포함한 8자리 이상 비밀번호 입력' name='password' ref={pwdInputRef} />
         </div>
         <div className={styled.pwdCheckGroup}>
-          <input type='password' placeholder='비밀번호 확인' name='pwdCheck' ref={pwdCheckInputRef} />
+          <input type='password' placeholder='비밀번호 확인' name='passwordCheck' ref={pwdCheckInputRef} />
         </div>
         <div className={styled.privacyGroup}>
           <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />

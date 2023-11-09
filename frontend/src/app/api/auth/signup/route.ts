@@ -1,34 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
+import prisma from '@/app/lib/prisma'
+import * as bcrypt from 'bcrypt'
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
   // console.log(body);
 
   try {
-    const response = await fetch(`http://localhost:9999/users`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: body.email,
-        pwd: body.pwd,
+    const user = await prisma.user.create({
+      data: {
+        email: body.email,
+        password: await bcrypt.hash(body.password, 10),
         privacy: body.privacy
-      }),
+      },
     });
 
-    if(response.ok) {
-      const data = await response.json();
-      // return new Response(JSON.stringify(data), {
-      //   status: response.status,
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      // });
-      return new NextResponse(JSON.stringify({ status: 200 }));
+    // console.log('user ', user);
 
+    if(user) {
+      const { password, ...result } = user;
+      return new NextResponse(JSON.stringify(result))
     } else {
-      return new NextResponse('Error user add', { status: response.status });
+      return new NextResponse('Error user add', { status: 500 });
     }
 
   } catch (error) {
