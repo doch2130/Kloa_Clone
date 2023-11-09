@@ -2231,7 +2231,7 @@
       "textData": "<p>123ㄴㅋㄴ</p><p>ㅈㄷㄱ</p>",
       "writeTime": "2023-11-06T16:49:33.299Z",
       "viewCount": 1,
-      "recomendCount": 0,
+      "recomendCount": 1,
       "id": 2
     },
     {
@@ -2249,7 +2249,7 @@
       "textData": "<p>sdfgdfsg</p>",
       "writeTime": "2023-11-06T17:09:33.299Z",
       "viewCount": 0,
-      "recomendCount": 0,
+      "recomendCount": 5,
       "id": 4
     },
     {
@@ -2258,7 +2258,7 @@
       "textData": "<p>sdfgdfsg</p><p>asdasd</p><p>수정했습니다</p><p>수정했습니다</p><p>수정했습니다222333</p>",
       "writeTime": "2023-11-06T17:11:33.299Z",
       "viewCount": 0,
-      "recomendCount": 0,
+      "recomendCount": 4,
       "id": 5
     },
     {
@@ -2267,7 +2267,7 @@
       "textData": "<p>ㅁㄴㅇ</p>",
       "writeTime": "2023-11-06T18:06:44.146Z",
       "viewCount": 0,
-      "recomendCount": 0,
+      "recomendCount": 3,
       "id": 7
     },
     {
@@ -2276,7 +2276,7 @@
       "textData": "<p>테스트 등록 공지1</p><p>테스트 등록 공지1</p><p>테스트 등록 공지1</p><p>테스트 등록 공지1</p><p>테스트 등록 공지1</p>",
       "writeTime": "2023-11-07T18:04:58.886Z",
       "viewCount": 1,
-      "recomendCount": 0,
+      "recomendCount": 3,
       "id": 8
     },
     {
@@ -2285,7 +2285,7 @@
       "textData": "<p>점검 글 테스트 입니다</p><p>점검 글 테스트 입니다</p><p><strong>점검 글 테스트 입니다</strong></p><p><strong>ㅎㅎㅎ</strong></p>",
       "writeTime": "2023-11-07T18:05:34.735Z",
       "viewCount": 1,
-      "recomendCount": 0,
+      "recomendCount": 6,
       "id": 9
     },
     {
@@ -2293,8 +2293,8 @@
       "title": "이벤트 ㄱㄱㄱㄱㄱ",
       "textData": "<p>이벤트 참여 해주세요</p><p><br></p>",
       "writeTime": "2023-11-07T18:05:48.008Z",
-      "viewCount": 4,
-      "recomendCount": 0,
+      "viewCount": 13,
+      "recomendCount": 18,
       "id": 10
     },
     {
@@ -2303,7 +2303,7 @@
       "textData": "<p>이벤트 참여 해주세요</p><p><br></p>",
       "writeTime": "2023-11-07T19:05:48.008Z",
       "viewCount": 1,
-      "recomendCount": 0,
+      "recomendCount": 4,
       "id": 11
     },
     {
@@ -2312,7 +2312,7 @@
       "textData": "<p>공지글 이지롱</p>",
       "writeTime": "2023-11-07T19:42:48.008Z",
       "viewCount": 15,
-      "recomendCount": 0,
+      "recomendCount": 2,
       "id": 12
     }
   ]
