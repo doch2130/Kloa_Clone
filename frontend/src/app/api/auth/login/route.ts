@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// NextAuth와 합침, 안씀
+
 export async function POST(req: NextRequest) {
   const body = await req.json();
   // console.log(body);
