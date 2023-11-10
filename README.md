@@ -43,8 +43,23 @@ Notices, Auth 페이지의 파일 구성을 layout, page 방식으로 변경 작
 => 메일 인증 기능 Prisma로 변경 완료
 => 로그인 테스트 정상 확인
 
-=> JWT 기능 작업 부터 시작
+18일차: 공지사항 페이지 fetch prisma 수정 작업 완료
+=> (전체 리스트 가져오기, 추천하기, 조회수 증가, 상세 게시글 가져오기, 게시글 삭제)
+=> 메인 페이지 공지사항 가져오기 api 수정 완료
+=> 상세글에서 다음, 이전 페이지를 가져올 때 id+1 값으로 가져오다보니 중간에 게시글 삭제 시 id 값이 비어있는 경우가 발생 => 해결완료
+
+=> JWT 참고 사이트
 https://mycodings.fly.dev/blog/2023-06-03-nextauth-nextjs-tutorial-protected-route-and-jwt-token
+=> JWT 작업 시작, 로그인 시 AccessToken 생성 정상 확인, session type 수정, 게시글 작성 시 token 검사 기능 추가 완료
+=> JWT 혹은 OAuth에 대한 토큰을 사용한다. (RFC 6750) 라는 Bearer 적는 이유는 Type 설정이라고 함
+
+Next middle
+=> 설치 시 버전 조심
+=> npm i next@13.5.6-canary.8
+app 폴더랑 같은 위치에 middleware.ts 파일 설치 => 테스트 결과 정상 확인
+로그인, 비로그인 페이지 구분해서 작업 필요 판단
+비인가 사용자 보안 페이지 접근 시 login 페이지로 리다이렉트 적용 완료 [nextauth] 폴더에서 page 부분을 추가하면 됨
+
 
 
 *해결사항*
