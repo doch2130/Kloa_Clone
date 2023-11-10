@@ -71,7 +71,7 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
     const startPage = (currentPage-1) * 10;
 
     for(let i = startPage; i < maxLength; i++) {
-      const writeTimeDateType = new Date(postList[i].writeTime);
+      const writeTimeDateType = new Date(postList[i].createdAt);
       const writeTimeFormat = `${writeTimeDateType.getFullYear()}-${String(writeTimeDateType.getMonth()+1).padStart(2, '0')}-${String(writeTimeDateType.getDate()).padStart(2, '0')}`;
       // console.log('writeTimeFormat ', writeTimeFormat);
 

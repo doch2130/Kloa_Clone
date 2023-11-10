@@ -1,7 +1,7 @@
 import { Session } from "next-auth";
 import { NoticePost } from "@/type/notice";
 
-export const recomendEventHandler = (postId:string, session:Session | null, postData:NoticePost[] | NoticePost, setPostData:Function) => {
+export const recomendEventHandler = (postId:number, session:Session | null, postData:NoticePost[] | NoticePost, setPostData:Function) => {
   if(session?.user?.email) {
     fetch(`/api/notices/recomend`, {
       method: 'PATCH',
