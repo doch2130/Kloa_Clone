@@ -19,7 +19,7 @@ export async function PATCH(req: NextRequest) {
         body: JSON.stringify({
           category: body.category,
           title: body.title,
-          textData: body.textData,
+          content: body.content,
         })
       });
 

@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
       data: {
         category: body.category,
         title: body.title,
-        content: body.textData,
+        content: body.content,
         authorId: user.id,
       },
     });

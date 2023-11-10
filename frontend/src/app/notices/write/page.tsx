@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 
 export default function Write() {
   const [categoryData, setCategoryData] = useState('공지');
-  const [textData, setTextData] = useState('');
+  const [content, setContent] = useState('');
   const titleRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -34,7 +34,7 @@ export default function Write() {
       return ;
     }
 
-    if(textData.trim() === '') {
+    if(content.trim() === '') {
       alert('내용을 입력해주세요.')
       return ;
     }
@@ -48,7 +48,7 @@ export default function Write() {
         body: JSON.stringify({
           category: categoryData,
           title: titleRef.current.value,
-          textData: textData
+          content: content
         })
       })
         .then(res => res.json())
@@ -99,7 +99,7 @@ export default function Write() {
           </div>
           <div className={styled.textarea}>
             <TextEditor placeholderText={'내용을 입력해주세요'} name={'textarea'}
-            setValueHandler={setTextData} initialValue={textData} height={300} />
+            setValueHandler={setContent} initialValue={content} height={300} />
           </div>
           <div className={styled.buttonGroup}>
             <button type='button' onClick={cancel}>취소</button>
