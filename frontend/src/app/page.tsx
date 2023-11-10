@@ -76,7 +76,7 @@ export default async function Home() {
         </div>
         <div className={styled.kloaNotice}>
           <div className={styled.subTitle}>
-            <Link href='/notices'>클로아 공지사항</Link>
+            <Link href='/notices?page=1'>클로아 공지사항</Link>
           </div>
           <div className={styled.noticeTable}>
             {
