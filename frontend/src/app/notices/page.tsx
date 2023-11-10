@@ -2,8 +2,9 @@ import React from 'react'
 import { NoticePostResp } from '@/type/notice'
 import NoticesTable from './NoticesTable';
 
-export default async function Notices(props:any) {
-  const postListResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices`, {
+export default async function Notices({searchParams}:any) {
+  // console.log('searchParams ', searchParams.page);
+  const postListResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices?page=${searchParams.page}`, {
     method: 'GET',
     cache: 'no-store',
   });
