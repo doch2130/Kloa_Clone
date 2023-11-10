@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 
 import { NoticePost } from '@/type/notice'
 import { recomendEventHandler } from '../../noticesUtils';
+import { getDetailPage, updateViewCount } from './detailUtils';
 
 import EyeIcon from '@/assets/Icon/eye.svg'
 import MococoIcon from '@/assets/Icon/mococo.svg'
@@ -37,130 +38,37 @@ export default function Detail() {
   const [prevPostData, setPrevPostData] = useState(initPostData);
 
   const { data: session } = useSession();
+
+  const pageLoadHandler = async () => {
+    const currentPage = await getDetailPage(Number(id), setPostData);
+    if(currentPage.status === false) {
+      alert('페이지 로딩 중 에러가 발생하였습니다.');
+      router.push('/notices?page=1');
+      return ;
+    }
+
+    const nextPage = await getDetailPage(Number(id)+1, setNextPostData);
+    if(nextPage.status === false) {
+      alert('페이지 로딩 중 에러가 발생하였습니다.');
+      router.push('/notices?page=1');
+      return ;
+    }
+
+    const prevPage = await getDetailPage(Number(id)-1, setPrevPostData);
+    if(prevPage.status === false) {
+      alert('페이지 로딩 중 에러가 발생하였습니다.');
+      router.push('/notices?page=1');
+      return ;
+    }
+  }
   
   useEffect(() => {
-    fetch(`http://localhost:9999/mainNotices/${id}`, {
-      cache: 'default',
-    })
-      .then(res => res.json())
-      .then(result => {
+    // 현재, 다음, 이전 페이지 가져오기
+    pageLoadHandler();
 
-        if(result.id === undefined) {
-          alert('잘못된 페이지 접근입니다.');
-          router.push('/notices?page=1');
-          return ;
-        }
-
-        const writeTimeDateType = new Date(result.writeTime);
-        const writeTimeFormat = `${writeTimeDateType.getFullYear()}-${String(writeTimeDateType.getMonth()+1).padStart(2, '0')}-${String(writeTimeDateType.getDate()).padStart(2, '0')}`;
-
-        setPostData({
-          id: result.id,
-          category: result.category,
-          title: result.title,
-          content: result.content,
-          createdAt: writeTimeFormat,
-          viewCount: result.viewCount,
-          recomendCount: result.recomendCount
-        });
-        return ;
-      })
-      .catch(error => {
-        alert('페이지 로딩 중 에러가 발생하였습니다.');
-        router.push('/notices?page=1');
-        return ;
-      });
-
-      // 다음 페이지 정보 가져오기
-      fetch(`http://localhost:9999/mainNotices/${Number(id)+1}`, {
-        cache: 'default',
-        // headers: {
-        //   'Cache-Control': 'max-age=3600',
-        // }
-      })
-      .then(res => res.json())
-      .then(result => {
-
-        if(result.id === undefined) {
-          return ;
-        }
-
-        const writeTimeDateType = new Date(result.writeTime);
-        const writeTimeFormat = `${writeTimeDateType.getFullYear()}-${String(writeTimeDateType.getMonth()+1).padStart(2, '0')}-${String(writeTimeDateType.getDate()).padStart(2, '0')}`;
-
-        setNextPostData({
-          id: result.id,
-          category: result.category,
-          title: result.title,
-          content: result.content,
-          createdAt: writeTimeFormat,
-          viewCount: result.viewCount,
-          recomendCount: result.recomendCount
-        });
-        return ;
-      })
-      .catch(error => {
-        alert('페이지 로딩 중 에러가 발생하였습니다.');
-        return ;
-      });
-
-
-      // 이전 페이지 정보 가져오기
-      fetch(`http://localhost:9999/mainNotices/${Number(id)-1}`, {
-        cache: 'default',
-        // headers: {
-        //   'Cache-Control': 'max-age=3600',
-        // }
-      })
-      .then(res => res.json())
-      .then(result => {
-
-        if(result.id === undefined) {
-          return ;
-        }
-
-        const writeTimeDateType = new Date(result.writeTime);
-        const writeTimeFormat = `${writeTimeDateType.getFullYear()}-${String(writeTimeDateType.getMonth()+1).padStart(2, '0')}-${String(writeTimeDateType.getDate()).padStart(2, '0')}`;
-
-        setPrevPostData({
-          id: result.id,
-          category: result.category,
-          title: result.title,
-          content: result.content,
-          createdAt: writeTimeFormat,
-          viewCount: result.viewCount,
-          recomendCount: result.recomendCount
-        });
-        return ;
-      })
-      .catch(error => {
-        alert('페이지 로딩 중 에러가 발생하였습니다.');
-        return ;
-      });
-
+    // 조회수 증가 함수
+    updateViewCount(Number(id), setPostData);
   }, []);
-
-  // 조회수 증가 함수
-  useEffect(() => {
-    fetch('/api/notices', {
-      method: 'PATCH',
-      body: JSON.stringify({
-        id: id
-      })
-    })
-      .then((res) => res.json())
-      .then(res => {
-        // console.log('res ', res);
-        if(res.status === 200) {
-          setPostData((prev) => ({
-            ...prev,
-            viewCount: Number(res.viewCount),
-          })
-          )
-        }
-      })
-  }, []);
-
 
   const postDelete = async () => {
     try {
@@ -337,3 +245,4 @@ export default function Detail() {
     </div>
   )
 }
+
