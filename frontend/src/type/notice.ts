@@ -11,10 +11,10 @@ export interface NoticePost {
   title: string,
   content: string,
   createdAt: string,
-  updatedAt: string,
+  updatedAt?: string,
   viewCount: number,
   recomendCount: number,
-  authorId: number,
+  authorId?: number,
 }
 
 export type NoticesTopFive = {
