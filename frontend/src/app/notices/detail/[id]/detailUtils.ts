@@ -50,8 +50,12 @@ export async function updateViewCount(id:number, setPostDataHandler:Function) {
         setPostDataHandler((prev:NoticePost) => ({
           ...prev,
           viewCount: Number(res.viewCount),
-        })
-        )
+        }));
       }
+      return ;
     })
+    .catch(error => {
+      // console.error('Error while fetching data:', error);
+      return ;
+    });
 }

@@ -28,9 +28,9 @@ export async function DELETE(req: NextRequest) {
     } else {
       return new NextResponse(JSON.stringify({ success: true, status: 404 }));
     }
-    
+
   } catch (err) {
-    console.log('err', err);
+    // console.log('err', err);
     return new NextResponse(JSON.stringify({ success: false, status: 500 }));
   }
 }
