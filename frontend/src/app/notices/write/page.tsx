@@ -48,7 +48,8 @@ export default function Write() {
         body: JSON.stringify({
           category: categoryData,
           title: titleRef.current.value,
-          content: content
+          content: content,
+          user: session?.user?.email
         })
       })
         .then(res => res.json())
