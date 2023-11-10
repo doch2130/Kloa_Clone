@@ -100,7 +100,7 @@ export default function Signup() {
         if(res.status === 204) {
           alert('인증번호가 일치하지 않습니다');
           return ;
-        } else if(res.data[0].mailNumber === authNumberInputRef.current.value) {
+        } else if(res.status === 200 && res.data.mailAuthNumber === authNumberInputRef.current.value) {
           setAuthNumberBtnStatus(false);
           setAuthMailIsCheck(true);
           mailAuthStopTimer();
