@@ -43,7 +43,8 @@ export default function Write() {
       fetch('/api/notices/create', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization' : session?.user?.accessToken || ''
         },
         body: JSON.stringify({
           category: categoryData,
