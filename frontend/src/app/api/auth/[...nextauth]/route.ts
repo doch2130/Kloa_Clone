@@ -3,6 +3,7 @@ import NaverProvider from "next-auth/providers/naver"
 import CredentialsProvider from "next-auth/providers/credentials"
 import prisma from '@/app/lib/prisma'
 import * as bcrypt from 'bcrypt'
+import { signJwtAccessToken } from "@/app/lib/jwt"
 
 const handler = NextAuth({
   providers: [
@@ -27,7 +28,16 @@ const handler = NextAuth({
         // id는 string으로 해야 authorize 함수 에러가 안남
         if (findUser && (await bcrypt.compare(body?.password, findUser.password))) {
           const user = { id: String(findUser.id), email: findUser.email };
-          return user;
+
+          // JWT 토큰
+          const accessToken = signJwtAccessToken(user);
+          const result = {
+            id: String(findUser.id),
+            email: findUser.email,
+            accessToken,
+          };
+
+          return result;
         } else {
           return null;
         }
@@ -35,20 +45,14 @@ const handler = NextAuth({
     })
   ],
   callbacks: {
-    async jwt({ token, account }) {
-      // Persist the OAuth access_token to the token right after signin
-      if (account) {
-        token.accessToken = account.access_token
-      }
-      return token
+    async jwt({ token, user }) {
+      return { ...token, ...user };
     },
-    // async session({ session, token, user }) {
-    //   // Send properties to the client, like an access_token from a provider.
-    //   session.accessToken = token.accessToken
-      
-    //   return session
-    // }
-  }
+    async session({ session, token }) {
+      session.user = token as any;
+      return session;
+    },
+  },
 });
 
 export { handler as GET, handler as POST };
