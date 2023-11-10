@@ -60,6 +60,15 @@ app 폴더랑 같은 위치에 middleware.ts 파일 설치 => 테스트 결과 �
 로그인, 비로그인 페이지 구분해서 작업 필요 판단
 비인가 사용자 보안 페이지 접근 시 login 페이지로 리다이렉트 적용 완료 [nextauth] 폴더에서 page 부분을 추가하면 됨
 
+=> Next Middle 사용 시 canary를 설치할 필요는 없음, 기존 버전으로 사용 가능
+=> 미들웨어 터미널 에러
+JWT verification error: The edge runtime does not support Node.js 'crypto' module.
+Learn More: https://nextjs.org/docs/messages/node-module-in-edge-runtime
+=> 복호화가 안되는 에러로 보임
+=> jsonwebtoken에서 jose로 변경하면 된다고 함, 임시 생성, 검증 코드 작성, 테스트 진행 예정
+
+
+
 
 
 *해결사항*
