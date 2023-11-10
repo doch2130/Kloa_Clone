@@ -47,6 +47,12 @@ export default function Detail() {
       return ;
     }
 
+    if(currentPage.result === null) {
+      alert('잘못된 접근입니다.');
+      router.push('/notices?page=1');
+      return ;
+    }
+
     const nextPage = await getDetailPage(Number(id)+1, setNextPostData);
     if(nextPage.status === false) {
       alert('페이지 로딩 중 에러가 발생하였습니다.');
@@ -70,9 +76,17 @@ export default function Detail() {
     updateViewCount(Number(id), setPostData);
   }, []);
 
-  const postDelete = async () => {
-    try {
 
+
+
+  // 게시글 삭제 함수
+  async function postDelete(id:number) {
+    // 데이터를 삭제한 후 캐시에서 해당 데이터를 삭제
+    // caches.open('your-cache-name').then((cache) => {
+    //   cache.delete(`http://localhost:9999/mainNotices/${id}`);
+    // });
+
+    try {
       const response = await fetch('/api/notices/delete', {
         method: 'DELETE',
         body: JSON.stringify({
@@ -81,35 +95,21 @@ export default function Detail() {
       });
 
       const deleteResponse = await response.json();
-
       // console.log('deleteResponse ', deleteResponse);
 
       if(deleteResponse.status === 404) {
-        alert('존재하지 않는 게시글 입니다.');
+        alert('존재하지 않는 게시글입니다.');
         router.push('/notices?page=1');
-
-        // 데이터를 삭제한 후 캐시에서 해당 데이터를 삭제
-        // caches.open('your-cache-name').then((cache) => {
-        //   cache.delete(`http://localhost:9999/mainNotices/${id}`);
-        // });
-
-        return ;
-      } else if(deleteResponse.status === 200) {
-        alert('게시글이 삭제되었습니다.');
-        router.push('/notices?page=1');
-
-        // 데이터를 삭제한 후 캐시에서 해당 데이터를 삭제
-        // caches.open('your-cache-name').then((cache) => {
-        //   cache.delete(`http://localhost:9999/mainNotices/${id}`);
-        // });
-
-        return ;
-      } else {
-        alert('삭제 중 에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.');
         return ;
       }
 
+      alert('게시글이 삭제되었습니다.');
+      router.push('/notices?page=1');
+
+      return ;
+
     } catch (error) {
+      // console.error('Error while fetching data:', error);
       alert('삭제 중 에러가 발생하였습니다.');
       return ;
     }
@@ -165,7 +165,7 @@ export default function Detail() {
         {session?.user?.email === 'test1' && 
         <div className={styled.postBodyRow + ' ' + styled.postManager}>
           <Link href={`/notices/update/${id}`}>수정</Link>
-          <span onClick={postDelete}>삭제</span>
+          <span onClick={() => postDelete(Number(id))}>삭제</span>
         </div>
         }
         

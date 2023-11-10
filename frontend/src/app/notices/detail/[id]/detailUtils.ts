@@ -10,8 +10,8 @@ export async function getDetailPage(id:number, setPostDataHandler:Function):Prom
       // console.log('res ', res);
       const result = res.result;
 
-      if(result === undefined || result === null) {
-        return { status: false, result: null };
+      if(res.status === 404) {
+        return { status: true, result: null };
       }
 
       const writeTimeDateType = new Date(result.createdAt);
@@ -27,7 +27,7 @@ export async function getDetailPage(id:number, setPostDataHandler:Function):Prom
         recomendCount: result.recomendCount
       });
 
-      return { status: true, result: null };
+      return { status: true, result: result };
     })
     .catch(error => {
       // console.error('Error while fetching data:', error);
@@ -55,50 +55,3 @@ export async function updateViewCount(id:number, setPostDataHandler:Function) {
       }
     })
 }
-
-
-
-// // 게시글 삭제 함수
-// const postDelete = async (id:number) => {
-//   try {
-//     const response = await fetch('/api/notices/delete', {
-//       method: 'DELETE',
-//       body: JSON.stringify({
-//         id: id
-//       })
-//     });
-
-//     const deleteResponse = await response.json();
-
-//     // console.log('deleteResponse ', deleteResponse);
-
-//     if(deleteResponse.status === 404) {
-//       alert('존재하지 않는 게시글 입니다.');
-//       router.push('/notices?page=1');
-
-//       // 데이터를 삭제한 후 캐시에서 해당 데이터를 삭제
-//       // caches.open('your-cache-name').then((cache) => {
-//       //   cache.delete(`http://localhost:9999/mainNotices/${id}`);
-//       // });
-
-//       return ;
-//     } else if(deleteResponse.status === 200) {
-//       alert('게시글이 삭제되었습니다.');
-//       router.push('/notices?page=1');
-
-//       // 데이터를 삭제한 후 캐시에서 해당 데이터를 삭제
-//       // caches.open('your-cache-name').then((cache) => {
-//       //   cache.delete(`http://localhost:9999/mainNotices/${id}`);
-//       // });
-
-//       return ;
-//     } else {
-//       alert('삭제 중 에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.');
-//       return ;
-//     }
-
-//   } catch (error) {
-//     alert('삭제 중 에러가 발생하였습니다.');
-//     return ;
-//   }
-// }
