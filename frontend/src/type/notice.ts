@@ -1,11 +1,20 @@
+export interface NoticePostResp {
+  success: true,
+  status: 200,
+  result: NoticePost[],
+}
+
+
 export interface NoticePost {
-  id: string,
+  id: number;
   category: string,
   title: string,
-  textData: string,
-  writeTime: string,
+  content: string,
+  createdAt: string,
+  updatedAt: string,
   viewCount: number,
   recomendCount: number,
+  authorId: number,
 }
 
 export type NoticesTopFive = {
