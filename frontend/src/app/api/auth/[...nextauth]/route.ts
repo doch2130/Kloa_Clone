@@ -31,10 +31,11 @@ const handler = NextAuth({
 
           // JWT 토큰
           const accessToken = signJwtAccessToken(user);
+          // console.log('accessToken ', accessToken);
           const result = {
             id: String(findUser.id),
             email: findUser.email,
-            accessToken,
+            accessToken: `bearer ${accessToken}`,
           };
 
           return result;
@@ -53,10 +54,11 @@ const handler = NextAuth({
       return session;
     },
   },
-  pages: {
-    // 미들웨어 로그인 안한 페이지 접근 시 로그인 하게 해당 페이지로 이동이 됨
-    signIn: "/auth/login",
-  },
+  // pages: {
+  //   // 미들웨어 별도 함수 설정 안한 경우 사용
+  //   // 미들웨어 로그인 안한 페이지 접근 시 로그인 하게 해당 페이지로 이동이 됨
+  //   signIn: "/auth/login",
+  // },
 });
 
 export { handler as GET, handler as POST };
