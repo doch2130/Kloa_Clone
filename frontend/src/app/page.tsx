@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { NoticePost, NoticesTopFive } from '@/type/notice'
+import { NoticePostResp, NoticePost, NoticesTopFive } from '@/type/notice'
 import { OrganizeAdventureIslandList } from '@/type/adventureIsland'
 
 import SlideImage from '@/components/Home/SlideImageSection/SlideImage';
@@ -16,6 +16,7 @@ const categoryClassMap: { [key: string]: string } = {
 };
 
 export default async function Home() {
+  // 로스트아크 공지사항
   const noticesResp = await fetch(`http://localhost:9999/notices`,
   { 
     cache: 'default',
@@ -24,22 +25,22 @@ export default async function Home() {
       'Cache-Control': 'max-age=3600',
     }
   });
-
   const noticesList = await noticesResp.json();
   const noticesTopList = noticesList[0];
   // console.log('noticesTopList ', noticesTopList);
 
-  const mainNoticesResp = await fetch('http://localhost:9999/mainNotices',
-  // const mainNoticesResp = await fetch(`${process.env.NEXT_PUBLIC_FIREBASE}/mainNotices.json`,
+  
+  // 클로아 공지사항
+  // const mainNoticesResp = await fetch(`http://localhost:9999/mainNotices`,
+  const mainNoticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices?top=true`,
   {
     cache: 'no-store',
   });
- 
-  const mainNoticesList:NoticePost[] = await mainNoticesResp.json();
-  mainNoticesList.sort((a, b) => Number(new Date(b.writeTime)) - Number(new Date(a.writeTime)));
-  const mainNoticesTopList = mainNoticesList.slice(0, 5);
+  const mainNoticesTopList:NoticePostResp = await mainNoticesResp.json();
+  // console.log('mainNoticesTopList ', mainNoticesTopList);
 
 
+  // 모험 섬 데이터
   // const adventureResp = await fetch('http://localhost:9999/adventureIsland',
   const adventureResp = await fetch(`${process.env.NEXT_PUBLIC_FIREBASE}/adventureIsland.json`,
   {
@@ -80,7 +81,7 @@ export default async function Home() {
           </div>
           <div className={styled.noticeTable}>
             {
-              mainNoticesTopList.map((el:NoticePost, index:number) => 
+              mainNoticesTopList.result.map((el:NoticePost, index:number) => 
               (
                 <div className={styled.noticeTableRow} key={index}>
                   <div className={`${styled.noticeTableCategory} ${categoryClassMap[el.category]}`}>{el.category}</div>

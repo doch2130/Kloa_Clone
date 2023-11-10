@@ -1,6 +1,6 @@
 export interface NoticePostResp {
-  success: true,
-  status: 200,
+  success: boolean,
+  status: number,
   result: NoticePost[],
 }
 
