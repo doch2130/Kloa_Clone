@@ -1,104 +1,92 @@
 import { NextRequest, NextResponse } from "next/server";
+import prisma from '@/app/lib/prisma'
 
 export async function GET() {
-  const url = 'https://developer-lostark.game.onstove.com/news/notices';
-
   try {
-    const response = await fetch(url, {
-      method: 'GET',
-      cache: 'no-cache',
-      headers: {
-        'accept': 'application/json',
-        'authorization': `bearer ${process.env.NEXT_PUBLIC_LOSTARK_API}`
-      },
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      return new NextResponse(JSON.stringify(data), {
-        status: response.status,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    } else {
-      return new NextResponse('Error fetching data', { status: response.status });
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    return new NextResponse('An error occurred', { status: 500 });
-  }
-}
-
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  // console.log(body);
-
-  const date = new Date();
-
-  try {
-    const response = await fetch('http://localhost:9999/mainNotices', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        category: body.category,
-        title: body.title,
-        textData: body.textData,
-        writeTime: date,
-        viewCount: 0,
-        recomendCount: 0,
-      })
+    // skip은 앞에서부터 X개를 건너뛰고, take는 건너뛴 이후 부터 X개를 가져온다는 의미
+    const postList = await prisma.mainnotices.findMany({
+      skip: 0,
+      take: 100,
+      orderBy: {
+        createdAt: 'desc'
+      }
     });
 
-    if(response.ok) {
-      const data = await response.json();
-      return new NextResponse(JSON.stringify({message: 'Success', status: response.status}));
+    // console.log('postList ', postList);
+
+    if(postList) {
+      return new NextResponse(JSON.stringify({ success: true, status: 200, result: postList }));
     } else {
-      return new NextResponse('Error Write data', { status: response.status });
+      return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
     }
-  } catch (error) {
-    console.error('Error:', error);
-    return new NextResponse('An error occurred', { status: 500 });
+
+  } catch (err) {
+    console.log('err', err);
+    return new NextResponse(JSON.stringify({ success: false, status: 500 }));
   }
 }
-
 
 
 export async function PATCH(req: NextRequest) {
   const body = await req.json();
   // console.log('body ', body);
   try {
-    const response = await fetch(`http://localhost:9999/mainNotices?id=${body.id}`);
-    const data = await response.json();
+    const post = await prisma.mainnotices.findFirst({
+      where: body.id
+    });
 
-    // console.log('data ', data);
+    if(!post) {
+      return new NextResponse(JSON.stringify({ success: true, status: 404 }));
+    }
 
-    if (data.length > 0) {
-      const updateViewCount = data[0].viewCount + 1;
-      const existingDataId = data[0].id;
-      const patchResponse = await fetch(`http://localhost:9999/mainNotices/${existingDataId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          viewCount: updateViewCount
-        })
-      });
+    const updateViewCount = post.viewCount + 1;
 
-      // console.log('patchResponse.status ', patchResponse.status);
-      if (patchResponse.status === 200) {
-        return new NextResponse(JSON.stringify({ success: true, status: 200, viewCount: updateViewCount }));
-      } else {
-        return new NextResponse(JSON.stringify({ success: true, status: 404 }));
-      }
+    const postUpdate = await prisma.mainnotices.update({
+      data: {
+        viewCount: updateViewCount
+      },
+      where: body.id
+    });
+
+    if(postUpdate) {
+      return new NextResponse(JSON.stringify({ success: true, status: 200, viewCount: updateViewCount }));
     } else {
       return new NextResponse(JSON.stringify({ success: true, status: 404 }));
     }
+
   } catch (err) {
     console.log('err', err);
     return new NextResponse(JSON.stringify({ success: false, status: 500 }));
   }
 }
+
+
+// export async function GET() {
+//   const url = 'https://developer-lostark.game.onstove.com/news/notices';
+
+//   try {
+//     const response = await fetch(url, {
+//       method: 'GET',
+//       cache: 'no-cache',
+//       headers: {
+//         'accept': 'application/json',
+//         'authorization': `bearer ${process.env.NEXT_PUBLIC_LOSTARK_API}`
+//       },
+//     });
+    
+//     if (response.ok) {
+//       const data = await response.json();
+//       return new NextResponse(JSON.stringify(data), {
+//         status: response.status,
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//       });
+//     } else {
+//       return new NextResponse('Error fetching data', { status: response.status });
+//     }
+//   } catch (error) {
+//     console.error('Error:', error);
+//     return new NextResponse('An error occurred', { status: 500 });
+//   }
+// }
