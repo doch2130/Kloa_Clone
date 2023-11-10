@@ -1,29 +1,39 @@
-import { NextRequest } from 'next/server';
+import { NextRequest } from 'next/server'
+import { withOutAuthList, withAuthList, withAuth, withOutAuth } from '@/middlewares/auth.middleware'
+import { getToken } from "next-auth/jwt"
 
-export { default } from 'next-auth/middleware'
+import jwt, { JwtPayload } from "jsonwebtoken";
 
-export const config = {
-  matcher: ['/userposts/:path*'],
+// 미들웨어 함수를 따로 지정하지 않는 경우 config에 url만 설정해서 사용하는 함수
+// export { default } from 'next-auth/middleware'
+
+export async function middleware(req: NextRequest) {
+  const pathName = req.nextUrl.pathname;
+  // console.log('pathName ', pathName);
+  // console.log('startsWith ', pathName.startsWith('/notices/update/'));
+
+  const secret = process.env.NEXTAUTH_SECRET;
+  const token = await getToken({ req, secret });
+  // console.log('token test ' , token);
+  // console.log('token accessToken ' , token?.accessToken);
+  const tokenValue: string = (token?.accessToken || '') as string;
+
+  // 관리자, 글 작성, 수정
+  // if(withAuthList.includes(pathName)) {
+  if(withAuthList.includes(pathName) || pathName.startsWith('/notices/update/')) {
+    console.log('manager');
+    return await withAuth(req, tokenValue);
+  }
+
+  // 로그인, 회원가입
+  // if(withOutAuthList.includes(pathName)) {
+  if(withOutAuthList.includes(pathName)) {
+    console.log('login');
+    return await withOutAuth(req, tokenValue);
+  }
 }
 
-
-
-// export async function middleware(req: NextRequest) {
-//   // 서버사이드에서 로그인 유무를 판단할 수 있는 next-auth 제공 함수 
-//   // 토큰 값이 falsy 하지 않으면 로그인 o
-//   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-
-// 	// 사용자가 요청하는 페이지 pathname
-//   const { pathname } = req.nextUrl;
-// 	// 해당 pathname이 미리 정의해둔 withAuth, withOutAuth 배열 중 어디에 속하는지 확인 
-//   const isWithAuth = withAuthList.includes(pathname);
-//   const isWithOutAuth = withOutAuthList.includes(pathname);
-
-//   if (isWithAuth) return withAuth(req, !!token); // 로그인 여부에 따라 redirect 하는 함수 
-//   else if (isWithOutAuth) return withOutAuth(req, !!token); // 로그인 여부에 따라 redirect 하는 함수 
-// }
-
-// // 미들웨어가 실행될 특정 pathname을 지정하면, 해당 pathname에서만 실행 가능 
-// export const config = {
-// 	mathcher : [...withAuthList, ...withOutAuthList]
-// }
+// 미들웨어가 실행될 특정 pathname을 지정하면, 해당 pathname에서만 실행 가능 
+export const config = {
+	mathcher : [...withAuthList, ...withOutAuthList]
+}
