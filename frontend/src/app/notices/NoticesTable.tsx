@@ -29,8 +29,7 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
 
   const [postData, setPostData] = useState(postList);
   const { data: session } = useSession();
-
-  console.log('session ', session);
+  // console.log('session ', session);
 
   const prevPageChangeHandler = ():void => {
     if (currentPage <= 1) {
