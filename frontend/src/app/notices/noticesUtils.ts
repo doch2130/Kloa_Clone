@@ -16,7 +16,6 @@ export const recomendEventHandler = (postId:number, session:Session | null, post
       .then(res => {
         // console.log('res ', res);
         if(res.status === 200) {
-
           if(Array.isArray(postData)) {
             const clonePostData = postData.map((el) => {
               if(el.id === postId) {
