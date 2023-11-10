@@ -8,8 +8,8 @@ datasource db {
 }
 
 model mailnumber {
-  id     Int    @id @default(autoincrement())
-  email  String @unique(map: "mailNumber_email_key")
+  id             Int    @id @default(autoincrement())
+  email          String @unique(map: "mailNumber_email_key")
   mailAuthNumber String
 }
 

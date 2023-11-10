@@ -10,6 +10,8 @@
     "back": "npx json-server --port 9999 --watch db.json",
     "format": "npx prisma format",
     "migrate": "npx prisma migrate dev --name init",
+    "generate": "npx prisma generate",
+    "prismadbpush": "npx prisma db push",
     "studio": "npx prisma studio"
   },
   "dependencies": {
