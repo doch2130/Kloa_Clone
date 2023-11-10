@@ -18,11 +18,10 @@ model mainnotices {
   category      String
   title         String
   content       String?
-  published     Boolean  @default(false)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @default(now())
-  viewCount     Int
-  recomendCount Int
+  viewCount     Int      @default(0)
+  recomendCount Int      @default(0)
   authorId      Int
   user          user     @relation(fields: [authorId], references: [id], map: "MainNotices_authorId_fkey")
 
