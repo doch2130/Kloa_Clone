@@ -15,14 +15,39 @@ async function getTopPost() {
 }
 
 // 상세 페이지 가져오기 전용 함수
-async function getPostDetail(id:number) {
-  const post = await prisma.mainnotices.findFirst({
+async function getPostDetail(id: number) {
+  // console.log('id ', id);
+  // 서브쿼리를 지원하지 않지만, 해당 방법으로 id 기준 이전, 이후 값도 같이 가져올 수 있다.
+  const post = await prisma.mainnotices.findMany({
     where: {
       id: id
-    }
+    },
+    take: 1,
   });
-  return post;
+
+  const prevPost = await prisma.mainnotices.findMany({
+    where: {
+      id: { lt: id }
+    },
+    orderBy: {
+      id: 'desc'
+    },
+    take: 1,
+  });
+
+  const nextPost = await prisma.mainnotices.findMany({
+    where: {
+      id: { gt: id }
+    },
+    orderBy: {
+      id: 'asc'
+    },
+    take: 1,
+  });
+
+  return [post, prevPost, nextPost];
 }
+
 
 // 전체 리스트 가져오기, 상세 페이지 가져오기
 export async function GET(req: NextRequest) {
@@ -45,9 +70,10 @@ export async function GET(req: NextRequest) {
 
     // 상세 페이지 가져오는 함수 / 분기점
     if(detail === 'true' && id !== null) {
-      const post = await getPostDetail(Number(id));
-      if(post) {
-        return new NextResponse(JSON.stringify({ success: true, status: 200, result: post }));
+      const posts = await getPostDetail(Number(id));
+      // console.log('posts ', posts);
+      if(posts) {
+        return new NextResponse(JSON.stringify({ success: true, status: 200, result: posts }));
       } else {
         return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
       }

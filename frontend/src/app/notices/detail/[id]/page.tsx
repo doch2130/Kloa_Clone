@@ -40,29 +40,16 @@ export default function Detail() {
   const { data: session } = useSession();
 
   const pageLoadHandler = async () => {
-    const currentPage = await getDetailPage(Number(id), setPostData);
-    if(currentPage.status === false) {
+    const detailPage = await getDetailPage(Number(id), setPostData, setNextPostData, setPrevPostData);
+    if(detailPage.status === false) {
       alert('페이지 로딩 중 에러가 발생하였습니다.');
       router.push('/notices?page=1');
       return ;
     }
 
-    if(currentPage.result === null) {
+    console.log('detailPage ', detailPage);
+    if(detailPage.result === null) {
       alert('잘못된 접근입니다.');
-      router.push('/notices?page=1');
-      return ;
-    }
-
-    const nextPage = await getDetailPage(Number(id)+1, setNextPostData);
-    if(nextPage.status === false) {
-      alert('페이지 로딩 중 에러가 발생하였습니다.');
-      router.push('/notices?page=1');
-      return ;
-    }
-
-    const prevPage = await getDetailPage(Number(id)-1, setPrevPostData);
-    if(prevPage.status === false) {
-      alert('페이지 로딩 중 에러가 발생하였습니다.');
       router.push('/notices?page=1');
       return ;
     }
@@ -172,7 +159,7 @@ export default function Detail() {
         {/* 다음, 현재, 이전 페이지 묶음 */}
         <div className={styled.postBodyRow + ' ' + styled.postBodyFooter}>
           {/* 다음 페이지 */}
-          {nextPostData.id && 
+          {nextPostData.id !== 0 && 
           <div className={styled.postTableRow}>
             <div className={
               nextPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck}` :
@@ -218,7 +205,7 @@ export default function Detail() {
           </div>
 
           {/* 이전 페이지 */}
-          {prevPostData.id && 
+          {prevPostData.id !== 0 && 
           <div className={styled.postTableRow}>
             <div className={
               prevPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck}` :

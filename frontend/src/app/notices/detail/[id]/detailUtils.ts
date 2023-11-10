@@ -1,33 +1,58 @@
 import { NoticePost } from "@/type/notice";
 
 // 상세 페이지 정보 가져오기, 현재, 다음, 이전 페이지
-export async function getDetailPage(id:number, setPostDataHandler:Function):Promise<{ status: boolean; result: NoticePost | null }> {
+export async function getDetailPage(id:number, setPostDataHandler:Function, 
+  setPrevPostDataHandler:Function, setNextPostDataHandler:Function):Promise<{ status: boolean; result: NoticePost | null }> {
   return fetch(`/api/notices?id=${id}&detail=true`, {
     method: 'GET',
   })
     .then(res => res.json())
     .then(res => {
-      // console.log('res ', res);
+      console.log('res ', res);
       const result = res.result;
 
       if(res.status === 404) {
         return { status: true, result: null };
       }
 
-      const writeTimeDateType = new Date(result.createdAt);
-      const writeTimeFormat = `${writeTimeDateType.getFullYear()}-${String(writeTimeDateType.getMonth()+1).padStart(2, '0')}-${String(writeTimeDateType.getDate()).padStart(2, '0')}`;
-
-      setPostDataHandler({
-        id: result.id,
-        category: result.category,
-        title: result.title,
-        content: result.content,
-        createdAt: writeTimeFormat,
-        viewCount: result.viewCount,
-        recomendCount: result.recomendCount
+      result.forEach((post:any, index:number) => {
+        const writeTimeDateType = new Date(post[0].createdAt);
+        const writeTimeFormat = `${writeTimeDateType.getFullYear()}-${String(writeTimeDateType.getMonth()+1).padStart(2, '0')}-${String(writeTimeDateType.getDate()).padStart(2, '0')}`;
+  
+        if(index === 0) {
+          setPostDataHandler({
+            id: post[0].id,
+            category: post[0].category,
+            title: post[0].title,
+            content: post[0].content,
+            createdAt: writeTimeFormat,
+            viewCount: post[0].viewCount,
+            recomendCount: post[0].recomendCount
+          });
+        } else if (index === 1) {
+          setPrevPostDataHandler({
+            id: post[0].id,
+            category: post[0].category,
+            title: post[0].title,
+            content: post[0].content,
+            createdAt: writeTimeFormat,
+            viewCount: post[0].viewCount,
+            recomendCount: post[0].recomendCount
+          });
+        } else if (index === 2) {
+          setNextPostDataHandler({
+            id: post[0].id,
+            category: post[0].category,
+            title: post[0].title,
+            content: post[0].content,
+            createdAt: writeTimeFormat,
+            viewCount: post[0].viewCount,
+            recomendCount: post[0].recomendCount
+          });
+        }
       });
 
-      return { status: true, result: result };
+      return { status: true, result: result[0] };
     })
     .catch(error => {
       // console.error('Error while fetching data:', error);
