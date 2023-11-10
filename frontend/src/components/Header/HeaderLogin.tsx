@@ -5,7 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 
 export default function HeaderLogin() {
   const { data: session } = useSession();
-  // console.log('session ', session);
+  // console.log('session ', session?.user?.accessToken);
 
   const logoutHandler = () => {
     if(window.confirm('로그아웃 하시겠습니까?')) {
