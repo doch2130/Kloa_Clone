@@ -1,23 +1,20 @@
 import React from 'react'
-import { NoticePost } from '@/type/notice'
+import { NoticePostResp } from '@/type/notice'
 import NoticesTable from './NoticesTable';
 
 export default async function Notices(props:any) {
-  const postListResp = await fetch('http://localhost:9999/mainNotices',
-  {
+  const postListResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices`, {
+    method: 'GET',
     cache: 'no-store',
-    // headers: {
-    //   // 캐시 유효 시간을 1시간으로 설정
-    //   'Cache-Control': 'max-age=3600',
-    // }
   });
-  const postList:NoticePost[] = await postListResp.json();
-  postList.sort((a, b) => Number(new Date(b.writeTime)) - Number(new Date(a.writeTime)));
+  
+  const postList:NoticePostResp = await postListResp.json();
   // console.log('postList ', postList);
+  // console.log('postList.result ', postList.result);
 
   return (
     <>
-      <NoticesTable postList={postList} />
+      <NoticesTable postList={postList.result} />
     </>
   )
 }
