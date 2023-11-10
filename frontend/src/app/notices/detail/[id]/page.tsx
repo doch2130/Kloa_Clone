@@ -18,13 +18,13 @@ import styled from './Detail.module.css'
 
 
 const initPostData:NoticePost = {
-  id: '',
+  id: 0,
   category: '',
   title: '',
-  textData: '',
-  writeTime: '',
+  content: '',
+  createdAt: '',
   viewCount: 0,
-  recomendCount: 0
+  recomendCount: 0,
 }
 
 export default function Detail() {
@@ -58,8 +58,8 @@ export default function Detail() {
           id: result.id,
           category: result.category,
           title: result.title,
-          textData: result.textData,
-          writeTime: writeTimeFormat,
+          content: result.content,
+          createdAt: writeTimeFormat,
           viewCount: result.viewCount,
           recomendCount: result.recomendCount
         });
@@ -92,8 +92,8 @@ export default function Detail() {
           id: result.id,
           category: result.category,
           title: result.title,
-          textData: result.textData,
-          writeTime: writeTimeFormat,
+          content: result.content,
+          createdAt: writeTimeFormat,
           viewCount: result.viewCount,
           recomendCount: result.recomendCount
         });
@@ -126,8 +126,8 @@ export default function Detail() {
           id: result.id,
           category: result.category,
           title: result.title,
-          textData: result.textData,
-          writeTime: writeTimeFormat,
+          content: result.content,
+          createdAt: writeTimeFormat,
           viewCount: result.viewCount,
           recomendCount: result.recomendCount
         });
@@ -222,7 +222,7 @@ export default function Detail() {
                 {postData.category}
             </div>
             <div className={styled.postTitle}>{postData.title}</div>
-            <div className={styled.postDate}>{postData.writeTime}</div>
+            <div className={styled.postDate}>{postData.createdAt}</div>
             <div className={styled.postViewCount}>
               <Image src={EyeIcon} alt='eye icon' />
               <span>{postData.viewCount}</span>
@@ -230,7 +230,7 @@ export default function Detail() {
           </div>
         </div>
         <div className={styled.postBodyRow + ' ' + styled.postBodyText}>
-          <pre dangerouslySetInnerHTML={{__html: postData.textData}}>
+          <pre dangerouslySetInnerHTML={{__html: postData.content}}>
           </pre>
         </div>
         <div className={styled.postBodyRow}>
@@ -275,7 +275,7 @@ export default function Detail() {
             <div className={styled.postFooterTitle}>
               <Link href={`/notices/detail/${nextPostData.id}`}>{nextPostData.title}</Link>
             </div>
-            <div className={styled.postFooterDate}>{nextPostData.writeTime}</div>
+            <div className={styled.postFooterDate}>{nextPostData.createdAt}</div>
             <div className={styled.postFooterViewCount}>
               <Image src={EyeIcon} alt='eye icon' />
               <span>{nextPostData.viewCount}</span>
@@ -298,7 +298,7 @@ export default function Detail() {
             <div className={styled.postFooterTitle}>
               <Link href={`/notices/detail/${postData.id}`}>{postData.title}</Link>
             </div>
-            <div className={styled.postFooterDate}>{postData.writeTime}</div>
+            <div className={styled.postFooterDate}>{postData.createdAt}</div>
             <div className={styled.postFooterViewCount}>
               <Image src={EyeIcon} alt='eye icon' />
               <span>{postData.viewCount}</span>
@@ -321,7 +321,7 @@ export default function Detail() {
             <div className={styled.postFooterTitle}>
               <Link href={`/notices/detail/${prevPostData.id}`}>{prevPostData.title}</Link>
             </div>
-            <div className={styled.postFooterDate}>{prevPostData.writeTime}</div>
+            <div className={styled.postFooterDate}>{prevPostData.createdAt}</div>
             <div className={styled.postFooterViewCount}>
               <Image src={EyeIcon} alt='eye icon' />
               <span>{prevPostData.viewCount}</span>
