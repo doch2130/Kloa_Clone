@@ -44,7 +44,7 @@ export default function Write() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization' : `bearer ${session?.user?.accessToken}` || 'bearer '
+          'Authorization' : `${session?.user?.accessToken}` || ''
         },
         body: JSON.stringify({
           category: categoryData,
