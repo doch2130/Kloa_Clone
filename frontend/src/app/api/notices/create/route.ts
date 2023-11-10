@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server"
 import prisma from '@/app/lib/prisma'
+import { verifyJwt } from "@/app/lib/jwt"
 
 export async function GET() {
   const url = 'https://developer-lostark.game.onstove.com/news/notices';
@@ -36,6 +37,13 @@ export async function POST(req: NextRequest) {
   // console.log(body);
 
   try {
+    const accessToken = req.headers.get('Authorization');
+    // console.log('test ', accessToken);
+    if (!accessToken || !verifyJwt(accessToken)) {
+      return new NextResponse('No Authorization', { status: 401 });
+    }
+
+
     const user = await prisma.user.findFirst({
       where: {
         email: body.user
