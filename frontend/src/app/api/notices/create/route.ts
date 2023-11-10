@@ -39,10 +39,9 @@ export async function POST(req: NextRequest) {
   try {
     const accessToken = req.headers.get('Authorization');
     // console.log('test ', accessToken);
-    if (!accessToken || !verifyJwt(accessToken)) {
+    if (!accessToken || !verifyJwt(accessToken.slice(7))) {
       return new NextResponse('No Authorization', { status: 401 });
     }
-
 
     const user = await prisma.user.findFirst({
       where: {
