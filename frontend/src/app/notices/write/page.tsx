@@ -40,7 +40,7 @@ export default function Write() {
     }
 
     if(window.confirm('작성한 내용으로 등록하시겠습니까?')) {
-      fetch('/api/notices', {
+      fetch('/api/notices/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
