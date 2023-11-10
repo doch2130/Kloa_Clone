@@ -137,7 +137,9 @@ export async function DELETE(req: NextRequest) {
       return new NextResponse(JSON.stringify({ success: true, status: 404 }));
     } else {
       const userMailNumberDelete = await prisma.mailnumber.delete({
-        where: body.email
+        where: {
+          email: body.email
+        }
       });
 
       // console.log('userMailNumberDelete ', userMailNumberDelete);
