@@ -48,7 +48,11 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
-      // console.log('jwt token ', token);
+      // 소셜 로그인의 경우 token.accessToken이 별도로 생성이 되지 않아서 조건문으로 데이터 추가
+      if(token && token.accessToken === undefined && user !== undefined) {
+        const accessToken = await signJwtAccessToken({id: user.id, email: user.email});
+        token.accessToken = accessToken;
+      }
       return { ...token, ...user };
     },
     async session({ session, token }) {
