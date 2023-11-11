@@ -18,6 +18,14 @@ export interface NoticePost {
 }
 
 export type NoticesTopFive = {
+  id: number,
+  title: string,
+  category: string,
+  createdAt: string,
+  link: string,
+}
+
+export type NoticesTopFiveResp = {
   Title: string,
   Date: string,
   Link: string,
