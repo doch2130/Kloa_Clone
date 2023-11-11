@@ -1,37 +1,16 @@
-import jwt, { JwtPayload } from "jsonwebtoken"
 import {SignJWT, jwtVerify, type JWTPayload} from 'jose';
+import { JWT } from "next-auth/jwt"
 
-interface SignOption {
-  expiresIn?: string | number;
-}
 
-const DEFAULT_SIGN_OPTION: SignOption = {
-  expiresIn: "1h",
-};
-
-// 토큰 생성 함수
-export function signJwtAccessToken(payload: JwtPayload, options: SignOption = DEFAULT_SIGN_OPTION) {
-  const secret_key = process.env.SECRET_KEY;
-  const token = jwt.sign(payload, secret_key!, options);
-  return token;
-}
-
-// 토큰 검증 함수
-export function verifyJwt(token: string) {
-  try {
-    const secret_key = process.env.SECRET_KEY;
-    const decoded = jwt.verify(token, secret_key!);
-    return decoded as JwtPayload;
-  } catch (error) {
-    console.log(error);
-    return null;
+export function getJwtSecretKey() {
+  const secret = process.env.SECRET_KEY;
+  if (!secret) {
+    throw new Error("JWT Secret key is not matched");
   }
+  return new TextEncoder().encode(secret);
 }
 
-
-
-// jose 임시 작성 함수 = 테스트 예정
-export async function sign(payload: JwtPayload):Promise<string> {
+export async function signJwtAccessToken(payload: JWTPayload):Promise<string> {
   try{
     const secret_key = process.env.SECRET_KEY;
     const iat = Math.floor(Date.now() / 1000);
@@ -51,11 +30,18 @@ export async function sign(payload: JwtPayload):Promise<string> {
   }
 }
 
-export async function verify(token: string):Promise<jwt.JwtPayload | null> {
+export async function verifyJwt(token: JWT):Promise<JWTPayload | null> {
   try {
-    const secret_key = process.env.SECRET_KEY;
-    const { payload } = await jwtVerify(token, new TextEncoder().encode(secret_key));
-    return payload as JwtPayload;
+    
+    if(typeof token.accessToken !== 'string') {
+      return null;
+    }
+
+    const accessToken:string = token.accessToken;
+
+    const { payload } = await jwtVerify(accessToken, getJwtSecretKey());
+    // console.log('payload ', payload);
+    return payload as JWTPayload;
   } catch (error) {
     console.log(error);
     return null;

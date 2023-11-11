@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { JWT } from "next-auth/jwt"
 import { verifyJwt } from "@/app/lib/jwt"
 
 // 로그인 안 한 상태에서만 접속 가능 리스트
@@ -12,17 +13,16 @@ export const withAuthList = [
   '/notices/write', '/notices/update/:path*', '/manager'
 ];
 
+export const authList = [...withAuthList, ...withOutAuthList];
 
-export async function withAuth(req: NextRequest, token: string) {
+
+export async function withAuth(req: NextRequest, token: JWT | null) {
   try {
-    // const token = req.cookies.get('next-auth.session-token');
-    // console.log('withAuth ', token);
-
     const url = req.nextUrl.clone()
     url.pathname = '/auth/login';
 
     // if(token !== undefined && verifyJwt(token.value)) {
-    if(token !== undefined && verifyJwt(token.slice(7))) {
+    if(token !== null && await verifyJwt(token)) {
       return NextResponse.next();
     } else {
       return NextResponse.redirect(url);
@@ -34,13 +34,12 @@ export async function withAuth(req: NextRequest, token: string) {
   }
 }
 
-export async function withOutAuth(req: NextRequest, token: string) {
+export async function withOutAuth(req: NextRequest, token: JWT | null) {
   try {
     const url = req.nextUrl.clone()
     url.pathname = '/';
 
-    // if(token !== undefined && verifyJwt(token.value)) {
-    if(token !== undefined && verifyJwt(token.slice(7))) {
+    if(token !== null && await verifyJwt(token)) {
       return NextResponse.redirect(url);
     } else {
       return NextResponse.next();

@@ -30,12 +30,13 @@ const handler = NextAuth({
           const user = { id: String(findUser.id), email: findUser.email };
 
           // JWT 토큰
-          const accessToken = signJwtAccessToken(user);
+          const accessToken = await signJwtAccessToken(user);
           // console.log('accessToken ', accessToken);
           const result = {
             id: String(findUser.id),
             email: findUser.email,
-            accessToken: `bearer ${accessToken}`,
+            // accessToken: `bearer ${accessToken}`,
+            accessToken: accessToken,
           };
 
           return result;
@@ -47,6 +48,7 @@ const handler = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
+      // console.log('jwt token ', token);
       return { ...token, ...user };
     },
     async session({ session, token }) {
