@@ -16,37 +16,39 @@ export const withAuthList = [
 export const authList = [...withAuthList, ...withOutAuthList];
 
 
-export async function withAuth(req: NextRequest, token: JWT | null) {
+export async function withAuth(req: NextRequest, token: JWT | null):Promise<Response> {
   try {
     const url = req.nextUrl.clone()
     url.pathname = '/auth/login';
 
-    // if(token !== undefined && verifyJwt(token.value)) {
-    if(token !== null && await verifyJwt(token)) {
+    if(token !== null && (await verifyJwt(token))) {
       return NextResponse.next();
     } else {
+      req.cookies.delete("next-auth.session-token");
       return NextResponse.redirect(url);
     }
 
   } catch (error) {
-    console.log('err: ', error);
-    throw new Error(`Couldn't check authentication`);
+    console.log('withAuth에서 에러 발생:', error);
+    return NextResponse.error();
   }
 }
 
-export async function withOutAuth(req: NextRequest, token: JWT | null) {
+
+export async function withOutAuth(req: NextRequest, token: JWT | null):Promise<Response> {
   try {
     const url = req.nextUrl.clone()
     url.pathname = '/';
 
-    if(token !== null && await verifyJwt(token)) {
+    if(token !== null && (await verifyJwt(token))) {
       return NextResponse.redirect(url);
     } else {
+      req.cookies.delete("next-auth.session-token");
       return NextResponse.next();
     }
 
   } catch (error) {
-    console.log('err: ', error);
-    throw new Error(`Couldn't check authentication`);
+    console.log('withOutAuth에서 에러 발생:', error);
+    return NextResponse.error();
   }
 }
