@@ -3,8 +3,6 @@ import React from 'react'
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
-import { NoticesTopFive } from '@/type/notice'
-
 import styled from './Manager.module.css'
 
 export default function Manager() {
