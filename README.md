@@ -67,7 +67,7 @@ Learn More: https://nextjs.org/docs/messages/node-module-in-edge-runtime
 => 복호화가 안되는 에러로 보임
 => jsonwebtoken에서 jose로 변경하면 된다고 함, 임시 생성, 검증 코드 작성, 테스트 진행 예정
 
-19일차 : jsonwebtoken에서 jose로 함수 변경 완료, 미들웨어 적용 정상 확인
+19일차 : jsonwebtoken에서 jose로 함수 변경 완료, 미들웨어 적용 정상 확인, token 불일치 시 쿠키 삭제, 소셜 로그인 시 accessToken 항목이 저장이 안되서 로그인 시 callback 함수에서 별도로 추가하는 로직 추가
 
 
 
