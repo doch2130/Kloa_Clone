@@ -1,9 +1,15 @@
 'use client'
 import React from 'react'
+import { useSession } from 'next-auth/react';
+
 import { NoticesTopFive } from '@/type/notice'
+
 import styled from './Manager.module.css'
 
 export default function Manager() {
+  const { data: session } = useSession();
+  console.log('session ', session);
+  
   return (
     <div className={styled.managerWrap}>
       <div>
