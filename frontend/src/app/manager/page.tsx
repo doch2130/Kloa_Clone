@@ -1,14 +1,58 @@
 'use client'
 import React from 'react'
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 import { NoticesTopFive } from '@/type/notice'
 
 import styled from './Manager.module.css'
 
 export default function Manager() {
+  const router = useRouter();
   const { data: session } = useSession();
-  console.log('session ', session);
+  // console.log('session ', session);
+
+  const getNoticeList = async () => {
+    fetch('/api/lostark/notices', {
+      method: 'GET',
+      headers: {
+        'accept': 'application/json',
+        'authorization': `bearer ${session?.user?.accessToken}`
+      }
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .then((data) => {
+        // console.log('Data from API:', data);
+        if(data.redirect) {
+          alert('인증이 만료되었습니다. 다시 로그인 해주세요.');
+          router.push('/auth/login');
+          return ;
+        }
+
+        if(data.status === 200) {
+          alert('공지사항 갱신이 완료되었습니다.');
+          return ;
+        } else {
+          alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
+          return ;
+        }
+
+      })
+      .catch((error) => {
+        // console.error('Fetch error: ', error);
+        alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
+      });
+  }
+
+
+
+  
   
   return (
     <div className={styled.managerWrap}>
@@ -28,7 +72,7 @@ export default function Manager() {
 
 const getCalendarList = () => {
   fetch('/api/calendar', {
-    method: 'GET'
+    method: 'GET',
   })
     .then((response) => {
       if (response.ok) {
@@ -46,43 +90,4 @@ const getCalendarList = () => {
       // console.error('Fetch error: ', error);
       alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
     });
-}
-
-const getNoticeList = () => {
-  fetch('/api/notices', {
-    method: 'GET'
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Network response was not ok');
-      }
-    })
-    .then((data) => {
-      // 데이터를 사용하는 코드를 여기에 작성
-      // console.log('Data from API:', data);
-      updateNoticeList(data.slice(0, 5));
-    })
-    .catch((error) => {
-      // console.error('Fetch error: ', error);
-      alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
-    });
-}
-
-const updateNoticeList = async (data:NoticesTopFive[]) => {
-  try {
-    await fetch('http://localhost:9999/notices', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
-    // console.log('success');
-    alert('데이터 갱신이 완료되었습니다.');
-  } catch (error) {
-    console.error('Update error: ', error);
-    // alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
-  }
 }
