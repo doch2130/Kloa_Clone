@@ -47,3 +47,14 @@ export async function verifyJwt(token: JWT):Promise<JWTPayload | null> {
     return null;
   }
 }
+
+export async function verifyStringJwt(token: string):Promise<JWTPayload | null> {
+  try {
+    const { payload } = await jwtVerify(token, getJwtSecretKey());
+    // console.log('payload ', payload);
+    return payload as JWTPayload;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
