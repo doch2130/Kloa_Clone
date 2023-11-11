@@ -17,23 +17,16 @@ const categoryClassMap: { [key: string]: string } = {
 
 export default async function Home() {
   // 로스트아크 공지사항
-  const noticesResp = await fetch(`http://localhost:9999/notices`,
-  { 
-    cache: 'default',
-    headers: {
-      // 캐시 유효 시간을 1시간으로 설정
-      'Cache-Control': 'max-age=3600',
-    }
+  // const noticesResp = await fetch(`http://localhost:9999/notices`,
+  const noticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark`, {
+    cache: 'no-store',
   });
   const noticesList = await noticesResp.json();
-  const noticesTopList = noticesList[0];
-  // console.log('noticesTopList ', noticesTopList);
-
+  // console.log('noticesList.data ', noticesList);
   
   // 클로아 공지사항
   // const mainNoticesResp = await fetch(`http://localhost:9999/mainNotices`,
-  const mainNoticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices?top=true`,
-  {
+  const mainNoticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices?top=true`, {
     cache: 'no-store',
   });
   const mainNoticesTopList:NoticePostResp = await mainNoticesResp.json();
@@ -42,8 +35,7 @@ export default async function Home() {
 
   // 모험 섬 데이터
   // const adventureResp = await fetch('http://localhost:9999/adventureIsland',
-  const adventureResp = await fetch(`${process.env.NEXT_PUBLIC_FIREBASE}/adventureIsland.json`,
-  {
+  const adventureResp = await fetch(`${process.env.NEXT_PUBLIC_FIREBASE}/adventureIsland.json`, {
     cache: 'no-store',
   });
   const adventureIslandList:OrganizeAdventureIslandList[] = await adventureResp.json();
@@ -65,11 +57,11 @@ export default async function Home() {
           </div>
           <div className={styled.noticeTable}>
             {
-              noticesTopList.map((el:NoticesTopFive, index:number) => 
+              noticesList.data.map((el:NoticesTopFive, index:number) => 
               (
                 <div className={styled.noticeTableRow} key={index}>
-                  <div className={`${styled.noticeTableCategory} ${categoryClassMap[el.Type]}`}>{el.Type}</div>
-                  <Link href={el.Link} target="_blank">{el.Title}</Link>
+                  <div className={`${styled.noticeTableCategory} ${categoryClassMap[el.category]}`}>{el.category}</div>
+                  <Link href={el.link} target="_blank">{el.title}</Link>
                 </div>
               ))
             }
