@@ -6,6 +6,7 @@ export interface RewardItem {
 }
 
 export interface AdventureIsland {
+  data: AdventureIsland;
   ContentsName: string;
   ContentsIcon: string;
   RewardItemType: string;
@@ -19,4 +20,9 @@ export interface AdventureIslandList {
 
 export interface OrganizeAdventureIslandList {
   [date: string]: AdventureIsland[];
+}
+
+export interface AdventureIslandResp {
+  data: AdventureIsland[] | [];
+  status: number;
 }
