@@ -67,11 +67,12 @@ Learn More: https://nextjs.org/docs/messages/node-module-in-edge-runtime
 => 복호화가 안되는 에러로 보임
 => jsonwebtoken에서 jose로 변경하면 된다고 함, 임시 생성, 검증 코드 작성, 테스트 진행 예정
 
-19일차 : jsonwebtoken에서 jose로 함수 변경 완료, 미들웨어 적용 정상 확인, token 불일치 시 쿠키 삭제, 소셜 로그인 시 accessToken 항목이 저장이 안되서 로그인 시 callback 함수에서 별도로 추가하는 로직 추가
+19일차: jsonwebtoken에서 jose로 함수 변경 완료, 미들웨어 적용 정상 확인, token 불일치 시 쿠키 삭제, 소셜 로그인 시 accessToken 항목이 저장이 안되서 로그인 시 callback 함수에서 별도로 추가하는 로직 추가
 Token 검증 함수 분리(Token 전체 검증, accessToken만 검증)
 로스트아크 API 공지사항 가져오기 함수 수정 (Json-Server => Prisma + MySQL)
 홈페이지 로스트아크 공지사항 출력 기능 수정
 
+20일차: 로스트아크 API 스케줄 데이터 가져오기 기능 변경 작업 (기존 db.json 방식에서 assets 폴더에 날짜 별로 파일 분리 작업)
 
 
 
