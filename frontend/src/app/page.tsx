@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import { NoticePostResp, NoticePost, NoticesTopFive } from '@/type/notice'
-import { OrganizeAdventureIslandList } from '@/type/adventureIsland'
+import { AdventureIslandResp } from '@/type/adventureIsland'
 
 import SlideImage from '@/components/Home/SlideImageSection/SlideImage';
 import Schedule from '@/components/Home/ScheduleSection/Schedule';
@@ -17,30 +17,25 @@ const categoryClassMap: { [key: string]: string } = {
 
 export default async function Home() {
   // 로스트아크 공지사항
-  // const noticesResp = await fetch(`http://localhost:9999/notices`,
-  const noticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark`, {
+  const noticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark?category=notices`, {
     cache: 'no-store',
   });
   const noticesList = await noticesResp.json();
   // console.log('noticesList.data ', noticesList);
   
   // 클로아 공지사항
-  // const mainNoticesResp = await fetch(`http://localhost:9999/mainNotices`,
   const mainNoticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices?top=true`, {
     cache: 'no-store',
   });
   const mainNoticesTopList:NoticePostResp = await mainNoticesResp.json();
   // console.log('mainNoticesTopList ', mainNoticesTopList);
 
-
   // 모험 섬 데이터
-  // const adventureResp = await fetch('http://localhost:9999/adventureIsland',
-  const adventureResp = await fetch(`${process.env.NEXT_PUBLIC_FIREBASE}/adventureIsland.json`, {
+  const adventureResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark?category=adventure`, {
     cache: 'no-store',
   });
-  const adventureIslandList:OrganizeAdventureIslandList[] = await adventureResp.json();
-  delete adventureIslandList[0].id
-  // console.log('adventureIslandList ', adventureIslandList);
+  const adventureIslandData:AdventureIslandResp = await adventureResp.json();
+  // console.log('adventureIslandData ', adventureIslandData);
 
   return (
     <div className={styled.bodySection}>
@@ -48,7 +43,7 @@ export default async function Home() {
         <SlideImage />
       </section>
       <section className={styled.schedule}>
-        <Schedule adventureIslandList={adventureIslandList[0]} />
+        <Schedule adventureIslandData={adventureIslandData?.data} />
       </section>
       <section className={styled.notices}>
         <div className={styled.lostarkNotice}>
