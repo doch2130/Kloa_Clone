@@ -1,8 +1,8 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 
-import { AdventureIsland, OrganizeAdventureIslandList } from '@/type/adventureIsland'
+import { AdventureIsland } from '@/type/adventureIsland'
 import { changeMonth } from './scheduleUtils'
 
 import ScheduleHeaderTime from './ScheduleHeaderTime'
@@ -16,7 +16,7 @@ import LeftArrow from '@/assets/Icon/leftArrow.svg'
 import RightArrow from '@/assets/Icon/rightArrow.svg'
 
 type ScheduleProps = {
-  adventureIslandList: OrganizeAdventureIslandList;
+  adventureIslandData: AdventureIsland[];
 }
 
 const DayOfWeekEventCategory = ['필드보스', '카오스게이트', '태초의 섬'];
@@ -24,28 +24,8 @@ const today = new Date();
 const tomorrow = new Date();
 tomorrow.setDate(tomorrow.getDate() + 1);
 
-export default function Schedule({ adventureIslandList }:ScheduleProps) {
+export default function Schedule({ adventureIslandData }:ScheduleProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [adventureList, setAdventureList] = useState<AdventureIsland[]>([]);
-
-  useEffect(() => {
-    // 선택날짜에 따른 모험섬 데이터 새로 저장하는 함수
-    // console.log('adventureIslandList ', adventureIslandList);
-    const year = currentDate.getFullYear();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-    const day = currentDate.getDate().toString().padStart(2, '0');
-    const dateFormat = `${year}-${month}-${day}`;
-
-    // 주말 오전, 오후 섬 시간대 별 정리를 위한 sort 함수
-    if(adventureIslandList[dateFormat]?.length >= 6) {
-      adventureIslandList[dateFormat].sort((a, b) => {
-        const dateA = new Date(a.StartTimes[0]);
-        const dateB = new Date(b.StartTimes[0]);
-        return dateA.getTime() - dateB.getTime();
-      });
-    }
-    setAdventureList(adventureIslandList[dateFormat]);
-  }, [adventureIslandList, currentDate]);
 
   return (
     <>
@@ -82,7 +62,7 @@ export default function Schedule({ adventureIslandList }:ScheduleProps) {
       {/* AdventureIslandSchedule Start */}
       <div className={styled.scheduleIsland}>
         <div className={styled.scheduleIslandRow}>
-          <AdventureIslandSchedule today={today} currentDate={currentDate} adventureList={adventureList} />
+          <AdventureIslandSchedule today={today} currentDate={currentDate} adventureIslandData={adventureIslandData} />
         </div>
       </div>
       {/* AdventureIslandSchedule End */}
