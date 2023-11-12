@@ -2,6 +2,10 @@
 import { NextRequest, NextResponse } from "next/server"
 import { ContentsCalendar, OrganizeContentsCalendar, RewardItem, OrganizeRewardItem, OrganizeAdventureIslandList } from '@/type/contentsCalendar'
 import { verifyStringJwt } from "@/app/lib/jwt"
+import path from 'path';
+import fs from "fs";
+// import { readFile, writeFile } from "fs/promises";
+import { writeFile } from "fs/promises";
 
 async function calendarAdventureFilter(data:ContentsCalendar[]) {
   const adventureIsland = data.filter((el:ContentsCalendar) => el.CategoryName === '모험 섬');
@@ -84,44 +88,47 @@ async function calendarAdventureFilter(data:ContentsCalendar[]) {
   return sortedData;
 }
 
-
-const updateCalendar = async (filterAdventureIsland:OrganizeAdventureIslandList) => {
+const calendarFileSave = async (filterAdventureIsland:OrganizeAdventureIslandList) => {
   try {
-    const adventureIslandList = await fetch('http://localhost:9999/adventureIsland');
-    const updateData = await adventureIslandList.json();
-    // console.log('updateData ', updateData);
+    // 현재 폴더 디렉토리 경로 가져오는 함수 (frontend 폴더)
+    // console.log('process.cwd() ',process.cwd());
+    // const filePath = path.join(process.cwd(), '/src/assets/Schedule/Schedule.json');
+    // const scheduleFile = await readFile(filePath, 'utf-8');
+    // console.log('scheduleFile', scheduleFile);
+
     // console.log('filterAdventureIsland ', filterAdventureIsland);
+    const keyArray = Object.keys(filterAdventureIsland);
 
-    updateData.forEach((el:OrganizeAdventureIslandList) => {
-      for (const date in filterAdventureIsland) {
-        if (filterAdventureIsland.hasOwnProperty(date)) {
-          el[date] = filterAdventureIsland[date];
-        }
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const folderName = `${year}${month}`;
+
+    // 현재 폴더 디렉토리 경로 가져오는 함수 (frontend 폴더)
+    // console.log('process.cwd() ',process.cwd());
+    const filePath = path.join(process.cwd(), `/src/assets/Schedule/${folderName}`);
+
+      if (!fs.existsSync(filePath)) {
+        fs.mkdirSync(filePath);
       }
-    });
 
-    // console.log('updateData ', updateData[0]);
+    for (let i = 0; i < keyArray.length; i++) {
+      const fileData = filterAdventureIsland[keyArray[i]];
+      const fileName = `${filePath}/${keyArray[i]}.json`
 
-    // 임시로 데이터 삭제 후 삽입 방식 사용
-    await fetch('http://localhost:9999/adventureIsland/1', {
-      method: 'DELETE',
-    });
-
-    await fetch('http://localhost:9999/adventureIsland', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updateData[0]),
-    });
+     await writeFile(fileName, JSON.stringify(fileData, null, 2), 'utf-8');
+    }
 
     console.log('Success');
+    return true;
     
   } catch (error) {
     console.error('Update error: ', error);
+    return false;
     // alert('데이터 갱신 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
   }
 }
+
 
 export async function GET(req: NextRequest) {
   // 로스트아크 API 캘린더 데이터 가져오기
@@ -153,18 +160,18 @@ export async function GET(req: NextRequest) {
     if (response.ok) {
       const data = await response.json();
       const filterAdventureIsland = await calendarAdventureFilter(data);
-      await updateCalendar(filterAdventureIsland);
-      return new NextResponse(JSON.stringify(filterAdventureIsland), {
-        status: response.status,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const saveAdventureIsland = await calendarFileSave(filterAdventureIsland);
+
+      if(saveAdventureIsland) {
+        return new NextResponse(JSON.stringify({message: 'Calendar Update Success', status: 200}));
+      } else {
+        return new NextResponse(JSON.stringify({message: 'Calendar Update error', status: 500}));
+      }
     } else {
-      return new NextResponse('Error fetching data', { status: response.status });
+      return new NextResponse(JSON.stringify({message: 'Calendar Update error', status: response.status}));
     }
   } catch (error) {
     console.error('Error:', error);
-    return new NextResponse('An error occurred', { status: 500 });
+    return new NextResponse(JSON.stringify({message: 'Calendar Update error', status: 500}));
   }
 }

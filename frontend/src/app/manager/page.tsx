@@ -50,7 +50,7 @@ export default function Manager() {
 
 
   const getCalendarList = () => {
-    fetch('/api/lostark/calendar2', {
+    fetch('/api/lostark/calendar', {
       method: 'GET',
       headers: {
         'accept': 'application/json',
