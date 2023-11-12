@@ -4,7 +4,6 @@ import { ContentsCalendar, OrganizeContentsCalendar, RewardItem, OrganizeRewardI
 import { verifyStringJwt } from "@/app/lib/jwt"
 import path from 'path';
 import fs from "fs";
-// import { readFile, writeFile } from "fs/promises";
 import { writeFile } from "fs/promises";
 
 async function calendarAdventureFilter(data:ContentsCalendar[]) {
@@ -85,32 +84,36 @@ async function calendarAdventureFilter(data:ContentsCalendar[]) {
     }
   });
 
+  // 일단 보류 (안써도 될듯)
+  // Sort the data based on date keys
+  // const sortedKeys = Object.keys(sortedData).sort();
+  // const sortedResult: OrganizeAdventureIslandList = {};
+
+  // sortedKeys.forEach((key) => {
+  //   sortedResult[key] = sortedData[key];
+  // });
+
   return sortedData;
 }
 
 const calendarFileSave = async (filterAdventureIsland:OrganizeAdventureIslandList) => {
   try {
-    // 현재 폴더 디렉토리 경로 가져오는 함수 (frontend 폴더)
-    // console.log('process.cwd() ',process.cwd());
-    // const filePath = path.join(process.cwd(), '/src/assets/Schedule/Schedule.json');
-    // const scheduleFile = await readFile(filePath, 'utf-8');
-    // console.log('scheduleFile', scheduleFile);
-
     // console.log('filterAdventureIsland ', filterAdventureIsland);
     const keyArray = Object.keys(filterAdventureIsland);
 
     const date = new Date();
     const year = date.getFullYear();
-    const month = date.getMonth() + 1;
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+
     const folderName = `${year}${month}`;
 
     // 현재 폴더 디렉토리 경로 가져오는 함수 (frontend 폴더)
     // console.log('process.cwd() ',process.cwd());
     const filePath = path.join(process.cwd(), `/src/assets/Schedule/${folderName}`);
 
-      if (!fs.existsSync(filePath)) {
-        fs.mkdirSync(filePath);
-      }
+    if (!fs.existsSync(filePath)) {
+      fs.mkdirSync(filePath);
+    }
 
     for (let i = 0; i < keyArray.length; i++) {
       const fileData = filterAdventureIsland[keyArray[i]];
