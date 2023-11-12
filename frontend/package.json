@@ -19,6 +19,7 @@
     "@prisma/client": "^5.5.2",
     "@types/nodemailer": "^6.4.13",
     "bcrypt": "^5.1.1",
+    "fs": "^0.0.1-security",
     "jose": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "next": "13.5.6",
