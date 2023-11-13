@@ -80,6 +80,8 @@ Token 검증 함수 분리(Token 전체 검증, accessToken만 검증)
 => 특수문자 replace 처리 작업 필요
 
 => JSON-SERVER 사용 X (일단 보류)
+DB 사용자 정보에서 role 항목 추가 (관리자 true, 일반 false);
+=> 그에 따라 prisma 파일, 관리자 뷰 조건 컴포넌트 수정 완료
 
 
 *해결사항*
