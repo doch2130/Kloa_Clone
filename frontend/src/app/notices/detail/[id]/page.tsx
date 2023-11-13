@@ -176,7 +176,7 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span>{nextPostData.viewCount}</span>
             </div>
-            <div className={styled.postFooterRecomendCount}>
+            <div className={styled.postFooterRecomendCount} onClick={() => recomendEventHandler(nextPostData.id, session, nextPostData, setNextPostData)}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{nextPostData.recomendCount}</span>
             </div>
@@ -199,7 +199,7 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span>{postData.viewCount}</span>
             </div>
-            <div className={styled.postFooterRecomendCount}>
+            <div className={styled.postFooterRecomendCount} onClick={() => recomendEventHandler(postData.id, session, postData, setPostData)}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{postData.recomendCount}</span>
             </div>
@@ -222,7 +222,7 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span>{prevPostData.viewCount}</span>
             </div>
-            <div className={styled.postFooterRecomendCount}>
+            <div className={styled.postFooterRecomendCount} onClick={() => recomendEventHandler(prevPostData.id, session, prevPostData, setPrevPostData)}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{prevPostData.recomendCount}</span>
             </div>
