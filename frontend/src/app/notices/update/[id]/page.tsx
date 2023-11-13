@@ -20,10 +20,14 @@ export default function Update() {
   const { data: session } = useSession();
 
   useEffect(() => {
-    fetch(`http://localhost:9999/mainNotices/${id}`)
+    fetch(`/api/notices?id=${id}&detail=true&update=true`, {
+      method: 'GET',
+    })
       .then(res => res.json())
-      .then(result => {
-        
+      .then(res => {
+        // console.log('res ', res);
+        const result = res.result[0];
+        // console.log('result ', result);
         if(result.id === undefined) {
           alert('잘못된 페이지 접근입니다.');
           router.push('/notices?page=1');
@@ -37,7 +41,6 @@ export default function Update() {
           title: result.title,
         });
         return ;
-
       })
       .catch(error => {
         alert('페이지 로딩 중 에러가 발생하였습니다.');
@@ -71,7 +74,8 @@ export default function Update() {
       fetch('/api/notices/update', {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${session?.user?.accessToken}`,
         },
         body: JSON.stringify({
           id: id,
