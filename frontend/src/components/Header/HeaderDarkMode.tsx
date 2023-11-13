@@ -6,7 +6,7 @@ import SunModeIcon from '@/assets/Icon/sun.svg'
 import MoonModeIcon from '@/assets/Icon/moon.svg'
 
 export default function HeaderDarkMode() {
-  const [dark, setDark] = useState("darkMode");
+  const [dark, setDark] = useState("defaultMode");
 
   const toggleDarkMode = () => {
     if (localStorage.getItem("theme") === "dark") {
@@ -23,7 +23,6 @@ export default function HeaderDarkMode() {
   };
 
   useEffect(() => {
-    // 처음에 다크모드인지 판단해서 뿌려주기 !! ( 나중에는 상태관리를 해도 괜찮습니다 ! )
     if (localStorage.getItem("theme") === "dark") {
       document.documentElement.classList.add("dark");
     }
@@ -32,8 +31,8 @@ export default function HeaderDarkMode() {
     <>
     <button type='button' className='duration-300 bg-white dark:bg-[#2b2d31] dark:hover:bg-[#40434a]' onClick={() => toggleDarkMode()}>
       {dark === 'defaultMode' ? 
-      <Image src={MoonModeIcon} alt='MoonMode' />
-      : <Image src={SunModeIcon} alt='MoonMode' />
+      <Image src={MoonModeIcon} alt='MoonMode Icon' />
+      : <Image src={SunModeIcon} alt='SunMode Icon' />
       }
     </button>
     </>
