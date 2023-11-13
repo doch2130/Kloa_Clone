@@ -6,14 +6,15 @@ import NavSearchForm from './NavSearchForm'
 import Kloa1Icon from '@/assets/Logo/kloa1.webp'
 import Kloa2Icon from '@/assets/Logo/kloa2.webp'
 import SearchIcon from '@/assets/Icon/search.svg'
-import SunModeIcon from '@/assets/Icon/sun.svg'
-import MoonModeIcon from '@/assets/Icon/moon.svg'
 import HeaderLogin from './HeaderLogin'
+import HeaderDarkMode from './HeaderDarkMode'
 
 export default function Header() {
   return (
-    <header style={{backgroundColor: 'white'}}>
-      <nav className='nav-bar'>
+    // <header style={{backgroundColor: 'white'}} className='dark:bg-[#2b2d31]'>
+    // <header style={{backgroundColor: 'white'}} className='dark:bg-slate-900'>
+    <header>
+      <nav className='nav-bar bg-white dark:bg-[#2b2d31]'>
         <div className='nav-left'>
           <Link href='/'>
             <Image src={Kloa1Icon} alt='KLOA ICON' width={100} height={30} />
@@ -33,10 +34,7 @@ export default function Header() {
           </div>
         </div>
         <div className='nav-right'>
-          <button type='button' className='duration-300'>
-            <Image src={MoonModeIcon} alt='MoonMode' />
-          </button>
-          {/* <Link href='/auth/login' className='duration-300'>로그인</Link> */}
+          <HeaderDarkMode />
           <HeaderLogin />
         </div>
       </nav>
