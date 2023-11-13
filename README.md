@@ -79,6 +79,8 @@ Token 검증 함수 분리(Token 전체 검증, accessToken만 검증)
 메인 공지사항 수정 페이지 JSON-SERVER에서 prisma로 변경 작업 완료, 데이터 정상 확인
 => 특수문자 replace 처리 작업 필요
 
+=> JSON-SERVER 사용 X (일단 보류)
+
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
