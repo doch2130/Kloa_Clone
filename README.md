@@ -83,6 +83,8 @@ Token 검증 함수 분리(Token 전체 검증, accessToken만 검증)
 DB 사용자 정보에서 role 항목 추가 (관리자 true, 일반 false);
 => 그에 따라 prisma 파일, 관리자 뷰 조건 컴포넌트 수정 완료
 
+tailwind 다크모드 테스트 (header 부분부터 테스트 진행)
+
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
