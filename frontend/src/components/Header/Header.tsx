@@ -12,7 +12,7 @@ import HeaderDarkMode from './HeaderDarkMode'
 export default function Header() {
   return (
     <header>
-      <nav className='nav-bar bg-white dark:bg-[#2b2d31]'>
+      <nav className='nav-bar bg-white dark:bg-[#33353a] dark:border-[#42464D]'>
         <div className='nav-left'>
           <Link href='/' className='logo-image-container'>
             <Image src={Kloa1Icon} alt='KLOA ICON' width={100} height={30} className='default-image' />
@@ -28,7 +28,7 @@ export default function Header() {
             <Link href='/crow' className='drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc]'>계산기</Link>
           </div>
           <div className='nav-search dark:border-[#42464D]'>
-            <Image src={SearchIcon} alt='SearchIcon' />
+            <Image src={SearchIcon} alt='SearchIcon' width={24} height={24} />
             <NavSearchForm />
           </div>
         </div>

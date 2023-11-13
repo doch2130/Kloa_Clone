@@ -73,38 +73,44 @@ export default function Detail() {
     //   cache.delete(`http://localhost:9999/mainNotices/${id}`);
     // });
 
-    try {
-      const response = await fetch('/api/notices/delete', {
-        method: 'DELETE',
-        body: JSON.stringify({
-          id: id
-        })
-      });
-
-      const deleteResponse = await response.json();
-      // console.log('deleteResponse ', deleteResponse);
-
-      if(deleteResponse.status === 404) {
-        alert('존재하지 않는 게시글입니다.');
+    if(window.confirm('게시글을 삭제하시겠습니까?')) {
+      try {
+        const response = await fetch('/api/notices/delete', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': `bearer ${session?.user?.accessToken}`,
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        });
+  
+        const deleteResponse = await response.json();
+        // console.log('deleteResponse ', deleteResponse);
+  
+        if(deleteResponse.status === 404) {
+          alert('존재하지 않는 게시글입니다.');
+          router.push('/notices?page=1');
+          return ;
+        }
+  
+        alert('게시글이 삭제되었습니다.');
         router.push('/notices?page=1');
+        router.refresh();
+  
+        return ;
+  
+      } catch (error) {
+        // console.error('Error while fetching data:', error);
+        alert('삭제 중 에러가 발생하였습니다.');
         return ;
       }
-
-      alert('게시글이 삭제되었습니다.');
-      router.push('/notices?page=1');
-      router.refresh();
-
-      return ;
-
-    } catch (error) {
-      // console.error('Error while fetching data:', error);
-      alert('삭제 중 에러가 발생하였습니다.');
-      return ;
     }
   }
 
   return (
-    <div className={styled.postBody}>
+    <div className={`${styled.postBody} dark:bg-[#2b2d31]`}>
       <div className={styled.postBodyWrap}>
         <div className={styled.postBodyRow}>
           <hr />
@@ -112,38 +118,38 @@ export default function Detail() {
         <div className={styled.postBodyRow}>
           <div className={styled.postTableRow}>
             <div className={
-              postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck}` :
-              postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent}`
-              : `${styled.postCategory}`}>
+              postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} dark:border-[#646870]` :
+              postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} dark:border-[#646870]`
+              : `${styled.postCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
                 {postData.category}
             </div>
-            <div className={styled.postTitle}>{postData.title}</div>
-            <div className={styled.postDate}>{postData.createdAt}</div>
-            <div className={styled.postViewCount}>
+            <div className={`${styled.postTitle} dark:text-[#eaf0ec]`}>{postData.title}</div>
+            <div className={`${styled.postDate} dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
+            <div className={`${styled.postViewCount} dark:text-[#eaf0eca2]`}>
               <Image src={EyeIcon} alt='eye icon' />
-              <span>{postData.viewCount}</span>
+              <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
             </div>
           </div>
         </div>
         <div className={styled.postBodyRow + ' ' + styled.postBodyText}>
-          <pre dangerouslySetInnerHTML={{__html: postData.content}}>
+          <pre className='dark:text-[#eaf0ec]' dangerouslySetInnerHTML={{__html: postData.content}}>
           </pre>
         </div>
         <div className={styled.postBodyRow}>
-          <div className={styled.postRecomendCount} onClick={() => recomendEventHandler(postData.id, session, postData, setPostData)}>
+          <div className={`${styled.postRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(postData.id, session, postData, setPostData)}>
             <Image src={MococoIcon} alt='mococo icon' />
             <span>{postData.recomendCount}</span>
           </div>
         </div>
         <div className={styled.postBodyRow + ' ' + styled.postBodyButtonGroup}>
-          <Link href='/notices?page=1'>
-            <Image src={ListIcon} alt='list icon' width={23} height={23} />
+          <Link className='dark:border-[#646870]' href='/notices?page=1'>
+            <Image src={ListIcon} alt='list icon' width={23} height={23} className='dark:text-[#eaf0ec]' />
           </Link>
           <div className={styled.arrowButtonGroup}>
-            <Link href={`/notices/detail/${Number(id)+1}`}>
+            <Link className='dark:border-[#646870]' href={`/notices/detail/${Number(id)+1}`}>
               <Image src={UpArrow} alt='up arrow icon' width={23} height={23} />
             </Link>
-            <Link href={`/notices/detail/${Number(id)-1}`}>
+            <Link className='dark:border-[#646870]' href={`/notices/detail/${Number(id)-1}`}>
               <Image src={DownArrow} alt='down arrow icon' width={23} height={23} />
             </Link>
           </div>
@@ -152,8 +158,8 @@ export default function Detail() {
         {/* 관리자 버튼 */}
         {session?.user?.role === true && 
         <div className={styled.postBodyRow + ' ' + styled.postManager}>
-          <Link href={`/notices/update/${id}`}>수정</Link>
-          <span onClick={() => postDelete(Number(id))}>삭제</span>
+          <Link className='dark:border-[#646870] dark:text-[#eaf0ec]' href={`/notices/update/${id}`}>수정</Link>
+          <span className='dark:border-[#646870] dark:text-[#eaf0ec]' onClick={() => postDelete(Number(id))}>삭제</span>
         </div>
         }
         
@@ -161,22 +167,22 @@ export default function Detail() {
         <div className={styled.postBodyRow + ' ' + styled.postBodyFooter}>
           {/* 다음 페이지 */}
           {nextPostData.id !== 0 && 
-          <div className={styled.postTableRow}>
+          <div className={`${styled.postTableRow} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
             <div className={
-              nextPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck}` :
-              nextPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent}`
-              : `${styled.postCategory}`}>
+              nextPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} dark:border-[#646870]` :
+              nextPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} dark:border-[#646870]`
+              : `${styled.postCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
                 {nextPostData.category}
             </div>
             <div className={styled.postFooterTitle}>
-              <Link href={`/notices/detail/${nextPostData.id}`}>{nextPostData.title}</Link>
+              <Link href={`/notices/detail/${nextPostData.id}`} className='dark:text-[#eaf0ec]'>{nextPostData.title}</Link>
             </div>
-            <div className={styled.postFooterDate}>{nextPostData.createdAt}</div>
+            <div className={`${styled.postFooterDate} dark:text-[#eaf0ec]`}>{nextPostData.createdAt}</div>
             <div className={styled.postFooterViewCount}>
               <Image src={EyeIcon} alt='eye icon' />
-              <span>{nextPostData.viewCount}</span>
+              <span className='dark:text-[#eaf0eca2]'>{nextPostData.viewCount}</span>
             </div>
-            <div className={styled.postFooterRecomendCount} onClick={() => recomendEventHandler(nextPostData.id, session, nextPostData, setNextPostData)}>
+            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(nextPostData.id, session, nextPostData, setNextPostData)}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{nextPostData.recomendCount}</span>
             </div>
@@ -184,22 +190,22 @@ export default function Detail() {
           }
           
           {/* 현재 페이지 */}
-          <div className={styled.postTableRow + ' ' + styled.postTableCurrentActive}>
+          <div className={`${styled.postTableRow} ${styled.postTableCurrentActive} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
             <div className={
-              postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck}` :
-              postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent}`
-              : `${styled.postCategory}`}>
+              postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} dark:border-[#646870]` :
+              postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} dark:border-[#646870]`
+              : `${styled.postCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
                 {postData.category}
             </div>
             <div className={styled.postFooterTitle}>
-              <Link href={`/notices/detail/${postData.id}`}>{postData.title}</Link>
+              <Link href={`/notices/detail/${postData.id}`} className='dark:text-[#eaf0ec]'>{postData.title}</Link>
             </div>
-            <div className={styled.postFooterDate}>{postData.createdAt}</div>
+            <div className={`${styled.postFooterDate} dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
             <div className={styled.postFooterViewCount}>
               <Image src={EyeIcon} alt='eye icon' />
-              <span>{postData.viewCount}</span>
+              <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
             </div>
-            <div className={styled.postFooterRecomendCount} onClick={() => recomendEventHandler(postData.id, session, postData, setPostData)}>
+            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(postData.id, session, postData, setPostData)}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{postData.recomendCount}</span>
             </div>
@@ -207,22 +213,22 @@ export default function Detail() {
 
           {/* 이전 페이지 */}
           {prevPostData.id !== 0 && 
-          <div className={styled.postTableRow}>
+          <div className={`${styled.postTableRow} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
             <div className={
-              prevPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck}` :
-              prevPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent}`
-              : `${styled.postCategory}`}>
+              prevPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} dark:border-[#646870]` :
+              prevPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} dark:border-[#646870]`
+              : `${styled.postCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
                 {prevPostData.category}
             </div>
             <div className={styled.postFooterTitle}>
-              <Link href={`/notices/detail/${prevPostData.id}`}>{prevPostData.title}</Link>
+              <Link href={`/notices/detail/${prevPostData.id}`} className='dark:text-[#eaf0ec]'>{prevPostData.title}</Link>
             </div>
-            <div className={styled.postFooterDate}>{prevPostData.createdAt}</div>
+            <div className={`${styled.postFooterDate} dark:text-[#eaf0ec]`}>{prevPostData.createdAt}</div>
             <div className={styled.postFooterViewCount}>
               <Image src={EyeIcon} alt='eye icon' />
-              <span>{prevPostData.viewCount}</span>
+              <span className='dark:text-[#eaf0eca2]'>{prevPostData.viewCount}</span>
             </div>
-            <div className={styled.postFooterRecomendCount} onClick={() => recomendEventHandler(prevPostData.id, session, prevPostData, setPrevPostData)}>
+            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(prevPostData.id, session, prevPostData, setPrevPostData)}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{prevPostData.recomendCount}</span>
             </div>

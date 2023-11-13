@@ -64,23 +64,23 @@ export default function Login() {
     <form className={styled.loginForm} onSubmit={onSubmit}>
       <div className={styled.loginFormInputWrap}>
         <div>
-          <input type='text' placeholder='이메일' name='id' ref={idInputRef} />
+          <input type='text' placeholder='이메일' name='id' ref={idInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
         </div>
         <div>
-          <input type='password' placeholder='비밀번호' name='password' ref={pwdInputRef} />
+          <input type='password' placeholder='비밀번호' name='password' ref={pwdInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
         </div>
       </div>
-      <button type='button' onClick={() => signIn('naver')} className={styled.naverLogin}>NAVER 로그인</button>
+      <button type='button' onClick={() => signIn('naver')} className={`${styled.naverLogin} dark:border-[#8991ee] dark:text-[#8991ee] dark:bg-[#2b2d31]`}>NAVER 로그인</button>
       <div className={styled.loginStay}>
         <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />
-        <span onClick={isCheckhandler}>로그인 상태 유지</span>
+        <span className='dark:text-[#eaf0ec]' onClick={isCheckhandler}>로그인 상태 유지</span>
       </div>
       <div className={styled.empty}>
         <div></div>
       </div>
       <button type='button' className={styled.loginButton} onClick={onSubmit}>로그인</button>
       <div className={styled.lastGroup}>
-        <Link href='/auth/signup'>회원가입</Link>
+        <Link href='/auth/signup' className='dark:text-[#8991ee]'>회원가입</Link>
         <Link href='/auth/login' onClick={() => alert('개발 중 입니다')}>앗, 비밀번호를 잊어버렸어요!</Link>
       </div>
     </form>

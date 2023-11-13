@@ -114,28 +114,29 @@ export default function Update() {
   }
 
   return (
-    <div className={styled.body}>
+    <div className={`${styled.body} dark:bg-[#2b2d31]`}>
       <div className={styled.wrap}>
         <form className={styled.form} onSubmit={onSubmit}>
           <div className={styled.category}>
-            <label htmlFor='category'>카테고리</label>
-            <select name='category' id='category' onChange={(e:ChangeEvent<HTMLSelectElement>) => categorySelectHandler(e)} value={categoryData}>
+            <label htmlFor='category' className='dark:text-[#eaf0ec]'>카테고리</label>
+            <select name='category' id='category' className='dark:bg-[#2b2d31] dark:border-[1px] dark:border-[#eaf0ec] dark:text-[#eaf0ec]' onChange={(e:ChangeEvent<HTMLSelectElement>) => categorySelectHandler(e)} value={categoryData}>
               <option value='공지'>공지</option>
               <option value='점검'>점검</option>
               <option value='이벤트'>이벤트</option>
             </select>
           </div>
           <div className={styled.title}>
-            <label htmlFor='title'>제목</label>
-            <input type='text' placeholder='제목' name='title' id='title' ref={titleRef} defaultValue={loadData.title || ''} />
+            <label htmlFor='title' className='dark:text-[#eaf0ec]'>제목</label>
+            <input type='text' placeholder='제목' name='title' id='title' ref={titleRef} defaultValue={loadData.title || ''}
+            className='dark:bg-[#2b2d31] dark:border-[1px] dark:border-[#eaf0ec] dark:text-[#eaf0ec] placeholder:dark:text-[#656770]' />
           </div>
-          <div className={styled.textarea}>
+          <div className={`${styled.textarea} dark:bg-[#ffffff]`}>
             <TextEditor placeholderText={'내용을 입력해주세요'} name={'content'}
             setValueHandler={setContent} initialValue={content || ''} height={300} />
           </div>
           <div className={styled.buttonGroup}>
-            <button type='button' onClick={cancel}>취소</button>
-            <button type='button' onClick={onSubmit}>수정</button>
+            <button type='button' className='dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={cancel}>취소</button>
+            <button type='button' className='dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={onSubmit}>수정</button>
           </div>
         </form>
       </div>

@@ -34,15 +34,15 @@ export default function Schedule({ adventureIslandData }:ScheduleProps) {
       <ScheduleHeaderTime today={today} currentDate={currentDate} />
       <div className={styled.scheduleDateChange}>
         <Image src={LeftArrow} alt='left arrow' onClick={() => changeMonth(currentDate, -1, setCurrentDate)}/>
-        <p>{`${currentDate.getFullYear()}년 ${currentDate.getMonth()+1}월`}</p>
+        <p className='dark:text-[#eaf0ec]'>{`${currentDate.getFullYear()}년 ${currentDate.getMonth()+1}월`}</p>
         <Image src={RightArrow} alt='right arrow' onClick={() => changeMonth(currentDate, 1, setCurrentDate)} />
       </div>
     </div>
-    <div className={styled.scheduleTable}>
+    <div className={`${styled.scheduleTable} dark:bg-[#33353a] dark:border-[#42464D]`}>
       <div>
         <ScheduleCalendar today={today} currentDate={currentDate} setCurrentDate={setCurrentDate} />
       </div>
-      <hr />
+      <hr className='dark:border-[#42464D]' />
 
       {/* DayOfWeekEventSchedule Start */}
       <div className={styled.scheduleEtc}>

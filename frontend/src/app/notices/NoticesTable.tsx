@@ -53,13 +53,13 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
     for (let i = 1; i <= btnTotalCount; i++) {
       if (i === currentPage) {
         buttons.push(
-          <span className={styled.noticeTableBtnActive} key={i}
+          <span className={`${styled.noticeTableBtnActive} dark:text-[#eaf0ec] dark:border-[#8991ee]`} key={i}
           onClick={() => router.push(`/notices?page=${i}`)}>
             {i}
           </span>
         );
       } else {
-        buttons.push(<span key={i} onClick={() => router.push(`/notices?page=${i}`)}>{i}</span>);
+        buttons.push(<span className='dark:text-[#eaf0ec] dark:border-[#646870]' key={i} onClick={() => router.push(`/notices?page=${i}`)}>{i}</span>);
       }
     }
     return buttons;
@@ -76,22 +76,22 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
       // console.log('writeTimeFormat ', writeTimeFormat);
 
       posts.push(
-        <div className={styled.noticeTableRow} key={postList[i].id}>
+        <div className={`${styled.noticeTableRow} dark:border-[#646870] dark:hover:bg-[#38393e]`} key={postList[i].id}>
           <div className={
-            postList[i].category === '점검' ? `${styled.noticeCategory} ${styled.noticeCategoryCheck}` :
-            postList[i].category === '이벤트' ? `${styled.noticeCategory} ${styled.noticeCategoryEvent}`
-            : `${styled.noticeCategory}`}>
+            postList[i].category === '점검' ? `${styled.noticeCategory} ${styled.noticeCategoryCheck} dark:border-[#646870]` :
+            postList[i].category === '이벤트' ? `${styled.noticeCategory} ${styled.noticeCategoryEvent} dark:border-[#646870]`
+            : `${styled.noticeCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
               {postList[i].category}
           </div>
           <div className={styled.noticeTitle}>
-            <Link href={`/notices/detail/${postList[i].id}`}>{postList[i].title}</Link>
+            <Link href={`/notices/detail/${postList[i].id}`} className='dark:text-[#eaf0ec]'>{postList[i].title}</Link>
           </div>
-          <div className={styled.noticeDate}>{writeTimeFormat}</div>
+          <div className={`${styled.noticeDate} dark:text-[#eaf0ec]`}>{writeTimeFormat}</div>
           <div className={styled.noticeViewCount}>
             <Image src={EyeIcon} alt='eye icon' />
-            <span>{postList[i].viewCount}</span>
+            <span className='dark:text-[#eaf0eca2]'>{postList[i].viewCount}</span>
           </div>
-          <div className={styled.notieRecomendCount} onClick={() => recomendEventHandler(postList[i].id, session, postData, setPostData)}>
+          <div className={`${styled.notieRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(postList[i].id, session, postData, setPostData)}>
             <Image src={MococoIcon} alt='mococo icon' />
             <span>{postList[i].recomendCount}</span>
           </div>
@@ -125,15 +125,15 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
       </div>
       <div className={styled.noticeBodyRow + ' ' + styled.noticeManagerBtn}>
         <div className={styled.noticeTableBtnGroup}>
-          <span onClick={() => prevPageChangeHandler()}>
-            <Image src={LeftArrow} alt='left arrow icon'/>
+          <span className='dark:border-[#646870]' onClick={() => prevPageChangeHandler()}>
+            <Image src={LeftArrow} alt='left arrow icon' />
           </span>
           {buttonViewFunction()}
-          <span onClick={() => nextPageChangeHandler()}>
+          <span className='dark:border-[#646870]' onClick={() => nextPageChangeHandler()}>
             <Image src={RightArrow} alt='right arrow icon' />
           </span>
         </div>
-        {session?.user?.role === true && <Link href='/notices/write' className={styled.noticeManager}>글쓰기</Link>}
+        {session?.user?.role === true && <Link href='/notices/write' className={`${styled.noticeManager} dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]`}>글쓰기</Link>}
       </div>
     </>
   )

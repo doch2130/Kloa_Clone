@@ -18,8 +18,11 @@
   padding: 0 30px;
 }
 
-.noticeBodyTitle h2 a {
+.noticeBodyTitle h2 {
   color: rgb(53 57 69);
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 21px;
 }
 
 .noticeTable {
@@ -76,7 +79,7 @@
 }
 
 .noticeTitle a {
-  text-decoration: none;
+  /* text-decoration: none; */
   color: rgb(53 57 69);
 }
 

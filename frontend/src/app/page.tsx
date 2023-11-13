@@ -9,7 +9,7 @@ import styled from './Home.module.css';
 
 
 const categoryClassMap: { [key: string]: string } = {
-  '공지': '',
+  '공지': 'dark:text-[#eaf0ec]',
   '상점': styled.noticeTableCategoryShop,
   '점검': styled.noticeTableCategoryCheck,
   '이벤트': styled.noticeTableCategoryEvent,
@@ -47,32 +47,32 @@ export default async function Home() {
       </section>
       <section className={styled.notices}>
         <div className={styled.lostarkNotice}>
-          <div className={styled.subTitle}>
+          <div className={`${styled.subTitle} dark:text-[#eaf0ec]`}>
             <Link href='https://lostark.game.onstove.com/News/Notice/List'>로스트아크 공지사항</Link>
           </div>
-          <div className={styled.noticeTable}>
+          <div className={`${styled.noticeTable} dark:bg-[#33353a] dark:border-[#42464D]`}>
             {
               noticesList.data.map((el:NoticesTopFive, index:number) => 
               (
                 <div className={styled.noticeTableRow} key={index}>
-                  <div className={`${styled.noticeTableCategory} ${categoryClassMap[el.category]}`}>{el.category}</div>
-                  <Link href={el.link} target="_blank">{el.title}</Link>
+                  <div className={`${styled.noticeTableCategory} dark:border-[#42464D] ${categoryClassMap[el.category]}`}>{el.category}</div>
+                  <Link href={el.link} target="_blank" className='dark:text-[#eaf0ec]'>{el.title}</Link>
                 </div>
               ))
             }
           </div>
         </div>
         <div className={styled.kloaNotice}>
-          <div className={styled.subTitle}>
+          <div className={`${styled.subTitle} dark:text-[#eaf0ec]`}>
             <Link href='/notices?page=1'>클로아 공지사항</Link>
           </div>
-          <div className={styled.noticeTable}>
+          <div className={`${styled.noticeTable} dark:bg-[#33353a] dark:border-[#42464D]`}>
             {
               mainNoticesTopList.result.map((el:NoticePost, index:number) => 
               (
                 <div className={styled.noticeTableRow} key={index}>
-                  <div className={`${styled.noticeTableCategory} ${categoryClassMap[el.category]}`}>{el.category}</div>
-                  <Link href={`/notices/detail/${el.id}`} target="_blank">{el.title}</Link>
+                  <div className={`${styled.noticeTableCategory} dark:border-[#42464D] ${categoryClassMap[el.category]}`}>{el.category}</div>
+                  <Link href={`/notices/detail/${el.id}`} target="_blank" className='dark:text-[#eaf0ec]'>{el.title}</Link>
                 </div>
               ))
             }

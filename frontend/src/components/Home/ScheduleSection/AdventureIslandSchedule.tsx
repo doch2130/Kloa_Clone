@@ -86,14 +86,14 @@ export default function AdventureIslandSchedule({ today, currentDate, adventureI
         }
         
         return (
-          <div className={isSameDate(today, currentDate) ? ScheduleIslandBoxStyle
-            : `${styled.scheduleIslandBox} ${styled.scheduleIslandBoxOpacity}`} key={el.ContentsName}>
+          <div className={isSameDate(today, currentDate) ? `${ScheduleIslandBoxStyle} dark:bg-[#2b2d31] dark:border-[0]`
+            : `${styled.scheduleIslandBox} ${styled.scheduleIslandBoxOpacity} dark:bg-[#2b2d31] dark:border-[0]`} key={el.ContentsName}>
     
             <Image src={el.ContentsIcon} alt={el.ContentsName} className={styled.scheduleIslandImage} width={64} height={64} />
             <div className={styled.scheduleIslandBoxWrap}>
               <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandBoxTitle}>
                 <div className={RewardItemTypeClassMap[el.RewardItemType]}>{el.RewardItemType}</div>
-                <div className={styled.scheduleIslandName}>{el.ContentsName}</div>
+                <div className={`${styled.scheduleIslandName} dark:text-[#eaf0ec]`}>{el.ContentsName}</div>
               </div>
               <div className={styled.scheduleIslandBoxRow + ' ' + styled.scheduleIslandCompensationImage}>
                 {

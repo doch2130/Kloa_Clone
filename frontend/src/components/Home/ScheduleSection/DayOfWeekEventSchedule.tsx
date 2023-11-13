@@ -161,8 +161,8 @@ export default function DayOfWeekEventSchedule({ today, currentDate, category }:
         />
         {
           appearanceDate[category].includes(dayEventScheduleDate.getDay()) ? 
-          <span className={styled.scheduleAppearFont}>{category}</span> : 
-          <span className={styled.scheduleLeaveFont}>{category}</span>
+          <span className={`{styled.scheduleAppearFont} dark:text-[#eaf0ec]`}>{category}</span> : 
+          <span className={`{styled.scheduleLeaveFont} dark:text-[#eaf0ec]`}>{category}</span>
         }
       </div>
       <div className={styled.scheduleTime}>

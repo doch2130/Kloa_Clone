@@ -35,13 +35,18 @@
 }
 
 .title input {
-  height: 20px;
+  height: 28px;
   width: 100%;
-  max-width: 300px;
+  max-width: 500px;
+  padding: 0 5px;
+}
+
+.textarea {
+  min-height: 341px;
 }
 
 .buttonGroup {
-  margin-top: 70px;
+  margin-top: 50px;
   display: flex;
   justify-content: flex-end;
 }

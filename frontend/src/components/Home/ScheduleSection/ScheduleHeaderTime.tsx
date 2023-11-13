@@ -77,7 +77,7 @@ export default function ScheduleHeaderTime({ today, currentDate }:ScheduleHeader
 
   return (
     <div>
-      <span>모험 섬</span>
+      <span className='dark:text-[#eaf0ec]'>모험 섬</span>
       {isSameDate(today, currentDate) ?
         <p className={styled.scheduleTime}>{adventureTime}</p>
       : <p className={styled.scheduleTime}>등장 예정</p>

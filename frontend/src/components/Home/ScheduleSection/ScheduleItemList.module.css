@@ -1,9 +1,14 @@
 .itemIconWrap {
   position: relative;
+  display: flex;
 }
 .itemIconWrap img {
   cursor: pointer;
+  width: auto;
+  height: auto;
 }
+
+
 
 .itemIconText {
   margin: 0px;
@@ -16,16 +21,14 @@
   border-radius: 5px;
   align-items: center;
   padding: 5px;
-  /* transform: translateX(-20%); */
   display: none;
+  top: 100%;
 }
 
 .itemIconWrap:hover .itemIconText {
-  /* display: flex; */
   display: block;
 }
 
 .itemIconText2 {
   right: 0;
-  /* transform: translateX(-20%); */
 }

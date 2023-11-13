@@ -6,7 +6,8 @@ export const recomendEventHandler = (postId:number, session:Session | null, post
     fetch(`/api/notices/recomend`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'authorization': `bearer ${session?.user?.accessToken}`,
       },
       body: JSON.stringify({
         postId: postId,

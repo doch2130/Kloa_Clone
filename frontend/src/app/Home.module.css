@@ -19,15 +19,6 @@
   justify-content: space-between;
 }
 
-.notices a {
-  text-decoration: none;
-  color: black;
-}
-
-.notices a:visited {
-  color: black;
-}
-
 .lostarkNotice, .kloaNotice {
   width: 100%;
   max-width: 550px;
@@ -61,13 +52,14 @@
 
 .noticeTableCategory {
   width: 60px;
-  height: 26px;
+  height: 28px;
   border: 1px solid rgb(230 232 236);
   border-radius: 9999px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 600;
+  font-size: 0.875rem;
 }
 
 .noticeTableCategoryShop {

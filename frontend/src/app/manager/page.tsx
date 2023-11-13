@@ -91,7 +91,7 @@ export default function Manager() {
   }
 
   return (
-    <div className={styled.managerWrap}>
+    <div className={`${styled.managerWrap} bg-white dark:bg-[#2b2d31] dark:text-[#eaf0ec]`}>
       <div>
         <h1>관리자 페이지</h1>
       </div>

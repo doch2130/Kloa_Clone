@@ -174,10 +174,6 @@
   height: 48px;
 }
 
-.postBodyFooter .postTableRow:hover {
-  background-color: rgb(250 251 251);
-}
-
 .postFooterTitle {
   margin-left: 10px;
   color: rgb(53 57 69);

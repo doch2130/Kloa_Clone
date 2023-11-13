@@ -25,14 +25,15 @@ export default function HeaderDarkMode() {
   useEffect(() => {
     if (localStorage.getItem("theme") === "dark") {
       document.documentElement.classList.add("dark");
+      setDark('darkMode');
     }
   }, []);
   return (
     <>
-    <button type='button' className='duration-300 bg-white dark:bg-[#2b2d31] dark:hover:bg-[#40434a]' onClick={() => toggleDarkMode()}>
+    <button type='button' className='duration-300 bg-white dark:bg-[#33353a] dark:hover:bg-[#40434a]' onClick={() => toggleDarkMode()}>
       {dark === 'defaultMode' ? 
-      <Image src={MoonModeIcon} alt='MoonMode Icon' />
-      : <Image src={SunModeIcon} alt='SunMode Icon' />
+      <Image src={MoonModeIcon} alt='MoonMode Icon' width={20} />
+      : <Image src={SunModeIcon} alt='SunMode Icon' width={20} />
       }
     </button>
     </>

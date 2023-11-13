@@ -36,8 +36,8 @@ export default function ScheduleCalendar({ today, currentDate, setCurrentDate }:
               return (
                 <div className={`${styled.calendarDateWrap} ${styled.calendarToday}`}
                   key={el} onClick={() => changeDate(today, setCurrentDate)}>
-                  <p className={styled.calendarDay}>{dayParsing[today.getDay()]}</p>
-                  <p className={`${styled.calendarDate}`}>{today.getDate()}</p>
+                  <p className={`${styled.calendarDay} dark:text-[#eaf0ec]`}>{dayParsing[today.getDay()]}</p>
+                  <p className={`${styled.calendarDate} dark:text-[#eaf0ec]`}>{today.getDate()}</p>
                 </div>
               )
             } else {
@@ -45,8 +45,8 @@ export default function ScheduleCalendar({ today, currentDate, setCurrentDate }:
                 <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
                   activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
                   key={el} onClick={() => changeDate(clone, setCurrentDate)}>
-                  <p className={styled.calendarDay}>{dayParsing[clone.getDay()]}</p>
-                  <p className={`${styled.calendarDate} ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
+                  <p className={`${styled.calendarDay} dark:text-[#eaf0ec]`}>{dayParsing[clone.getDay()]}</p>
+                  <p className={`${styled.calendarDate} dark:text-[#eaf0ec] ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
                 </div>
               )
             }
@@ -56,8 +56,8 @@ export default function ScheduleCalendar({ today, currentDate, setCurrentDate }:
               return (
                 <div className={`${styled.calendarDateWrap} ${styled.calendarToday}`}
                 key={el} onClick={() => changeDate(clone, setCurrentDate)}>
-                  <p className={styled.calendarDay}>{dayParsing[today.getDay()]}</p>
-                  <p className={`${styled.calendarDate}`}>{today.getDate()}</p>
+                  <p className={`${styled.calendarDay} dark:text-[#eaf0ec]`}>{dayParsing[today.getDay()]}</p>
+                  <p className={`${styled.calendarDate} dark:text-[#eaf0ec]`}>{today.getDate()}</p>
                 </div>
               )
             } else {
@@ -65,8 +65,8 @@ export default function ScheduleCalendar({ today, currentDate, setCurrentDate }:
                 <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
                 activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
                 key={el} onClick={() => changeDate(clone, setCurrentDate)}>
-                  <p className={styled.calendarDay}>{dayParsing[clone.getDay()]}</p>
-                  <p className={`${styled.calendarDate} ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
+                  <p className={`${styled.calendarDay} dark:text-[#eaf0ec]`}>{dayParsing[clone.getDay()]}</p>
+                  <p className={`${styled.calendarDate} dark:text-[#eaf0ec] ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
                 </div>
               )
             }
@@ -76,8 +76,8 @@ export default function ScheduleCalendar({ today, currentDate, setCurrentDate }:
               <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
               activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
               key={el} onClick={() => changeDate(clone, setCurrentDate)}>
-                <p className={styled.calendarDay}>{dayParsing[clone.getDay()]}</p>
-                <p className={`${styled.calendarDate} ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
+                <p className={`${styled.calendarDay} dark:text-[#eaf0ec]`}>{dayParsing[clone.getDay()]}</p>
+                <p className={`${styled.calendarDate} dark:text-[#eaf0ec] ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
               </div>
             )
           }
