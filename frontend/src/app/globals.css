@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-a {
-  text-decoration: none;
-}
-
 body {
   margin: 0px;
   background-color: rgb(245 246 247);
@@ -20,10 +16,6 @@ body {
   border-bottom: 2px solid rgb(230 232 236);
 }
 
-.nav-bar a {
-  text-decoration: none;
-}
-
 .nav-left, .nav-right {
   flex-basis: 400px;
   flex-shrink: 2;
@@ -33,6 +25,38 @@ body {
 .nav-left {
   justify-content: flex-start;
   padding-left: 2rem;
+}
+
+.nav-left .logo-image-container {
+  position: relative;
+  height: 30px;
+  width: 100px;
+}
+
+.default-image,
+.hover-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hover-image {
+  /* 초기에는 투명하게 설정 */
+  opacity: 0;
+  z-index: 300;
+}
+
+.nav-left .logo-image-container:hover .default-image {
+  /* hover 시 기본 이미지를 숨김 */
+  opacity: 0;
+}
+
+.nav-left .logo-image-container:hover .hover-image {
+  /* hover 시 대체 이미지를 나타냄 */
+  opacity: 1;
 }
 
 .nav-right {
@@ -145,10 +169,6 @@ body {
   background-color: rgb(230 232 236);
   border-radius: 3px;
   height: 10%;  
-}
-
-.duration-300 {
-  transition-duration: .3s;
 }
 
 footer {
