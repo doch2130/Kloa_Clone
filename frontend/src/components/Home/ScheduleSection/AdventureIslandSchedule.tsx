@@ -67,9 +67,6 @@ export default function AdventureIslandSchedule({ today, currentDate, adventureI
   // }, [adventureIslandData, currentDate]);
   }, [currentDate]);
 
-  console.log('adventureList ', adventureList);
-  
-
   return (
     <>
     {
