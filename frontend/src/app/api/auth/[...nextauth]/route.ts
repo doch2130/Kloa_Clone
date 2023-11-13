@@ -27,7 +27,7 @@ const handler = NextAuth({
         // 아이디만 찾아오고 비밀번호는 여기서 검증
         // id는 string으로 해야 authorize 함수 에러가 안남
         if (findUser && (await bcrypt.compare(body?.password, findUser.password))) {
-          const user = { id: String(findUser.id), email: findUser.email };
+          const user = { id: String(findUser.id), email: findUser.email, role: findUser.role };
 
           // JWT 토큰
           const accessToken = await signJwtAccessToken(user);
