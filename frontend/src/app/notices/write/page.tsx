@@ -58,6 +58,7 @@ export default function Write() {
           if(res.status === 201) {
             alert('게시글을 등록하였습니다.');
             router.push('/notices?page=1');
+            router.refresh();
             return ;
           } else {
             alert('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.');

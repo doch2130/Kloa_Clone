@@ -40,6 +40,7 @@ export default function Update() {
           id: result.id,
           title: result.title,
         });
+        router.refresh();
         return ;
       })
       .catch(error => {

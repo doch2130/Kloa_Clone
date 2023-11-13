@@ -92,6 +92,7 @@ export default function Detail() {
 
       alert('게시글이 삭제되었습니다.');
       router.push('/notices?page=1');
+      router.refresh();
 
       return ;
 
