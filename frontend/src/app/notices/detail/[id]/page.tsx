@@ -47,7 +47,7 @@ export default function Detail() {
       return ;
     }
 
-    console.log('detailPage ', detailPage);
+    // console.log('detailPage ', detailPage);
     if(detailPage.result === null) {
       alert('잘못된 접근입니다.');
       router.push('/notices?page=1');
