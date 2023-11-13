@@ -150,7 +150,7 @@ export default function Detail() {
         </div>
 
         {/* 관리자 버튼 */}
-        {session?.user?.email === 'test1' && 
+        {session?.user?.role === true && 
         <div className={styled.postBodyRow + ' ' + styled.postManager}>
           <Link href={`/notices/update/${id}`}>수정</Link>
           <span onClick={() => postDelete(Number(id))}>삭제</span>

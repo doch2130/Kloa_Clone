@@ -30,6 +30,7 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
   const [postData, setPostData] = useState(postList);
   const { data: session } = useSession();
   // console.log('session ', session);
+  // console.log('session ', typeof session?.user?.role);
 
   const prevPageChangeHandler = ():void => {
     if (currentPage <= 1) {
@@ -132,7 +133,7 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
             <Image src={RightArrow} alt='right arrow icon' />
           </span>
         </div>
-        {session?.user?.email === 'test1' && <Link href='/notices/write' className={styled.noticeManager}>글쓰기</Link>}
+        {session?.user?.role === true && <Link href='/notices/write' className={styled.noticeManager}>글쓰기</Link>}
       </div>
     </>
   )

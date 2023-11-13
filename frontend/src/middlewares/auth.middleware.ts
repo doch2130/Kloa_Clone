@@ -47,7 +47,7 @@ export async function withManagerAuth(req: NextRequest, token: JWT | null):Promi
     if(token !== null) {
       const payload = await verifyJwt(token);
       if(payload) {
-        if(payload.email === 'test1') {
+        if(payload.role === true) {
           return NextResponse.next();
         } else {
           url.pathname = '/';

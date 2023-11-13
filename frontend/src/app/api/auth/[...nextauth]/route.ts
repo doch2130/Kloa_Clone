@@ -35,6 +35,7 @@ const handler = NextAuth({
           const result = {
             id: String(findUser.id),
             email: findUser.email,
+            role: findUser.role,
             // accessToken: `bearer ${accessToken}`,
             accessToken: accessToken,
           };
