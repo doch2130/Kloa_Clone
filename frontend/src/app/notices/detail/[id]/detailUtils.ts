@@ -8,7 +8,7 @@ export async function getDetailPage(id:number, setPostDataHandler:Function,
   })
     .then(res => res.json())
     .then(res => {
-      console.log('res ', res);
+      // console.log('res ', res);
       const result = res.result;
 
       if(res.status === 404) {
@@ -16,39 +16,42 @@ export async function getDetailPage(id:number, setPostDataHandler:Function,
       }
 
       result.forEach((post:any, index:number) => {
-        const writeTimeDateType = new Date(post[0].createdAt);
-        const writeTimeFormat = `${writeTimeDateType.getFullYear()}-${String(writeTimeDateType.getMonth()+1).padStart(2, '0')}-${String(writeTimeDateType.getDate()).padStart(2, '0')}`;
-  
-        if(index === 0) {
-          setPostDataHandler({
-            id: post[0].id,
-            category: post[0].category,
-            title: post[0].title,
-            content: post[0].content,
-            createdAt: writeTimeFormat,
-            viewCount: post[0].viewCount,
-            recomendCount: post[0].recomendCount
-          });
-        } else if (index === 1) {
-          setPrevPostDataHandler({
-            id: post[0].id,
-            category: post[0].category,
-            title: post[0].title,
-            content: post[0].content,
-            createdAt: writeTimeFormat,
-            viewCount: post[0].viewCount,
-            recomendCount: post[0].recomendCount
-          });
-        } else if (index === 2) {
-          setNextPostDataHandler({
-            id: post[0].id,
-            category: post[0].category,
-            title: post[0].title,
-            content: post[0].content,
-            createdAt: writeTimeFormat,
-            viewCount: post[0].viewCount,
-            recomendCount: post[0].recomendCount
-          });
+        // console.log('post[0] ', post[0]);
+        if(post[0] !== undefined) {
+          const writeTimeDateType = new Date(post[0].createdAt);
+          const writeTimeFormat = `${writeTimeDateType.getFullYear()}-${String(writeTimeDateType.getMonth()+1).padStart(2, '0')}-${String(writeTimeDateType.getDate()).padStart(2, '0')}`;
+          
+          if(index === 0) {
+            setPostDataHandler({
+              id: post[0].id,
+              category: post[0].category,
+              title: post[0].title,
+              content: post[0].content,
+              createdAt: writeTimeFormat,
+              viewCount: post[0].viewCount,
+              recomendCount: post[0].recomendCount
+            });
+          } else if (index === 1) {
+            setPrevPostDataHandler({
+              id: post[0].id,
+              category: post[0].category,
+              title: post[0].title,
+              content: post[0].content,
+              createdAt: writeTimeFormat,
+              viewCount: post[0].viewCount,
+              recomendCount: post[0].recomendCount
+            });
+          } else if (index === 2) {
+            setNextPostDataHandler({
+              id: post[0].id,
+              category: post[0].category,
+              title: post[0].title,
+              content: post[0].content,
+              createdAt: writeTimeFormat,
+              viewCount: post[0].viewCount,
+              recomendCount: post[0].recomendCount
+            });
+          }
         }
       });
 
