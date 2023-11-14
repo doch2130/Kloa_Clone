@@ -13,7 +13,8 @@
     "migrate": "npx prisma migrate dev --name init",
     "generate": "npx prisma generate",
     "prismadbpush": "npx prisma db push",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "output": "next build && next export"
   },
   "dependencies": {
     "@looop/quill-image-resize-module-react": "^3.1.5",
