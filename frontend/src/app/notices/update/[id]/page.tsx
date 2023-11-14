@@ -2,7 +2,6 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-// import TextEditor from '@/components/TextEditor/TextEditor'
 
 import styled from './Update.module.css'
 import { useSession } from 'next-auth/react';
@@ -23,38 +22,6 @@ export default function Update() {
     title: '',
   });
   const { data: session } = useSession();
-
-  useEffect(() => {
-    fetch(`/api/notices?id=${id}&detail=true&update=true`, {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(res => {
-        // console.log('res ', res);
-        const result = res.result[0];
-        // console.log('result ', result);
-        if(result.id === undefined) {
-          alert('잘못된 페이지 접근입니다.');
-          router.push('/notices?page=1');
-          return ;
-        }
-
-        setCategoryData(result.category);
-        setContent(result.content);
-        setLoadData({
-          id: result.id,
-          title: result.title,
-        });
-        router.refresh();
-        return ;
-      })
-      .catch(error => {
-        alert('페이지 로딩 중 에러가 발생하였습니다.');
-        router.push('/notices?page=1');
-        return ;
-      });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const categorySelectHandler = (e:ChangeEvent<HTMLSelectElement>) => {
     setCategoryData(e.target.value);
@@ -118,6 +85,36 @@ export default function Update() {
     }
     return ;
   }
+
+  useEffect(() => {
+    fetch(`/api/notices?id=${id}&detail=true&update=true`)
+      .then(res => res.json())
+      .then(res => {
+        // console.log('res ', res);
+        const result = res.result[0];
+        // console.log('result ', result);
+        if(result.id === undefined) {
+          alert('잘못된 페이지 접근입니다.');
+          router.push('/notices?page=1');
+          return ;
+        }
+
+        setCategoryData(result.category);
+        setContent(result.content);
+        setLoadData({
+          id: result.id,
+          title: result.title,
+        });
+        router.refresh();
+        return ;
+      })
+      .catch(error => {
+        alert('페이지 로딩 중 에러가 발생하였습니다.');
+        router.push('/notices?page=1');
+        return ;
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={`${styled.body} dark:bg-[#2b2d31]`}>

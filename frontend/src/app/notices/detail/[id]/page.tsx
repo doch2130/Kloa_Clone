@@ -39,33 +39,28 @@ export default function Detail() {
 
   const { data: session } = useSession();
 
-  const pageLoadHandler = async () => {
-    const detailPage = await getDetailPage(Number(id), setPostData, setNextPostData, setPrevPostData);
-    if(detailPage.status === false) {
+  const pageLoadHandler = async (id:number) => {
+    try {
+      const detailPage = await getDetailPage(id, setPostData, setNextPostData, setPrevPostData);
+      if(detailPage.status === false) {
+        alert('페이지 로딩 중 에러가 발생하였습니다.');
+        router.push('/notices?page=1');
+        return ;
+      }
+
+      // console.log('detailPage ', detailPage);
+      if(detailPage.result === null) {
+        alert('잘못된 접근입니다.');
+        router.push('/notices?page=1');
+        return ;
+      }
+    } catch (error) {
+      // console.log('error ', error);
       alert('페이지 로딩 중 에러가 발생하였습니다.');
       router.push('/notices?page=1');
       return ;
     }
-
-    // console.log('detailPage ', detailPage);
-    if(detailPage.result === null) {
-      alert('잘못된 접근입니다.');
-      router.push('/notices?page=1');
-      return ;
-    }
   }
-  
-  useEffect(() => {
-    // 현재, 다음, 이전 페이지 가져오기
-    pageLoadHandler();
-
-    // 조회수 증가 함수
-    updateViewCount(Number(id), setPostData);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-
-
 
   // 게시글 삭제 함수
   async function postDelete(id:number) {
@@ -109,6 +104,15 @@ export default function Detail() {
       }
     }
   }
+
+  useEffect(() => {
+    // 현재, 다음, 이전 페이지 가져오기
+    pageLoadHandler(Number(id));
+
+    // 조회수 증가 함수
+    updateViewCount(Number(id), setPostData);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={`${styled.postBody} dark:bg-[#2b2d31]`}>
