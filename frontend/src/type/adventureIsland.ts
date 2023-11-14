@@ -6,7 +6,6 @@ export interface RewardItem {
 }
 
 export interface AdventureIsland {
-  data: AdventureIsland;
   ContentsName: string;
   ContentsIcon: string;
   RewardItemType: string;
@@ -23,6 +22,6 @@ export interface OrganizeAdventureIslandList {
 }
 
 export interface AdventureIslandResp {
-  data: AdventureIsland[] | [];
+  result: AdventureIsland[];
   status: number;
 }

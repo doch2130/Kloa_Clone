@@ -17,7 +17,7 @@ export interface NoticePost {
   authorId?: number,
 }
 
-export type NoticesTopFive = {
+export interface NoticesTopFive {
   id: number,
   title: string,
   category: string,
@@ -25,7 +25,12 @@ export type NoticesTopFive = {
   link: string,
 }
 
-export type NoticesTopFiveResp = {
+export interface NoticesTopFiveResp {
+  result: NoticesTopFive[],
+  status: number,
+}
+
+export interface NoticesApiResp {
   Title: string,
   Date: string,
   Link: string,
