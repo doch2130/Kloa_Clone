@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 12000",
     "lint": "next lint",
     "export": "next export",
     "back": "npx json-server --port 9999 --watch db.json",
