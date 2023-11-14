@@ -46,11 +46,12 @@ export default function AdventureIslandSchedule({ today, currentDate, adventureI
         const advetureResp = await fetch(`/api/lostark?category=adventure&currentDate=${currentDateFormat}`);
         const advetureData:AdventureIslandResp = await advetureResp.json();
         // console.log('Data: ', advetureData);
-        setAdventureList(advetureData.data);
+        setAdventureList(advetureData.result);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate]);
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export default function AdventureIslandSchedule({ today, currentDate, adventureI
     // }
     // setAdventureList(adventureIslandData);
   // }, [adventureIslandData, currentDate]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate]);
 
   return (

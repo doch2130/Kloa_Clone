@@ -136,6 +136,7 @@ export default function DayOfWeekEventSchedule({ today, currentDate, category }:
     // setChaosgateDate(clone);
     // setFieldbossDate(clone);
     // setBattleArenaDate(currentDate);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate]);
 
   useEffect(() => {
@@ -146,6 +147,7 @@ export default function DayOfWeekEventSchedule({ today, currentDate, category }:
       cleanup();
       adventureCleanup();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

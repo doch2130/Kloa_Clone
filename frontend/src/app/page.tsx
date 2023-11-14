@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { NoticePostResp, NoticePost, NoticesTopFive } from '@/type/notice'
+import { NoticePostResp, NoticePost, NoticesTopFive, NoticesTopFiveResp } from '@/type/notice'
 import { AdventureIslandResp } from '@/type/adventureIsland'
 
 import SlideImage from '@/components/Home/SlideImageSection/SlideImage';
@@ -16,34 +16,61 @@ const categoryClassMap: { [key: string]: string } = {
 };
 
 export default async function Home() {
-  // 로스트아크 공지사항
-  const noticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark?category=notices`, {
-    cache: 'no-store',
-  });
-  const noticesList = await noticesResp.json();
-  // console.log('noticesList.data ', noticesList);
+  async function getLostarkNotices() {
+    try {
+      // 로스트아크 공지사항
+      const noticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark?category=notices`, {
+        cache: 'no-store',
+      });
+      const noticesList:NoticesTopFiveResp = await noticesResp.json();
+      return noticesList;
+    } catch (error) {
+      console.error('LostArk Notices Fetch error:', error);
+      return { result: [], status: 500 };
+    }
+  }
+
+  async function getKloaNotices() {
+    try {
+      // 클로아 공지사항
+      const mainNoticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices?top=true`, {
+        cache: 'no-store',
+      });
+      const mainNoticesTopList:NoticePostResp = await mainNoticesResp.json();
+      return mainNoticesTopList;
+    } catch (error) {
+      console.error('Kloa Notices Fetch error:', error);
+      return { result: [], status: 500, success: false };
+    }
+  }
+
+  async function getAdventureIslandData() {
+    try {
+      // 모험 섬 데이터
+      const adventureResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark?category=adventure`, {
+        cache: 'no-store',
+      });
+      const adventureIslandData:AdventureIslandResp = await adventureResp.json();
+      return adventureIslandData;
+    } catch (error) {
+      console.error('Kloa Notices Fetch error:', error);
+      return { result:[], status:500 };
+    }
+  }
+
+  const noticesList = await getLostarkNotices();
+  const mainNoticesTopList = await getKloaNotices();
+  const adventureIslandData = await getAdventureIslandData();
+
+  console.log('adventureIslandData ', adventureIslandData);
   
-  // 클로아 공지사항
-  const mainNoticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices?top=true`, {
-    cache: 'no-store',
-  });
-  const mainNoticesTopList:NoticePostResp = await mainNoticesResp.json();
-  // console.log('mainNoticesTopList ', mainNoticesTopList);
-
-  // 모험 섬 데이터
-  const adventureResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark?category=adventure`, {
-    cache: 'no-store',
-  });
-  const adventureIslandData:AdventureIslandResp = await adventureResp.json();
-  // console.log('adventureIslandData ', adventureIslandData);
-
   return (
     <div className={styled.bodySection}>
       <section className={styled.slideImage}>
         <SlideImage />
       </section>
       <section className={styled.schedule}>
-        <Schedule adventureIslandData={adventureIslandData?.data} />
+        <Schedule adventureIslandData={adventureIslandData?.result} />
       </section>
       <section className={styled.notices}>
         <div className={styled.lostarkNotice}>
@@ -52,7 +79,7 @@ export default async function Home() {
           </div>
           <div className={`${styled.noticeTable} dark:bg-[#33353a] dark:border-[#42464D]`}>
             {
-              noticesList.data.map((el:NoticesTopFive, index:number) => 
+              noticesList.result.map((el:NoticesTopFive, index:number) => 
               (
                 <div className={styled.noticeTableRow} key={index}>
                   <div className={`${styled.noticeTableCategory} dark:border-[#42464D] ${categoryClassMap[el.category]}`}>{el.category}</div>

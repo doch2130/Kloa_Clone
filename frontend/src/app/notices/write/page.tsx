@@ -1,11 +1,16 @@
 'use client'
 import React, { ChangeEvent, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation';
-import TextEditor from '@/components/TextEditor/TextEditor'
+import dynamic from 'next/dynamic';
+// import TextEditor from '@/components/TextEditor/TextEditor'
 
 import styled from './Write.module.css'
 import { useSession } from 'next-auth/react';
 
+
+const TextEditor = dynamic(() => import('@/components/TextEditor/TextEditor'), {
+  ssr: false,
+});
 
 export default function Write() {
   const [categoryData, setCategoryData] = useState('공지');

@@ -116,7 +116,8 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
         return ;
       }
     }
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageValue,]);
 
   return (
     <>
