@@ -1,10 +1,15 @@
 'use client'
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation';
-import TextEditor from '@/components/TextEditor/TextEditor'
+import dynamic from 'next/dynamic';
+// import TextEditor from '@/components/TextEditor/TextEditor'
 
 import styled from './Update.module.css'
 import { useSession } from 'next-auth/react';
+
+const TextEditor = dynamic(() => import('@/components/TextEditor/TextEditor'), {
+  ssr: false,
+});
 
 export default function Update() {
   const router = useRouter();
@@ -48,6 +53,7 @@ export default function Update() {
         router.push('/notices?page=1');
         return ;
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const categorySelectHandler = (e:ChangeEvent<HTMLSelectElement>) => {

@@ -61,6 +61,7 @@ export default function Detail() {
 
     // 조회수 증가 함수
     updateViewCount(Number(id), setPostData);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
