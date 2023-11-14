@@ -78,15 +78,15 @@ export async function GET(req: NextRequest) {
   try {
     if(category === 'notices') {
       const notices = await getNotices();
-      return new NextResponse(JSON.stringify({data: notices, status: 200}));
+      return new NextResponse(JSON.stringify({result: notices, status: 200}));
     }
 
     if(category === 'adventure') {
       const adventure = await getAdventureIsland(reqDate);
-      return new NextResponse(JSON.stringify({data: adventure, status: 200}));
+      return new NextResponse(JSON.stringify({result: adventure, status: 200}));
     }
 
-    return new NextResponse(JSON.stringify({data: [], status: 200}));
+    return new NextResponse(JSON.stringify({result: [], status: 200}));
 
   } catch (error) {
     console.error('Error:', error);

@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from '@/app/lib/prisma'
 import { verifyStringJwt } from "@/app/lib/jwt";
-import { NoticesTopFiveResp } from "@/type/notice";
+import { NoticesApiResp } from "@/type/notice";
 
-async function noticesListUpdate(data:NoticesTopFiveResp[]) {
+async function noticesListUpdate(data:NoticesApiResp[]) {
   // console.log('data ', data)
   try {
     const topNoticesFive = data.slice(0, 5);
