@@ -61,8 +61,6 @@ export default async function Home() {
   const noticesList = await getLostarkNotices();
   const mainNoticesTopList = await getKloaNotices();
   const adventureIslandData = await getAdventureIslandData();
-
-  console.log('adventureIslandData ', adventureIslandData);
   
   return (
     <div className={styled.bodySection}>
@@ -109,3 +107,4 @@ export default async function Home() {
     </div>
   )
 }
+
