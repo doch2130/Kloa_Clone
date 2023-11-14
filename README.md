@@ -86,6 +86,18 @@ DB 사용자 정보에서 role 항목 추가 (관리자 true, 일반 false);
 tailwind 다크모드 테스트 (header 부분부터 테스트 진행)
 => 현재 작업 페이지 다크모드 적용 완료 (로컬 스토리지 이용한 다크모드 적용 방식)
 
+22일차: 로스트아크 API Return 값 통일 수정, 메인 페이지 API Call 함수 방식 변경
+build 테스트 중 에러 발생
+=> eslintrc.json 파일을 못찾는 에러 => 파일 내용 수정, eslint-plugin-prettier 설치 후 파일 정상(parsing 에러 없음)
+=> 텍스트에디터 에러 발생 => 동적 로딩 방식으로 수정 후 해결 완료
+=> document undefined 에러 발생 => 동적 로딩 방식으로 수정 후 해결 완료
+
+Error: Page "/notices/update/[id]" is missing "generateStaticParams()" so it cannot be used with "output: export" config.
+=> next.config.js => output: 'export', 추가 이후에도 에러 발생
+=> 해당 페이지의 useEffect() 함수를 밑으로 이동 => 에러 동일 증상 => try catch 누락되어 재작성 => 에러 동일 증상
+=> Next13 버전 에러라고 한다. => 임시로 나눠서 페이지를 분리해서 해결하면 된다고 함 => 분리안하고 props.params.id로 해결 완료
+
+
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
