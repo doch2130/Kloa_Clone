@@ -15,18 +15,14 @@ const categoryClassMap: { [key: string]: string } = {
 };
 
 export default async function Home() {
-  console.log(process.env.NEXTAUTH_URL);
+  const apiUrl = process.env.NODE_ENV === 'production' ? process.env.API_URL_PROD : process.env.API_URL_DEV;
   console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
+  console.log('apiUrl ', apiUrl);
 
-  if(process.env.NODE_ENV === 'development') {
-    console.log('dev');
-  } else {
-    console.log('prod');
-  }
   async function getLostarkNotices() {
     try {
       // 로스트아크 공지사항
-      const noticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark?category=notices`, {
+      const noticesResp = await fetch(`${apiUrl}/api/lostark?category=notices`, {
         cache: 'no-store',
       });
       const noticesList:NoticesTopFiveResp = await noticesResp.json();
@@ -40,7 +36,7 @@ export default async function Home() {
   async function getKloaNotices() {
     try {
       // 클로아 공지사항
-      const mainNoticesResp = await fetch(`${process.env.NEXTAUTH_URL}/api/notices?top=true`, {
+      const mainNoticesResp = await fetch(`${apiUrl}/api/notices?top=true`, {
         cache: 'no-store',
       });
       const mainNoticesTopList:NoticePostResp = await mainNoticesResp.json();
@@ -54,7 +50,7 @@ export default async function Home() {
   async function getAdventureIslandData() {
     try {
       // 모험 섬 데이터
-      const adventureResp = await fetch(`${process.env.NEXTAUTH_URL}/api/lostark?category=adventure`, {
+      const adventureResp = await fetch(`${apiUrl}/api/lostark?category=adventure`, {
         cache: 'no-store',
       });
       const adventureIslandData:AdventureIslandResp = await adventureResp.json();
