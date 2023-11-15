@@ -157,6 +157,13 @@ Uncaught Error: Minified React error #423; visit https://reactjs.org/docs/error-
 [참고사이트] https://velog.io/@pds0309/nextjs-Minified-React-error-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0
 => 해당 부분의 컴포넌트를 dynamic 방식으로 변경해서 불러오니 해결되었다.
 
+다른 에러 발생
+was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+[참고사이트]https://stackoverflow.com/questions/73386743/nextjs-image-was-preloaded-using-link-preload-but-not-used-within-a-few-seconds
+=> 나중에 확인 예정
+
+
+
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
