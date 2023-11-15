@@ -97,6 +97,17 @@ Error: Page "/notices/update/[id]" is missing "generateStaticParams()" so it can
 => 해당 페이지의 useEffect() 함수를 밑으로 이동 => 에러 동일 증상 => try catch 누락되어 재작성 => 에러 동일 증상
 => Next13 버전 에러라고 한다. => 임시로 나눠서 페이지를 분리해서 해결하면 된다고 함 => 분리안하고 props.params.id로 해결 완료
 
+23일차 : Next.js 배포
+네이버 무료 서버
+- 기본 Next.js도 실행 안됨
+- npm install 견디지 못하고 뻗음
+- 설치가 되더라도 dev, build가 에러가 뜨면서 안됨
+AWS EC2
+- 기본 Next.js 정상 작동
+- npm install 정상 설치
+=> node 16 버전 말고 업데이트 하라고 메시지 출력되서, nvm 이용해서 설치는 했지만 사용하는 거는 16 버전 그대로임
+=> 16버전도 크게 문제는 없는 듯
+=> npm run build => 엄청 엄청 엄청 오래 걸림 서버 사양 문제인듯
 
 
 *해결사항*
