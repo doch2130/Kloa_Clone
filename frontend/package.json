@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 12000",
+    "start": "next start",
+    "prod:build": "env-cmd -f .env.production next build",
+    "prod:start": "env-cmd -f .env.production next start -p 12000",
     "lint": "next lint",
     "export": "next export",
     "back": "npx json-server --port 9999 --watch db.json",
@@ -21,6 +23,7 @@
     "@prisma/client": "^5.5.2",
     "@types/nodemailer": "^6.4.13",
     "bcrypt": "^5.1.1",
+    "env-cmd": "^10.1.0",
     "fs": "^0.0.1-security",
     "jose": "^5.1.0",
     "next": "13.5.6",
