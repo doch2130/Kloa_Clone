@@ -60,6 +60,16 @@ const handler = NextAuth({
       session.user = token as any;
       return session;
     },
+    async redirect({url, baseUrl}) {
+      if(process.env.NODE_ENV === 'production') {
+        // console.log('prod callback');
+        baseUrl = `${process.env.PRODUCTION_NEXTAUTH_URL}`;
+      } else {
+        // console.log('dev callback');
+        baseUrl = `${process.env.NEXTAUTH_URL}`;
+      }
+      return baseUrl; // 콜백 완료 후 리다이렉션될 URL
+    },
   },
   // pages: {
   //   // 미들웨어 별도 함수 설정 안한 경우 사용
