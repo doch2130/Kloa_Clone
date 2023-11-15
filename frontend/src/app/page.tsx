@@ -2,10 +2,15 @@ import Link from 'next/link';
 
 import { NoticePostResp, NoticePost, NoticesTopFive, NoticesTopFiveResp } from '@/type/notice'
 import { AdventureIslandResp } from '@/type/adventureIsland'
+import dynamic from 'next/dynamic';
 
 import SlideImage from '@/components/Home/SlideImageSection/SlideImage';
-import Schedule from '@/components/Home/ScheduleSection/Schedule';
+// import Schedule from '@/components/Home/ScheduleSection/Schedule';
 import styled from './Home.module.css';
+
+const Schedule = dynamic(() => import('@/components/Home/ScheduleSection/Schedule'), {
+  ssr: false,
+});
 
 const apiUrl = process.env.NEXT_PUBLIC_MODE === 'production' ? process.env.API_URL_PROD : process.env.API_URL_DEV;
 
