@@ -109,6 +109,29 @@ AWS EC2
 => 16버전도 크게 문제는 없는 듯
 => npm run build => 엄청 엄청 엄청 오래 걸림 서버 사양 문제인듯
 
+AWS EC2 새로 설치
+우분투 22버전으로 변경 됨
+mysql 설치
+nvm 설치
+node 설치 v20
+npm install 할 때마다 멈추는 현상 발생 - 메모리 부족으로 판단
+npm 1개씩 설치 진행
+npm run dev 까지는 실행 성공
+page 접속 진행중 메모리 부족으로 컴파일 무한 로딩
+=> swap 메모리 설정으로 임시 해결
+=> 되기는 하지만 로딩이 엄청 길어짐...(이걸로라도 임시 처리)
+[메모리 설정 사이트] https://sundries-in-myidea.tistory.com/102
+=> 페이지 접속 정상 확인 (로딩 길어지는 현상은 어쩔 수 없음)
+=> 로그인 정상, 로그아웃 시 callback url이 로컬호스트로 이동 됨
+=> npm run dev로 실행해서 env.local의 NEXTAUTH_URL이 callback url로 설정되어 로컬호스트로 이동되는 현상 확인
+=> 수정 후 정상 이동
+
+=> local, dev, production 설정이 제대로 반영 안됨
+=> 해당 사이트 참고해서 설정 작업 해야 할 듯
+=> https://funveloper.tistory.com/163
+=> 해당 방법은 약간 이상한 듯한 느낌, 다른 방법 찾는 중
+
+
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
