@@ -75,13 +75,6 @@ async function getAdventureIslandData() {
 
 
 export default async function Home() {
-  // const apiUrl = process.env.NODE_ENV === 'production' ? process.env.API_URL_PROD : process.env.API_URL_DEV;
-  console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
-  console.log('process.env.NEXT_PUBLIC_MODE ', process.env.NEXT_PUBLIC_MODE);
-  console.log('apiUrl ', apiUrl);
-
-
-
   const noticesList = await getLostarkNotices();
   const mainNoticesTopList = await getKloaNotices();
   const adventureIslandData = await getAdventureIslandData();
