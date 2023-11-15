@@ -131,6 +131,31 @@ page 접속 진행중 메모리 부족으로 컴파일 무한 로딩
 => https://funveloper.tistory.com/163
 => 해당 방법은 약간 이상한 듯한 느낌, 다른 방법 찾는 중
 
+스크립트 실행시 .env.local, .env.production 설정 및 api 호출 조건 재 설정
+로컬
+"prod:build": "env-cmd -f .env.local next build",
+build 에러 안뜸, start 데이터 없음
+
+"prod:build": "env-cmd -f .env.production next build",
+1. AWS 서버 켜져 있는 경우 / build 에러 안뜸, start 데이터 있음
+2. AWS 서버 꺼진 경우 / build 에러 발생, start 에러 발생
+
+AWS 배포 서버
+"prod:build": "env-cmd -f .env.local next build",
+build 에러 안뜸, start 데이터 없음
+
+"prod:build": "env-cmd -f .env.production next build",
+build 에러 발생, start 데이터 있음
+
+=> 결론 => 배포 서버에서는 build 에러 발생, start 데이터 있음 방식으로 사용하면 됨
+
+Uncaught Error: Minified React error #423; visit https://reactjs.org/docs/error-decoder.html?invariant=423 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+=> 서버에서 build 할 때와 실제로 start 했을 때 데이터가 달라서 생기는 에러라고 한다.
+=> 실제 문제는 없지만 F12를 누르면 빨간색으로 체크 되어 있는게 거슬린다...
+=> 다른 사이트도 확인해보니 new Date()의 시간차이 떄문으로 확인되었다.
+=> AWS 서버 시간이랑, 브랑우저 시간이랑 다르게 측정이 되서 그런걸로 확인이 됬다.
+[참고사이트] https://velog.io/@pds0309/nextjs-Minified-React-error-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0
+=> 해당 부분의 컴포넌트를 dynamic 방식으로 변경해서 불러오니 해결되었다.
 
 
 *해결사항*
