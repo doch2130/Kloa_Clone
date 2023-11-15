@@ -7,7 +7,6 @@ import SlideImage from '@/components/Home/SlideImageSection/SlideImage';
 import Schedule from '@/components/Home/ScheduleSection/Schedule';
 import styled from './Home.module.css';
 
-
 const categoryClassMap: { [key: string]: string } = {
   '공지': 'dark:text-[#eaf0ec]',
   '상점': styled.noticeTableCategoryShop,
@@ -16,6 +15,14 @@ const categoryClassMap: { [key: string]: string } = {
 };
 
 export default async function Home() {
+  console.log(process.env.NEXTAUTH_URL);
+  console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
+
+  if(process.env.NODE_ENV === 'development') {
+    console.log('dev');
+  } else {
+    console.log('prod');
+  }
   async function getLostarkNotices() {
     try {
       // 로스트아크 공지사항
