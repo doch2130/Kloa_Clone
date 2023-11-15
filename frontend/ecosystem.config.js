@@ -6,7 +6,7 @@ module.exports = {
 
   deploy : {
     production : {
-      key: 'AWS_Prettier_Key.pem',
+      key: 'AWS_Prettier_Key.ppk',
       user : 'SSH_USERNAME',
       host : '52.78.154.125',
       ref  : 'origin/main',
