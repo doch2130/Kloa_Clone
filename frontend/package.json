@@ -5,9 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "prod:build": "env-cmd -f .env.production next build",
-    "prod:start": "env-cmd -f .env.production next start -p 12000",
+    "start": "next start -p 12000",
     "lint": "next lint",
     "export": "next export",
     "back": "npx json-server --port 9999 --watch db.json",
