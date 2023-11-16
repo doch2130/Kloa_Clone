@@ -1,13 +1,13 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import HeaderSearchForm from './HeaderSearchForm'
+import HeaderDarkMode from './HeaderDarkMode'
+import HeaderLogin from './HeaderLogin'
 
 import Kloa1Icon from '@/assets/Logo/kloa1.webp'
 import Kloa2Icon from '@/assets/Logo/kloa2.webp'
-import SearchIcon from '@/assets/Icon/search.svg'
-import HeaderLogin from './HeaderLogin'
-import HeaderDarkMode from './HeaderDarkMode'
 
 export default function Header() {
   return (
@@ -27,10 +27,7 @@ export default function Header() {
             <Link href='/sell' className='drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc]'>아이템 거래</Link>
             <Link href='/crow' className='drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc]'>계산기</Link>
           </div>
-          <div className='nav-search dark:border-[#42464D]'>
-            <Image src={SearchIcon} alt='SearchIcon' width={24} height={24} />
-            <HeaderSearchForm />
-          </div>
+          <HeaderSearchForm />
         </div>
         <div className='nav-right'>
           <HeaderDarkMode />

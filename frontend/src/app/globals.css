@@ -238,3 +238,35 @@ footer a:active {
   border-radius: 3px;
   height: 10%;  
 }
+
+
+
+
+/* 검색 팝업 창 */
+.nav-search-over {
+  width: 300px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  transform: translateY(40%);
+  border: 0px;
+}
+
+.nav-search-over-header {
+  display: flex;
+}
+
+.nav-search-over-header button {
+  width: 50%;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.87rem;
+  background-color: rgb(230 232 236);
+}
+
+.nav-search-over-body {
+}
+
+
+
