@@ -243,14 +243,22 @@ footer a:active {
 
 
 /* 검색 팝업 창 */
+.nav-search-wrap {
+  position: relative;
+}
+
+.nav-search > form {
+  display: inline-block;
+}
+
 .nav-search-over {
   width: 300px;
   position: absolute;
   left: 0;
   top: 0;
   z-index: 200;
-  transform: translateY(40%);
-  border: 0px;
+  border: 0.8px solid rgb(230 232 236);
+  transform: translateY(55px);
 }
 
 .nav-search-over-header {
@@ -262,11 +270,34 @@ footer a:active {
   text-align: center;
   font-weight: 600;
   font-size: 0.87rem;
+}
+
+.nav-search-over-header-unactive {
+  color: #7e8496;
   background-color: rgb(230 232 236);
 }
 
 .nav-search-over-body {
+  min-height: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.nav-search-over-body-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-search-over-body-empty p {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
 
 
 
