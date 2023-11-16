@@ -164,7 +164,8 @@ was preloaded using link preload but not used within a few seconds from the wind
 [참고사이트]https://stackoverflow.com/questions/73386743/nextjs-image-was-preloaded-using-link-preload-but-not-used-within-a-few-seconds
 => 나중에 확인 예정
 
-
+24일차:
+Header 검색 창 UI 작업
 
 
 *해결사항*
