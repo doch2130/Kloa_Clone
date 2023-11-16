@@ -1,7 +1,7 @@
 'use client'
 import React, { useRef, useState } from 'react'
 
-export default function NavSearchForm() {
+export default function HeaderSearchForm() {
   const searchValueRef = useRef<HTMLInputElement>(null);
   const [searchValue, setSearchValue] = useState('');
   

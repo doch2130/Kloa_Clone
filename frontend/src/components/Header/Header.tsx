@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import NavSearchForm from './NavSearchForm'
+import HeaderSearchForm from './HeaderSearchForm'
 
 import Kloa1Icon from '@/assets/Logo/kloa1.webp'
 import Kloa2Icon from '@/assets/Logo/kloa2.webp'
@@ -29,7 +29,7 @@ export default function Header() {
           </div>
           <div className='nav-search dark:border-[#42464D]'>
             <Image src={SearchIcon} alt='SearchIcon' width={24} height={24} />
-            <NavSearchForm />
+            <HeaderSearchForm />
           </div>
         </div>
         <div className='nav-right'>
