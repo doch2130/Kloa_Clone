@@ -43,7 +43,7 @@ export default function ScheduleCalendar({ today, currentDate, setCurrentDate }:
             } else {
               return (
                 <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
-                  activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
+                  activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap} dark:hover:bg-[#40434a]`}`}
                   key={el} onClick={() => changeDate(clone, setCurrentDate)}>
                   <p className={`${styled.calendarDay} dark:text-[#eaf0ec]`}>{dayParsing[clone.getDay()]}</p>
                   <p className={`${styled.calendarDate} dark:text-[#eaf0ec] ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
@@ -63,7 +63,7 @@ export default function ScheduleCalendar({ today, currentDate, setCurrentDate }:
             } else {
               return (
                 <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
-                activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
+                activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap} dark:hover:bg-[#40434a]`}`}
                 key={el} onClick={() => changeDate(clone, setCurrentDate)}>
                   <p className={`${styled.calendarDay} dark:text-[#eaf0ec]`}>{dayParsing[clone.getDay()]}</p>
                   <p className={`${styled.calendarDate} dark:text-[#eaf0ec] ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
@@ -74,7 +74,7 @@ export default function ScheduleCalendar({ today, currentDate, setCurrentDate }:
             // 현재 날짜가 -7~+7범위에 있는 경우
             return (
               <div className={`${todayStyled ? `${styled.calendarDateWrap} ${styled.calendarToday}` : 
-              activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap}`}`}
+              activeStyled ? `${styled.calendarActiveDate} ${styled.calendarDateWrap}` : `${styled.calendarDateWrap} dark:hover:bg-[#40434a]`}`}
               key={el} onClick={() => changeDate(clone, setCurrentDate)}>
                 <p className={`${styled.calendarDay} dark:text-[#eaf0ec]`}>{dayParsing[clone.getDay()]}</p>
                 <p className={`${styled.calendarDate} dark:text-[#eaf0ec] ${clone.getDay() === 0 && styled.calendarSunday}`}>{clone.getDate()}</p>
