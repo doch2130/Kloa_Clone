@@ -60,15 +60,71 @@ export default function HeaderSearchForm() {
       document.removeEventListener('mousedown', popOverCloseEvent);
     }
   }, []);
+
+  const onSubmit = async (e:React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    if(!searchValueRef.current) {
+      return ;
+    }
+    if(searchValueRef.current.value.trim() === '') {
+      alert('캐릭터명을 입력해주세요.');
+      searchValueRef.current.focus();
+      return ;
+    }
+
+    searchDataSaveHandler(searchValueRef.current.value);
+    setSearchValue('');
+
+  }
+
+  const searchDataSaveHandler = (searchValue: string) => {
+    const recentlySearchDataArray = [];
+    const recentlySearchStorage = localStorage.getItem('recentlySearchStorage');
+
+    const searchData = {
+      name: searchValue,
+      job: '워로드',
+      icon_url: 'http://aaa.com',
+      level: 60,
+      item_level: 1543,
+      max_item_level: 1543,
+      guild: '명품길드',
+      server: 7
+    }
+
+    if(recentlySearchStorage !== null) {
+      const recentlySearchStorageJson = JSON.parse(recentlySearchStorage);
+      recentlySearchStorageJson.unshift(searchData);
+
+      if(recentlySearchStorageJson.length > 5) {
+        recentlySearchStorageJson.pop();
+      }
+
+      localStorage.setItem('recentlySearchStorage', JSON.stringify(recentlySearchStorageJson));
+    } else {
+      recentlySearchDataArray.push(searchData);
+      localStorage.setItem('recentlySearchStorage', JSON.stringify(recentlySearchDataArray));
+    }
+  }
+
+  const enterEvent = (e:React.KeyboardEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    if(e.key === 'Enter') {
+      e.preventDefault();
+      onSubmit(e);
+    }
+    return ;
+  }
   
   return (
     <div ref={searchWrap} className='nav-search-wrap'>
       <div className='nav-search'>
         <Image src={SearchIcon} alt='SearchIcon' width={24} height={24} />
-        <form>
+        <form onSubmit={onSubmit}>
           <input id='characterName' ref={searchValueRef} className='bg-transparent dark:text-white placeholder:dark:text-[#656770]'
           type='text' placeholder='캐릭터명을 입력하세요' maxLength={12}
-          onChange={(e) => textChange(e)} value={searchValue} onFocus={() => popOverOpenEvent()} />
+          onChange={(e) => textChange(e)} value={searchValue} onFocus={() => popOverOpenEvent()}
+          onKeyDown={enterEvent} />
         </form>
       </div>
       {isInputFocus &&
