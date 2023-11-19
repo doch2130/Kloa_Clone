@@ -84,16 +84,16 @@ async function calendarAdventureFilter(data:ContentsCalendar[]) {
     }
   });
 
-  // 일단 보류 (안써도 될듯)
   // Sort the data based on date keys
-  // const sortedKeys = Object.keys(sortedData).sort();
-  // const sortedResult: OrganizeAdventureIslandList = {};
+  const sortedKeys = Object.keys(sortedData).sort();
+  const sortedResult: OrganizeAdventureIslandList = {};
 
-  // sortedKeys.forEach((key) => {
-  //   sortedResult[key] = sortedData[key];
-  // });
+  sortedKeys.forEach((key) => {
+    sortedResult[key] = sortedData[key];
+  });
 
-  return sortedData;
+  // return sortedData;
+  return sortedResult;
 }
 
 const calendarFileSave = async (filterAdventureIsland:OrganizeAdventureIslandList) => {
