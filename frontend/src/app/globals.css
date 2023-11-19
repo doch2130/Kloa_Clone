@@ -284,7 +284,15 @@ footer a:active {
   align-items: center;
 }
 
-.nav-search-over-body-empty {
+.navSearchOverBodyFull {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.nav-search-over-body-empty,
+.navSearchOverBodyEmpty {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -297,7 +305,3 @@ footer a:active {
   text-align: center;
   margin-top: 0.5rem;
 }
-
-
-
-

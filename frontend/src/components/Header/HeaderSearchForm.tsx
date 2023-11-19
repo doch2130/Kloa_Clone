@@ -5,6 +5,7 @@ import Image from 'next/image'
 import SearchIcon from '@/assets/Icon/search.svg'
 import AlertIcon from '@/assets/Icon/alertIcon.svg'
 import SearchListEmptyIcon from '@/assets/Mococo/img_auction_empty2.png'
+import CloseIcon from '@/assets/Icon/close.svg'
 
 export default function HeaderSearchForm() {
   const searchWrap = useRef<HTMLDivElement>(null);
@@ -15,6 +16,8 @@ export default function HeaderSearchForm() {
 
   // 최근검색, 즐겨찾기
   const [popOverCategory, setPopOverCategory] = useState<string>('최근검색');
+
+  const [recentlyData, setRecentlyData] = useState([]);
   
   // 인풋 창 데이터 변환, 값에 따른 팝업 창 출력 상태
   const textChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -101,6 +104,7 @@ export default function HeaderSearchForm() {
       }
 
       localStorage.setItem('recentlySearchStorage', JSON.stringify(recentlySearchStorageJson));
+      setRecentlyData(recentlySearchStorageJson);
     } else {
       recentlySearchDataArray.push(searchData);
       localStorage.setItem('recentlySearchStorage', JSON.stringify(recentlySearchDataArray));
@@ -115,6 +119,25 @@ export default function HeaderSearchForm() {
     }
     return ;
   }
+
+  const deleteSearchDataHandler = (name:string) => {
+    const filterRecentlyData = recentlyData.filter((item:any) => item.name !== name);
+    if(filterRecentlyData.length === 0) {
+      localStorage.removeItem('recentlySearchStorage');
+    }
+
+    localStorage.setItem('recentlySearchStorage', JSON.stringify(filterRecentlyData));
+    setRecentlyData(filterRecentlyData);
+  }
+
+
+  useEffect(() => {
+    const recentlySearchStorage = localStorage.getItem('recentlySearchStorage');
+    if(recentlySearchStorage !== null) {
+      const recentlySearchStorageJson = JSON.parse(recentlySearchStorage);
+      setRecentlyData(recentlySearchStorageJson);
+    }
+  }, []);
   
   return (
     <div ref={searchWrap} className='nav-search-wrap'>
@@ -122,7 +145,7 @@ export default function HeaderSearchForm() {
         <Image src={SearchIcon} alt='SearchIcon' width={24} height={24} />
         <form onSubmit={onSubmit}>
           <input id='characterName' ref={searchValueRef} className='bg-transparent dark:text-white placeholder:dark:text-[#656770]'
-          type='text' placeholder='캐릭터명을 입력하세요' maxLength={12}
+          type='text' placeholder='캐릭터명을 입력하세요' maxLength={12} autoComplete="off"
           onChange={(e) => textChange(e)} value={searchValue} onFocus={() => popOverOpenEvent()}
           onKeyDown={enterEvent} />
         </form>
@@ -136,12 +159,28 @@ export default function HeaderSearchForm() {
           <button type='button' className={`h-10 ${popOverCategory === '즐겨찾기' ? 'dark:text-[#eaf0ec] dark:bg-[#33353a]' : 'nav-search-over-header-unactive dark:bg-[#2c2f33]'}`}
           onClick={() => popOverCategoryChangeHandler('즐겨찾기')}>즐겨찾기</button>
         </div>
-        <div className='nav-search-over-body'>
+        <div className={popOverCategory === '최근검색' && recentlyData.length > 0 ? 'navSearchOverBodyFull' : 'nav-search-over-body'}>
           {popOverCategory === '최근검색' ?
-          <div className='nav-search-over-body-empty'>
-            <Image src={AlertIcon} alt='alertIcon' width={24} height={24} />
-            <p className='dark:text-[#eaf0ec]'>최근 검색한 캐릭터가 없습니다.</p>
-          </div>
+          recentlyData.length === 0 ?
+            <div className='nav-search-over-body-empty'>
+              <Image src={AlertIcon} alt='alertIcon' width={24} height={24} />
+              <p className='dark:text-[#eaf0ec]'>최근 검색한 캐릭터가 없습니다.</p>
+            </div>
+          :
+          recentlyData.map((el:any, index:number) =>
+            <div key={index} className='w-full h-[55px] border-b border-basicGrey dark:border-[#4d4f55] flex justify-between items-center pl-5 last:border-b-0 hover:bg-[#f9fbfb] dark:bg-[#33353a] hover:dark:bg-[#3a3b41]'>
+              <a href='/' className='flex flex-col justify-center grow dark:text-[#eaf0ec] hover:text-[#8991ee] dark:hover:text-[#8991ee]'>
+                <p className='font-medium text-main1'>
+                  <span className='text-xs text-[#7d8395] dark:text-[#acaeb4]'>{el.server}</span>&nbsp;
+                  <span style={{fontWeight: 600}}>{el.name}</span>
+                </p>
+                <p className='text-sm font-light text-[#000] dark:text-[#eaf0ec]'>Lv. {el.item_level} {el.job}</p>
+              </a>
+              <button type='button' className='pr-5'>
+                <Image src={CloseIcon} alt='close button' width={16} height={16} onClick={() => deleteSearchDataHandler(el.name)} />
+              </button>
+            </div>
+          )
           : 
           <div className='nav-search-over-body-empty'>
             <Image src={SearchListEmptyIcon} alt='SearchListEmptyIcon' width={55} height={64} />
