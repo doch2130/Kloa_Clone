@@ -167,6 +167,16 @@ was preloaded using link preload but not used within a few seconds from the wind
 24일차:
 Header 검색 창 UI 작업
 
+25일차:
+휴식
+
+26일차:
+스케줄섬 시간 정렬 필요 확인 => 작업 완료
+스케줄 다크모드 hover 설정
+Header 검색 창 기능 작업 진행 (검색 클릭 시 popOpen, 글자 입력 or 다른 곳 클릭 popClose)
+검색 내역 로컬 스토리지 저장 (최근 검색 내역)
+=> CSS, 삭제 기능 추가 완료
+
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
