@@ -186,6 +186,11 @@ Header Search Input 최근검색, 즐겨찾기 기능 작업 완료
 Footer 내용 수정
 Rest (Forget Password) Page UI 작업 시작
 
+28일차:
+전체 Layout에서 Footer 제거 후 일부에만 사용하도록 변경 작업 완료
+Rest (Forget Password) Page UI, Function 작업 완료
+API Return 값 JSON 방식으로 변경 작업 완료
+
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
