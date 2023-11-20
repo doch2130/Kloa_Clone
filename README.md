@@ -184,6 +184,8 @@ Header 검색 창 기능 작업 진행 (검색 클릭 시 popOpen, 글자 입력
 Header Search Input 최근검색, 즐겨찾기 기능 작업 완료
 => 즐겨찾기 추가 기능은 전투정보실 페이지 작업 이후 진행
 Footer 내용 수정
+Rest (Forget Password) Page UI 작업 시작
+
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
