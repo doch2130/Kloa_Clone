@@ -21,11 +21,11 @@ export async function POST(req: NextRequest) {
       const { password, ...result } = user;
       return new NextResponse(JSON.stringify(result))
     } else {
-      return new NextResponse('Error user add', { status: 500 });
+      return new NextResponse(JSON.stringify({ message: 'Error user add', status: 500 }));
     }
 
   } catch (error) {
     console.error('user add error: ', error);
-    return new NextResponse('An error occurred', { status: 500 });
+    return new NextResponse(JSON.stringify({ message: 'An error occurred', status: 500 }));
   }
 }

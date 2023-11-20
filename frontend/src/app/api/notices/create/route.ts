@@ -24,11 +24,11 @@ export async function GET() {
         },
       });
     } else {
-      return new NextResponse('Error fetching data', { status: response.status });
+      return new NextResponse(JSON.stringify({ message: 'Error fetching data', status: response.status }));
     }
   } catch (error) {
     console.error('Error:', error);
-    return new NextResponse('An error occurred', { status: 500 });
+    return new NextResponse(JSON.stringify({ message: 'An error occurred', status: 500 }));
   }
 }
 
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     });
 
     if(!user) {
-      return new NextResponse('Error Not Found User', { status: 500 });
+      return new NextResponse(JSON.stringify({ message: 'Error Not Found User', status: 500 }));
     }
 
     const post = await prisma.mainnotices.create({
@@ -71,12 +71,12 @@ export async function POST(req: NextRequest) {
     if(post) {
       return new NextResponse(JSON.stringify({result: post, status: 201}));
     } else {
-      return new NextResponse('Error Create Post', { status: 500 });
+      return new NextResponse(JSON.stringify({ message: 'Error Create Post', status: 500 }));
     }
 
 
   } catch (error) {
     console.error('Error:', error);
-    return new NextResponse('An error occurred', { status: 500 });
+    return new NextResponse(JSON.stringify({ message: 'An error occurred', status: 500 }));
   }
 }
