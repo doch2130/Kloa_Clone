@@ -163,6 +163,9 @@ nohup 실행 방식에서 pm2 설치 후 실행 방식으로 변경 => 정상 �
 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
 [참고사이트]https://stackoverflow.com/questions/73386743/nextjs-image-was-preloaded-using-link-preload-but-not-used-within-a-few-seconds
 => 나중에 확인 예정
+------
+=> SlideImage.tsx as='image' priority={true} 추가 작업 후 재배포 => 해결안됨
+
 
 24일차:
 Header 검색 창 UI 작업
