@@ -100,7 +100,7 @@ export default function HeaderSearchForm() {
 
   return (
     <div ref={searchWrap} className='nav-search-wrap'>
-      <div className='nav-search'>
+      <div className='nav-search dark:border-[#42464D]'>
         <Image src={SearchIcon} alt='SearchIcon' width={24} height={24} />
         <form onSubmit={onSubmit}>
           <input id='characterName' ref={searchValueRef} className='bg-transparent dark:text-white placeholder:dark:text-[#656770]'
