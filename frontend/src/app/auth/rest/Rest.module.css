@@ -100,3 +100,43 @@
     margin-top: 70px;
   }
 }
+
+
+
+.forgetPasswordWrap2 {
+  margin-top: 0px !important;
+}
+
+.idGroup2 input {
+  border-radius: 10px;
+}
+
+.pwdGroup, .pwdCheckGroup, .restButton {
+  margin-top: 1.25rem;
+}
+
+.pwdGroup input,
+.pwdCheckGroup input {
+  border-radius: 10px;
+}
+
+
+.restButton {
+  color: rgb(255 255 255);
+  font-weight: 600;
+  font-size: 1.125rem;
+  --tw-gradient-to-position: ;
+  --tw-gradient-from-position: ;
+  --tw-gradient-to: #8045dd var(--tw-gradient-to-position);
+  --tw-gradient-from: #5865f2 var(--tw-gradient-from-position);
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
+  background-image: linear-gradient(to right,var(--tw-gradient-stops));
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 48px;
+  width: 100%;
+  border: none;
+}
