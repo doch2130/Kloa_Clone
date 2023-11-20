@@ -42,8 +42,8 @@ export default function SlideImage() {
       {SlideImageData.map((el) => {
         return (
           <SwiperSlide key={el.id}>
-            <Link href={el.url} target='_blank'>
-              <Image src={el.src} alt={el.alt} placeholder='blur' />
+            <Link href={el.url} target='_blank' as='image'>
+              <Image src={el.src} alt={el.alt} placeholder='blur' priority={true} />
             </Link>
           </SwiperSlide>
         )
