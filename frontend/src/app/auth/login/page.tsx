@@ -81,7 +81,7 @@ export default function Login() {
       <button type='button' className={styled.loginButton} onClick={onSubmit}>로그인</button>
       <div className={styled.lastGroup}>
         <Link href='/auth/signup' className='dark:text-[#8991ee]'>회원가입</Link>
-        <Link href='/auth/login' onClick={() => alert('개발 중 입니다')}>앗, 비밀번호를 잊어버렸어요!</Link>
+        <Link href='/auth/rest'>앗, 비밀번호를 잊어버렸어요!</Link>
       </div>
     </form>
   )
