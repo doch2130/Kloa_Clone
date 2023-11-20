@@ -3,6 +3,8 @@ import React from 'react'
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
+import Footer from '@/components/Footer/Footer';
+
 import styled from './Manager.module.css'
 
 export default function Manager() {
@@ -91,6 +93,7 @@ export default function Manager() {
   }
 
   return (
+    <>
     <div className={`${styled.managerWrap} bg-white dark:bg-[#2b2d31] dark:text-[#eaf0ec]`}>
       <div>
         <h1>관리자 페이지</h1>
@@ -103,5 +106,7 @@ export default function Manager() {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   )
 }

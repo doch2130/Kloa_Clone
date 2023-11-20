@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
 import './globals.css'
-import Footer from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 import AuthSession from './AuthSession'
 
@@ -23,7 +22,6 @@ export default function RootLayout({
         <AuthSession>
           <Header />
           {children}
-          <Footer />
         </AuthSession>
       </body>
     </html>

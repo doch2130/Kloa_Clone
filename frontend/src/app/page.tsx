@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic';
 
 import SlideImage from '@/components/Home/SlideImageSection/SlideImage';
 // import Schedule from '@/components/Home/ScheduleSection/Schedule';
+import Footer from '@/components/Footer/Footer';
+
 import styled from './Home.module.css';
 
 const Schedule = dynamic(() => import('@/components/Home/ScheduleSection/Schedule'), {
@@ -85,6 +87,7 @@ export default async function Home() {
   const adventureIslandData = await getAdventureIslandData();
   
   return (
+    <>
     <div className={styled.bodySection}>
       <section className={styled.slideImage}>
         <SlideImage />
@@ -127,6 +130,8 @@ export default async function Home() {
         </div>
       </section>
     </div>
+    <Footer />
+    </>
   )
 }
 
