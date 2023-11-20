@@ -9,7 +9,7 @@
 .form {
   width: 100%;
   display: flex;
-  flex: 1 0;
+  flex: 2 0;
   align-items: center;
   justify-content: center;
 }
@@ -19,12 +19,18 @@
 }
 
 .authArt {
-  max-width: 750px;
+  flex: 1 0;
   width: 100%;
 }
 
 .authArt img {
   width: 100%;
+}
+
+@media (min-width: 1535px) {
+  .wrap {
+    padding: 0 40px;
+  }
 }
 
 @media (max-width: 1535px) {

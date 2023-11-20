@@ -12,7 +12,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         {children}
       </div>
       <div className={styled.authArt}>
-        <Image src={SonabelArt} width={560} height={700} alt='auth art image' />
+        <Image src={SonabelArt} alt='auth art image' />
       </div>
     </div>
   )
