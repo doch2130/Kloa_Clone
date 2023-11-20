@@ -99,14 +99,21 @@ export async function POST(req: NextRequest) {
   // 메일 인증번호 생성 6자리
   const number = ((Math.round(Math.random() * 1000000)) + '').padStart(6, '0');
 
+  let subject = '클로아 회원가입 메일 인증 - ';
+  let text = '클로아 회원가입 인증번호 :';
+  if(body.type === 'rest') {
+    subject = '클로아 비밀번호찾기 메일 인증 - ';
+    text = '클로아 비밀번호찾기 인증번호 :';
+  }
+
   // transperter 활용해 이메일 전송
   try {
     await transporter.sendMail({
       ...mailOptions,
       ...{
-        text: `클로아 회원가입 인증번호 : ${number}`,
+        text: `${text} ${number}`,
       },
-      subject: `클로아 메일 인증-${fixTime}`,
+      subject: `${subject}${fixTime}`,
     });
 
     const emailNumberSave = await emailAuthNumberSend(body.email, number);
