@@ -3,16 +3,33 @@
   justify-content: space-between;
   background-color: white;
   min-height: 550px;
-  max-width: 1120px;
   margin: auto;
 }
 
 .form {
   width: 100%;
   display: flex;
+  flex: 1 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.authArt {
+  max-width: 750px;
+  width: 100%;
+}
+
+.authArt img {
+  width: 100%;
 }
 
 @media (max-width: 1535px) {
+  .form {
+    width: 100%;
+    display: flex;
+    flex: none;
+  }
+
   .authArt {
     display: none;
   }

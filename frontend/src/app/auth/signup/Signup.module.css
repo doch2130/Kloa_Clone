@@ -1,7 +1,5 @@
 .signForm {
   width: 400px;
-  margin: auto;
-  margin-top: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -158,4 +156,11 @@
   font-size: .75rem;
   font-weight: 600;
   text-decoration: none;
+}
+
+
+@media (max-width: 1000px) {
+  .signForm {
+    margin-top: 70px;
+  }
 }

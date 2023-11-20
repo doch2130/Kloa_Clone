@@ -1,6 +1,5 @@
 .loginForm {
   width: 400px;
-  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,4 +111,10 @@
   height: 48px;
   width: 100%;
   border: 2px solid rgb(88 101 242);
+}
+
+@media (max-width: 1000px) {
+  .loginForm {
+    margin-top: 70px;
+  }
 }
