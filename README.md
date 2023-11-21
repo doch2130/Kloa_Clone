@@ -243,3 +243,30 @@ useEffect를 사용해도 반응이 없고 안써도 반응이 없고, 에러도
 1번 방법: 다른 사이트에서 캐릭터 이름만 크롤링 해서 데이터 수집 후 API 이용하여 캐릭터 정보 업데이트
 2번 방법: 크롤링으로 전체 데이터 수집
 3번 방법: 탑 100,200 까지만 크롤링해서 데이터 수집 후 이후 캐릭터는 검색 시 api로 데이터 불러와서 갱신하는 방식
+
+
+23일차 문제
+Warning: For production Image Optimization with Next.js, the optional 'sharp' package is strongly recommended. Run 'npm i sharp', and Next.js will use it automatically for Image Optimization.
+Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
+배포시 Image 대신 sharp 사용하라는 권고 메시지
+=> 나중에 확인 예정
+
+28일차 문제
+auth 폴더 구조
+auth/
+	layout.tsx
+	login/
+	singup/
+	rest/
+
+layout.tsx 파일만 존재한 상태에서 배포를 하면 콘솔 창에 다음과 같이 출력이 되었다.
+The resource http://52.78.154.125:12000/_next/static/css/09e1cca9fc5c6311.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally.
+
+비슷한 구조인 Notice는 출력이 안되는 것으로 볼 때 page.tsx를 안쓰고 사용해서 탐지되는 경고 메시지로 추측된다.
+=> page.tsx는 상관없이 페이지와 연결되어 있는 링크에 한해서 연결된 페이지의 css 파일이 로딩이 되는 현상으로 판단된다.
+
+=> Link 태그 대신 a 태그를 사용하면 메시지가 출력이 되지는 않는다.
+=> 그런데 다른 Link 태그는 출력이 안되는 것으로 봐서는 target도 영향이 있지 않을까???
+=> target은 영향이 없다.
+=> Link로 연결된 컴포넌트에서 스타일 불러오는 방식에 의해 발생하는 것으로 확인되었다.
+=> import styled from './login.module.css' 에서 => import './login.css' 변경해도 해결이 안된다.
