@@ -48,6 +48,27 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
     router.push(`/notices?page=${nextPage}`);
   };
 
+  const recomendEvent = (id:number) => {
+    const result = recomendEventHandler(id, session, postData, setPostData);
+    // console.log('result ', result);
+
+    if(result.status === 401 && result.redirect === false) {
+      if(window.confirm('로그인 후 추천 가능합니다.\r\n로그인 페이지로 이동 하시겠습니까?')) {
+        router.push('/auth/login');
+      }
+      return ;
+    }
+
+    if(result.status === 401 && result.redirect === true) {
+      alert('로그인이 만료되었습니다. 다시 로그인 해주세요');
+      router.push('/auth/login');
+      return ;
+    } else {
+      alert('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
+      return ;
+    }
+  }
+
   const buttonViewFunction = ():React.JSX.Element[] => {
     const buttons = [];
     for (let i = 1; i <= btnTotalCount; i++) {
@@ -91,7 +112,7 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
             <Image src={EyeIcon} alt='eye icon' />
             <span className='dark:text-[#eaf0eca2]'>{postList[i].viewCount}</span>
           </div>
-          <div className={`${styled.notieRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(postList[i].id, session, postData, setPostData)}>
+          <div className={`${styled.notieRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent(postList[i].id)}>
             <Image src={MococoIcon} alt='mococo icon' />
             <span>{postList[i].recomendCount}</span>
           </div>

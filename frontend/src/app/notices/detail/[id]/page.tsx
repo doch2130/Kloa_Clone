@@ -90,6 +90,12 @@ export default function Detail() {
           router.push('/notices?page=1');
           return ;
         }
+
+        if(deleteResponse.status === 401 && deleteResponse.redirect === true) {
+          alert('로그인이 만료되었습니다. 로그인 후 다시 시도해주세요');
+          router.push('/auth/login');
+          return ;
+        }
   
         alert('게시글이 삭제되었습니다.');
         router.push('/notices?page=1');
@@ -102,6 +108,28 @@ export default function Detail() {
         alert('삭제 중 에러가 발생하였습니다.');
         return ;
       }
+    }
+  }
+
+  const recomendEvent = () => {
+    const result = recomendEventHandler(postData.id, session, postData, setPostData);
+    // console.log('result ', result);
+
+    if(result.status === 401 && result.redirect === false) {
+      // alert('로그인 후 추천 가능합니다');
+      if(window.confirm('로그인 후 추천 가능합니다.\r\n로그인 페이지로 이동 하시겠습니까?')) {
+        router.push('/auth/login');
+      }
+      return ;
+    }
+
+    if(result.status === 401 && result.redirect === true) {
+      alert('로그인이 만료되었습니다. 다시 로그인 해주세요');
+      router.push('/auth/login');
+      return ;
+    } else {
+      alert('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
+      return ;
     }
   }
 
@@ -141,7 +169,7 @@ export default function Detail() {
           </pre>
         </div>
         <div className={styled.postBodyRow}>
-          <div className={`${styled.postRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(postData.id, session, postData, setPostData)}>
+          <div className={`${styled.postRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
             <Image src={MococoIcon} alt='mococo icon' />
             <span>{postData.recomendCount}</span>
           </div>
@@ -187,7 +215,7 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{nextPostData.viewCount}</span>
             </div>
-            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(nextPostData.id, session, nextPostData, setNextPostData)}>
+            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{nextPostData.recomendCount}</span>
             </div>
@@ -210,7 +238,7 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
             </div>
-            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(postData.id, session, postData, setPostData)}>
+            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{postData.recomendCount}</span>
             </div>
@@ -233,7 +261,7 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{prevPostData.viewCount}</span>
             </div>
-            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEventHandler(prevPostData.id, session, prevPostData, setPrevPostData)}>
+            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{prevPostData.recomendCount}</span>
             </div>
