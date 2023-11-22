@@ -6,6 +6,8 @@ import path from 'path';
 import fs from "fs";
 import { writeFile } from "fs/promises";
 
+let te = 1;
+
 async function calendarAdventureFilter(data:ContentsCalendar[]) {
   const adventureIsland = data.filter((el:ContentsCalendar) => el.CategoryName === '모험 섬');
   
@@ -67,7 +69,7 @@ async function calendarAdventureFilter(data:ContentsCalendar[]) {
 
 
           if(item.StartTimes !== null) {
-            const filterStartTimes = item.StartTimes.filter((time:string) => dateKey === time.substring(0, 10));
+            const filterStartTimes = item.StartTimes.filter((time: string) => dateKey === time.substring(0, 10));
 
             sortedData[dateKey].push({
               ContentsName: item.ContentsName,
@@ -76,8 +78,13 @@ async function calendarAdventureFilter(data:ContentsCalendar[]) {
               StartTimes: filterStartTimes,
               RewardItems: sortedReward,
             });
-          }
 
+            sortedData[dateKey].sort((a, b) => {
+              const aStartTime = a.StartTimes[0];
+              const bStartTime = b.StartTimes[0];
+              return aStartTime.localeCompare(bStartTime);
+            });
+          }
         }
 
       });
