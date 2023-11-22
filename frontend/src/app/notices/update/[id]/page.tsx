@@ -65,6 +65,10 @@ export default function Update() {
             alert('게시글을 수정하였습니다.');
             router.push(`/notices/detail/${id}`);
             return ;
+          } else if(res.status === 401 && res.redirect === true) {
+            alert('로그인이 만료되었습니다. 로그인 후 다시 시도해주세요');
+            router.push('/auth/login');
+            return ;
           } else {
             alert('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.');
             return ;
