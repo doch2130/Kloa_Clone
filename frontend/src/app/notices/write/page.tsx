@@ -49,7 +49,7 @@ export default function Write() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization' : `${session?.user?.accessToken}` || ''
+          'Authorization': `bearer ${session?.user?.accessToken}`,
         },
         body: JSON.stringify({
           category: categoryData,
@@ -64,6 +64,10 @@ export default function Write() {
             alert('게시글을 등록하였습니다.');
             router.push('/notices?page=1');
             router.refresh();
+            return ;
+          } else if(res.status === 401 && res.redirect === true) {
+            alert('로그인이 만료되었습니다. 로그인 후 다시 시도해주세요');
+            router.push('/auth/login');
             return ;
           } else {
             alert('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.');
