@@ -11,7 +11,7 @@ export async function PATCH(req: NextRequest) {
     // console.log('accessToken ', accessToken);
 
     if(accessToken === null) {
-      return new NextResponse(JSON.stringify({redirect: true, status: 401}));
+      return new NextResponse(JSON.stringify({redirect: false, status: 401}));
     }
 
     if (!(await verifyStringJwt(accessToken?.slice(7)))) {
