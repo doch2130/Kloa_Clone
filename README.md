@@ -191,6 +191,12 @@ Rest (Forget Password) Page UI 작업 시작
 Rest (Forget Password) Page UI, Function 작업 완료
 API Return 값 JSON 방식으로 변경 작업 완료
 
+29일차:
+공지사항 작성 시 에러 발생 => fetch 요청 시 Token 앞에 bearer 누락 확인 => 수정 후 정상 확인
+공지사항 추천 함수 일부 수정 작업
+스케줄 파일 업데이트 시 시간 정렬 안되는 현상 확인
+=> Key 값으로 날짜 정렬은 되었는데 내부 데이터가 정렬이 안되었음 => 수정 완료
+
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
