@@ -111,12 +111,41 @@ export default function Detail() {
     }
   }
 
-  const recomendEvent = () => {
-    const result = recomendEventHandler(postData.id, session, postData, setPostData);
-    // console.log('result ', result);
+  // const recomendEvent = () => {
+  //   const result = recomendEventHandler(postData.id, session, postData, setPostData);
+  //   // console.log('result ', result);
+
+  //   if(result.status === 401 && result.redirect === false) {
+  //     // alert('로그인 후 추천 가능합니다');
+  //     if(window.confirm('로그인 후 추천 가능합니다.\r\n로그인 페이지로 이동 하시겠습니까?')) {
+  //       router.push('/auth/login');
+  //     }
+  //     return ;
+  //   }
+
+  //   if(result.status === 401 && result.redirect === true) {
+  //     alert('로그인이 만료되었습니다. 다시 로그인 해주세요');
+  //     router.push('/auth/login');
+  //     return ;
+  //   } else {
+  //     alert('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
+  //     return ;
+  //   }
+  // }
+
+  const recomendEvent = async () => {
+    const result = await recomendEventHandler(postData.id, session);
+
+    if(result.status === 200) {
+      setPostData((prev: NoticePost) => ({
+        ...prev,
+        recomendCount: Number(result.recomendCount)
+      }));
+      
+      return ;
+    }
 
     if(result.status === 401 && result.redirect === false) {
-      // alert('로그인 후 추천 가능합니다');
       if(window.confirm('로그인 후 추천 가능합니다.\r\n로그인 페이지로 이동 하시겠습니까?')) {
         router.push('/auth/login');
       }

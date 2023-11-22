@@ -48,9 +48,20 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
     router.push(`/notices?page=${nextPage}`);
   };
 
-  const recomendEvent = (id:number) => {
-    const result = recomendEventHandler(id, session, postData, setPostData);
-    // console.log('result ', result);
+  const recomendEvent = async (id:number) => {
+    const result = await recomendEventHandler(id, session);
+
+    if(result.status === 200) {
+      const clonePostData = postData.map((el) => {
+        if(el.id === id) {
+          el.recomendCount = Number(result.recomendCount);
+        }
+        return el;
+      });
+      setPostData(clonePostData);
+
+      return ;
+    }
 
     if(result.status === 401 && result.redirect === false) {
       if(window.confirm('로그인 후 추천 가능합니다.\r\n로그인 페이지로 이동 하시겠습니까?')) {
