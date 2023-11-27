@@ -6,8 +6,6 @@ import path from 'path';
 import fs from "fs";
 import { writeFile } from "fs/promises";
 
-let te = 1;
-
 async function calendarAdventureFilter(data:ContentsCalendar[]) {
   const adventureIsland = data.filter((el:ContentsCalendar) => el.CategoryName === '모험 섬');
   
