@@ -16,7 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // const router = require("./routes");
 // app.use('/', router);
-
 // app.get('/api/hello', (req, res) => {});
 
 app.get('*', (req, res) => {
@@ -24,8 +23,9 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Kloa Server Port: ${port}`);
+  console.log(`Kloa Schedule Server Port: ${port}`);
 
   // 로스트아크 공지사항 자동 스케줄
   lostarkSchedule.noticesSchedule();
+  lostarkSchedule.adventureIslandSchedule();
 });
