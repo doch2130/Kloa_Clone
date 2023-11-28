@@ -19,21 +19,8 @@ exports.noticesGetCall = async () => {
     
     if (response.ok) {
       const data = await response.json();
+      return { data, status: 200};
 
-      if(data) {
-        const result = await noticesListUpdate(data);
-
-        if(result) {
-          console.log(new Date() + ' Island Scheduler Success!');
-          return { data, status: 200};
-        } else {
-          console.log(new Date() + ' Island Scheduler Failed!');
-          return { data, status: 500};
-        }
-
-      } else {
-        return { data, status: 500};
-      }
     } else {
       return { data: [], status: 500};
     }
@@ -42,43 +29,6 @@ exports.noticesGetCall = async () => {
     return { data: [], status: 500};
   }
 }
-
-const noticesListUpdate = async (data) => {
-  try {
-    const topNoticesFive = data.slice(0, 5);
-
-    for (let i = 4; i >= 0; i--) {
-      if(!topNoticesFive[i].Title) {
-        continue;
-      }
-      const isNoticeDuplicate = await notices.findAll({
-        where: {
-         title: topNoticesFive[i].Title
-        }
-      });
-
-      if(isNoticeDuplicate.length > 0) {
-        continue;
-      }
-      
-      await notices.create({
-        title: topNoticesFive[i].Title,
-        category: topNoticesFive[i].Type,
-        createdAt: new Date(topNoticesFive[i].Date),
-        link: topNoticesFive[i].Link,
-      });
-    }
-
-    return true;
-
-  } catch (error) {
-    console.error('Error:', error);
-    return false;
-  }
-};
-
-
-
 
 // 모험 섬 데이터 API
 exports.adventureIslandGetCall = async () => {

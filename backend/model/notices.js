@@ -1,4 +1,4 @@
-const notices = (Sequelize, DataTypes) => {
+const Notices = (Sequelize, DataTypes) => {
   return Sequelize.define(
       'notices',
       {
@@ -33,4 +33,4 @@ const notices = (Sequelize, DataTypes) => {
   )
 }
 
-module.exports = notices;
+module.exports = Notices;
