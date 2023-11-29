@@ -166,26 +166,21 @@ const calendarFileSave = async (filterAdventureIsland) => {
     // console.log('filterAdventureIsland ', filterAdventureIsland);
     const keyArray = Object.keys(filterAdventureIsland);
 
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-
-    const folderName = `${year}${month}`;
-
-    // 현재 폴더 디렉토리 경로 가져오는 함수 (frontend 폴더)
-    // console.log('process.cwd() ',process.cwd());
-    const filePath = path.join(__dirname, `../frontend/src/assets/Schedule/${folderName}`);
-
-    if (!fs.existsSync(filePath)) {
-      fs.mkdirSync(filePath);
-    }
-
     for (let i = 0; i < keyArray.length; i++) {
       const fileData = filterAdventureIsland[keyArray[i]];
-      const fileName = `${filePath}/${keyArray[i]}.json`
 
-    //  await writeFile(fileName, JSON.stringify(fileData, null, 2), 'utf-8');
-     await fs.writeFile(fileName, JSON.stringify(fileData, null, '\t'))
+      const folderName = keyArray[i].slice(0, 7).replace('-', '');
+      const filePath = path.join(__dirname, `../../frontend/src/assets/Schedule/${folderName}`);
+      
+      try {
+        await fs.access(filePath);
+      } catch (error) {
+        // If the folder doesn't exist, create it
+        await fs.mkdir(filePath, { recursive: true });
+      }
+
+      const fileName = `${filePath}/${keyArray[i]}.json`
+      await fs.writeFile(fileName, JSON.stringify(fileData, null, '\t'))
 
     }
 
