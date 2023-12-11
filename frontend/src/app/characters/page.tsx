@@ -1,20 +1,19 @@
 import React from 'react'
 
-import styled from './Characters.module.css'
-
 import TopTriadSpotlight from './TopTriadSpotlight'
 import CharacterNavigator from './CharacterNavigator'
-
+import CharacterList from './CharacterList'
+import Footer from '@/components/Footer/Footer'
 
 export default function Characters() {
   return (
-    <div className={`${styled.body}`}>
-      <div className={`${styled.TopTriadSpotlightSection}`}>
-        <TopTriadSpotlight />
-      </div>
-      <div className={`${styled.CharacterNavigatorSection}`}>
-        <CharacterNavigator />
-      </div>
+    <>
+    <div className='max-w-[1120px] pt-[30px] m-auto'>
+      <TopTriadSpotlight />
+      <CharacterNavigator />
+      <CharacterList />
     </div>
+    <Footer />
+    </>
   )
 }
