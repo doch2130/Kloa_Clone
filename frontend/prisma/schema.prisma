@@ -17,7 +17,7 @@ model mainnotices {
   id            Int      @id @default(autoincrement())
   category      String
   title         String
-  content       String?
+  content       String   @db.MediumText
   createdAt     DateTime @default(now())
   updatedAt     DateTime @default(now())
   viewCount     Int      @default(0)
