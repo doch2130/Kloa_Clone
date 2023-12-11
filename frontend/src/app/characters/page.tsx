@@ -2,17 +2,18 @@ import React from 'react'
 
 import styled from './Characters.module.css'
 
-import TopSection from './TopSection'
+import TopTriadSpotlight from './TopTriadSpotlight'
+import CharacterNavigator from './CharacterNavigator'
 
 
 export default function Characters() {
   return (
     <div className={`${styled.body}`}>
-      <div className={`${styled.topThreeSection}`}>
-        <TopSection />
+      <div className={`${styled.TopTriadSpotlightSection}`}>
+        <TopTriadSpotlight />
       </div>
-      <div className='list'>
-        characters list
+      <div className={`${styled.CharacterNavigatorSection}`}>
+        <CharacterNavigator />
       </div>
     </div>
   )

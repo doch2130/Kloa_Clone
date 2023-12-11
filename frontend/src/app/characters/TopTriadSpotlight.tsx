@@ -10,7 +10,7 @@ import tempImage1 from '@/assets/Character/characterImage1.png'
 import tempImage2 from '@/assets/Character/characterImage2.png'
 import tempImage3 from '@/assets/Character/characterImage3.png'
 
-export default function TopSection() {
+export default function TopTriadSpotlight() {
   // 여기서 top3 데이터 로딩
   // 이미지 파일 대신 데이터 url로 대체 진행 필요
   // Link href에 캐릭터 이름 매칭 작업 필요

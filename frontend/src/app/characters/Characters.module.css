@@ -4,8 +4,11 @@
   padding-top: 30px;
 }
 
-.topThreeSection {
+.TopTriadSpotlightSection {
   display: flex;
   justify-content: center;
   align-items: flex-end;
+}
+
+.CharacterNavigatorSection {
 }
