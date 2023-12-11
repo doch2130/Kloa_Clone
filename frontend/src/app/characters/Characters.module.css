@@ -1,0 +1,11 @@
+.body {
+  max-width: 1120px;
+  margin: auto;
+  padding-top: 30px;
+}
+
+.topThreeSection {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
