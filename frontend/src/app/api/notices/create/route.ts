@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import prisma from '@/app/lib/prisma'
 import { verifyStringJwt } from "@/app/lib/jwt"
+import { xssPrevention } from "../../utill/xssPrevention";
 
 export async function GET() {
   const url = 'https://developer-lostark.game.onstove.com/news/notices';
@@ -69,11 +70,13 @@ export async function POST(req: NextRequest) {
       // return new NextResponse(JSON.stringify({ message: 'Error Not Found User', status: 500 }));
     }
 
+    const title = xssPrevention(body.title);
+    const content = xssPrevention(body.content);
     const post = await prisma.mainnotices.create({
       data: {
         category: body.category,
-        title: body.title,
-        content: body.content,
+        title: title,
+        content: content,
         authorId: user.id,
       },
     });

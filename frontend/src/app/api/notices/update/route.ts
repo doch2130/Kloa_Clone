@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { verifyStringJwt } from "@/app/lib/jwt";
 import prisma from '@/app/lib/prisma'
+import { xssPrevention } from "../../utill/xssPrevention";
 
 export async function PATCH(req: NextRequest) {
   const body = await req.json();
@@ -29,11 +30,16 @@ export async function PATCH(req: NextRequest) {
     });
 
     if(findPost) {
+      const title = xssPrevention(body.title);
+      const content = xssPrevention(body.content);
+      const date = new Date();
+
       const updatePost = await prisma.mainnotices.update({
         data: {
           category: body.category,
-          title: body.title,
-          content: body.content,
+          title: title,
+          content: content,
+          updatedAt: date,
         },
         where: {
           id: Number(body.id)
