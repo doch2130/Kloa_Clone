@@ -240,6 +240,13 @@ API Return 값 JSON 방식으로 변경 작업 완료
 3. 반응형 작업 필요
 4. 마이페이지??? 확인 필요
 
+XSS 공격 방어 설정
+=> next.config.js 1차 방어
+=> replace를 통한 2차 방어
+=> notice detail page, dangerouslySetInnerHTML로 방어
+=> 각 입력 값 검증 패턴 추가 예정 => React-Hook-Form으로 설정 예정
+
+
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
 새벽시간대에 확인 결과 카오스게이트, 필드보스 등의 시간 출력이 이상하게 나오는 현상 확인 (수정 필요)
@@ -318,3 +325,4 @@ The resource http://52.78.154.125:12000/_next/static/css/09e1cca9fc5c6311.css wa
 => target은 영향이 없다.
 => Link로 연결된 컴포넌트에서 스타일 불러오는 방식에 의해 발생하는 것으로 확인되었다.
 => import styled from './login.module.css' 에서 => import './login.css' 변경해도 해결이 안된다.
+=> as 추가 하였으나 해결 안된다.
