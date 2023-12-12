@@ -47,7 +47,7 @@ export default function Rest() {
       return ;
     }
 
-    const response = await fetch(`/api/auth/mail`, {
+    const response = await fetch(`/api/auth/mail/rest`, {
       method: 'POST',
       body: JSON.stringify({
         email: email,
@@ -65,7 +65,7 @@ export default function Rest() {
       throw new Error('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
     }
 
-    if(data.status === 409) {
+    if(data.status === 404) {
       setIsLoading(false);
       alert('사용할 수 없는 이메일 입니다.');
       return ;
@@ -169,7 +169,7 @@ export default function Rest() {
       return ;
     }
 
-    if(window.confirm('작성한 정보로 가입하시겠습니까?')) {
+    if(window.confirm('비밀번호를 변경하시겠습니까?')) {
       try {
         const response = await fetch('/api/auth/rest', {
           method: 'POST',
