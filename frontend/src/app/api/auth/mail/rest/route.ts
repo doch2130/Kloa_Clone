@@ -79,7 +79,8 @@ export async function POST(req: NextRequest) {
   const emailDuplicate = await emailCheck(body.email);
 
   if(!emailDuplicate) {
-    return new NextResponse(JSON.stringify({ success: false, status: 404 }));
+    return NextResponse.json({ success: false, status: 404 });
+    // return new NextResponse(JSON.stringify({ success: false, status: 404 }));
   }
 
   // 메일 제목 형식에 활용할 fixTime 객체 선언 : 전송 시간 기록
@@ -120,13 +121,16 @@ export async function POST(req: NextRequest) {
     // console.log('emailNumberSave ', emailNumberSave);
 
     if(emailNumberSave === false) {
-      return new NextResponse(JSON.stringify({ message: '에러가 발생하였습니다. 메일 전송을 다시 시도해주세요.', status: 500})); 
+      return NextResponse.json({ message: '에러가 발생하였습니다. 메일 전송을 다시 시도해주세요.', status: 500});
+      // return new NextResponse(JSON.stringify({ message: '에러가 발생하였습니다. 메일 전송을 다시 시도해주세요.', status: 500})); 
     }
 
-    return new NextResponse(JSON.stringify({ success: true, status: 200 }));
+    return NextResponse.json({ success: true, status: 200 });
+    // return new NextResponse(JSON.stringify({ success: true, status: 200 }));
 
   } catch (err) {
     console.log(err);
-    return new NextResponse(JSON.stringify({ message: '메일 전송에 실패함', status: 500}));
+    return NextResponse.json({ message: '메일 전송에 실패함', status: 500});
+    // return new NextResponse(JSON.stringify({ message: '메일 전송에 실패함', status: 500}));
   }
 }

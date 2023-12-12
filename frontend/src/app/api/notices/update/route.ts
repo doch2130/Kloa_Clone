@@ -10,13 +10,15 @@ export async function PATCH(req: NextRequest) {
     // console.log('accessToken ', accessToken);
 
     if(accessToken === null) {
-      return new NextResponse(JSON.stringify({redirect: true, status: 401}));
+      return NextResponse.json({ redirect: true, status: 401 });
+      // return new NextResponse(JSON.stringify({redirect: true, status: 401}));
     }
 
     if (!(await verifyStringJwt(accessToken?.slice(7)))) {
       // 인증 만료, 로그인 재요청
       req.cookies.delete("next-auth.session-token");
-      return new NextResponse(JSON.stringify({redirect: true, status: 401}));
+      return NextResponse.json({ redirect: true, status: 401 });
+      // return new NextResponse(JSON.stringify({redirect: true, status: 401}));
     }
 
     const findPost = await prisma.mainnotices.findMany({
@@ -41,16 +43,20 @@ export async function PATCH(req: NextRequest) {
       // console.log('updatePost ', updatePost);
 
       if(updatePost) {
-        return new NextResponse(JSON.stringify({ success: true, status: 200 }));
+        return NextResponse.json({ success: true, status: 200 });
+        // return new NextResponse(JSON.stringify({ success: true, status: 200 }));
       } else {
-        return new NextResponse(JSON.stringify({ success: true, status: 404 }));
+        return NextResponse.json({ success: true, status: 404 });
+        // return new NextResponse(JSON.stringify({ success: true, status: 404 }));
       }
     } else {
-      return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
+      return NextResponse.json({ success: true, status: 404, result: [] });
+      // return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
     }
 
   } catch (err) {
     console.log('err', err);
-    return new NextResponse(JSON.stringify({ success: false, status: 500 }));
+    return NextResponse.json({ success: false, status: 500 });
+    // return new NextResponse(JSON.stringify({ success: false, status: 500 }));
   }
 }

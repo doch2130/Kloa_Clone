@@ -49,13 +49,15 @@ export async function GET(req: NextRequest) {
   // console.log('accessToken ', accessToken);
 
   if(accessToken === null) {
-    return new NextResponse(JSON.stringify({redirect: true, status: 401}));
+    return NextResponse.json({ redirect: true, status: 401 });
+    // return new NextResponse(JSON.stringify({redirect: true, status: 401}));
   }
 
   if(!(await verifyStringJwt(accessToken?.slice(7)))) {
     // 인증 만료, 로그인 재요청
     req.cookies.delete("next-auth.session-token");
-    return new NextResponse(JSON.stringify({redirect: true, status: 401}));
+    return NextResponse.json({ redirect: true, status: 401 });
+    // return new NextResponse(JSON.stringify({redirect: true, status: 401}));
   }
 
   try {
@@ -75,15 +77,19 @@ export async function GET(req: NextRequest) {
       const result = await noticesListUpdate(data);
 
       if(result) {
-        return new NextResponse(JSON.stringify({message: 'Notices Update Success', status: 200}));
+        return NextResponse.json({ message: 'Notices Update Success', status: 200 });
+        // return new NextResponse(JSON.stringify({message: 'Notices Update Success', status: 200}));
       } else {
-        return new NextResponse(JSON.stringify({message: 'Notices Update error', status: 500}));
+        return NextResponse.json({ message: 'Notices Update error', status: 500 });
+        // return new NextResponse(JSON.stringify({message: 'Notices Update error', status: 500}));
       }
     } else {
-      return new NextResponse(JSON.stringify({message: 'Notices Update error', status: response.status}));
+      return NextResponse.json({ message: 'Notices Update error', status: response.status });
+      // return new NextResponse(JSON.stringify({message: 'Notices Update error', status: response.status}));
     }
   } catch (error) {
     console.error('Error:', error);
-    return new NextResponse(JSON.stringify({message: 'Notices Update error', status: 500}));
+    return NextResponse.json({ message: 'Notices Update error', status: 500 });
+    // return new NextResponse(JSON.stringify({message: 'Notices Update error', status: 500}));
   }
 }

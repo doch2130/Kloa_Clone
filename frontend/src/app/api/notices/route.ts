@@ -78,9 +78,11 @@ export async function GET(req: NextRequest) {
     if(top === 'true') {
       const topPost = await getTopPost();
       if(topPost) {
-        return new NextResponse(JSON.stringify({ success: true, status: 200, result: topPost }));
+        return NextResponse.json({ success: true, status: 200, result: topPost });
+        // return new NextResponse(JSON.stringify({ success: true, status: 200, result: topPost }));
       } else {
-        return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
+        return NextResponse.json({ success: true, status: 404, result: [] });
+        // return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
       }
     }
 
@@ -89,17 +91,21 @@ export async function GET(req: NextRequest) {
       if(update === 'true') {
         const updateDetailPosts = await getPostUpdateDetail(Number(id));
         if(updateDetailPosts) {
-          return new NextResponse(JSON.stringify({ success: true, status: 200, result: updateDetailPosts }));
+          return NextResponse.json({ success: true, status: 200, result: updateDetailPosts });
+          // return new NextResponse(JSON.stringify({ success: true, status: 200, result: updateDetailPosts }));
         } else {
-          return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
+          return NextResponse.json({ success: true, status: 404, result: [] });
+          // return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
         }
       }
       const posts = await getPostDetail(Number(id));
       // console.log('posts ', posts);
       if(posts) {
-        return new NextResponse(JSON.stringify({ success: true, status: 200, result: posts }));
+        return NextResponse.json({ success: true, status: 200, result: posts });
+        // return new NextResponse(JSON.stringify({ success: true, status: 200, result: posts }));
       } else {
-        return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
+        return NextResponse.json({ success: true, status: 404, result: [] });
+        // return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
       }
     }
 
@@ -118,14 +124,17 @@ export async function GET(req: NextRequest) {
     // console.log('postList ', postList);
 
     if(postList) {
-      return new NextResponse(JSON.stringify({ success: true, status: 200, result: postList }));
+      return NextResponse.json({ success: true, status: 200, result: postList });
+      // return new NextResponse(JSON.stringify({ success: true, status: 200, result: postList }));
     } else {
-      return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
+      return NextResponse.json({ success: true, status: 404, result: [] });
+      // return new NextResponse(JSON.stringify({ success: true, status: 404, result: [] }));
     }
 
   } catch (err) {
     console.log('err', err);
-    return new NextResponse(JSON.stringify({ success: false, status: 500 }));
+    return NextResponse.json({ success: false, status: 500 });
+    // return new NextResponse(JSON.stringify({ success: false, status: 500 }));
   }
 }
 
@@ -142,7 +151,8 @@ export async function PATCH(req: NextRequest) {
     });
 
     if(!post) {
-      return new NextResponse(JSON.stringify({ success: true, status: 404 }));
+      return NextResponse.json({ success: true, status: 404 });
+      // return new NextResponse(JSON.stringify({ success: true, status: 404 }));
     }
 
     const updateViewCount = post.viewCount + 1;
@@ -157,13 +167,16 @@ export async function PATCH(req: NextRequest) {
     });
 
     if(postUpdate) {
-      return new NextResponse(JSON.stringify({ success: true, status: 200, viewCount: updateViewCount }));
+      return NextResponse.json({ success: true, status: 200, viewCount: updateViewCount });
+      // return new NextResponse(JSON.stringify({ success: true, status: 200, viewCount: updateViewCount }));
     } else {
-      return new NextResponse(JSON.stringify({ success: true, status: 404 }));
+      return NextResponse.json({ success: true, status: 404 });
+      // return new NextResponse(JSON.stringify({ success: true, status: 404 }));
     }
 
   } catch (err) {
     console.log('err', err);
-    return new NextResponse(JSON.stringify({ success: false, status: 500 }));
+    return NextResponse.json({ success: false, status: 500 });
+    // return new NextResponse(JSON.stringify({ success: false, status: 500 }));
   }
 }

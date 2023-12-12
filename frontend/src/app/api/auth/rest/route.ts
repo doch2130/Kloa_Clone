@@ -20,14 +20,17 @@ export async function POST(req: NextRequest) {
 
     if(user) {
       const { password, ...result } = user;
-      return new NextResponse(JSON.stringify({ data: result, status: 200 }))
+      return NextResponse.json({ data: result, status: 200 });
+      // return new NextResponse(JSON.stringify({ data: result, status: 200 }))
     } else {
-      return new NextResponse(JSON.stringify({ message: 'Error password update', status: 500 }));
+      return NextResponse.json({ message: 'Error password update', status: 500 });
+      // return new NextResponse(JSON.stringify({ message: 'Error password update', status: 500 }));
     }
 
   } catch (error) {
     console.error('user add error: ', error);
-    return new NextResponse(JSON.stringify({ message: 'An error occurred', status: 500 }));
+    return NextResponse.json({ message: 'An error occurred', status: 500 });
+    // return new NextResponse(JSON.stringify({ message: 'An error occurred', status: 500 }));
   }
 }
 
@@ -37,7 +40,8 @@ export async function GET(req: NextRequest) {
   const email = searchParams.get('email');
 
   if(!email) {
-    return new NextResponse(JSON.stringify({ message: 'Error email data', status: 500 }));
+    return NextResponse.json({ message: 'Error email data', status: 500 });
+    // return new NextResponse(JSON.stringify({ message: 'Error email data', status: 500 }));
   }
 
   try {
@@ -48,12 +52,15 @@ export async function GET(req: NextRequest) {
       take: 1
     });
     if(user.length > 0) {
-      return new NextResponse(JSON.stringify({ message: 'Find User Data', status: 200 }));
+      return NextResponse.json({ message: 'Find User Data', status: 200 });
+      // return new NextResponse(JSON.stringify({ message: 'Find User Data', status: 200 }));
     } else {
-      return new NextResponse(JSON.stringify({ message: 'Error Find User', status: 500 }));
+      return NextResponse.json({ message: 'Error Find User', status: 500 });
+      // return new NextResponse(JSON.stringify({ message: 'Error Find User', status: 500 }));
     }
   } catch (error) {
     console.error('user add error: ', error);
-    return new NextResponse(JSON.stringify({ message: 'An error occurred', status: 500 }));
+    return NextResponse.json({ message: 'An error occurred', status: 500 });
+    // return new NextResponse(JSON.stringify({ message: 'An error occurred', status: 500 }));
   }
 }

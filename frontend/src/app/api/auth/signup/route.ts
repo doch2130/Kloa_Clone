@@ -19,13 +19,16 @@ export async function POST(req: NextRequest) {
 
     if(user) {
       const { password, ...result } = user;
-      return new NextResponse(JSON.stringify(result))
+      return NextResponse.json(result);
+      // return new NextResponse(JSON.stringify(result))
     } else {
-      return new NextResponse(JSON.stringify({ message: 'Error user add', status: 500 }));
+      return NextResponse.json({ message: 'Error user add', status: 500 });
+      // return new NextResponse(JSON.stringify({ message: 'Error user add', status: 500 }));
     }
 
   } catch (error) {
     console.error('user add error: ', error);
-    return new NextResponse(JSON.stringify({ message: 'An error occurred', status: 500 }));
+    return NextResponse.json({ message: 'An error occurred', status: 500 });
+    // return new NextResponse(JSON.stringify({ message: 'An error occurred', status: 500 }));
   }
 }

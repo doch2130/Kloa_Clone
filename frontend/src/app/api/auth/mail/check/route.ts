@@ -13,14 +13,17 @@ export async function POST(req: NextRequest) {
     });
 
     if(existingDataMailUser) {
-      return new NextResponse(JSON.stringify({ data: existingDataMailUser, status: 200 }));
+      return NextResponse.json({ data: existingDataMailUser, status: 200 });
+      // return new NextResponse(JSON.stringify({ data: existingDataMailUser, status: 200 }));
     } else {
-      return new NextResponse(JSON.stringify({ data: existingDataMailUser, status: 204 }));
+      return NextResponse.json({ data: existingDataMailUser, status: 204 });
+      // return new NextResponse(JSON.stringify({ data: existingDataMailUser, status: 204 }));
     }
 
   } catch (err) {
     console.log(err);
-    return new NextResponse(JSON.stringify({ message: '에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.', status: 500})); 
+    return NextResponse.json({ message: '에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.', status: 500});
+    // return new NextResponse(JSON.stringify({ message: '에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요.', status: 500})); 
   }
 
 }

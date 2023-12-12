@@ -78,18 +78,22 @@ export async function GET(req: NextRequest) {
   try {
     if(category === 'notices') {
       const notices = await getNotices();
-      return new NextResponse(JSON.stringify({result: notices, status: 200}));
+      return NextResponse.json({ result: notices, status: 200 });
+      // return new NextResponse(JSON.stringify({result: notices, status: 200}));
     }
 
     if(category === 'adventure') {
       const adventure = await getAdventureIsland(reqDate);
-      return new NextResponse(JSON.stringify({result: adventure, status: 200}));
+      return NextResponse.json({ result: adventure, status: 200 });
+      // return new NextResponse(JSON.stringify({result: adventure, status: 200}));
     }
 
-    return new NextResponse(JSON.stringify({result: [], status: 200}));
+    return NextResponse.json({ result: [], status: 200 });
+    // return new NextResponse(JSON.stringify({result: [], status: 200}));
 
   } catch (error) {
     console.error('Error:', error);
-    return new NextResponse(JSON.stringify({message: 'LostArk Notices Update error', status: 500}));
+    return NextResponse.json({ message: 'LostArk Notices Update error', status: 500 });
+    // return new NextResponse(JSON.stringify({message: 'LostArk Notices Update error', status: 500}));
   }
 }
