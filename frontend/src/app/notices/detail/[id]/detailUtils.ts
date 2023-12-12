@@ -1,4 +1,6 @@
+import { xssPreventionReplace } from "@/app/api/utill/xssPrevention";
 import { NoticePost } from "@/type/notice";
+
 
 // 상세 페이지 정보 가져오기, 현재, 다음, 이전 페이지
 export async function getDetailPage(id:number, setPostDataHandler:Function, 
@@ -21,12 +23,15 @@ export async function getDetailPage(id:number, setPostDataHandler:Function,
           const writeTimeDateType = new Date(post[0].createdAt);
           const writeTimeFormat = `${writeTimeDateType.getFullYear()}-${String(writeTimeDateType.getMonth()+1).padStart(2, '0')}-${String(writeTimeDateType.getDate()).padStart(2, '0')}`;
           
+          const title = xssPreventionReplace(post[0].title);
+          const content = xssPreventionReplace(post[0].content);
+
           if(index === 0) {
             setPostDataHandler({
               id: post[0].id,
               category: post[0].category,
-              title: post[0].title,
-              content: post[0].content,
+              title: title,
+              content: content,
               createdAt: writeTimeFormat,
               viewCount: post[0].viewCount,
               recomendCount: post[0].recomendCount
@@ -35,8 +40,8 @@ export async function getDetailPage(id:number, setPostDataHandler:Function,
             setPrevPostDataHandler({
               id: post[0].id,
               category: post[0].category,
-              title: post[0].title,
-              content: post[0].content,
+              title: title,
+              content: content,
               createdAt: writeTimeFormat,
               viewCount: post[0].viewCount,
               recomendCount: post[0].recomendCount
@@ -45,8 +50,8 @@ export async function getDetailPage(id:number, setPostDataHandler:Function,
             setNextPostDataHandler({
               id: post[0].id,
               category: post[0].category,
-              title: post[0].title,
-              content: post[0].content,
+              title: title,
+              content: content,
               createdAt: writeTimeFormat,
               viewCount: post[0].viewCount,
               recomendCount: post[0].recomendCount

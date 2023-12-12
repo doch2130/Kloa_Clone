@@ -11,7 +11,7 @@ export function xssPreventionReplace(str:string) {
   let result:string = str;
 
   result = result.replaceAll('&lt;', '<');
-  result = result.replaceAll('^gt;', '>');
+  result = result.replaceAll('&gt;', '>');
 
   return result;
 }
