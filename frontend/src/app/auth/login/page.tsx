@@ -60,14 +60,21 @@ export default function Login() {
     }
   }
 
+
+  const enterEventHandler = (e:React.KeyboardEvent) => {
+    if(e.key === 'Enter') {
+      onSubmit(e);
+    }
+  }
+
   return (
     <form className={styled.loginForm} onSubmit={onSubmit}>
       <div className={styled.loginFormInputWrap}>
         <div>
-          <input type='text' placeholder='이메일' name='id' ref={idInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
+          <input type='text' placeholder='이메일' name='id' ref={idInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' onKeyDown={enterEventHandler} />
         </div>
         <div>
-          <input type='password' placeholder='비밀번호' name='password' ref={pwdInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
+          <input type='password' placeholder='비밀번호' name='password' ref={pwdInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' onKeyDown={enterEventHandler} />
         </div>
       </div>
       <button type='button' onClick={() => signIn('naver')} className={`${styled.naverLogin} dark:border-[#8991ee] dark:text-[#8991ee] dark:bg-[#2b2d31]`}>NAVER 로그인</button>
