@@ -20,18 +20,23 @@ export default function Signup() {
   const pwdCheckInputRef = useRef<HTMLInputElement>(null);
   const authNumberInputRef = useRef<HTMLInputElement>(null);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const isCheckhandler = () => {
     setIsCheck(!isCheck);
   }
 
   // 이메일 인증번호 보내기
   const emailAuthenticationSend = async () => {
+    setIsLoading(true);
     if(emailInputRef.current === null) {
       alert('잠시 후 다시 시도해주세요');
+      setIsLoading(false);
       return ;
     }
     if(emailInputRef.current?.value.trim() === '') {
       alert('이메일을 입력해주세요.');
+      setIsLoading(false);
       return ;
     }
 
@@ -49,10 +54,13 @@ export default function Signup() {
     const data = await response.json();
 
     if(!response.ok) {
+      setIsLoading(false);
       throw new Error('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
     }
 
+
     if(data.status === 409) {
+      setIsLoading(false);
       alert('사용할 수 없는 이메일 입니다.');
       return ;
     } else if(data.status === 200) {
@@ -60,8 +68,10 @@ export default function Signup() {
       alert('메일이 성공적으로 발송되었습니다.\r\n5분 이내에 인증번호를 입력해주세요.');
       setAuthMailStatus(true);
       mailAuthStartTimer();
+      setIsLoading(false);
       return ;
     }
+    setIsLoading(false);
     return ;
   }
 
@@ -254,7 +264,7 @@ export default function Signup() {
       <div className={styled.signFormInputWrap}>
         <div className={styled.idGroup}>
           <input type='text' placeholder='이메일 입력' name='email' ref={emailInputRef} disabled={authMailStatus} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
-          <button type='button' onClick={emailAuthenticationSend} className={authMailStatus ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus} >전송</button>
+          <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
         </div>
         <div className={styled.authNumberGroup}>
           <input type='text' placeholder='인증번호 입력' name='authNumber' ref={authNumberInputRef} disabled={!authNumberBtnStatus ? true : false} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
@@ -272,7 +282,7 @@ export default function Signup() {
         <div className={styled.privacyGroup}>
           <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />
           <span className='dark:text-[#eaf0ec]' onClick={isCheckhandler}>
-            <Link href='https://kloa.gg/terms' className='dark:text-[#8991ee]'>이용 약관</Link>과 <Link href='https://kloa.gg/privacy' className='dark:text-[#8991ee]'>개인정보 수집 및 이용</Link>에 동의합니다.
+            <Link href='https://kloa.gg/terms' className='dark:text-[#8991ee]' target='_blank'>이용 약관</Link>과 <Link href='https://kloa.gg/privacy' className='dark:text-[#8991ee]' target='_blank'>개인정보 수집 및 이용</Link>에 동의합니다.
           </span>
         </div>
       </div>

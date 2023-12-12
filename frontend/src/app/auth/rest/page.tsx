@@ -16,14 +16,19 @@ export default function Rest() {
   const pwdCheckInputRef = useRef<HTMLInputElement>(null);
   const authNumberInputRef = useRef<HTMLInputElement>(null);
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   // 이메일 인증번호 보내기
   const emailAuthenticationSend = async () => {
+    setIsLoading(true);
     if(emailInputRef.current === null) {
       alert('잠시 후 다시 시도해주세요');
+      setIsLoading(false);
       return ;
     }
     if(emailInputRef.current?.value.trim() === '') {
       alert('이메일을 입력해주세요.');
+      setIsLoading(false);
       return ;
     }
 
@@ -38,6 +43,7 @@ export default function Rest() {
     if(findUserResult.status !== 200) {
       alert('가입하지 않은 이메일 주소 입니다.');
       emailInputRef.current.value = '';
+      setIsLoading(false);
       return ;
     }
 
@@ -55,10 +61,12 @@ export default function Rest() {
     const data = await response.json();
 
     if(!response.ok) {
+      setIsLoading(false);
       throw new Error('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
     }
 
     if(data.status === 409) {
+      setIsLoading(false);
       alert('사용할 수 없는 이메일 입니다.');
       return ;
     } else if(data.status === 200) {
@@ -66,8 +74,10 @@ export default function Rest() {
       alert('메일이 성공적으로 발송되었습니다.\r\n5분 이내에 인증번호를 입력해주세요.');
       setAuthMailStatus(true);
       mailAuthStartTimer();
+      setIsLoading(false);
       return ;
     }
+    setIsLoading(false);
     return ;
   }
 
@@ -275,7 +285,7 @@ export default function Rest() {
       <div className={styled.forgetPasswordWrap}>
         <div className={styled.idGroup}>
           <input type='text' placeholder='이메일 입력' name='email' ref={emailInputRef} disabled={authMailStatus} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
-          <button type='button' onClick={emailAuthenticationSend} className={authMailStatus ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus} >전송</button>
+          <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
         </div>
         <div className={styled.authNumberGroup}>
           <input type='text' placeholder='인증번호 입력' name='authNumber' ref={authNumberInputRef} disabled={!authNumberBtnStatus ? true : false} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
