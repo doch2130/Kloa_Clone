@@ -284,11 +284,13 @@ export default function Rest() {
       <p className={styled.subText}>가입할 때 사용한 이메일 주소를 입력하시면 인증코드를 보내드려요.<br />이메일에 표기된 인증코드를 입력해 주세요.</p>
       <div className={styled.forgetPasswordWrap}>
         <div className={styled.idGroup}>
-          <input type='text' placeholder='이메일 입력' name='email' ref={emailInputRef} disabled={authMailStatus} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
+          <input type='text' placeholder='이메일 입력' name='email' ref={emailInputRef} disabled={authMailStatus}
+          className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+          pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}" />
           <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
         </div>
         <div className={styled.authNumberGroup}>
-          <input type='text' placeholder='인증번호 입력' name='authNumber' ref={authNumberInputRef} disabled={!authNumberBtnStatus ? true : false} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
+          <input type='text' placeholder='인증번호 입력' name='authNumber' maxLength={6} ref={authNumberInputRef} disabled={!authNumberBtnStatus ? true : false} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
           <button type='button' 
           disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? `${styled.authNumberButton} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.authNumberButtonActive} dark:bg-[#33353a] dark:border-[#42464D]`}
           onClick={() => emailAuthenticationCheck()} >확인</button>
@@ -301,13 +303,21 @@ export default function Rest() {
       <p className={styled.subText}>변경하실 비밀번호를 입력해주세요.</p>
       <div className={`${styled.forgetPasswordWrap} ${styled.forgetPasswordWrap2}`}>
         <div className={`${styled.idGroup} ${styled.idGroup2}`}>
-          <input type='text' placeholder='이메일 입력' name='email' ref={emailInputRef} disabled={authMailStatus} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
+          <input type='text' placeholder='이메일 입력' name='email' ref={emailInputRef} disabled={authMailStatus}
+          className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+          pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}" />
         </div>
         <div className={styled.pwdGroup}>
-          <input type='password' placeholder='영어, 숫자, 특수문자를 포함한 8자리 이상 비밀번호 입력' name='password' ref={pwdInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
+          <input type='password' placeholder='영어, 숫자, 특수문자를 포함한 8자리 이상 비밀번호 입력' name='password' ref={pwdInputRef}
+          className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+          minLength={8} maxLength={20}
+          pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" />
         </div>
         <div className={styled.pwdCheckGroup}>
-          <input type='password' placeholder='비밀번호 확인' name='passwordCheck' ref={pwdCheckInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
+          <input type='password' placeholder='비밀번호 확인' name='passwordCheck' ref={pwdCheckInputRef}
+          className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+          minLength={8} maxLength={20}
+          pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" />
         </div>
       </div>
       <button type='button' className={styled.restButton} onClick={onSubmit}>비밀번호 변경</button>
