@@ -12,9 +12,9 @@ export default function Footer() {
       </p>
       <div>
         <p className='privacy-text dark:text-[#eaf0ec] dark:text-opacity-70'>
-          <Link href='/' className='none-decoration'>이용약관</Link>
+          <Link href='/' as='/' target='_blank' className='none-decoration'>이용약관</Link>
           |
-          <Link href='/' className='none-decoration'>개인정보처리방침</Link>
+          <Link href='/' as='/' target='_blank' className='none-decoration'>개인정보처리방침</Link>
         </p>
         <div className='discord-wrap'>
           <Image src={DiscordIcon} alt='discord icon' />

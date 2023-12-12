@@ -20,7 +20,7 @@ export default function HeaderLogin() {
       <span className='duration-300 logoutBtn' onClick={() => logoutHandler()}>로그아웃</span>
     ) :
     (
-      <Link href='/auth/login' className='duration-300'>로그인</Link>
+      <Link href='/auth/login' as='/auth/login' className='duration-300'>로그인</Link>
     )
   }
     </>

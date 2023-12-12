@@ -288,7 +288,7 @@ export default function Signup() {
       </div>
       <button type='button' className={styled.signButton} onClick={onSubmit}>회원가입</button>
       <div className={styled.lastGroup}>
-        <Link href='/auth/login' className='dark:text-[#8991ee]'>로그인하기</Link>
+        <Link href='/auth/login' as='/auth/login' className='dark:text-[#8991ee]'>로그인하기</Link>
       </div>
     </form>
   )
