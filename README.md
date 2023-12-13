@@ -250,6 +250,7 @@ XSS 공격 방어 설정
 React-Hook-Form으로 변경 작업
 => input에 ref를 설정하면 라이브러리가 제대로 작동이 안됨(onChange Mode 설정이 안됨)
 => 회원가입, 비밀번호 찾기 페이지 적용 완료
+Notice 작성, 수정 제목 input에 pattern 추가 완료
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
