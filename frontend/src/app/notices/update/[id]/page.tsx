@@ -44,6 +44,12 @@ export default function Update() {
       return ;
     }
 
+    const titlePattern = /^[^`&*()_+\-=\[{\]};:'",<>\./\\|]+$/;
+    if(!titlePattern.test(titleRef.current.value)) {
+      alert('특수기호는 !@#$%^? 만 사용가능합니다.');
+      return ;
+    }
+
     if(window.confirm('작성한 내용으로 수정하시겠습니까?')) {
       fetch('/api/notices/update', {
         method: 'PATCH',

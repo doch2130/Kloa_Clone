@@ -1,12 +1,10 @@
 'use client'
 import React, { ChangeEvent, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic';
-// import TextEditor from '@/components/TextEditor/TextEditor'
 
 import styled from './Write.module.css'
-import { useSession } from 'next-auth/react';
-
 
 const TextEditor = dynamic(() => import('@/components/TextEditor/TextEditor'), {
   ssr: false,
@@ -21,7 +19,6 @@ export default function Write() {
   const { data: session } = useSession();
 
   const categorySelectHandler = (e:ChangeEvent<HTMLSelectElement>):void => {
-    // console.log(e.target.value);
     setCategoryData(e.target.value);
     return ;
   }
@@ -41,6 +38,12 @@ export default function Write() {
 
     if(content.trim() === '') {
       alert('내용을 입력해주세요.')
+      return ;
+    }
+
+    const titlePattern = /^[^`&*()_+\-=\[{\]};:'",<>\./\\|]+$/;
+    if(!titlePattern.test(titleRef.current.value)) {
+      alert('특수기호는 !@#$%^? 만 사용가능합니다.');
       return ;
     }
 
