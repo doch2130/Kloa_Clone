@@ -246,6 +246,10 @@ XSS 공격 방어 설정
 => notice detail page, dangerouslySetInnerHTML로 방어
 => 각 입력 값 검증 패턴 추가 예정 => React-Hook-Form으로 설정 예정
 
+36일차:
+React-Hook-Form으로 변경 작업
+=> input에 ref를 설정하면 라이브러리가 제대로 작동이 안됨(onChange Mode 설정이 안됨)
+=> 회원가입, 비밀번호 찾기 페이지 적용 완료
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
