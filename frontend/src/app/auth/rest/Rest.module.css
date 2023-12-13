@@ -140,3 +140,10 @@
   width: 100%;
   border: none;
 }
+
+.warningMessage {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e94e4e;
+  text-align: center;
+}
