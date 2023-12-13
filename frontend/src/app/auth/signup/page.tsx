@@ -2,10 +2,19 @@
 import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { SubmitHandler, useForm } from "react-hook-form"
 
 import CheckSvgComponent from '@/components/UI/CheckSvgComponent'
 
 import styled from './Signup.module.css'
+
+
+type FormValues = {
+  email: string
+  authNumber: string
+  password: string
+  passwordCheck: string
+}
 
 export default function Signup() {
   const router = useRouter();
@@ -15,12 +24,11 @@ export default function Signup() {
   const [authMailIsCheck, setAuthMailIsCheck] = useState<Boolean>(false);
   const [authMailTimerView, setAuthMailTimerView] = useState<number>(300);
   const [authMailTimer, setAuthMailTimer] = useState<NodeJS.Timeout | undefined>(undefined);
-  const emailInputRef = useRef<HTMLInputElement>(null);
-  const pwdInputRef = useRef<HTMLInputElement>(null);
-  const pwdCheckInputRef = useRef<HTMLInputElement>(null);
-  const authNumberInputRef = useRef<HTMLInputElement>(null);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { register, getValues, formState: { errors }, handleSubmit} = useForm<FormValues>({ mode: 'onChange' });
+
 
   const isCheckhandler = () => {
     setIsCheck(!isCheck);
@@ -29,18 +37,13 @@ export default function Signup() {
   // 이메일 인증번호 보내기
   const emailAuthenticationSend = async () => {
     setIsLoading(true);
-    if(emailInputRef.current === null) {
-      alert('잠시 후 다시 시도해주세요');
-      setIsLoading(false);
-      return ;
-    }
-    if(emailInputRef.current?.value.trim() === '') {
+    if(getValues('email').trim() === '') {
       alert('이메일을 입력해주세요.');
       setIsLoading(false);
       return ;
     }
 
-    const email = emailInputRef.current?.value;
+    const email = getValues('email');
     const response = await fetch(`/api/auth/mail`, {
       method: 'POST',
       body: JSON.stringify({
@@ -61,14 +64,14 @@ export default function Signup() {
 
     if(data.status === 409) {
       setIsLoading(false);
-      alert('사용할 수 없는 이메일 입니다.');
+      alert('가입되어 있는 이메일 입니다.');
       return ;
     } else if(data.status === 200) {
+      setIsLoading(false);
       setAuthNumberBtnStatus(true);
       alert('메일이 성공적으로 발송되었습니다.\r\n5분 이내에 인증번호를 입력해주세요.');
       setAuthMailStatus(true);
       mailAuthStartTimer();
-      setIsLoading(false);
       return ;
     }
     setIsLoading(false);
@@ -77,17 +80,13 @@ export default function Signup() {
 
   // 이메일 인증번호 체크 함수
   const emailAuthenticationCheck = async () => {
-    if(!authNumberInputRef.current || !emailInputRef.current) {
-      alert('잠시 후 다시 시도해주세요.');
-      return ;
-    }
 
-    if(emailInputRef.current.value.trim() === '') {
+    if(getValues('email').trim() === '') {
       alert('이메일을 입력해주세요');
       return ;
     }
 
-    if(authNumberInputRef.current.value.trim() === '') {
+    if(getValues('authNumber').trim() === '') {
       alert('인증번호를 입력해주세요');
       return ;
     }
@@ -99,8 +98,8 @@ export default function Signup() {
         },
         method: 'POST',
         body: JSON.stringify({
-          email: emailInputRef.current.value,
-          number: authNumberInputRef.current.value
+          email: getValues('email'),
+          number: getValues('authNumber')
         })
       });
       
@@ -110,7 +109,7 @@ export default function Signup() {
         if(res.status === 204) {
           alert('인증번호가 일치하지 않습니다');
           return ;
-        } else if(res.status === 200 && res.data.mailAuthNumber === authNumberInputRef.current.value) {
+        } else if(res.status === 200 && res.data.mailAuthNumber === getValues('authNumber')) {
           setAuthNumberBtnStatus(false);
           setAuthMailIsCheck(true);
           mailAuthStopTimer();
@@ -129,15 +128,8 @@ export default function Signup() {
     }
   }
 
-  const onSubmit = async (e:React.FormEvent) => {
-    e.stopPropagation();
-
-    if(emailInputRef.current === null || authNumberInputRef.current === null || pwdInputRef.current === null || pwdCheckInputRef.current === null) {
-      alert('잠시 후 다시 시도해주세요');
-      return ;
-    }
-
-    if(emailInputRef.current.value.trim() === '') {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    if(data.email.trim() === '') {
       alert('이메일을 입력해주세요');
       return ;
     }
@@ -147,16 +139,16 @@ export default function Signup() {
       return ;
     }
 
-    if(pwdInputRef.current.value.trim() === '') {
+    if(data.password.trim() === '') {
       alert('비밀번호를 입력해주세요');
       return ;
     }
-    if(pwdCheckInputRef.current.value.trim() === '') {
+    if(data.passwordCheck.trim() === '') {
       alert('비밀번호 확인을 입력해주세요');
       return ;
     }
 
-    if(pwdInputRef.current.value !== pwdCheckInputRef.current.value) {
+    if(data.password !== data.passwordCheck) {
       alert('비밀번호가 동일하지 않습니다.')
       return ;
     }
@@ -174,8 +166,8 @@ export default function Signup() {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            email: emailInputRef.current.value,
-            password: pwdInputRef.current.value,
+            email: data.email,
+            password: data.password,
             privacy: isCheck
           })
         });
@@ -184,13 +176,13 @@ export default function Signup() {
         router.push('/auth/login');
         return ;
       } catch (err) {
-        alert('회원가입 중 에러가 발생하였습니다.');
+        alert('회원가입 중 에러가 발생하였습니다.\r\n새로고침 후 다시 시도해주세요.');
         return ;
       }
     }
     
     return ;
-  }
+  };
 
   const mailAuthStartTimer = () => {
     const timer = setInterval(() => {
@@ -211,16 +203,11 @@ export default function Signup() {
   };
 
   const expireMailNumber = async () => {
-    if(!emailInputRef.current) {
-      alert('잠시 후 다시 시도해주세요');
-      return ;
-    }
-
     try {
       const response = await fetch(`/api/auth/mail`, {
         method: 'DELETE',
         body: JSON.stringify({
-          email: emailInputRef.current.value
+          email: getValues('email')
         })
       });
   
@@ -255,38 +242,98 @@ export default function Signup() {
         expireMailNumber();
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authMailTimer]);
   
-
   return (
-    <form className={styled.signForm} onSubmit={onSubmit}>
+    <form className={styled.signForm} onSubmit={handleSubmit(onSubmit)}>
       <h1 className='dark:text-[#eaf0ec]'>모코코만큼 환영합니다.<br />회원가입을 진행해 볼까요?</h1>
       <div className={styled.signFormInputWrap}>
         <div className={styled.idGroup}>
-          <input type='text' placeholder='이메일 입력' name='email' ref={emailInputRef} disabled={authMailStatus}
-          className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
-          pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}" />
+
+          <input
+            {...register("email",
+              { 
+                required: {
+                  value: true,
+                  message: '값을 입력해주세요',
+                },
+                pattern: {
+                  value: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+                  message: '이메일 형태로 입력해주세요'
+                }
+              },
+            )}
+            type="text" id="email"
+            placeholder="이메일 입력해주세요"
+            disabled={authMailStatus}
+            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+          />          
           <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
         </div>
+        {errors.email && <p className={styled.warningMessage}>{errors.email?.message}</p>}
+
         <div className={styled.authNumberGroup}>
-          <input type='text' placeholder='인증번호 입력' name='authNumber' maxLength={6} ref={authNumberInputRef} disabled={!authNumberBtnStatus ? true : false} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' />
+          <input
+            {...register('authNumber')}
+            type="text"
+            name='authNumber'
+            placeholder="인증번호 입력"
+            disabled={!authNumberBtnStatus ? true : false}
+            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+          />
           <button type='button' 
           disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? `${styled.authNumberButton} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.authNumberButtonActive} dark:bg-[#33353a] dark:border-[#42464D]`}
           onClick={() => emailAuthenticationCheck()} >확인</button>
           {(authMailStatus && authNumberBtnStatus) && <p className={styled.authNumberTimer}>{authMailTimerView}초</p>}
         </div>
+
         <div className={styled.pwdGroup}>
-          <input type='password' placeholder='영어, 숫자, 특수문자를 포함한 8자리 이상 비밀번호 입력' name='password' ref={pwdInputRef}
-          className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
-          minLength={8} maxLength={20}
-          pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" />
+          <input
+            {...register('password',
+              {
+                required: {value: true, message: '값을 입력해주세요'},
+                minLength: {
+                  value: 8,
+                  message: '8 ~ 20 글자 사이로 입력해주세요',
+                },
+                maxLength: {
+                  value: 20,
+                  message: '8 ~ 20 글자 사이로 입력해주세요',
+                },
+                pattern: {
+                  value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/i,
+                  message: '영어, 숫자, 특수기호를 포함하여 작성해주세요'
+                },
+              }
+            )}
+            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            type="password"
+            name='password'
+            placeholder='영어, 숫자, 특수문자를 포함한 8자리 이상 비밀번호 입력'
+          />
         </div>
+        <p className={styled.warningMessage}>{errors.password?.message}</p>
+
         <div className={styled.pwdCheckGroup}>
-          <input type='password' placeholder='비밀번호 확인' name='passwordCheck' ref={pwdCheckInputRef}
-          className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
-          minLength={8} maxLength={20}
-          pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$" />
+          <input
+            {...register('passwordCheck',
+              {
+                required: {value: true, message: '값을 입력해주세요'},
+                pattern: {
+                  value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/i,
+                  message: '영어, 숫자, 특수기호를 포함하여 작성해주세요'
+                },
+              }
+            )}
+            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            type="password"
+            name='passwordCheck'
+            placeholder='비밀번호 확인'
+          />
         </div>
+        <p className={styled.warningMessage}>{errors.passwordCheck?.message}</p>
+
         <div className={styled.privacyGroup}>
           <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />
           <span className='dark:text-[#eaf0ec]' onClick={isCheckhandler}>
@@ -294,7 +341,7 @@ export default function Signup() {
           </span>
         </div>
       </div>
-      <button type='button' className={styled.signButton} onClick={onSubmit}>회원가입</button>
+      <button type='button' className={styled.signButton} onClick={handleSubmit(onSubmit)}>회원가입</button>
       <div className={styled.lastGroup}>
         <Link href='/auth/login' as='/auth/login' className='dark:text-[#8991ee]'>로그인하기</Link>
       </div>
