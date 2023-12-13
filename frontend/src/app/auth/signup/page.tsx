@@ -29,7 +29,6 @@ export default function Signup() {
 
   const { register, getValues, formState: { errors }, handleSubmit} = useForm<FormValues>({ mode: 'onChange' });
 
-
   const isCheckhandler = () => {
     setIsCheck(!isCheck);
   }
@@ -250,7 +249,6 @@ export default function Signup() {
       <h1 className='dark:text-[#eaf0ec]'>모코코만큼 환영합니다.<br />회원가입을 진행해 볼까요?</h1>
       <div className={styled.signFormInputWrap}>
         <div className={styled.idGroup}>
-
           <input
             {...register("email",
               { 
@@ -268,10 +266,10 @@ export default function Signup() {
             placeholder="이메일 입력해주세요"
             disabled={authMailStatus}
             className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
-          />          
+          />
           <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
         </div>
-        {errors.email && <p className={styled.warningMessage}>{errors.email?.message}</p>}
+        <p className={styled.warningMessage}>{errors.email?.message}</p>
 
         <div className={styled.authNumberGroup}>
           <input
@@ -320,6 +318,14 @@ export default function Signup() {
             {...register('passwordCheck',
               {
                 required: {value: true, message: '값을 입력해주세요'},
+                minLength: {
+                  value: 8,
+                  message: '8 ~ 20 글자 사이로 입력해주세요',
+                },
+                maxLength: {
+                  value: 20,
+                  message: '8 ~ 20 글자 사이로 입력해주세요',
+                },
                 pattern: {
                   value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/i,
                   message: '영어, 숫자, 특수기호를 포함하여 작성해주세요'
