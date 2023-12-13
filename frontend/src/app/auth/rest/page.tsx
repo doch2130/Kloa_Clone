@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from "react-hook-form"
 
@@ -250,16 +250,6 @@ export default function Rest() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authMailTimer]);
 
-
-  // useEffect(() => {
-  //   if(!pwdInputRef?.current) {
-  //     return ;
-  //   }
-
-  //   pwdInputRef.current.value = '';
-  // }, [authMailIsCheck]);
-
-
   return (
     <form className={styled.forgetPasswordForm}>
       <h1 className='dark:text-[#eaf0ec]'>비밀번호를 잊어버리셨나요?</h1>
@@ -298,10 +288,7 @@ export default function Rest() {
             disabled={!authNumberBtnStatus ? true : false}
             className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           />
-          
-          {/* <input type='text' placeholder='인증번호 입력' name='authNumber' maxLength={6} ref={authNumberInputRef} disabled={!authNumberBtnStatus ? true : false} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]' /> */}
-          <button type='button' 
-          disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? `${styled.authNumberButton} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.authNumberButtonActive} dark:bg-[#33353a] dark:border-[#42464D]`}
+          <button type='button' disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? `${styled.authNumberButton} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.authNumberButtonActive} dark:bg-[#33353a] dark:border-[#42464D]`}
           onClick={() => emailAuthenticationCheck()} >확인</button>
           {(authMailStatus && authNumberBtnStatus) && <p className={styled.authNumberTimer}>{authMailTimerView}초</p>}
         </div>
@@ -312,10 +299,6 @@ export default function Rest() {
       <p className={styled.subText}>변경하실 비밀번호를 입력해주세요.</p>
       <div className={`${styled.forgetPasswordWrap} ${styled.forgetPasswordWrap2}`}>
         <div className={`${styled.idGroup} ${styled.idGroup2}`}>
-          {/* <input type='text' placeholder='이메일 입력' name='email' ref={emailInputRef} disabled={authMailStatus}
-          className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
-          pattern="^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}" /> */}
-          
           <input
             {...register("email",
               { 
@@ -334,12 +317,6 @@ export default function Rest() {
             disabled={authMailStatus}
             className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           />
-          
-
-
-
-
-
         </div>
         <div className={styled.pwdGroup}>          
           <input
