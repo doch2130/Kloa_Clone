@@ -72,13 +72,11 @@ export default function Login() {
       <div className={styled.loginFormInputWrap}>
         <div>
           <input type='email' placeholder='이메일' name='id' ref={idInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
-          pattern='^[a-zA-Z0-9._%+-]+@+^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
           onKeyDown={enterEventHandler} />
         </div>
         <div>
           <input type='password' placeholder='비밀번호' name='password' ref={pwdInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           maxLength={20}
-          pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$"
           onKeyDown={enterEventHandler} />
         </div>
       </div>
