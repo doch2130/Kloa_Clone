@@ -18,10 +18,6 @@ const nextConfig = {
       }
     ],
   },
-  header: {
-    key: 'X-XSS-Protection',
-    value: '1; mode=block'
-  }
 }
 
 module.exports = nextConfig
