@@ -97,7 +97,7 @@
 }
 
 /* Auth 로그인 버튼 */
-.naverLogin {
+.oAuthLogin {
   margin-top: 2rem;
   color: rgb(88 101 242);
   font-weight: 600;

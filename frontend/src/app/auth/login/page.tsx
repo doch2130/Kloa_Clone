@@ -80,7 +80,8 @@ export default function Login() {
           onKeyDown={enterEventHandler} />
         </div>
       </div>
-      <button type='button' onClick={() => signIn('naver')} className={`${styled.naverLogin} dark:border-[#8991ee] dark:text-[#8991ee] dark:bg-[#2b2d31]`}>NAVER 로그인</button>
+      {/* <button type='button' onClick={() => signIn('naver')} className={`${styled.oAuthLogin} dark:border-[#8991ee] dark:text-[#8991ee] dark:bg-[#2b2d31]`}>NAVER 로그인</button> */}
+      <button type='button' onClick={() => signIn('discord')} className={`${styled.oAuthLogin} dark:border-[#8991ee] dark:text-[#8991ee] dark:bg-[#2b2d31]`}>Discord 로그인</button>
       <div className={styled.loginStay}>
         <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />
         <span className='dark:text-[#eaf0ec]' onClick={isCheckhandler}>로그인 상태 유지</span>
