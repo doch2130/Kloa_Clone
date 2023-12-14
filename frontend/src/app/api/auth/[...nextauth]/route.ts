@@ -8,6 +8,14 @@ import { signJwtAccessToken } from "@/app/lib/jwt"
 
 // discord email 정보만 받기, 추가 데이터 필요 시 해당 칸에 추가 입력
 const scopes = ['email'];
+let discordRedirecttURI = '';
+
+if(process.env.NODE_ENV === 'production') {
+  discordRedirecttURI = `${process.env.PRODUCTION_NEXTAUTH_URL}${process.env.DISCORD_REDIRECT_URI}`;
+} else {
+  discordRedirecttURI = `${process.env.NEXTAUTH_URL}${process.env.DISCORD_REDIRECT_URI}`;
+}
+
 
 const handler = NextAuth({
   providers: [
@@ -19,7 +27,7 @@ const handler = NextAuth({
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID || "",
       clientSecret: process.env.DISCORD_CLIENT_SECRET || "",
-      authorization: {params: {scope: scopes.join(' ')}},
+      authorization: { params: { scope: scopes.join(' '), redirect_uri: discordRedirecttURI } }
     }),
     CredentialsProvider({
       credentials: {}, // 빈 객체로 설정
