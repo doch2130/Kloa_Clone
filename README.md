@@ -241,7 +241,7 @@ API Return 값 JSON 방식으로 변경 작업 완료
 4. 마이페이지??? 확인 필요
 
 XSS 공격 방어 설정
-=> next.config.js 1차 방어
+=> next.config.js 1차 방어 => 경고 메시지로 없는 옵션이라고 출력되어 삭제
 => replace를 통한 2차 방어
 => notice detail page, dangerouslySetInnerHTML로 방어
 => 각 입력 값 검증 패턴 추가 예정 => React-Hook-Form으로 설정 예정
@@ -251,6 +251,9 @@ React-Hook-Form으로 변경 작업
 => input에 ref를 설정하면 라이브러리가 제대로 작동이 안됨(onChange Mode 설정이 안됨)
 => 회원가입, 비밀번호 찾기 페이지 적용 완료
 Notice 작성, 수정 제목 input에 pattern 추가 완료
+
+37일차:
+OAuth 변경, Naver => Discord 로 변경
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
