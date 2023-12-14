@@ -1,17 +1,26 @@
 import NextAuth from "next-auth"
 import NaverProvider from "next-auth/providers/naver"
+import DiscordProvider from "next-auth/providers/discord"
 import CredentialsProvider from "next-auth/providers/credentials"
 import prisma from '@/app/lib/prisma'
 import * as bcrypt from 'bcrypt'
 import { signJwtAccessToken } from "@/app/lib/jwt"
 
+// discord email 정보만 받기, 추가 데이터 필요 시 해당 칸에 추가 입력
+const scopes = ['email'];
+
 const handler = NextAuth({
   providers: [
+    // Naver는 임시 사용 중지, 사용 시 OAuth 페이지에서 환경 작업 필요
     NaverProvider({
       clientId: process.env.NAVER_CLIENT_ID || "",
       clientSecret: process.env.NAVER_CLIENT_SECRET || "",
     }),
-
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID || "",
+      clientSecret: process.env.DISCORD_CLIENT_SECRET || "",
+      authorization: {params: {scope: scopes.join(' ')}},
+    }),
     CredentialsProvider({
       credentials: {}, // 빈 객체로 설정
       async authorize(credentials, req) {
