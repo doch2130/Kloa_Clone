@@ -254,6 +254,9 @@ Notice 작성, 수정 제목 input에 pattern 추가 완료
 
 37일차:
 OAuth 변경, Naver => Discord 로 변경
+=> 로컬에서는 정상이였으나, 배포이후 안되는 현상 발견(Redirect url이 로컬로 잡힘)
+=> redirect_uri => redirect_url로 변경
+=> npm start script 변경 (기존 start 에서 .env.production 설정 후 start로 변경)
 
 *해결사항*
 모험 섬 컴포넌트 분리 작업 => 완료
