@@ -31,7 +31,7 @@ type characterJobSkillType = {
   [key: string]: string[];
 }
 
-export const characterJobSkill:characterJobSkillType = {
+export const characterJobSkillList:characterJobSkillType = {
   '전체 클래스': [],
   '디스트로이어': ['분노의 망치', '중력 수련'],
   '워로드': ['고독한 기사', '전투 태세'],
