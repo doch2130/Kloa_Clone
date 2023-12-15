@@ -1,42 +1,31 @@
 'use clinet'
 import React from 'react'
-import downArrow from '@/assets/Icon/downArrow.svg'
-import Image from 'next/image'
+
+import { serverList } from '@/data/ServerListData'
+import { characterJobList, characterJobSkillList } from '@/data/CharacterJobData'
 
 import ListBoxSelect from '@/components/UI/ListBoxSelect'
 
-import { serverList } from '@/data/ServerListData'
-import { characterJobList } from '@/data/CharacterJobData'
-
 import styled from './CharacterNavigator.module.css'
 
-export default function CharacterNavigator() {
-  const buttonClass = 'w-full h-full border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-placeholder';
+const buttonClass = 'w-full h-full border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-placeholder';
 
+export default function CharacterNavigator() {
   return (
     <div className='w-full h-[54px] bg-white dark:bg-[#33353a] dark:border-0 border-2 border-lightGrey rounded-[10px] flex justify-between items-center px-[10px] mt-[28px]'>
       <div className='flex items-center space-x-5'>
         <div className='relative w-[150px] h-[38px]'>
-          <ListBoxSelect classData={{ buttonClass }} listData={serverList} />
+          <ListBoxSelect buttonClass={buttonClass} listData={serverList} />
         </div>
         <div className='relative w-[150px] h-[38px]'>
-          <button type='button' className='w-full h-full border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-placeholder'>
-            <p className='ml-4 text-sm font-medium'>전 서버</p>
-            <Image src={downArrow} alt='down arrow' className='mr-[10px]' />
-          </button>
+          <ListBoxSelect buttonClass={buttonClass} listData={characterJobList} />
         </div>
+        {/* 데이터에 따른 밑에 UI 출력 */}
+        {characterJobSkillList[characterJobList[0]].length > 0 &&
         <div className='relative w-[150px] h-[38px]'>
-          <button type='button' className='w-full h-full border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-placeholder'>
-            <p className='ml-4 text-sm font-medium'>전체 클래스</p>
-            <Image src={downArrow} alt='down arrow' className='mr-[10px]' />
-          </button>
+          <ListBoxSelect buttonClass={buttonClass} listData={characterJobSkillList[characterJobList[0]]} />
         </div>
-        {/* <div className='relative w-[150px] h-[38px]'>
-          <button type='button' className='w-full h-full border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-placeholder'>
-            <p className='ml-4 text-sm font-medium'>직업 각인</p>
-            <Image src={downArrow} alt='down arrow' className='mr-[10px]' />
-          </button>
-        </div> */}
+        }
       </div>
       <div className='flex items-center space-x-5'>
         <input type='number' defaultValue={0} 
