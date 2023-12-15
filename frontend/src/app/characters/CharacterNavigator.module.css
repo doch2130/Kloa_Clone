@@ -1,0 +1,36 @@
+.levelWrap {
+  transform: scale(1);
+  cursor: inherit;
+}
+
+.levelBar {
+  background: linear-gradient(
+    to right, 
+    rgb(230, 232, 236) 0%, rgb(230, 232, 236) 0%, rgb(118, 77, 226) 0%, rgb(118, 77, 226) 100%, rgb(230, 232, 236) 100%, rgb(230, 232, 236) 100%);
+}
+
+.levelLeftButton {
+  position: absolute;
+  z-index: 0;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  transform: translate(-12px, -8px);
+}
+
+.levelLeftButton > div {
+  background-color: rgb(88 101 242);
+}
+
+.levelRightButton {
+  position: absolute;
+  z-index: 1;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  transform: translate(238px, -8px);
+}
+
+.levelRightButton > div {
+  background-color: rgb(128 69 221);
+}
