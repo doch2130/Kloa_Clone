@@ -1,0 +1,12 @@
+.listActiveText {
+  color: rgb(255 255 255);
+}
+
+.listActiveBackground {
+  --tw-gradient-to-position: ;
+  --tw-gradient-from-position: ;
+  --tw-gradient-to: #8045dd var(--tw-gradient-to-position);
+  --tw-gradient-from: #5865f2 var(--tw-gradient-from-position);
+  --tw-gradient-stops: var(--tw-gradient-from),var(--tw-gradient-to);
+  background-image: linear-gradient(to right,var(--tw-gradient-stops));
+}
