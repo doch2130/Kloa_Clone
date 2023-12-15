@@ -258,10 +258,16 @@ OAuth 변경, Naver => Discord 로 변경
 => redirect_uri => redirect_url로 변경
 => npm start script 변경 (기존 start 에서 .env.production 설정 후 start로 변경)
 
+38일차:
+전투 정보실 페이지 캐릭터 Select 작업
+=> headlessUI Npm 사용
+=> 서버, 직업, 각인 데이터 파일 생성
+=> select 박스 출력 작업 완료
+데이터에 따른 리스트 출력 방식 체크 필요 => React-Query 사용 할 지 고민 중
+
+
 *해결사항*
-모험 섬 컴포넌트 분리 작업 => 완료
 새벽시간대에 확인 결과 카오스게이트, 필드보스 등의 시간 출력이 이상하게 나오는 현상 확인 (수정 필요)
-로그인 기능 완료(전역 상태 관리 기능 추가 필요) => Next Auth로 관리 완료
 
 =========
 4일차 문제
