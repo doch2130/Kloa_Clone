@@ -6,14 +6,15 @@ import HeaderSearchFormRecently from './HeaderSearchFormRecently'
 import HeaderSearchFormFavorite from './HeaderSearchFormFavorite'
 
 import { Character } from '@/type/characters'
-import { localStorageSaveHandler } from './HeaderSearchUtil'
 
 import SearchIcon from '@/assets/Icon/search.svg'
+import { useRouter } from 'next/navigation'
 
 export default function HeaderSearchForm() {
   const searchWrap = useRef<HTMLDivElement>(null);
   const searchValueRef = useRef<HTMLInputElement>(null);
   const [searchValue, setSearchValue] = useState<string>('');
+  const router = useRouter();
 
   // Input Focus에 따른 pop 출력
   const [isInputFocus, setIsInputFocus] = useState<boolean>(false);
@@ -59,11 +60,7 @@ export default function HeaderSearchForm() {
       return ;
     }
 
-    // 최근 검색 로컬 스토리지 저장
-    localStorageSaveHandler('recently', searchValueRef.current.value, setRecentlyData);
-
-    setSearchValue('');
-    setIsInputFocus(true);
+    router.push(`./characters/${searchValueRef.current.value.trim()}`);
     return ;
   }
 
