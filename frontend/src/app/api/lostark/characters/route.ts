@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
 
     if (response.ok) {
       const data = await response.json();
-      console.log('data ', data);
+      // console.log('data ', data);
       if(data !== null) {
         return NextResponse.json({ message: 'Character Search Success', status: 200, data });
       } else {
