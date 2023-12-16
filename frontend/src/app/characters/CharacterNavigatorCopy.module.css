@@ -1,0 +1,44 @@
+.levelWrap {
+  position: relative;
+  background-color: rgb(230, 232, 236);
+  transform: scale(1);
+  cursor: inherit;
+}
+
+.levelBar {
+  background: linear-gradient(to right, rgb(118, 77, 226) 0%, rgb(118, 77, 226) 100%);
+  left: 0%;
+  right: 0%;
+}
+
+.levelBarInput {
+  -webkit-appearance: none;
+  appearance: none; 
+  background: none;
+  pointer-events: none;
+}
+
+.levelBarInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 100%;
+  pointer-events: auto;
+  cursor: grab;
+}
+
+.levelBarInput::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+
+.levelBarInputLeft::-webkit-slider-thumb {
+  background-color: rgb(88 101 242);
+}
+
+.levelBarInputRight::-webkit-slider-thumb {
+  background-color: rgb(128 69 221);
+}
+
+/* 참고 사이트 */
+/* https://velog.io/@forest_xox/%EB%A6%AC%EC%95%A1%ED%8A%B8-%EC%96%91%EB%B0%A9%ED%96%A5-Range-%EB%A7%8C%EB%93%A4%EA%B8%B0 */
