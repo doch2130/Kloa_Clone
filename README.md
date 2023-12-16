@@ -322,6 +322,8 @@ Warning: For production Image Optimization with Next.js, the optional 'sharp' pa
 Read more: https://nextjs.org/docs/messages/sharp-missing-in-production
 배포시 Image 대신 sharp 사용하라는 권고 메시지
 => 나중에 확인 예정
+=> Image 태그는 그대로 사용하되 배포 시에 sharp를 설치하고 배포를 해야한다고 함
+=> vercel은 자동 설치라서 괜찮다고 함
 
 28일차 문제
 auth 폴더 구조
