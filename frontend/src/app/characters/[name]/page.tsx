@@ -78,10 +78,10 @@ export default function CharacterDetail() {
                   </clipPath>
                 </defs>
                 <g id="ico_itemlevel" transform="translate(0 4.988)">
-                  <g id="그룹_141" data-name="그룹 141" transform="translate(0 0)" clip-path="url(#clip-path)">
+                  <g id="그룹_141" data-name="그룹 141" transform="translate(0 0)" clipPath="url(#clip-path)">
                     <path id="패스_94" data-name="패스 94" d="M13.517,4.68h-.378C12.193,2.4,9.36,1.644,9.36,1.644L7,0,4.641,1.644S1.805,2.4.861,4.68H.482A17.085,17.085,0,0,0,.011,9.4l.56-.4v3.737a1.566,1.566,0,0,0,.454,1.09L5.058,18V9.528l-.976.732c-1.183.878-1.4.191-1.434-.254V7.933a2.933,2.933,0,0,1,1.9.3L6.624,9.4v1.385l-.681.607L7,12.334l1.056-.94-.681-.607V9.4L9.453,8.235a2.935,2.935,0,0,1,1.9-.3v2.074c-.032.445-.248,1.132-1.432.254L8.94,9.528V18l4.034-4.169a1.566,1.566,0,0,0,.454-1.09V9.006l.562.4a17.13,17.13,0,0,0-.473-4.721" transform="translate(0 -0.001)" fill="#fff"></path>
                   </g>
-                  <text id="_1_584.17" data-name="1,584.17" transform="translate(19 -4.988)" fill="#fff" font-size="24" font-family="Pretendard Variable, Pretendard" font-weight="600">
+                  <text id="_1_584.17" data-name="1,584.17" transform="translate(19 -4.988)" fill="#fff" fontSize="24" fontFamily="Pretendard Variable, Pretendard" fontWeight="600">
                     <tspan x="0" y="23">1,621.67</tspan>
                   </text>
                 </g>
