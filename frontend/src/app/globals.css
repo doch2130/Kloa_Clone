@@ -89,7 +89,7 @@ body {
 
 .nav-list a {
   margin-left: 2.5rem;
-  color: rgb(125 131 149);
+  /* color: rgb(125 131 149); */
   font-weight: 700;
   font-size: 0.9rem;
 }
@@ -119,6 +119,11 @@ body {
 }
 
 .drop-in-underline:hover:before {
+  opacity: 1;
+  transition: opacity .2s;
+}
+
+.drop-in-underline-active:before {
   opacity: 1;
   transition: opacity .2s;
 }
