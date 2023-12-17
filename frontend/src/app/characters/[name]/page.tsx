@@ -48,9 +48,10 @@ export default function CharacterDetail() {
   }, []);
 
   return (
-    <>
-    <div>Name: {decodeURIComponent(name)}</div>
-    <div>Name: {name}</div>
-    </>
+    <div className='w-full min-h-full bg-lightGrey dark:bg-[#2b2d31] text-head dark:text-[#eaf0ec] min-[1260px]:flex min-[1260px]:justify-center relative'>
+      <div className='shrink-0 w-[1200px] flex justify-between relative'>
+        asd
+      </div>
+    </div>
   )
 }

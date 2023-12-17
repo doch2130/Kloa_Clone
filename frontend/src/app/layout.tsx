@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body className='bg-white dark:bg-[#2b2d31]'>
+      <body className='dark:bg-[#2b2d31] h-full'>
         <AuthSession>
           <Header />
           {children}

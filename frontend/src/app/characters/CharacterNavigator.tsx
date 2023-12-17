@@ -8,7 +8,7 @@ import ListBoxSelect from '@/components/UI/ListBoxSelect'
 
 import styled from './CharacterNavigator.module.css'
 
-const buttonClass = 'w-full h-full border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-placeholder';
+const buttonClass = 'w-full h-full border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-[#7d8395]';
 
 export default function CharacterNavigator() {
   const [rangeMinValue, setRangeMinValue] = useState<number>(0); 
@@ -56,7 +56,7 @@ export default function CharacterNavigator() {
   }, [rangeMinPercent, rangeMaxPercent]);
   
   return (
-    <div className='w-full h-[54px] bg-white dark:bg-[#33353a] dark:border-0 border-2 border-lightGrey rounded-[10px] flex justify-between items-center px-[10px] mt-[28px]'>
+    <div className='w-full h-[54px] bg-white dark:bg-[#33353a] rounded-[10px] flex justify-between items-center px-[10px] mt-[28px]'>
       <div className='flex items-center space-x-5'>
         <div className='relative w-[150px] h-[38px]'>
           <ListBoxSelect buttonClass={buttonClass} listData={serverList} />

@@ -14,7 +14,7 @@ export default function CharacterList() {
         <p className="text-center">장비</p>
         <p>직업 각인</p>
       </div>
-      <ul className='w-full min-h-[812px] bg-white dark:bg-[#33353a] dark:border-0 border-2 border-lightGrey rounded-[10px] overflow-hidden [&>li]:px-5 [&>li]:first:pt-1 [&>li>div]:grid [&>li>div]:grid-cols-[76px_196px_110px_134px_112px_202px_140px_110px] [&>li>div]:grid-rows-1 [&>li>div]:h-12 [&>li>div]:items-center [&>li>div]:border-b [&>li>div]:border-basicGrey dark:[&>li>div]:border-[#4d4f55] text-head dark:text-[#eaf0ec] text-sm font-semibold select-text'>
+      <ul className='w-full min-h-[812px] bg-white dark:bg-[#33353a] rounded-[10px] overflow-hidden [&>li]:px-5 [&>li]:first:pt-1 [&>li>div]:grid [&>li>div]:grid-cols-[76px_196px_110px_134px_112px_202px_140px_110px] [&>li>div]:grid-rows-1 [&>li>div]:h-12 [&>li>div]:items-center [&>li>div]:border-b [&>li>div]:border-basicGrey dark:[&>li>div]:border-[#4d4f55] text-head dark:text-[#eaf0ec] text-sm font-semibold select-text'>
         <li className='hover:bg-[#F9FBFB] dark:hover:bg-[#3a3b41]'>
           <div>
             <p>1</p>
