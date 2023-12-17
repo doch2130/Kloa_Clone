@@ -18,7 +18,7 @@ export default function CharacterList() {
         <li className='hover:bg-[#F9FBFB] dark:hover:bg-[#3a3b41]'>
           <div>
             <p>1</p>
-            <Link href='./characters'>키토단</Link>
+            <Link href='./characters/키토단' as='./characters/키토단'>키토단</Link>
             <p>1621.10</p>
             <p>스카우터</p>
             <p>카제로스</p>
