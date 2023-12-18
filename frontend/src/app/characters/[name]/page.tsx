@@ -7,13 +7,23 @@ import { localStorageSaveHandler } from '../../../components/Header/HeaderSearch
 import starEmpty from '@/assets/Icon/starEmpty.svg'
 import starFull from '@/assets/Icon/starFull.svg'
 
+import UpArrowSvg from '@/components/UI/UpArrowSvg'
+
 import { useState } from 'react'
-import { Tab } from '@headlessui/react'
+import { Tab, Disclosure } from '@headlessui/react'
 
 export default function CharacterDetail() {
   const params = useParams();
   // const name = params.name;
   const name = Array.isArray(params.name) ? params.name.join(',') : params.name;
+
+  const [isFavoriteCheck, setIsFavoriteCheck] = useState<boolean>(false);
+
+  const cardCount = [1,2,3,4,5,6];
+
+  const favoriteCheckHandler = () => {
+    setIsFavoriteCheck((prev) => !prev);
+  }
 
   // 여기서는 데이터 호출하지 않고 페이지만 넘겨준다.
   // 페이지를 넘겨준 후 API를 호출해서 데이터가 있으면 로컬스토리지 저장도 같이 한다.
@@ -195,7 +205,7 @@ export default function CharacterDetail() {
             <div className='w-full h-[300px] bg-[#15181d] relative overflow-hidden'>
               {/* 캐릭터 사진 */}
               <div className='absolute w-[612px] right-[-180px] top-[-60px]'>
-                <Image src={'https://img.lostark.co.kr/armory/9/6ebf3a6ebe4ae67706162d8688f9b8ec711ab39a1c576dc98ad1d7b1cec96d66.png?v=20231210061139'} alt='character Image' width={612} height={708} loading='lazy' />
+                <Image src={'https://img.lostark.co.kr/armory/9/6ebf3a6ebe4ae67706162d8688f9b8ec711ab39a1c576dc98ad1d7b1cec96d66.png?v=20231210061139'} alt='character Image' width={612} height={708} loading='lazy' property='false' />
               </div>
               {/* 아이템 레벨에 따른 배경 색 다른 효과 */}
               <div className='absolute inset-0 mix-blend-lighten transition-colors duration-[2000ms] ease-out bg-[#F25068]' style={characterBackgroundColor}></div>
@@ -253,8 +263,15 @@ export default function CharacterDetail() {
               {/* 관심 체크 */}
               <div className='absolute top-0 right-0'>
                 <button type='button' className='p-5 h-full justify-self-end text-gray-100'>
-                  <Image src={starEmpty} alt='starEmpty' width={20} height={20} />
-                  {/* <Image src={starFull} alt='starFull' width={20} height={20} /> */}
+                  {isFavoriteCheck ?
+                  <>
+                    <Image src={starFull} alt='starFull' width={20} height={20} onClick={favoriteCheckHandler} />
+                  </>
+                  :
+                  <>
+                    <Image src={starEmpty} alt='starEmpty' width={20} height={20} onClick={favoriteCheckHandler} />
+                  </>
+                  }
                 </button>
               </div>
             </div>
@@ -379,7 +396,112 @@ export default function CharacterDetail() {
 
           {/* 오른쪽 섹션, 정보 */}
           <section className='grow pb-[50px]'>
-            asd
+            <div className='pl-[60px] pt-[25px] h-full'>
+              <div className='flex justify-end select-none'>
+                <div className='flex justify-end items-center gap-x-1.5 mb-[10px] mr-[1px]'>
+                  {/* 갱신 2분 이후부터 활성화 되는 방식 */}
+                  {/* 1분 이내면 몇 초 전, 1분 이후부터는 X분전 */}
+                  <p className='text-sm'>14분전</p>
+                  {/* 임시로 disabled 즐겨찾기 변수 사용 */}
+                  <button type='button' disabled={isFavoriteCheck} className='w-16 h-6 bg-[#dadada] dark:bg-[#44474d] disabled:bg-[#ececec] dark:disabled:bg-[#33353a] disabled:text-[#7d8395] rounded-lg flex items-center justify-center select-none'>
+                    <p className='text-sm'>갱신하기</p>
+                  </button>
+                </div>
+              </div>
+              {/* 탭에 따른 데이터 출력 위치 */}
+              <Tab.Panels>
+                <Tab.Panel className='space-y-6'>
+                    <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] mt-6'>
+                    <Disclosure as={Fragment}>
+                      {({ open }) => (
+                        <>
+                        <Disclosure.Button className='w-full'>
+                          <div className='flex justify-between items-center'>
+                            <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
+                              <p className='text-sm font-bold text-[#8045dd]'>카드</p>
+                            </div>
+                            <hr className='grow mx-3 border-basicGrey dark:border-[#7d8395]' />
+                            <div className='flex items-center space-x-1.5'>
+                              <p className='font-semibold'>
+                                세상을 구하는 빛&nbsp;
+                                <span className='text-[#8045dd] dark:text-[#a36bfc]'>30각</span>
+                              </p>
+                              <UpArrowSvg isOpen={open} classNameDefault={'w-5 h-5 transition-transform duration-100'} classNameOpen={'rotate-180'} classNameClose={'rotate-0'} />
+                            </div>
+                          </div>
+                          <div className='mt-3 grid grid-cols-6 gap-x-3'>
+                            {cardCount.map((card:number) => (
+                            <div className='w-full' key={card}>
+                              <div className='relative aspect-[248/362] -mr-1'>
+                                <div className='absolute inset-0 pl-[1.8%] pr-[4.2%] pt-[5.2%]'>
+                                  <Image alt="실리안" loading="lazy" width={248} height={362} decoding="async" data-nimg="1" src="https://pica.korlark.com/efui_iconatlas/card_legend/card_legend_00_1.png" style={{color: 'transparent;'}} />
+                                </div>
+                                {/* 카드 등급에 따라 bg postion 값이 달라짐 (X 값) */}
+                                <div className='absolute inset-0 bg-cover aspect-[248/362] bg-[url(https://pica.korlark.com/2018/obt/assets/images/pc/profile/img_card_grade.png?f9e0ffc8a709611354db408dd0e7a7bb)]'
+                                  style={{backgroundPositionX: '80.4%', backgroundPositionY: 'top'}}></div>
+                                <div className='absolute bottom-[6.5%] left-[5%] right-[7.5%] overflow-hidden'>
+                                  {/* Left를 이용하여 1,2,3,4,5 각 그림 표시 */}
+                                {/* absolute top-0 bottom-0 w-full bg-pos-[0_100%] bg-cover left-[-40%] bg-[url(https://pica.korlark.com/2018/obt/assets/images/pc/profile/img_profile_awake.png)] */}
+                                {/* absolute top-0 bottom-0 w-full bg-pos-[0_100%] bg-cover left-[-100%] bg-[url(https://pica.korlark.com/2018/obt/assets/images/pc/profile/img_profile_awake.png)] */}
+                                  <div className='relative bg-cover aspect-[10/3] bg-[url(https://pica.korlark.com/2018/obt/assets/images/pc/profile/img_profile_awake.png)] drop-shadow-xl'>
+                                    <div className='absolute top-0 bottom-0 w-full bg-bottom bg-cover left-0 bg-[url(https://pica.korlark.com/2018/obt/assets/images/pc/profile/img_profile_awake.png)]'></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <p className='mt-[6px] -mb-2 px-1 w-full text-center text-xs font-semibold select-text break-keep'>실리안</p>
+                            </div>
+                            ))}
+                          </div>
+                        </Disclosure.Button>
+                          <Disclosure.Panel className="mt-4 transform scale-100 opacity-100">
+                            <div className='grid gap-3 grid-cols-1'>
+                              {/* 카드 종류에 따라 div 태그 추가 */}
+                              {/* 지금은 1종류만 설정 */}
+                              <div className='px-[17px] py-4 bg-[#f5f6f7] dark:bg-[#2b2d31] rounded-xl'>
+                                <p className='font-semibold'>세상을 구하는 빛</p>
+                                <div className='mt-3 space-y-2'>
+                                  {/* 같은 종류 카드에서 효과 리스트 */}
+                                  <div className='flex'>
+                                    <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>2세트</span>
+                                    <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>암속성 피해 감소 +10.00%</p>
+                                  </div>
+                                  <div className='flex'>
+                                    <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>4세트</span>
+                                    <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>암속성 피해 감소 +10.00%</p>
+                                  </div>
+                                  <div className='flex'>
+                                    <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>6세트</span>
+                                    <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>암속성 피해 감소 +10.00%</p>
+                                  </div>
+                                  <div className='flex'>
+                                    <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>12각성</span>
+                                    <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>공격 속성을 성속성으로 변환</p>
+                                  </div>
+                                  <div className='flex'>
+                                    <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>18각성</span>
+                                    <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>성속성 피해 +7.00%</p>
+                                  </div>
+                                  <div className='flex'>
+                                    <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>30각성</span>
+                                    <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>성속성 피해 +8.00%</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+                  </div>
+                </Tab.Panel>
+                <Tab.Panel className='space-y-6'>Content 2</Tab.Panel>
+                <Tab.Panel className='space-y-6'>Content 3</Tab.Panel>
+                <Tab.Panel className='space-y-6'>Content 4</Tab.Panel>
+                <Tab.Panel className='space-y-6'>Content 5</Tab.Panel>
+                <Tab.Panel className='space-y-6'>Content 6</Tab.Panel>
+                <Tab.Panel className='space-y-6'>Content 7</Tab.Panel>
+              </Tab.Panels>
+            </div>
           </section>
         </Tab.Group>
       </div>
