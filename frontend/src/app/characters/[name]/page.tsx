@@ -20,6 +20,8 @@ export default function CharacterDetail() {
   const [isFavoriteCheck, setIsFavoriteCheck] = useState<boolean>(false);
 
   const cardCount = [1,2,3,4,5,6];
+  const jewelCount = [1,2,3,4,5,6,7,8,9,10,11];
+  const gagInCount = [1,2,3,4,5,6];
 
   const favoriteCheckHandler = () => {
     setIsFavoriteCheck((prev) => !prev);
@@ -198,7 +200,7 @@ export default function CharacterDetail() {
   };
 
   return (
-    <div className='w-full min-h-full bg-lightGrey dark:bg-[#2b2d31] text-head dark:text-[#eaf0ec] min-[1260px]:flex min-[1260px]:justify-center relative'>
+    <div className='w-full min-h-full bg-lightGrey dark:bg-[#2b2d31] text-[#353945] dark:text-[#eaf0ec] min-[1260px]:flex min-[1260px]:justify-center relative'>
       <div className='shrink-0 w-[1200px] flex justify-between relative'>
         <Tab.Group>
           <section className='shrink-0 w-[400px] bg-white dark:bg-[#33353a] border-l dark:border-l-[#4d4f55] shadow-[5px_1px_8px_0_rgba(0,0,0,.06)] z-[1]'>
@@ -233,7 +235,7 @@ export default function CharacterDetail() {
               <div className='absolute bottom-5 left-5 text-white space-y-1.5'>
                 <div className='flex'>
                   <div className='w-[45px] h-5 bg-[#1B1E24] flex justify-center items-center rounded-[10px] mr-2'>
-                    <p className='text-[12px] leading-[15px] text-basicGrey'>원정대</p>
+                    <p className='text-[12px] leading-[15px] text-[#e6e8ec]'>원정대</p>
                   </div>
                   <p className='text-[15px] leading-[18px] [text-shadow:2px_2px_2px_#00000099]'>
                     <span className='text-[11px] leading-[11px]'>Lv.</span>226
@@ -241,19 +243,19 @@ export default function CharacterDetail() {
                 </div>
                 <div className='flex'>
                   <div className='w-[45px] h-5 bg-[#1B1E24] flex justify-center items-center rounded-[10px] mr-2'>
-                    <p className='text-[12px] leading-[15px] text-basicGrey'>칭호</p>
+                    <p className='text-[12px] leading-[15px] text-[#e6e8ec]'>칭호</p>
                   </div>
                   <p className='text-[15px] leading-[18px] [text-shadow:2px_2px_2px_#00000099]'>빛을 꺼트리는 자</p>
                 </div>
                 <div className='flex'>
                   <div className='w-[45px] h-5 bg-[#1B1E24] flex justify-center items-center rounded-[10px] mr-2'>
-                    <p className='text-[12px] leading-[15px] text-basicGrey'>PVP</p>
+                    <p className='text-[12px] leading-[15px] text-[#e6e8ec]'>PVP</p>
                   </div>
                   <p className='text-[15px] leading-[18px] [text-shadow:2px_2px_2px_#00000099]'>20급</p>
                 </div>
                 <div className='flex'>
                   <div className='w-[45px] h-5 bg-[#1B1E24] flex justify-center items-center rounded-[10px] mr-2'>
-                    <p className='text-[12px] leading-[15px] text-basicGrey'>영지</p>
+                    <p className='text-[12px] leading-[15px] text-[#e6e8ec]'>영지</p>
                   </div>
                   <p className='text-[15px] leading-[18px] [text-shadow:2px_2px_2px_#00000099]'>
                     <span className='text-[11px] leading-[11px]'>Lv.</span>70 첫영지
@@ -285,21 +287,21 @@ export default function CharacterDetail() {
                 <div className='flex gap-x-2'>
                   <div className='grid grid-rows-2'>
                     <p className='shrink-0 flex justify-end items-center gap-x-1'>
-                      <span className='text-head dark:text-inherit'>12422위</span>
+                      <span className='text-[#353945] dark:text-inherit'>12422위</span>
                       <span className='w-8 inline-block font-medium text-xs text-[#7d8395]'>8%</span>
                     </p>
                     <p className='shrink-0 flex justify-end items-center gap-x-1'>
-                      <span className='text-head dark:text-inherit'>124위</span>
+                      <span className='text-[#353945] dark:text-inherit'>124위</span>
                       <span className='w-8 inline-block font-medium text-xs text-[#7d8395]'>8%</span>
                     </p>
                   </div>
                   <div className='grid grid-rows-2'>
                     <p className='shrink-0 flex justify-end items-center gap-x-1'>
-                      <span className='text-head dark:text-inherit'>클래스 1463위</span>
+                      <span className='text-[#353945] dark:text-inherit'>클래스 1463위</span>
                       <span className='w-8 inline-block font-medium text-xs text-[#7d8395]'>7%</span>
                     </p>
                     <p className='shrink-0 flex justify-end items-center gap-x-1'>
-                      <span className='text-head dark:text-inherit'>클래스 12422위</span>
+                      <span className='text-[#353945] dark:text-inherit'>클래스 12422위</span>
                       <span className='w-8 inline-block font-medium text-xs text-[#7d8395]'>7%</span>
                     </p>
                   </div>
@@ -411,7 +413,145 @@ export default function CharacterDetail() {
               {/* 탭에 따른 데이터 출력 위치 */}
               <Tab.Panels>
                 <Tab.Panel className='space-y-6'>
-                    <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] mt-6'>
+                  {/* 보석 정보 */}
+                  <div className='px-[17px] pt-4 pb-2 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
+                    <div className='grid grid-cols-11 gap-x-4 place-items-center'>
+                      {jewelCount.map((jewel:number) => (
+                        <div key={jewel} className='relative w-full max-w-[44px] h-full rounded-md' style={{background: `linear-gradient(135deg, #3b1303, #a23405);`}}>
+                          <Image src={'https://pica.korlark.com/efui_iconatlas/use/use_9_55.png'} alt='jewel' width={44} height={44} decoding='async' style={{color: 'transparent;'}} />
+                          <div className='absolute bottom-0 right-0 w-4 h-4 rounded-[4px] rounded-tr-md bg-white dark:bg-[#33353a] opacity-90 flex justify-center items-center'>
+                            <p className='text-[11px] text-[#FF6000] dark:text-[#ff9e63] font-medium'>10</p>
+                          </div>
+                        </div>
+                      )
+                      )}
+                    </div>
+                    <div className='grid grid-cols-11 mt-2 gap-x-4'>
+                      <div className='flex items-center px-2 gap-x-2' style={{gridColumn: 'span 6 / span 6;'}}>
+                        <div className='grow h-2 mb-[6px] border-l-2 border-b-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
+                        <p className='text-sm font-medium text-black shrink-0 dark:text-inherit'>멸화 6</p>
+                        <div className='grow h-2 mb-[6px] border-b-2 border-r-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
+                      </div>
+                      <div className='flex items-center px-2 gap-x-2' style={{gridColumn: 'span 5 / span 5;'}}>
+                        <div className='grow h-2 mb-[6px] border-l-2 border-b-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
+                        <p className='text-sm font-medium text-black shrink-0 dark:text-inherit'>홍염 5</p>
+                        <div className='grow h-2 mb-[6px] border-b-2 border-r-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
+                      </div>
+                    </div>
+                  </div>
+                  {/* 특성, 각인 정보 */}
+                  <div className='flex gap-x-6'>
+                    {/* 특성 */}
+                    <div className='px-[17px] py-4 w-full h-[300px] bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
+                      <div className='class="flex flex-col justify-between'>
+                        {/* 기본 특성 */}
+                        <div>
+                          <div className='flex justify-between items-center'>
+                            <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
+                              <p className='text-sm font-bold text-[#8045dd]'>기본 특성</p>
+                            </div>
+                            <hr className='grow ml-3 border-basicGrey dark:border-[#7d8395]' />
+                          </div>
+                          <div className='mt-4 text-sm leading-[17px] pl-1'>
+                            <div className='flex justify-between'>
+                              <p className='text-[#7d8395]'>공격력</p>
+                              <p className='font-semibold text-[#353945] dark:text-inherit'>86,102</p>
+                              
+                            </div>
+                            <div className='flex justify-between text-sm mt-2.5'>
+                              <p className='text-[#7d8395]'>
+                                <><span className='ml-2.5 mr-2 w-[6px] h-[4px] border-l border-b inline-block mb-1 border-[#7d8395]'></span>기본</>
+                              </p>
+                              <p className='font-semibold text-[#353945] dark:text-inherit'>70,385</p>
+                            </div>
+                            <div className='flex justify-between text-sm mt-0.5'>
+                              <p className='text-[#7d8395]'>
+                                <><span className='ml-2.5 mr-2 w-[6px] h-[4px] border-l border-b inline-block mb-1  border-[#7d8395]'></span>효과</>
+                              </p>
+                              <p className='font-semibold text-[#353945] dark:text-inherit'>15,717</p>
+                            </div>
+                            <div className='flex justify-between mt-3'>
+                              <p className='text-[#7d8395]'>최대 생명력</p>
+                              <p className="font-semibold text-[#353945] dark:text-inherit">250,639</p>
+                            </div>
+                          </div>
+                        </div>
+                        {/* 전투 특성 */}
+                        <div className='mt-7'>
+                          <div className='flex justify-between items-center'>
+                            <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
+                              <p className='text-sm font-bold text-[#8045dd]'>전투 특성</p>
+                            </div>
+                            <hr className='grow mx-3 border-[#e6e8ec] dark:border-[#7d8395]' />
+                            <p className='text-sm font-semibold'>합계 2779</p>
+                          </div>
+                          <div className='mt-4 pl-1'>
+                            <div className='space-y-2.5 text-[0.925rem] items-between'>
+                              {/* 치특신 */}
+                              {/* 가장 높은 값: #8045dd, 2번쨰 높은 값: 5865f2 */}
+                              <div className='flex justify-between'>
+                                <div className='flex justify-between max-w-[75px] w-full'>
+                                  <p className='text-[#7d8395]'>치명</p>
+                                  <p className='font-semibold text-[#5865f2] dark:text-[#8991ee]'>559</p>
+                                </div>
+                                <div className='flex justify-between max-w-[75px] w-full'>
+                                  <p className='text-[#7d8395]'>특화</p>
+                                  <p className='font-semibold text-[#8045dd] dark:text-[#a36bfc]'>1852</p>
+                                </div>
+                                <div className='flex justify-between max-w-[75px] w-full'>
+                                  <p className='text-[#7d8395]'>신속</p>
+                                  <p className='font-semibold text-[#353945] dark:text-inherit'>166</p>
+                                </div>
+                              </div>
+                              {/* 제인숙 */}
+                              <div className='flex justify-between'>
+                                <div className='flex justify-between max-w-[75px] w-full'>
+                                  <p className='text-[#7d8395]'>제압</p>
+                                  <p className='font-semibold text-[#353945] dark:text-inherit'>70</p>
+                                </div>
+                                <div className='flex justify-between max-w-[75px] w-full'>
+                                  <p className='text-[#7d8395]'>인내</p>
+                                  <p className='font-semibold text-[#353945] dark:text-inherit'>66</p>
+                                </div>
+                                <div className='flex justify-between max-w-[75px] w-full'>
+                                  <p className='text-[#7d8395]'>숙련</p>
+                                  <p className='font-semibold text-[#353945] dark:text-inherit'>66</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* 각인 */}
+                    <div className='px-[17px] py-4 w-full h-[300px] bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] flex flex-col'>
+                      <div className='shrink-0 flex justify-between items-center'>
+                        <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
+                          <p className='text-sm font-bold text-[#8045dd]'>각인</p>
+                        </div>
+                        <hr className='grow mx-3 border-[#e6e8ec] dark:border-[#7d8395]' />
+                        <p className='font-semibold'>
+                          <span className='text-[#8045dd] dark:text-[#a36bfc]'>33333</span>
+                          <span className='text-[#5865f2] dark:text-[#8991ee]'>2</span>
+                          <span className='text-warning'></span>
+                        </p>
+                      </div>
+                      <div className='mt-4 pl-1 grow flex flex-col justify-between gap-y-2 overflow-y-auto'>
+                        {/* 각인 사진 */}
+                        {gagInCount.map((gagIn:number) => (
+                          <div key={gagIn} className='flex items-center gap-x-3'>
+                            <Image src={'https://pica.korlark.com/EFUI_IconAtlas/buff/buff_71.png'} alt='gagIn' decoding="async" className='rounded-full bg-[#e6e8ec]' width={31} height={31} style={{color: 'transparent;'}} />
+                            <p className='text-lg font-semibold'>
+                              <span className='text-[#7d8395]'>Lv.</span>
+                              <span>3 원한</span>
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  {/* 카드 정보 */}
+                  <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] mt-6'>
                     <Disclosure as={Fragment}>
                       {({ open }) => (
                         <>
@@ -420,7 +560,7 @@ export default function CharacterDetail() {
                             <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
                               <p className='text-sm font-bold text-[#8045dd]'>카드</p>
                             </div>
-                            <hr className='grow mx-3 border-basicGrey dark:border-[#7d8395]' />
+                            <hr className='grow mx-3 border-[#e6e8ec] dark:border-[#7d8395]' />
                             <div className='flex items-center space-x-1.5'>
                               <p className='font-semibold'>
                                 세상을 구하는 빛&nbsp;
