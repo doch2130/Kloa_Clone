@@ -19,6 +19,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'img.lostark.co.kr',
+      },
+      {
+        protocol: 'https',
+        hostname: 'pica.korlark.com',
       }
     ],
   },
