@@ -767,7 +767,6 @@ export default function CharacterDetail() {
                         </>
                       )}
                     </Disclosure>
-                    <Popovertest />
                   </div>
                 </Tab.Panel>
                 <Tab.Panel className='space-y-6'>Content 2</Tab.Panel>
