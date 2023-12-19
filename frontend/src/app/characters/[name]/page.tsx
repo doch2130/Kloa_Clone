@@ -13,6 +13,7 @@ import UpArrowSvg from '@/components/UI/UpArrowSvg'
 
 import { useState } from 'react'
 import { Tab, Disclosure } from '@headlessui/react'
+import Popovertest from './Popovertest'
 
 export default function CharacterDetail() {
   const params = useParams();
@@ -766,6 +767,7 @@ export default function CharacterDetail() {
                         </>
                       )}
                     </Disclosure>
+                    <Popovertest />
                   </div>
                 </Tab.Panel>
                 <Tab.Panel className='space-y-6'>Content 2</Tab.Panel>
