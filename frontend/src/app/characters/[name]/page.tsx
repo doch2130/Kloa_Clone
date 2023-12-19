@@ -207,7 +207,7 @@ export default function CharacterDetail() {
             <div className='w-full h-[300px] bg-[#15181d] relative overflow-hidden'>
               {/* 캐릭터 사진 */}
               <div className='absolute w-[612px] right-[-180px] top-[-60px]'>
-                <Image src={'https://img.lostark.co.kr/armory/9/6ebf3a6ebe4ae67706162d8688f9b8ec711ab39a1c576dc98ad1d7b1cec96d66.png?v=20231210061139'} alt='character Image' width={612} height={708} loading='lazy' property='false' />
+                <Image src={'https://img.lostark.co.kr/armory/9/6ebf3a6ebe4ae67706162d8688f9b8ec711ab39a1c576dc98ad1d7b1cec96d66.png?v=20231210061139'} alt='character Image' width={612} height={708} property='false' />
               </div>
               {/* 아이템 레벨에 따른 배경 색 다른 효과 */}
               <div className='absolute inset-0 mix-blend-lighten transition-colors duration-[2000ms] ease-out bg-[#F25068]' style={characterBackgroundColor}></div>
@@ -417,8 +417,8 @@ export default function CharacterDetail() {
                   <div className='px-[17px] pt-4 pb-2 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
                     <div className='grid grid-cols-11 gap-x-4 place-items-center'>
                       {jewelCount.map((jewel:number) => (
-                        <div key={jewel} className='relative w-full max-w-[44px] h-full rounded-md' style={{background: `linear-gradient(135deg, #3b1303, #a23405);`}}>
-                          <Image src={'https://pica.korlark.com/efui_iconatlas/use/use_9_55.png'} alt='jewel' width={44} height={44} decoding='async' style={{color: 'transparent;'}} />
+                        <div key={jewel} className='relative w-full max-w-[44px] h-full rounded-md' style={{background: `linear-gradient(135deg, #3b1303, #a23405)`}}>
+                          <Image src={'https://pica.korlark.com/efui_iconatlas/use/use_9_55.png'} alt='jewel' width={44} height={44} decoding='async' />
                           <div className='absolute bottom-0 right-0 w-4 h-4 rounded-[4px] rounded-tr-md bg-white dark:bg-[#33353a] opacity-90 flex justify-center items-center'>
                             <p className='text-[11px] text-[#FF6000] dark:text-[#ff9e63] font-medium'>10</p>
                           </div>
@@ -427,12 +427,12 @@ export default function CharacterDetail() {
                       )}
                     </div>
                     <div className='grid grid-cols-11 mt-2 gap-x-4'>
-                      <div className='flex items-center px-2 gap-x-2' style={{gridColumn: 'span 6 / span 6;'}}>
+                      <div className='flex items-center px-2 gap-x-2 col-span-6'>
                         <div className='grow h-2 mb-[6px] border-l-2 border-b-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
                         <p className='text-sm font-medium text-black shrink-0 dark:text-inherit'>멸화 6</p>
                         <div className='grow h-2 mb-[6px] border-b-2 border-r-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
                       </div>
-                      <div className='flex items-center px-2 gap-x-2' style={{gridColumn: 'span 5 / span 5;'}}>
+                      <div className='flex items-center px-2 gap-x-2 col-span-5'>
                         <div className='grow h-2 mb-[6px] border-l-2 border-b-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
                         <p className='text-sm font-medium text-black shrink-0 dark:text-inherit'>홍염 5</p>
                         <div className='grow h-2 mb-[6px] border-b-2 border-r-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
@@ -540,7 +540,7 @@ export default function CharacterDetail() {
                         {/* 각인 사진 */}
                         {gagInCount.map((gagIn:number) => (
                           <div key={gagIn} className='flex items-center gap-x-3'>
-                            <Image src={'https://pica.korlark.com/EFUI_IconAtlas/buff/buff_71.png'} alt='gagIn' decoding="async" className='rounded-full bg-[#e6e8ec]' width={31} height={31} style={{color: 'transparent;'}} />
+                            <Image src={'https://pica.korlark.com/EFUI_IconAtlas/buff/buff_71.png'} alt='gagIn' decoding="async" className='rounded-full bg-[#e6e8ec]' width={31} height={31} />
                             <p className='text-lg font-semibold'>
                               <span className='text-[#7d8395]'>Lv.</span>
                               <span>3 원한</span>
@@ -574,7 +574,7 @@ export default function CharacterDetail() {
                             <div className='w-full' key={card}>
                               <div className='relative aspect-[248/362] -mr-1'>
                                 <div className='absolute inset-0 pl-[1.8%] pr-[4.2%] pt-[5.2%]'>
-                                  <Image alt="실리안" loading="lazy" width={248} height={362} decoding="async" data-nimg="1" src="https://pica.korlark.com/efui_iconatlas/card_legend/card_legend_00_1.png" style={{color: 'transparent;'}} />
+                                  <Image alt="실리안" width={248} height={362} decoding="async" data-nimg="1" src="https://pica.korlark.com/efui_iconatlas/card_legend/card_legend_00_1.png" />
                                 </div>
                                 {/* 카드 등급에 따라 bg postion 값이 달라짐 (X 값) */}
                                 <div className='absolute inset-0 bg-cover aspect-[248/362] bg-[url(https://pica.korlark.com/2018/obt/assets/images/pc/profile/img_card_grade.png?f9e0ffc8a709611354db408dd0e7a7bb)]'
