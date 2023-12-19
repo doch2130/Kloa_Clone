@@ -39,6 +39,55 @@ export default function Popovertest() {
 
   return (
     <div className="fixed top-16 w-full max-w-sm px-4">
+
+{/* 테스트 해볼만한 기능 */}
+{/* // duration can be tweaked at convenience
+const timeoutDuration = 120
+export const PopoverMenu = ({ className, labelText, content }) => {
+  const triggerRef = useRef()
+  const timeOutRef = useRef()
+
+  const handleEnter = (isOpen) => {
+    clearTimeout(timeOutRef.current)
+    !isOpen && triggerRef.current?.click()
+  }
+
+  const handleLeave = (isOpen) => {
+    timeOutRef.current = setTimeout(() => {
+      isOpen && triggerRef.current?.click()
+    }, timeoutDuration)
+  }
+
+  return (
+    <Popover className={cn("relative", className)}>
+      {({ open }) => (
+          <div 
+              onMouseEnter={() => handleEnter(open)}
+              onMouseLeave={() => handleLeave(open)}
+          >
+            <Popover.Button ref={triggerRef} >
+              {labelText}
+            </Popover.Button>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
+            >
+              <Popover.Panel className="absolute left-1/2 z-50 mt-3 -translate-x-1/2 transform px-4">
+                 {content}
+              </Popover.Panel>
+            </Transition>
+          </div>
+        )
+      }
+    </Popover>
+  )
+} */}
+
           <>
             <button type='button' onMouseEnter={onMouseEnterHandler} onMouseLeave={onMouseLeaveHandler}>
               <span>pop overlay</span>
