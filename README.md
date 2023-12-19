@@ -287,6 +287,12 @@ Character Name 페이지 API 테스트 작업 완료
 => 오른쪽 섹션 작업 시작, 카드 UI 먼저 작업 진행 완료 (데이터에 따른 UI 변경은 추후 설정 예정)
 => 보석, 특성, 각인 UI 작업 진행 (보석, 각인 hover 시 팝업 창 출력 작업 필요)
 
+42일차:
+캐릭터 상세정보 UI 3차 작업 (오른쪽)
+=> 능력치 탭 작업 완료 (반응형 X)
+=> 데이터는 고정 데이터로 사용
+=> Hover 작업 필요, HeadlessUI에서는 버튼 방식으로 구현되어 있으므로 button 대신에 mouse 이벤트를 이용해서 실행하는 방법으로 진행하면 될 것 같음
+=> 참고 사이트 https://github.com/tailwindlabs/headlessui/discussions/425
 
 *CSS 참고용*
 placeholder
