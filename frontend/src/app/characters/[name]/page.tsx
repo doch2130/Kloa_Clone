@@ -6,6 +6,8 @@ import { localStorageSaveHandler } from '../../../components/Header/HeaderSearch
 
 import starEmpty from '@/assets/Icon/starEmpty.svg'
 import starFull from '@/assets/Icon/starFull.svg'
+import transcendance from '@/assets/Icon/transcendance.svg'
+import elixir from '@/assets/Icon/elixir.svg'
 
 import UpArrowSvg from '@/components/UI/UpArrowSvg'
 
@@ -22,6 +24,8 @@ export default function CharacterDetail() {
   const cardCount = [1,2,3,4,5,6];
   const jewelCount = [1,2,3,4,5,6,7,8,9,10,11];
   const gagInCount = [1,2,3,4,5,6];
+  const equipCount = [1,2,3,4,5,6];
+  const accessoriesCount = [1,2,3,4,5,6];
 
   const favoriteCheckHandler = () => {
     setIsFavoriteCheck((prev) => !prev);
@@ -392,9 +396,7 @@ export default function CharacterDetail() {
                 <span>TOTAL : 83</span>
               </p>
             </div>
-
           </section>
-
 
           {/* 오른쪽 섹션, 정보 */}
           <section className='grow pb-[50px]'>
@@ -413,6 +415,138 @@ export default function CharacterDetail() {
               {/* 탭에 따른 데이터 출력 위치 */}
               <Tab.Panels>
                 <Tab.Panel className='space-y-6'>
+                  {/* 장비 정보 */}
+                  <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
+                    <div className='grid grid-cols-2 gap-x-3'>
+                      {/* 장비 정보 - 장비 */}
+                      <div>
+                        {equipCount.map((equip:number, index:number) => {
+                          let divWrapStyle = 'flex items-center w-full gap-x-2';
+                          if(index > 0) {
+                            divWrapStyle += ' mt-3'
+                          }
+                          return (
+                          <div key={equip} className={divWrapStyle}>
+                            {/* 장비 이미지, 품질 */}
+                            <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                              <Image src={'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_165.png'} alt='차오른 몽환의 환각 서브 머신건' loading="lazy" width={50} height={50} decoding="async" />
+                              <div className="w-full h-4 text-center bg-[#f9ae00] dark:bg-[#eba70c]">
+                                {/* 품질 */}
+                                <p className='text-xs font-semibold text-white'>100</p>
+                              </div>
+                            </div>
+                            {/* 장비 정보 */}
+                            <div>
+                              {/* 초월 */}
+                              {index !== 5 &&
+                              <div className='flex items-center'>
+                                <Image src={transcendance} alt='초월' width={16} height={16} />
+                                <p className='text-sm font-semibold text-yellow-500 ml-0.5'>21</p>
+                                <p className='text-[0.8rem] font-semibold ml-1'>7단계</p>
+                              </div>
+                              }
+                              {/* 강화, 장비이름 */}
+                              <p className='truncate text-[0.9rem] font-semibold text-[#D9AB48]'><span className='text-base'>+25</span> 차오른 몽환의 환각 서브 머신건</p>
+                              {/* 세트, 엘릭서 */}
+                              <div className='flex items-center'>
+                                <p className='text-[0.7rem] leading-3 py-0.5 text-center font-semibold bg-[#e6e8ec] dark:bg-[#4b4e58] rounded-sm px-1.5'>환각 <span className='text-[0.75rem]'>Lv.3</span></p>
+                                <div className='gap-x-1.5 font-semibold ml-1.5 flex items-center'>
+                                  {index !== 5 ?
+                                  <>
+                                  <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>회심 (질서) <span className='text-[0.75rem]'>Lv.5</span></span>
+                                  <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>무력화 <span className='text-[0.75rem]'>Lv.3</span></span>
+                                  </>
+                                  :
+                                  <div className='flex items-center gap-x-1.5'>
+                                    <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>달인 2단계</div>
+                                    <div className='font-semibold text-white rounded-sm pl-0.5 pr-1 py-0.5 flex justify-center items-center gap-x-0.5 rounded-r-none last:rounded-r-sm text-xs leading-3 bg-[#2AB1F6]'>
+                                      <Image src={elixir} alt='엘릭서' width={12} height={12} />
+                                      <p className='flex items-end drop-shadow'>20.15%</p>
+                                    </div>
+                                  </div>
+                                  }
+                                </div>
+                              </div>
+                              {/* 무기, 초월 합계 및 초월 증가 수치 */}
+                              {index === 5 &&
+                              <div className='flex items-center mt-1 w-fit font-semibold text-[0.75rem] leading-3 rounded-full px-1.5 py-0.5 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>
+                                <Image src={transcendance} alt='초월' width={14} height={14} />
+                                <p className='ml-1 font-semibold text-yellow-500'>합계 45</p>
+                                <p className='ml-1.5 font-semibold dark:text-[#cacdd4]'>평균 3.0단계</p>
+                                <p className='ml-1 font-semibold dark:text-[#cacdd4]'>+4.92%</p>
+                              </div>
+                              }
+                            </div>
+                          </div>
+                        )})}
+                        {/* 각인 */}
+                        <div className='h-[50px] px-0.5 grid grid-cols-2 items-center mt-3'>
+                          <div className='flex items-center text-left h-11 gap-x-3'>
+                            <Image src={'https://pica.korlark.com/efui_iconatlas/buff/buff_71.png'} alt='원한' width={44} height={44} decoding="async" className='rounded-full drop-shadow' />
+                            <div>
+                              <p className='text-[0.8rem] font-semibold'>원한</p>
+                              <p className='text-[0.7rem]'>활성 포인트 +12</p>
+                            </div>
+                          </div>
+                          <div className='flex items-center text-left h-11 gap-x-3'>
+                            <Image src={'https://pica.korlark.com/efui_iconatlas/achieve/achieve_03_40.png'} alt='예리한 둔기' width={44} height={44} decoding="async" className='rounded-full drop-shadow' />
+                            <div>
+                              <p className='text-[0.8rem] font-semibold'>예리한 둔기</p>
+                              <p className='text-[0.7rem]'>활성 포인트 +12</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {/* 장비 정보 - 악세 */}
+                      <div>
+                      {accessoriesCount.map((accessorie:number, index:number) => {
+                        let divWrapStyle = 'flex items-center w-full gap-x-2';
+                        if(index > 0) {
+                          divWrapStyle += ' mt-3'
+                        }
+                        return (
+                        <div key={accessorie} className={divWrapStyle}>
+                          {/* 악세 사진 */}
+                          <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                            <Image src={'https://pica.korlark.com/efui_iconatlas/acc/acc_213.png'} alt='참혹한 파멸의 목걸이' width={50} height={50} loading="lazy" decoding="async" />
+                            <div className='class="w-full h-4 text-center bg-[#8045dd]'>
+                              <p className='text-xs font-semibold text-white'>92</p>
+                            </div>
+                          </div>
+                          {/* 악세 정보 */}
+                          <div>
+                          {/* <p className='truncate text-[0.9rem] font-semibold text-[#D9AB48]'><span className='text-base'>+25</span> 차오른 몽환의 환각 서브 머신건</p> */}
+                            <p className='truncate text-[0.9rem] leading-4 font-semibold text-[#D9AB48]'>참혹한 파멸의 목걸이</p>
+                            <p className='text-sm font-semibold mt-0.5'>
+                              <span>치명 493</span>
+                              { index === 0 && <span className='ml-1.5'>특화 491</span> }
+                            </p>
+                            <p className='text-sm font-semibold mt-0.5'>
+                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>돌격대장 6</span>
+                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>바리케이드 3</span>
+                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>공격력 감소 2</span>
+                            </p>
+                          </div>
+                        </div>
+                        )
+                        })}
+                        {/* 어빌리티 스톤 (돌) */}
+                        <div className='flex items-center text-left gap-x-2 mt-3'>
+                          <div className='w-[50px] h-[50px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                            <Image src={'https://pica.korlark.com/efui_iconatlas/ability/ability_257.png'} alt='준엄한 비상의 돌 IV' width={50} height={50} decoding="async" />
+                          </div>
+                          <div>
+                            <p className='text-[0.9rem] font-semibold leading-4 text-[#D9AB48]'>준엄한 비상의 돌 IV</p>
+                            <p className='mt-1'>
+                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>바리케이드 4</span>
+                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>아드레날린 9</span>
+                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>공격속도 감소 3</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   {/* 보석 정보 */}
                   <div className='px-[17px] pt-4 pb-2 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
                     <div className='grid grid-cols-11 gap-x-4 place-items-center'>
