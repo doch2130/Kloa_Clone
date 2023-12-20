@@ -13,7 +13,21 @@ import UpArrowSvg from '@/components/UI/UpArrowSvg'
 
 import { useState } from 'react'
 import { Tab, Disclosure } from '@headlessui/react'
-import Popovertest from './Popovertest'
+
+type equipArrayType = {
+  reinforcementLevel: string;
+  name: string;
+  itemLevel: string;
+  tear: string;
+  rating: string;
+  equipmentType: string;
+  quality: string;
+  setEffect: string;
+  basicEffect: string;
+  additionalEffects: string;
+  imageSrc: string;
+}
+
 
 export default function CharacterDetail() {
   const params = useParams();
@@ -27,6 +41,88 @@ export default function CharacterDetail() {
   const gagInCount = [1,2,3,4,5,6];
   const equipCount = [1,2,3,4,5,6];
   const accessoriesCount = [1,2,3,4,5,6];
+
+  const equipArray:equipArrayType[] = [
+    {
+      reinforcementLevel: '+19',
+      name: '차오른 몽환의 환각 모자',
+      itemLevel: '1620',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '모자',
+      quality: '95',
+      setEffect: '환각 Lv.3',
+      basicEffect: '물리 방어력 +5435\r\n마법 방어력+6039\r\n민첩 +35394\r\n체력 +5081',
+      additionalEffects: '생명 활성력 +1264',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_160.png',
+    },
+    {
+      reinforcementLevel: '+19',
+      name: '차오른 몽환의 환각 견갑',
+      itemLevel: '1620',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '어깨장식',
+      quality: '90',
+      setEffect: '환각 Lv.3',
+      basicEffect: '물리 방어력 +6039\r\n마법 방어력+5435\r\n민첩 +37669\r\n체력 +4404',
+      additionalEffects: '생명 활성력 +1134',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_161.png',
+    },
+    {
+      reinforcementLevel: '+19',
+      name: '차오른 몽환의 환각 상의',
+      itemLevel: '1620',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '상의',
+      quality: '82',
+      setEffect: '환각 Lv.3',
+      basicEffect: '물리 방어력 +7247\r\n마법 방어력+6643\r\n민첩 +28315\r\n체력 +6775',
+      additionalEffects: '생명 활성력 +942',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_163.png',
+    },
+    {
+      reinforcementLevel: '+19',
+      name: '차오른 몽환의 환각 하의',
+      itemLevel: '1620',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '하의',
+      quality: '99',
+      setEffect: '환각 Lv.3',
+      basicEffect: '물리 방어력 +6643\r\n마법 방어력+7247\r\n민첩 +30591\r\n체력 +5758',
+      additionalEffects: '생명 활성력 +1373',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_164.png',
+    },
+    {
+      reinforcementLevel: '+19',
+      name: '차오른 몽환의 환각 장갑',
+      itemLevel: '1620',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '상의',
+      quality: '90',
+      setEffect: '환각 Lv.3',
+      basicEffect: '물리 방어력 +4831\r\n마법 방어력+4831\r\n민첩 +42473\r\n체력 +3388',
+      additionalEffects: '생명 활성력 +1134',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_162.png',
+    },
+    {
+      reinforcementLevel: '+23',
+      name: '차오른 몽환의 환각 서브 머신건',
+      itemLevel: '1640',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '무기',
+      quality: '96',
+      setEffect: '환각 Lv.3',
+      basicEffect: '무기 공격력 +70036',
+      additionalEffects: '추가 피해 +28%',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_165.png',
+    }
+  ];
+
 
   const favoriteCheckHandler = () => {
     setIsFavoriteCheck((prev) => !prev);
@@ -421,19 +517,19 @@ export default function CharacterDetail() {
                     <div className='grid grid-cols-2 gap-x-3'>
                       {/* 장비 정보 - 장비 */}
                       <div>
-                        {equipCount.map((equip:number, index:number) => {
-                          let divWrapStyle = 'flex items-center w-full gap-x-2';
+                        {equipArray.map((equip:equipArrayType, index:number) => {
+                          let divWrapStyle = 'relative flex items-center w-full gap-x-2 z-1 group/item';
                           if(index > 0) {
                             divWrapStyle += ' mt-3'
                           }
                           return (
-                          <div key={equip} className={divWrapStyle}>
+                          <div key={equip.equipmentType} className={divWrapStyle}>
                             {/* 장비 이미지, 품질 */}
                             <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-                              <Image src={'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_165.png'} alt='차오른 몽환의 환각 서브 머신건' loading="lazy" width={50} height={50} decoding="async" />
+                              <Image src={equip.imageSrc} alt={equip.name} loading="lazy" width={50} height={50} decoding="async" />
                               <div className="w-full h-4 text-center bg-[#f9ae00] dark:bg-[#eba70c]">
                                 {/* 품질 */}
-                                <p className='text-xs font-semibold text-white'>100</p>
+                                <p className='text-xs font-semibold text-white'>{equip.quality}</p>
                               </div>
                             </div>
                             {/* 장비 정보 */}
@@ -447,10 +543,10 @@ export default function CharacterDetail() {
                               </div>
                               }
                               {/* 강화, 장비이름 */}
-                              <p className='truncate text-[0.9rem] font-semibold text-[#D9AB48]'><span className='text-base'>+25</span> 차오른 몽환의 환각 서브 머신건</p>
+                              <p className='truncate text-[0.9rem] font-semibold text-[#D9AB48]'><span className='text-base'>{equip.reinforcementLevel}</span> {equip.name}</p>
                               {/* 세트, 엘릭서 */}
                               <div className='flex items-center'>
-                                <p className='text-[0.7rem] leading-3 py-0.5 text-center font-semibold bg-[#e6e8ec] dark:bg-[#4b4e58] rounded-sm px-1.5'>환각 <span className='text-[0.75rem]'>Lv.3</span></p>
+                                <p className='text-[0.7rem] leading-3 py-0.5 text-center font-semibold bg-[#e6e8ec] dark:bg-[#4b4e58] rounded-sm px-1.5'>{equip.setEffect.slice(0, 2)}<span className='text-[0.75rem]'>{equip.setEffect.slice(2)}</span></p>
                                 <div className='gap-x-1.5 font-semibold ml-1.5 flex items-center'>
                                   {index !== 5 ?
                                   <>
@@ -478,8 +574,47 @@ export default function CharacterDetail() {
                               </div>
                               }
                             </div>
+                            {/* 장비 Hover */}
+                            <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                              <p className='truncate text-[0.9rem] font-semibold text-[#D9AB48] mb-2'><span className='text-base'>{equip.reinforcementLevel}</span> {equip.name}</p>
+                              <div className='flex w-full'>
+                                <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                                  <Image src={equip.imageSrc} alt={equip.name} loading="lazy" width={44} height={44} decoding="async" />
+                                </div>
+                                <div className='ml-1 w-full h-auto flex flex-col justify-around'>
+                                  <div className='text-xs font-semibold flex items-center'>
+                                    <span className='text-[#D9AB48]'>{equip.rating} {equip.equipmentType}</span>
+                                    <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
+                                    <span className='pb-[1px]'>{equip.itemLevel}</span>
+                                    <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
+                                    <span className=''>{equip.tear}</span>
+                                  </div>
+                                  <div className='flex items-center'>
+                                    <span className='text-[0.85rem] font-semibold text-[#D9AB48] mr-2'>{equip.quality}</span>
+                                    <div className="w-full h-[9px] mt-[2px] bg-[#4d4f55] dark:bg-[#e6e8ec] relative">
+                                      <div className={`rounded-r-sm h-[9px] mt-[2px] bg-[#f9ae00] dark:bg-[#eba70c] absolute bottom-0`} style={{width: `${equip.quality}%`}}></div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              {/* 장비 Hover 기본 효과 */}
+                              <div className='mt-4 w-full'>
+                                <pre className='text-[0.75rem] leading-5 font-semibold'>{equip.basicEffect}</pre>
+                              </div>
+                              {/* 장비 Hover 추가 효과 */}
+                              <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
+                              <div className='w-full'>
+                                <p className='text-[0.8rem] leading-5 font-semibold'>{equip.additionalEffects}</p>
+                              </div>
+                              {/* 장비 세트 효과 */}
+                              <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
+                              <div className='w-full'>
+                                <p className='text-[0.8rem] leading-5 font-semibold'>{equip.setEffect}</p>
+                              </div>
+                            </div>
                           </div>
                         )})}
+                        {/* <PopOverEquip /> */}
                         {/* 각인 */}
                         <div className='h-[50px] px-0.5 grid grid-cols-2 items-center mt-3'>
                           <div className='flex items-center text-left h-11 gap-x-3'>
@@ -678,7 +813,7 @@ export default function CharacterDetail() {
                       <div className='mt-4 pl-1 grow flex flex-col justify-between gap-y-2 overflow-y-auto'>
                         {/* 각인 사진 */}
                         {gagInCount.map((gagIn:number) => (
-                          <div key={gagIn} className='flex items-center gap-x-3  group/item'>
+                          <div key={gagIn} className='flex items-center gap-x-3 group/item'>
                             <Image src={'https://pica.korlark.com/EFUI_IconAtlas/buff/buff_71.png'} alt='gagIn' decoding="async" className='rounded-full bg-[#e6e8ec]' width={31} height={31} />
                             <p className='text-lg font-semibold'>
                               <span className='text-[#7d8395]'>Lv.</span>
