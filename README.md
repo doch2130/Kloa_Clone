@@ -294,6 +294,12 @@ Character Name 페이지 API 테스트 작업 완료
 => Hover 작업 필요, HeadlessUI에서는 버튼 방식으로 구현되어 있으므로 button 대신에 mouse 이벤트를 이용해서 실행하는 방법으로 진행하면 될 것 같음
 => 참고 사이트 https://github.com/tailwindlabs/headlessui/discussions/425
 
+43일차:
+캐릭터 상세정보 UI 4차 작업 (오른쪽)
+=> 능력치 탭 추가 작업
+=> 보석 Hover 시 설명 추가 완료 (tailwind Hover CSS 방식)
+=> 각인 탭 Hover 시 설명 추가 완료 (장비 각인이랑은 다름) (tailwind Hover CSS 방식)
+
 *CSS 참고용*
 placeholder
 #7d8395
