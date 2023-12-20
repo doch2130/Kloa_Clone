@@ -552,10 +552,14 @@ export default function CharacterDetail() {
                   <div className='px-[17px] pt-4 pb-2 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
                     <div className='grid grid-cols-11 gap-x-4 place-items-center'>
                       {jewelCount.map((jewel:number) => (
-                        <div key={jewel} className='relative w-full max-w-[44px] h-full rounded-md' style={{background: `linear-gradient(135deg, #3b1303, #a23405)`}}>
+                        <div key={jewel} className='relative w-[44px] h-[44px] rounded-md group/item' style={{background: `linear-gradient(135deg, #3b1303, #a23405)`}}>
                           <Image src={'https://pica.korlark.com/efui_iconatlas/use/use_9_55.png'} alt='jewel' width={44} height={44} decoding='async' />
                           <div className='absolute bottom-0 right-0 w-4 h-4 rounded-[4px] rounded-tr-md bg-white dark:bg-[#33353a] opacity-90 flex justify-center items-center'>
                             <p className='text-[11px] text-[#FF6000] dark:text-[#ff9e63] font-medium'>10</p>
+                          </div>
+                          <div className='absolute mt-1 w-max flex flex-col justify-center items-center p-2 rounded-[8px] bg-white dark:bg-[#33353a] left-1/2 translate-x-[-50%] invisible group-hover/item:visible shadow-[1px_2px_4px_0px_rgba(0,0,0,0.25)]' >
+                            <p className='font-bold text-[0.8rem]'>싱크 스킬</p>
+                            <p className='font-semibold text-[0.7rem] mt-1'>피해 40% 증가</p>
                           </div>
                         </div>
                       )
@@ -564,12 +568,12 @@ export default function CharacterDetail() {
                     <div className='grid grid-cols-11 mt-2 gap-x-4'>
                       <div className='flex items-center px-2 gap-x-2 col-span-6'>
                         <div className='grow h-2 mb-[6px] border-l-2 border-b-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
-                        <p className='text-sm font-medium text-black shrink-0 dark:text-inherit'>멸화 6</p>
+                        <p className='text-sm font-semibold text-black shrink-0 dark:text-inherit'>멸화 6</p>
                         <div className='grow h-2 mb-[6px] border-b-2 border-r-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
                       </div>
                       <div className='flex items-center px-2 gap-x-2 col-span-5'>
                         <div className='grow h-2 mb-[6px] border-l-2 border-b-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
-                        <p className='text-sm font-medium text-black shrink-0 dark:text-inherit'>홍염 5</p>
+                        <p className='text-sm font-semibold text-black shrink-0 dark:text-inherit'>홍염 5</p>
                         <div className='grow h-2 mb-[6px] border-b-2 border-r-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
                       </div>
                     </div>
@@ -674,12 +678,17 @@ export default function CharacterDetail() {
                       <div className='mt-4 pl-1 grow flex flex-col justify-between gap-y-2 overflow-y-auto'>
                         {/* 각인 사진 */}
                         {gagInCount.map((gagIn:number) => (
-                          <div key={gagIn} className='flex items-center gap-x-3'>
+                          <div key={gagIn} className='flex items-center gap-x-3  group/item'>
                             <Image src={'https://pica.korlark.com/EFUI_IconAtlas/buff/buff_71.png'} alt='gagIn' decoding="async" className='rounded-full bg-[#e6e8ec]' width={31} height={31} />
                             <p className='text-lg font-semibold'>
                               <span className='text-[#7d8395]'>Lv.</span>
                               <span>3 원한</span>
                             </p>
+                            <div className='absolute z-1 opacity-95 w-max max-w-[260px] flex flex-col justify-center items-baseline p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[18%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                              <p className='font-bold text-[0.9rem]'>원한 Lv.3</p>
+                              <p className='font-semibold text-[0.8rem] mt-[12px]'>보스 등급 이상 몬스터에게 주는 피해가 20% 증가하지만, 받는 피해가 20% 증가한다.</p>
+                              {/* <p className='font-semibold text-[0.8rem] mt-[12px]'>하이퍼 싱크 모드 중 싱크 스킬이 적중했을 시 피해량이 2% 증가하는 효과를 획득하며 (최대 3중첩) 이동기 및 기상기를 제외한 다른 싱크 스킬들의 재사용 대기시간이 0.5초씩 감소한다.<br />또한 하이퍼 싱크 모드에 진입 시 싱크 스킬들의 재사용 대기시간이 초기화되며 하이퍼 싱크 모드가 해제될 시 소모한 코어 에너지의 40%를 돌려받는다.</p> */}
+                            </div>
                           </div>
                         ))}
                       </div>
