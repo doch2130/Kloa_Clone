@@ -299,6 +299,7 @@ Character Name 페이지 API 테스트 작업 완료
 => 능력치 탭 추가 작업
 => 보석 Hover 시 설명 추가 완료 (tailwind Hover CSS 방식)
 => 각인 탭 Hover 시 설명 추가 완료 (장비 각인이랑은 다름) (tailwind Hover CSS 방식)
+=> 장비 Hover 설명 추가 완료 (엘릭서, 달인 미완료)
 
 *CSS 참고용*
 placeholder
