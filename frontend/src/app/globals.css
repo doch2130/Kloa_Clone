@@ -9,7 +9,7 @@ html {
 body {
   height: 100%;
   margin: 0px;
-  background-color: rgb(245 246 247);
+  /* background-color: rgb(245 246 247); */
   cursor: default;
 }
 
@@ -70,7 +70,7 @@ body {
 }
 
 .nav-right button {
-  background-color: white;
+  /* background-color: white; */
   border: none;
 }
 
@@ -164,8 +164,8 @@ body {
 }
 
 .nav-right button:hover {
-  background-color: rgb(230 232 236);
-  color: rgb(128 69 221);
+  /* background-color: rgb(230 232 236); */
+  /* color: rgb(128 69 221); */
 }
 
 .nav-right a {
@@ -178,7 +178,7 @@ body {
 }
 
 .nav-right a:hover {
-  background-color: rgb(230 232 236);
+  /* background-color: rgb(230 232 236); */
   border-radius: 3px;
   height: 10%;  
 }

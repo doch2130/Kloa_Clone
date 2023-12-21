@@ -127,7 +127,7 @@ export default function Update() {
   }, []);
 
   return (
-    <div className={`${styled.body} dark:bg-[#2b2d31]`}>
+    <div className={`${styled.body} bg-[#fff] dark:bg-[#2b2d31]`}>
       <div className={styled.wrap}>
         <form className={styled.form} onSubmit={onSubmit}>
           <div className={styled.category}>
@@ -148,8 +148,8 @@ export default function Update() {
             setValueHandler={setContent} initialValue={content || ''} height={300} />
           </div>
           <div className={styled.buttonGroup}>
-            <button type='button' className='dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={cancel}>취소</button>
-            <button type='button' className='dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={onSubmit}>수정</button>
+            <button type='button' className='bg-[#fff] border-2 border-[#5865f2] text-[#5865f2] dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={cancel}>취소</button>
+            <button type='button' className='bg-[#fff] border-2 border-[#5865f2] text-[#5865f2] dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={onSubmit}>수정</button>
           </div>
         </form>
       </div>

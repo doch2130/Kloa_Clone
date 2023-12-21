@@ -108,22 +108,22 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
       // console.log('writeTimeFormat ', writeTimeFormat);
 
       posts.push(
-        <div className={`${styled.noticeTableRow} dark:border-[#646870] dark:hover:bg-[#38393e]`} key={postList[i].id}>
+        <div className={`${styled.noticeTableRow} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`} key={postList[i].id}>
           <div className={
             postList[i].category === '점검' ? `${styled.noticeCategory} ${styled.noticeCategoryCheck} dark:border-[#646870]` :
             postList[i].category === '이벤트' ? `${styled.noticeCategory} ${styled.noticeCategoryEvent} dark:border-[#646870]`
-            : `${styled.noticeCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
+            : `${styled.noticeCategory} text-[#353945] dark:text-[#eaf0ec] dark:border-[#646870]`}>
               {postList[i].category}
           </div>
-          <div className={styled.noticeTitle}>
-            <Link href={`/notices/detail/${postList[i].id}`} className='dark:text-[#eaf0ec]'>{postList[i].title}</Link>
+          <div className={`${styled.noticeTitle} text-[#353945]`}>
+            <Link href={`/notices/detail/${postList[i].id}`} className='text-[#353945] dark:text-[#eaf0ec]'>{postList[i].title}</Link>
           </div>
-          <div className={`${styled.noticeDate} dark:text-[#eaf0ec]`}>{writeTimeFormat}</div>
-          <div className={styled.noticeViewCount}>
+          <div className={`${styled.noticeDate} text-[#353945] dark:text-[#eaf0ec]`}>{writeTimeFormat}</div>
+          <div className={`${styled.noticeViewCount} text-[#353945]`}>
             <Image src={EyeIcon} alt='eye icon' />
             <span className='dark:text-[#eaf0eca2]'>{postList[i].viewCount}</span>
           </div>
-          <div className={`${styled.notieRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent(postList[i].id)}>
+          <div className={`${styled.notieRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent(postList[i].id)}>
             <Image src={MococoIcon} alt='mococo icon' />
             <span>{postList[i].recomendCount}</span>
           </div>
@@ -166,7 +166,7 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
             <Image src={RightArrow} alt='right arrow icon' />
           </span>
         </div>
-        {session?.user?.role === true && <Link href='/notices/write' className={`${styled.noticeManager} dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]`}>글쓰기</Link>}
+        {session?.user?.role === true && <Link href='/notices/write' className={`${styled.noticeManager} text-[#5865f2] bg-[#fff] dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]`}>글쓰기</Link>}
       </div>
     </>
   )

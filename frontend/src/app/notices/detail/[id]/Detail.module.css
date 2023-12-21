@@ -1,5 +1,5 @@
 .postBody {
-  background-color: white;
+  /* background-color: white; */
   display: flex;
   justify-content: center;
   min-height: 600px;
@@ -39,10 +39,10 @@
 }
 
 .postCategory {
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   font-weight: 600;
   font-size: 14px;
-  border: 1px solid #e5e7eb;
+  /* border: 1px solid #e5e7eb; */
   border-radius: 14px;
   width: 60px;
   height: 28px;
@@ -52,16 +52,16 @@
 }
 
 .postCategoryCheck {
-  color: rgb(88 101 242) !important;
+  color: rgb(88 101 242);
 }
 
 .postCategoryEvent {
-  color: rgb(221 69 191) !important;
+  color: rgb(221 69 191);
 }
 
 .postTitle {
   margin-left: 10px;
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   font-size: 20px;
   font-weight: 700;
   white-space: nowrap;
@@ -75,7 +75,7 @@
 }
 
 .postDate {
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   font-size: 13px;
   width: 80px;
   height: 22px;
@@ -84,7 +84,7 @@
 .postViewCount {
  display: flex;
  align-items: center;
- color: rgb(53 57 69);
+ /* color: rgb(53 57 69); */
  font-size: 13px;
 }
 
@@ -112,8 +112,8 @@
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  color: rgb(125 131 149);
-  border: 1px solid rgb(230 232 236);
+  /* color: rgb(125 131 149); */
+  /* border: 1px solid rgb(230 232 236); */
   border-radius: 6px;
   width: 80px;
   height: 46px;
@@ -126,7 +126,7 @@
 }
 
 .postRecomendCount:hover {
-  background-color: rgb(250 251 251);
+  /* background-color: rgb(250 251 251); */
 }
 
 .postBodyButtonGroup {
@@ -142,7 +142,7 @@
 }
 
 .postBodyButtonGroup a {
-  border: 1px solid rgb(230 232 236);
+  /* border: 1px solid rgb(230 232 236); */
   border-radius: .375rem;
   width: 46px;
   height: 46px;
@@ -176,7 +176,7 @@
 
 .postFooterTitle {
   margin-left: 10px;
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   font-size: 15px;
   white-space: nowrap;
   overflow: hidden;
@@ -191,15 +191,15 @@
 
 .postFooterTitle a {
   text-decoration: none;
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
 }
 
 .postTableCurrentActive .postFooterTitle a {
-  color: rgb(128 69 221);
+  /* color: rgb(128 69 221); */
 }
 
 .postFooterDate {
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   font-size: 13px;
   width: 80px;
   height: 22px;
@@ -208,7 +208,7 @@
 .postFooterViewCount {
  display: flex;
  align-items: center;
- color: rgb(53 57 69);
+ /* color: rgb(53 57 69); */
  font-size: 13px;
 }
 
@@ -221,8 +221,8 @@
   align-items: center;
   justify-content: center;
   font-size: 13px;
-  color: rgb(125 131 149);
-  border: 1px solid rgb(230 232 236);
+  /* color: rgb(125 131 149); */
+  /* border: 1px solid rgb(230 232 236); */
   border-radius: 6px;
   width: 80px;
   height: 22px;
@@ -244,7 +244,7 @@
 
 .postManager a,
 .postManager span {
-  border: 1px solid rgb(230 232 236);
+  /* border: 1px solid rgb(230 232 236); */
   border-radius: .375rem;
   width: 46px;
   height: 46px;

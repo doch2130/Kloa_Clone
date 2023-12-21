@@ -172,7 +172,7 @@ export default function Detail() {
   }, []);
 
   return (
-    <div className={`${styled.postBody} dark:bg-[#2b2d31]`}>
+    <div className={`${styled.postBody} bg-[#fff] dark:bg-[#2b2d31]`}>
       <div className={styled.postBodyWrap}>
         <div className={styled.postBodyRow}>
           <hr />
@@ -180,14 +180,14 @@ export default function Detail() {
         <div className={styled.postBodyRow}>
           <div className={styled.postTableRow}>
             <div className={
-              postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} dark:border-[#646870]` :
-              postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} dark:border-[#646870]`
-              : `${styled.postCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
+              postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} border-[1px] border-[#e5e7eb] dark:border-[#646870]` :
+              postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} border-[1px] border-[#e5e7eb] dark:border-[#646870]`
+              : `${styled.postCategory} text-[#353945] border-[1px] border-[#e5e7eb] dark:text-[#eaf0ec] dark:border-[#646870]`}>
                 {postData.category}
             </div>
-            <div className={`${styled.postTitle} dark:text-[#eaf0ec]`}>{postData.title}</div>
-            <div className={`${styled.postDate} dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
-            <div className={`${styled.postViewCount} dark:text-[#eaf0eca2]`}>
+            <div className={`${styled.postTitle} text-[#353945] dark:text-[#eaf0ec]`}>{postData.title}</div>
+            <div className={`${styled.postDate} text-[#353945] dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
+            <div className={`${styled.postViewCount} text-[#353945] dark:text-[#eaf0eca2]`}>
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
             </div>
@@ -198,13 +198,13 @@ export default function Detail() {
           </pre>
         </div>
         <div className={styled.postBodyRow}>
-          <div className={`${styled.postRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
+          <div className={`${styled.postRecomendCount} text-[#7d8395] border-1 border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a] hover:bg-[#fafbfb]`} onClick={() => recomendEvent()}>
             <Image src={MococoIcon} alt='mococo icon' />
             <span>{postData.recomendCount}</span>
           </div>
         </div>
         <div className={styled.postBodyRow + ' ' + styled.postBodyButtonGroup}>
-          <Link className='dark:border-[#646870]' href='/notices?page=1'>
+          <Link className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' href='/notices?page=1'>
             <Image src={ListIcon} alt='list icon' width={23} height={23} className='dark:text-[#eaf0ec]' />
           </Link>
           <div className={styled.arrowButtonGroup}>
@@ -220,8 +220,8 @@ export default function Detail() {
         {/* 관리자 버튼 */}
         {session?.user?.role === true && 
         <div className={styled.postBodyRow + ' ' + styled.postManager}>
-          <Link className='dark:border-[#646870] dark:text-[#eaf0ec]' href={`/notices/update/${id}`}>수정</Link>
-          <span className='dark:border-[#646870] dark:text-[#eaf0ec]' onClick={() => postDelete(Number(id))}>삭제</span>
+          <Link className='border-[1px] border-[#e6e8ec] dark:border-[#646870] dark:text-[#eaf0ec]' href={`/notices/update/${id}`}>수정</Link>
+          <span className='border-[1px] border-[#e6e8ec] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={() => postDelete(Number(id))}>삭제</span>
         </div>
         }
         
@@ -231,20 +231,20 @@ export default function Detail() {
           {nextPostData.id !== 0 && 
           <div className={`${styled.postTableRow} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
             <div className={
-              nextPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} dark:border-[#646870]` :
-              nextPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} dark:border-[#646870]`
-              : `${styled.postCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
+              nextPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} border-[1px] border-[#e5e7eb] dark:border-[#646870]` :
+              nextPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} border-[1px] border-[#e5e7eb] dark:border-[#646870]`
+              : `${styled.postCategory} text-[#353945] border-[1px] border-[#e5e7eb] dark:text-[#eaf0ec] dark:border-[#646870]`}>
                 {nextPostData.category}
             </div>
-            <div className={styled.postFooterTitle}>
-              <Link href={`/notices/detail/${nextPostData.id}`} className='dark:text-[#eaf0ec]'>{nextPostData.title}</Link>
+            <div className={`${styled.postFooterTitle} text-[#353945]`}>
+              <Link href={`/notices/detail/${nextPostData.id}`} className='text-[#353945] dark:text-[#eaf0ec]'>{nextPostData.title}</Link>
             </div>
-            <div className={`${styled.postFooterDate} dark:text-[#eaf0ec]`}>{nextPostData.createdAt}</div>
-            <div className={styled.postFooterViewCount}>
+            <div className={`${styled.postFooterDate} text-[#353945] dark:text-[#eaf0ec]`}>{nextPostData.createdAt}</div>
+            <div className={`${styled.postFooterViewCount} text-[#353945]`}>
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{nextPostData.viewCount}</span>
             </div>
-            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
+            <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-1 border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{nextPostData.recomendCount}</span>
             </div>
@@ -254,20 +254,20 @@ export default function Detail() {
           {/* 현재 페이지 */}
           <div className={`${styled.postTableRow} ${styled.postTableCurrentActive} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
             <div className={
-              postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} dark:border-[#646870]` :
-              postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} dark:border-[#646870]`
-              : `${styled.postCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
+              postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} border-[1px] border-[#e5e7eb] dark:border-[#646870]` :
+              postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} border-[1px] border-[#e5e7eb] dark:border-[#646870]`
+              : `${styled.postCategory} text-[#353945] border-[1px] border-[#e5e7eb] dark:text-[#eaf0ec] dark:border-[#646870]`}>
                 {postData.category}
             </div>
-            <div className={styled.postFooterTitle}>
-              <Link href={`/notices/detail/${postData.id}`} className='dark:text-[#eaf0ec]'>{postData.title}</Link>
+            <div className={`${styled.postFooterTitle} text-[#353945]`}>
+              <Link href={`/notices/detail/${postData.id}`} className='text-[#8045dd] dark:text-[#a36bfc]'>{postData.title}</Link>
             </div>
-            <div className={`${styled.postFooterDate} dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
-            <div className={styled.postFooterViewCount}>
+            <div className={`${styled.postFooterDate} text-[#353945] dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
+            <div className={`${styled.postFooterViewCount} text-[#353945]`}>
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
             </div>
-            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
+            <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-1 border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{postData.recomendCount}</span>
             </div>
@@ -277,20 +277,20 @@ export default function Detail() {
           {prevPostData.id !== 0 && 
           <div className={`${styled.postTableRow} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
             <div className={
-              prevPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} dark:border-[#646870]` :
-              prevPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} dark:border-[#646870]`
-              : `${styled.postCategory} dark:text-[#eaf0ec] dark:border-[#646870]`}>
+              prevPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} border-[1px] border-[#e5e7eb] dark:border-[#646870]` :
+              prevPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} border-[1px] border-[#e5e7eb] dark:border-[#646870]`
+              : `${styled.postCategory} text-[#353945] border-[1px] border-[#e5e7eb] dark:text-[#eaf0ec] dark:border-[#646870]`}>
                 {prevPostData.category}
             </div>
-            <div className={styled.postFooterTitle}>
-              <Link href={`/notices/detail/${prevPostData.id}`} className='dark:text-[#eaf0ec]'>{prevPostData.title}</Link>
+            <div className={`${styled.postFooterTitle} text-[#353945]`}>
+              <Link href={`/notices/detail/${prevPostData.id}`} className='text-[#353945] dark:text-[#eaf0ec]'>{prevPostData.title}</Link>
             </div>
-            <div className={`${styled.postFooterDate} dark:text-[#eaf0ec]`}>{prevPostData.createdAt}</div>
-            <div className={styled.postFooterViewCount}>
+            <div className={`${styled.postFooterDate} text-[#353945] dark:text-[#eaf0ec]`}>{prevPostData.createdAt}</div>
+            <div className={`${styled.postFooterViewCount} text-[#353945]`}>
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{prevPostData.viewCount}</span>
             </div>
-            <div className={`${styled.postFooterRecomendCount} dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
+            <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-1 border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{prevPostData.recomendCount}</span>
             </div>

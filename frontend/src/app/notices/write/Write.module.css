@@ -54,10 +54,10 @@
 }
 
 .buttonGroup button {
-  color: rgb(88 101 242);
+  /* color: rgb(88 101 242); */
   font-weight: 600;
   font-size: 1rem;
-  background-color: white;
+  /* background-color: white; */
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -65,7 +65,7 @@
   cursor: pointer;
   height: 36px;
   width: 70px;
-  border: 2px solid rgb(88 101 242);
+  /* border: 2px solid rgb(88 101 242); */
 }
 
 .buttonGroup button:nth-child(1) {

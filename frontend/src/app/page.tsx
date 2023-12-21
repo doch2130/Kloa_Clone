@@ -88,7 +88,7 @@ export default async function Home() {
   
   return (
     <>
-    <div className={styled.bodySection}>
+    <div className={`${styled.bodySection}`}>
       <section className={styled.slideImage}>
         <SlideImage />
       </section>
@@ -100,12 +100,12 @@ export default async function Home() {
           <div className={`${styled.subTitle} dark:text-[#eaf0ec]`}>
             <Link href='https://lostark.game.onstove.com/News/Notice/List'>로스트아크 공지사항</Link>
           </div>
-          <div className={`${styled.noticeTable} dark:bg-[#33353a] dark:border-[#42464D]`}>
+          <div className={`${styled.noticeTable} bg-[#fff] border-2 border-[#e6e8ec] dark:bg-[#33353a] dark:border-[#42464D]`}>
             {
               noticesList.result.map((el:NoticesTopFive, index:number) => 
               (
                 <div className={styled.noticeTableRow} key={index}>
-                  <div className={`${styled.noticeTableCategory} dark:border-[#42464D] ${categoryClassMap[el.category]}`}>{el.category}</div>
+                  <div className={`${styled.noticeTableCategory} border-[1px] border-[#e6e8ec] dark:border-[#42464D] ${categoryClassMap[el.category]}`}>{el.category}</div>
                   <Link href={el.link} target="_blank" className='dark:text-[#eaf0ec]'>{el.title}</Link>
                 </div>
               ))
@@ -116,12 +116,12 @@ export default async function Home() {
           <div className={`${styled.subTitle} dark:text-[#eaf0ec]`}>
             <Link href='/notices?page=1'>클로아 공지사항</Link>
           </div>
-          <div className={`${styled.noticeTable} dark:bg-[#33353a] dark:border-[#42464D]`}>
+          <div className={`${styled.noticeTable} bg-[#fff] border-2 border-[#e6e8ec] dark:bg-[#33353a] dark:border-[#42464D]`}>
             {
               mainNoticesTopList.result.map((el:NoticePost, index:number) => 
               (
                 <div className={styled.noticeTableRow} key={index}>
-                  <div className={`${styled.noticeTableCategory} dark:border-[#42464D] ${categoryClassMap[el.category]}`}>{el.category}</div>
+                  <div className={`${styled.noticeTableCategory} border-[1px] border-[#e6e8ec] dark:border-[#42464D] ${categoryClassMap[el.category]}`}>{el.category}</div>
                   <Link href={`/notices/detail/${el.id}`} target="_blank" className='dark:text-[#eaf0ec]'>{el.title}</Link>
                 </div>
               ))

@@ -30,7 +30,7 @@ export default function HeaderDarkMode() {
   }, []);
   return (
     <>
-    <button type='button' className='duration-300 bg-white dark:bg-[#33353a] dark:hover:bg-[#40434a]' onClick={() => toggleDarkMode()}>
+    <button type='button' className='duration-300 bg-white hover:bg-[#e6e8ec] hover:text-[#8045dd] dark:bg-[#33353a] dark:hover:bg-[#40434a]' onClick={() => toggleDarkMode()}>
       {dark === 'defaultMode' ? 
       <Image src={MoonModeIcon} alt='MoonMode Icon' width={20} />
       : <Image src={SunModeIcon} alt='SunMode Icon' width={20} />

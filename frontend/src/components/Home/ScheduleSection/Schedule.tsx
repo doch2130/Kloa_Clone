@@ -38,7 +38,7 @@ export default function Schedule({ adventureIslandData }:ScheduleProps) {
         <Image src={RightArrow} alt='right arrow' onClick={() => changeMonth(currentDate, 1, setCurrentDate)} />
       </div>
     </div>
-    <div className={`${styled.scheduleTable} dark:bg-[#33353a] dark:border-[#42464D]`}>
+    <div className={`${styled.scheduleTable} border-2 border-[#e6e8ec] bg-[#fff] dark:bg-[#33353a] dark:border-[#42464D]`}>
       <div>
         <ScheduleCalendar today={today} currentDate={currentDate} setCurrentDate={setCurrentDate} />
       </div>
