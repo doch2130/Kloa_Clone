@@ -41,6 +41,8 @@ export default function CharacterDetail() {
   const gagInCount = [1,2,3,4,5,6];
   const equipCount = [1,2,3,4,5,6];
   const accessoriesCount = [1,2,3,4,5,6];
+  const equipGagInArrayCount = [1,2];
+  const equipGagInCount = [1,2,3];
 
   const equipArray:equipArrayType[] = [
     {
@@ -614,21 +616,66 @@ export default function CharacterDetail() {
                             </div>
                           </div>
                         )})}
-                        {/* <PopOverEquip /> */}
-                        {/* 각인 */}
+                        {/* 각인 1 */}
                         <div className='h-[50px] px-0.5 grid grid-cols-2 items-center mt-3'>
-                          <div className='flex items-center text-left h-11 gap-x-3'>
-                            <Image src={'https://pica.korlark.com/efui_iconatlas/buff/buff_71.png'} alt='원한' width={44} height={44} decoding="async" className='rounded-full drop-shadow' />
-                            <div>
-                              <p className='text-[0.8rem] font-semibold'>원한</p>
-                              <p className='text-[0.7rem]'>활성 포인트 +12</p>
+                          <div className='relative group/item'>
+                            <div className='flex items-center text-left h-11 gap-x-3'>
+                              <Image src={'https://pica.korlark.com/efui_iconatlas/buff/buff_71.png'} alt='원한' width={44} height={44} decoding="async" className='rounded-full drop-shadow' />
+                              <div>
+                                <p className='text-sm font-semibold'>원한</p>
+                                <p className='text-[0.7rem] font-semibold mt-0.5'>활성 포인트 +12</p>
+                              </div>
+                            </div>
+                            {/* 각인 1 Hover */}
+                            <div className='absolute z-10 opacity-98 w-[260px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                              <div className='flex w-full'>
+                                <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' >
+                                  <Image src={'https://pica.korlark.com/efui_iconatlas/buff/buff_71.png'} alt={'원한'} loading="lazy" width={44} height={44} decoding="async" />
+                                </div>
+                                <div className='w-full ml-3'>
+                                  <p className='text-base font-bold'>원한</p>
+                                  <p className='text-[0.7rem] font-semibold text-[#7d8395] mt-0.5 pl-0.5'>활성 포인트 +12</p>
+                                </div>
+                              </div>
+                              <div className='flex flex-col w-full'>
+                              {equipGagInCount.map((el:number) => (
+                                <div key={el} className='w-full mt-3'>
+                                  <p className='text-[0.9rem] font-bold leading-6'>레벨 {el} (활설도 {el*5})</p>
+                                  <p className='text-[0.85rem] font-semibold leading-5'>보스 등급 이상 몬스터에게 주는 피해가 {el === 1 ? 4 : el === 2 ? 10 : 20}% 증가하지만, 받는 피해가 20% 증가한다.</p>
+                                </div>
+                              ))}
+                              </div>
                             </div>
                           </div>
-                          <div className='flex items-center text-left h-11 gap-x-3'>
-                            <Image src={'https://pica.korlark.com/efui_iconatlas/achieve/achieve_03_40.png'} alt='예리한 둔기' width={44} height={44} decoding="async" className='rounded-full drop-shadow' />
-                            <div>
-                              <p className='text-[0.8rem] font-semibold'>예리한 둔기</p>
-                              <p className='text-[0.7rem]'>활성 포인트 +12</p>
+
+                          {/* 각인 2 */}
+                          <div className='relative group/item'>
+                            <div className='flex items-center text-left h-11 gap-x-3'>
+                              <Image src={'https://pica.korlark.com/efui_iconatlas/achieve/achieve_03_40.png'} alt='예리한 둔기' width={44} height={44} decoding="async" className='rounded-full drop-shadow' />
+                              <div>
+                                <p className='text-sm font-semibold'>예리한 둔기</p>
+                                <p className='text-[0.7rem] font-semibold mt-0.5'>활성 포인트 +12</p>
+                              </div>
+                            </div>
+                            {/* 각인 2 Hover */}
+                            <div className='absolute z-10 opacity-98 w-[260px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                              <div className='flex w-full'>
+                                <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' >
+                                  <Image src={'https://pica.korlark.com/efui_iconatlas/achieve/achieve_03_40.png'} alt='예리한 둔기' loading="lazy" width={44} height={44} decoding="async" />
+                                </div>
+                                <div className='w-full ml-3'>
+                                  <p className='text-base font-bold'>예리한 둔기</p>
+                                  <p className='text-[0.7rem] font-semibold text-[#7d8395] mt-0.5 pl-0.5'>활성 포인트 +12</p>
+                                </div>
+                              </div>
+                              <div className='flex flex-col w-full'>
+                              {equipGagInCount.map((el:number) => (
+                                <div key={el} className='w-full mt-3'>
+                                  <p className='text-[0.9rem] font-bold leading-6'>레벨 {el} (활설도 {el*5})</p>
+                                  <p className='text-[0.85rem] font-semibold leading-5'>치명타 피해량이 {el === 1 ? 10 : el === 2 ? 25 : 50}% 증가하지만, 공격시 일정 확률로 20% 감소된 피해를 준다.</p>
+                                </div>
+                              ))}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -667,17 +714,55 @@ export default function CharacterDetail() {
                         )
                         })}
                         {/* 어빌리티 스톤 (돌) */}
-                        <div className='flex items-center text-left gap-x-2 mt-3'>
-                          <div className='w-[50px] h-[50px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-                            <Image src={'https://pica.korlark.com/efui_iconatlas/ability/ability_257.png'} alt='준엄한 비상의 돌 IV' width={50} height={50} decoding="async" />
-                          </div>
-                          <div>
-                            <p className='text-[0.9rem] font-semibold leading-4 text-[#D9AB48]'>준엄한 비상의 돌 IV</p>
-                            <p className='mt-1'>
-                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>바리케이드 4</span>
-                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>아드레날린 9</span>
-                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>공격속도 감소 3</span>
-                            </p>
+                        <div className='flex'>
+                          <div className='flex items-center text-left gap-x-2 mt-3 relative group/item '>
+                            <div className='w-[50px] h-[50px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                              <Image src={'https://pica.korlark.com/efui_iconatlas/ability/ability_257.png'} alt='준엄한 비상의 돌 IV' width={50} height={50} decoding="async" />
+                            </div>
+                            <div>
+                              <p className='text-[0.9rem] font-semibold leading-4 text-[#D9AB48]'>준엄한 비상의 돌 IV</p>
+                              <p className='mt-1'>
+                                <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>바리케이드 4</span>
+                                <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>아드레날린 9</span>
+                                <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>공격속도 감소 3</span>
+                              </p>
+                            </div>
+                            {/* 어빌리티 스톤 (돌) Hover */}
+                            <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                              <p className='truncate text-[0.95rem] font-semibold text-[#D9AB48] mb-2'>준엄한 비상의 돌 IV</p>
+                              <div className='flex w-full'>
+                                <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                                  <Image src={'https://pica.korlark.com/efui_iconatlas/ability/ability_257.png'} alt={'준엄한 비상의 돌 IV'} loading="lazy" width={44} height={44} decoding="async" />
+                                </div>
+                                <div className='ml-1 w-full h-auto flex flex-col justify-evenly'>
+                                  <div className='text-xs font-semibold flex items-center'>
+                                    <span className='text-[#D9AB48]'>고대 어빌리티 스톤</span>
+                                    <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
+                                    <span className=''>티어 3</span>
+                                  </div>
+                                  <div className='flex items-center ml-[2px]'>
+                                    <div className="w-full flex items-center">
+                                      <span className='text-[0.85rem] font-semibold'>4</span>
+                                      <div className='w-[3px] h-[3px] rounded-full bg-[#7d8395] mt-[3px] mx-[6px]'></div>
+                                      <span className='text-[0.85rem] font-semibold'>9</span>
+                                      <div className='w-[3px] h-[3px] rounded-full bg-[#7d8395] mt-[3px] mx-[6px]'></div>
+                                      <span className='text-[0.85rem] font-semibold text-[#f95126]'>3</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              {/* 돌 체력 */}
+                              <div className='w-full mt-4'>
+                                <p className='text-sm font-bold'>체력 +21326</p>
+                              </div>
+                              <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
+                              {/* 돌 옵션 */}
+                              <div className='w-full'>
+                                <p className='text-[0.8rem] leading-5 font-bold'>바리케이드 +4</p>
+                                <p className='text-[0.8rem] leading-5 font-bold my-[2px]'>아드레날린 +9</p>
+                                <p className='text-[0.8rem] leading-5 font-bold text-[#f95126]'>공격속도 감소 +3</p>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
