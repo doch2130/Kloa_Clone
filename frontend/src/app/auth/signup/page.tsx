@@ -246,7 +246,7 @@ export default function Signup() {
   
   return (
     <form className={styled.signForm} onSubmit={handleSubmit(onSubmit)}>
-      <h1 className='dark:text-[#eaf0ec]'>모코코만큼 환영합니다.<br />회원가입을 진행해 볼까요?</h1>
+      <h1 className='text-[#353945] dark:text-[#eaf0ec]'>모코코만큼 환영합니다.<br />회원가입을 진행해 볼까요?</h1>
       <div className={styled.signFormInputWrap}>
         <div className={styled.idGroup}>
           <input
@@ -265,7 +265,7 @@ export default function Signup() {
             type="text" id="email"
             placeholder="이메일 입력해주세요"
             disabled={authMailStatus}
-            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            className='border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           />
           <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
         </div>
@@ -278,7 +278,7 @@ export default function Signup() {
             name='authNumber'
             placeholder="인증번호 입력"
             disabled={!authNumberBtnStatus ? true : false}
-            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            className='border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           />
           <button type='button' 
           disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? `${styled.authNumberButton} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.authNumberButtonActive} dark:bg-[#33353a] dark:border-[#42464D]`}
@@ -305,7 +305,7 @@ export default function Signup() {
                 },
               }
             )}
-            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            className='border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
             type="password"
             name='password'
             placeholder='영어, 숫자, 특수문자를 포함한 8자리 이상 비밀번호 입력'
@@ -332,7 +332,7 @@ export default function Signup() {
                 },
               }
             )}
-            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            className='border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
             type="password"
             name='passwordCheck'
             placeholder='비밀번호 확인'
@@ -342,14 +342,14 @@ export default function Signup() {
 
         <div className={styled.privacyGroup}>
           <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />
-          <span className='dark:text-[#eaf0ec]' onClick={isCheckhandler}>
-            <Link href='https://kloa.gg/terms' className='dark:text-[#8991ee]' target='_blank'>이용 약관</Link>과 <Link href='https://kloa.gg/privacy' className='dark:text-[#8991ee]' target='_blank'>개인정보 수집 및 이용</Link>에 동의합니다.
+          <span className='text-[#353945] dark:text-[#eaf0ec]' onClick={isCheckhandler}>
+            <Link href='https://kloa.gg/terms' className='text-[#5865f2] dark:text-[#8991ee]' target='_blank'>이용 약관</Link>과 <Link href='https://kloa.gg/privacy' className='dark:text-[#8991ee]' target='_blank'>개인정보 수집 및 이용</Link>에 동의합니다.
           </span>
         </div>
       </div>
       <button type='button' className={styled.signButton} onClick={handleSubmit(onSubmit)}>회원가입</button>
       <div className={styled.lastGroup}>
-        <Link href='/auth/login' as='/auth/login' className='dark:text-[#8991ee]'>로그인하기</Link>
+        <Link href='/auth/login' as='/auth/login' className='text-[#5865f2] dark:text-[#8991ee]'>로그인하기</Link>
       </div>
     </form>
   )

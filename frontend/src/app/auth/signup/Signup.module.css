@@ -7,7 +7,7 @@
 }
 
 .signForm h1 {
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   line-height: 36px;
   font-weight: 700;
   font-size: 32px;
@@ -26,8 +26,8 @@
   padding-right: 1rem;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  color: rgb(53 57 69);
-  border: 2px solid rgb(230 232 236);
+  /* color: rgb(53 57 69); */
+  /* border: 2px solid rgb(230 232 236); */
   min-height: 46px;
 }
 
@@ -106,7 +106,7 @@
 }
 
 .privacyGroup a {
-  color: rgb(88 101 242);
+  /* color: rgb(88 101 242); */
 }
 
 .privacyGroup svg {
@@ -119,7 +119,7 @@
 .privacyGroup span {
   font-weight: 600;
   font-size: .875rem;
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   margin-left: 0.5rem;
   margin-bottom: auto;
   margin-top: auto;
@@ -152,7 +152,7 @@
 }
 
 .lastGroup a {
-  color: rgb(88 101 242);
+  /* color: rgb(88 101 242); */
   font-size: .75rem;
   font-weight: 600;
   text-decoration: none;

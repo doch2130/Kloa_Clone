@@ -178,7 +178,7 @@ export default function Detail() {
           <hr />
         </div>
         <div className={styled.postBodyRow}>
-          <div className={styled.postTableRow}>
+          <div className={`${styled.postTableRow} border-b-[1px] border-[#e6e8ec]`}>
             <div className={
               postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} border-[1px] border-[#e5e7eb] dark:border-[#646870]` :
               postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} border-[1px] border-[#e5e7eb] dark:border-[#646870]`
@@ -229,7 +229,7 @@ export default function Detail() {
         <div className={styled.postBodyRow + ' ' + styled.postBodyFooter}>
           {/* 다음 페이지 */}
           {nextPostData.id !== 0 && 
-          <div className={`${styled.postTableRow} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
+          <div className={`${styled.postTableRow} border-b-[1px] border-[#e6e8ec] hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
             <div className={
               nextPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} border-[1px] border-[#e5e7eb] dark:border-[#646870]` :
               nextPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} border-[1px] border-[#e5e7eb] dark:border-[#646870]`
@@ -252,7 +252,7 @@ export default function Detail() {
           }
           
           {/* 현재 페이지 */}
-          <div className={`${styled.postTableRow} ${styled.postTableCurrentActive} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
+          <div className={`${styled.postTableRow} ${styled.postTableCurrentActive} border-b-[1px] border-[#e6e8ec] hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
             <div className={
               postData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} border-[1px] border-[#e5e7eb] dark:border-[#646870]` :
               postData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} border-[1px] border-[#e5e7eb] dark:border-[#646870]`
@@ -275,7 +275,7 @@ export default function Detail() {
 
           {/* 이전 페이지 */}
           {prevPostData.id !== 0 && 
-          <div className={`${styled.postTableRow} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
+          <div className={`${styled.postTableRow} border-b-[1px] border-[#e6e8ec] hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`}>
             <div className={
               prevPostData.category === '점검' ? `${styled.postCategory} ${styled.postCategoryCheck} border-[1px] border-[#e5e7eb] dark:border-[#646870]` :
               prevPostData.category === '이벤트' ? `${styled.postCategory} ${styled.postCategoryEvent} border-[1px] border-[#e5e7eb] dark:border-[#646870]`

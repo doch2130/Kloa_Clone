@@ -85,13 +85,13 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
     for (let i = 1; i <= btnTotalCount; i++) {
       if (i === currentPage) {
         buttons.push(
-          <span className={`${styled.noticeTableBtnActive} dark:text-[#eaf0ec] dark:border-[#8991ee]`} key={i}
+          <span className={`${styled.noticeTableBtnActive} border-[1px] border-[#5865f2] dark:text-[#eaf0ec] dark:border-[#8991ee]`} key={i}
           onClick={() => router.push(`/notices?page=${i}`)}>
             {i}
           </span>
         );
       } else {
-        buttons.push(<span className='dark:text-[#eaf0ec] dark:border-[#646870]' key={i} onClick={() => router.push(`/notices?page=${i}`)}>{i}</span>);
+        buttons.push(<span className='dark:text-[#eaf0ec] border-[1px] border-[#e6e8ec] dark:border-[#646870]' key={i} onClick={() => router.push(`/notices?page=${i}`)}>{i}</span>);
       }
     }
     return buttons;
@@ -108,11 +108,11 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
       // console.log('writeTimeFormat ', writeTimeFormat);
 
       posts.push(
-        <div className={`${styled.noticeTableRow} hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`} key={postList[i].id}>
+        <div className={`${styled.noticeTableRow} border-b-[1px] border-[#e6e8ec] hover:bg-[#fafbfb] dark:border-[#646870] dark:hover:bg-[#38393e]`} key={postList[i].id}>
           <div className={
-            postList[i].category === '점검' ? `${styled.noticeCategory} ${styled.noticeCategoryCheck} dark:border-[#646870]` :
-            postList[i].category === '이벤트' ? `${styled.noticeCategory} ${styled.noticeCategoryEvent} dark:border-[#646870]`
-            : `${styled.noticeCategory} text-[#353945] dark:text-[#eaf0ec] dark:border-[#646870]`}>
+            postList[i].category === '점검' ? `${styled.noticeCategory} ${styled.noticeCategoryCheck} border-[1px] border-[#e5e7eb] dark:border-[#646870]` :
+            postList[i].category === '이벤트' ? `${styled.noticeCategory} ${styled.noticeCategoryEvent} border-[1px] border-[#e5e7eb] dark:border-[#646870]`
+            : `${styled.noticeCategory} text-[#353945] dark:text-[#eaf0ec] border-[1px] border-[#e5e7eb] dark:border-[#646870]`}>
               {postList[i].category}
           </div>
           <div className={`${styled.noticeTitle} text-[#353945]`}>
@@ -157,16 +157,16 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
         {postViewFunction()}
       </div>
       <div className={styled.noticeBodyRow + ' ' + styled.noticeManagerBtn}>
-        <div className={styled.noticeTableBtnGroup}>
-          <span className='dark:border-[#646870]' onClick={() => prevPageChangeHandler()}>
+        <div className={`${styled.noticeTableBtnGroup}`}>
+          <span className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' onClick={() => prevPageChangeHandler()}>
             <Image src={LeftArrow} alt='left arrow icon' />
           </span>
           {buttonViewFunction()}
-          <span className='dark:border-[#646870]' onClick={() => nextPageChangeHandler()}>
+          <span className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' onClick={() => nextPageChangeHandler()}>
             <Image src={RightArrow} alt='right arrow icon' />
           </span>
         </div>
-        {session?.user?.role === true && <Link href='/notices/write' className={`${styled.noticeManager} text-[#5865f2] bg-[#fff] dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]`}>글쓰기</Link>}
+        {session?.user?.role === true && <Link href='/notices/write' className={`${styled.noticeManager} text-[#5865f2] bg-[#fff] border-2 border-[#5865f2] dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]`}>글쓰기</Link>}
       </div>
     </>
   )

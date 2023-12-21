@@ -14,7 +14,7 @@ import Kloa2Icon from '@/assets/Logo/kloa2.webp'
 export default function Header() {
   const pathName = usePathname();
   return (
-    <header>
+    <header className='relative z-20'>
       <nav className='nav-bar bg-white dark:bg-[#33353a] dark:border-[#42464D]'>
         <div className='nav-left'>
           <Link href='/' as='/' className='logo-image-container'>

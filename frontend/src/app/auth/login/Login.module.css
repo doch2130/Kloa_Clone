@@ -12,7 +12,7 @@
   padding-left: 1rem;
   padding-right: 1rem;
   border-radius: 10px;
-  border: 2px solid rgb(230 232 236);
+  /* border: 2px solid rgb(230 232 236); */
   min-height: 46px;
 }
 
@@ -40,7 +40,7 @@
 .loginStay span {
   font-weight: 600;
   font-size: .875rem;
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   margin-left: 0.5rem;
   margin-bottom: auto;
   margin-top: auto;
@@ -86,23 +86,23 @@
 }
 
 .lastGroup a {
-  color: rgb(88 101 242);
+  /* color: rgb(88 101 242); */
   font-size: .75rem;
   font-weight: 600;
   text-decoration: none;
 }
 
 .lastGroup a:nth-child(2) {
-  color: rgb(177 181 195);
+  /* color: rgb(177 181 195); */
 }
 
 /* Auth 로그인 버튼 */
 .oAuthLogin {
   margin-top: 2rem;
-  color: rgb(88 101 242);
+  /* color: rgb(88 101 242); */
   font-weight: 600;
   font-size: 1.125rem;
-  background-color: white;
+  /* background-color: white; */
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -110,7 +110,7 @@
   cursor: pointer;
   height: 48px;
   width: 100%;
-  border: 2px solid rgb(88 101 242);
+  /* border: 2px solid rgb(88 101 242); */
 }
 
 @media (max-width: 1000px) {

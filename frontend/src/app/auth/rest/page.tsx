@@ -252,7 +252,7 @@ export default function Rest() {
 
   return (
     <form className={styled.forgetPasswordForm}>
-      <h1 className='dark:text-[#eaf0ec]'>비밀번호를 잊어버리셨나요?</h1>
+      <h1 className='text-[#000] dark:text-[#eaf0ec]'>비밀번호를 잊어버리셨나요?</h1>
       {!authMailIsCheck ?
       <>
       <p className={styled.subText}>가입할 때 사용한 이메일 주소를 입력하시면 인증코드를 보내드려요.<br />이메일에 표기된 인증코드를 입력해 주세요.</p>
@@ -274,9 +274,9 @@ export default function Rest() {
             type="text" id="email"
             placeholder="이메일 입력해주세요"
             disabled={authMailStatus}
-            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            className='bg-white border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           />
-          <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
+          <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} bg-white border-t-2 border-r-2 border-b-2 border-[#e5e7eb] dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} bg-white border-t-2 border-r-2 border-b-2 border-[#e5e7eb] dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
         </div>
         <p className={styled.warningMessage}>{errors.email?.message}</p>
         <div className={styled.authNumberGroup}>
@@ -286,9 +286,9 @@ export default function Rest() {
             name='authNumber'
             placeholder="인증번호 입력"
             disabled={!authNumberBtnStatus ? true : false}
-            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            className='bg-white border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           />
-          <button type='button' disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? `${styled.authNumberButton} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.authNumberButtonActive} dark:bg-[#33353a] dark:border-[#42464D]`}
+          <button type='button' disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? `${styled.authNumberButton} bg-white border-t-2 border-r-2 border-b-2 border-[#e5e7eb] dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.authNumberButtonActive} bg-white border-t-2 border-r-2 border-b-2 border-[#e5e7eb] dark:bg-[#33353a] dark:border-[#42464D]`}
           onClick={() => emailAuthenticationCheck()} >확인</button>
           {(authMailStatus && authNumberBtnStatus) && <p className={styled.authNumberTimer}>{authMailTimerView}초</p>}
         </div>
@@ -315,7 +315,7 @@ export default function Rest() {
             type="text" id="email"
             placeholder="이메일 입력해주세요"
             disabled={authMailStatus}
-            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            className='bg-white border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           />
         </div>
         <div className={styled.pwdGroup}>          
@@ -337,7 +337,7 @@ export default function Rest() {
                 },
               }
             )}
-            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            className='bg-white border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
             type="password"
             name='password'
             placeholder='영어, 숫자, 특수문자를 포함한 8자리 이상 비밀번호 입력'
@@ -364,7 +364,7 @@ export default function Rest() {
                 },
               }
             )}
-            className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+            className='bg-white border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
             type="password"
             name='passwordCheck'
             placeholder='비밀번호 확인'

@@ -8,7 +8,7 @@ export default function NoticesLayout({ children }: { children: React.ReactNode 
       <div className={`${styled.noticeBody}`}>
         <div className={styled.noticeBodyWrap}>
           <div className={styled.noticeBodyRow + ' ' + styled.noticeBodyTitle}>
-            <h2 className='dark:text-[#eaf0ec]'>공지사항</h2>
+            <h2 className='text-[#353945] dark:text-[#eaf0ec]'>공지사항</h2>
           </div>
           {children}
         </div>

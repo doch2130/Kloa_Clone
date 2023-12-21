@@ -22,7 +22,7 @@
 }
 
 .calendarDateWrap:hover {
-  background-color: rgb(245 246 247);
+  /* background-color: rgb(245 246 247); */
 }
 
 .calendarDateWrap:not(:nth-child(1)) {
@@ -30,7 +30,7 @@
 }
 
 .calendarDay {
-  color: rgb(125 131 14);
+  /* color: rgb(125 131 149); */
   margin: 0px;
   text-align: center;
 }

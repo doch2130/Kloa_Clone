@@ -34,8 +34,8 @@
   padding-right: 1rem;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  color: rgb(53 57 69);
-  border: 2px solid rgb(230 232 236);
+  /* color: rgb(53 57 69); */
+  /* border: 2px solid rgb(230 232 236); */
   min-height: 46px;
 }
 
@@ -46,8 +46,8 @@
 
 .idGroup button,
 .authNumberGroup button {
-  background-color: white;
-  border: 0 solid #e5e7eb;
+  /* background-color: white; */
+  /* border: 0 solid #e5e7eb; */
   border-top-width: 2px;
   border-right-width: 2px;
   border-bottom-width: 2px;

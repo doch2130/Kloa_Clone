@@ -18,7 +18,7 @@
 }
 
 .noticeBodyTitle h2 {
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   font-weight: 700;
   font-size: 24px;
   margin-bottom: 21px;
@@ -32,7 +32,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  border-bottom: 1px solid rgb(230 232 236);
+  /* border-bottom: 1px solid rgb(230 232 236); */
   height: 48px;
   transition-duration: 0.75ms;
 }
@@ -45,7 +45,7 @@
   /* color: rgb(53 57 69); */
   font-weight: 600;
   font-size: 14px;
-  border: 1px solid #e5e7eb;
+  /* border: 1px solid #e5e7eb; */
   border-radius: 14px;
   width: 60px;
   height: 28px;
@@ -129,7 +129,7 @@
   width: 40px;
   height: 38px;
   cursor: pointer;
-  border: 1px solid rgb(230 232 236);
+  /* border: 1px solid rgb(230 232 236); */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,11 +147,11 @@
 }
 
 .noticeTableBtnGroup span:not(:last-child) {
-  border-right-width: 0px;
+  /* border-right-width: 0px; */
 }
 
 .noticeTableBtnActive {
-  border: 1px solid rgb(88 101 242) !important;
+  /* border: 1px solid rgb(88 101 242) !important; */
 }
 
 
@@ -171,7 +171,7 @@
   cursor: pointer;
   height: 36px;
   width: 70px;
-  border: 2px solid rgb(88 101 242);
+  /* border: 2px solid rgb(88 101 242); */
   position: absolute;
   top: 38px;
   right: 40px;

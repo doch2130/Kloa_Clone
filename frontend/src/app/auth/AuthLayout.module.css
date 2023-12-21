@@ -9,7 +9,7 @@
 .form {
   width: 100%;
   display: flex;
-  flex: 2 0;
+  flex: 1.5 0;
   align-items: center;
   justify-content: center;
 }
@@ -29,7 +29,7 @@
 
 @media (min-width: 1535px) {
   .wrap {
-    padding: 0 40px;
+    /* padding: 0 40px; */
   }
 }
 

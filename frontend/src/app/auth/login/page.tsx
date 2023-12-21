@@ -71,28 +71,28 @@ export default function Login() {
     <form className={styled.loginForm} onSubmit={onSubmit}>
       <div className={styled.loginFormInputWrap}>
         <div>
-          <input type='email' placeholder='이메일' name='id' ref={idInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+          <input type='email' placeholder='이메일' name='id' ref={idInputRef} className='border-2 border-[#e6e8ec] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           onKeyDown={enterEventHandler} />
         </div>
         <div>
-          <input type='password' placeholder='비밀번호' name='password' ref={pwdInputRef} className='dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
+          <input type='password' placeholder='비밀번호' name='password' ref={pwdInputRef} className='border-2 border-[#e6e8ec] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           maxLength={20}
           onKeyDown={enterEventHandler} />
         </div>
       </div>
       {/* <button type='button' onClick={() => signIn('naver')} className={`${styled.oAuthLogin} dark:border-[#8991ee] dark:text-[#8991ee] dark:bg-[#2b2d31]`}>NAVER 로그인</button> */}
-      <button type='button' onClick={() => signIn('discord')} className={`${styled.oAuthLogin} dark:border-[#8991ee] dark:text-[#8991ee] dark:bg-[#2b2d31]`}>Discord 로그인</button>
+      <button type='button' onClick={() => signIn('discord')} className={`${styled.oAuthLogin} border-2 border-[#5865f2] text-[#5865f2] bg-white dark:border-[#8991ee] dark:text-[#8991ee] dark:bg-[#2b2d31]`}>Discord 로그인</button>
       <div className={styled.loginStay}>
         <CheckSvgComponent isCheck={isCheck} isCheckhandler={isCheckhandler} />
-        <span className='dark:text-[#eaf0ec]' onClick={isCheckhandler}>로그인 상태 유지</span>
+        <span className='text-[#353945] dark:text-[#eaf0ec]' onClick={isCheckhandler}>로그인 상태 유지</span>
       </div>
       <div className={styled.empty}>
         <div></div>
       </div>
       <button type='button' className={styled.loginButton} onClick={onSubmit}>로그인</button>
       <div className={styled.lastGroup}>
-        <Link href='/auth/signup' as='/auth/signup' className='dark:text-[#8991ee]'>회원가입</Link>
-        <Link href='/auth/rest' as='/auth/rest'>앗, 비밀번호를 잊어버렸어요!</Link>
+        <Link href='/auth/signup' as='/auth/signup' className='text-[#5865f2] dark:text-[#8991ee]'>회원가입</Link>
+        <Link href='/auth/rest' as='/auth/rest' className='text-[#b1b5c3]'>앗, 비밀번호를 잊어버렸어요!</Link>
       </div>
     </form>
   )
