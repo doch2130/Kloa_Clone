@@ -198,7 +198,7 @@ export default function Detail() {
           </pre>
         </div>
         <div className={styled.postBodyRow}>
-          <div className={`${styled.postRecomendCount} text-[#7d8395] border-1 border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a] hover:bg-[#fafbfb]`} onClick={() => recomendEvent()}>
+          <div className={`${styled.postRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a] hover:bg-[#fafbfb]`} onClick={() => recomendEvent()}>
             <Image src={MococoIcon} alt='mococo icon' />
             <span>{postData.recomendCount}</span>
           </div>
@@ -208,10 +208,10 @@ export default function Detail() {
             <Image src={ListIcon} alt='list icon' width={23} height={23} className='dark:text-[#eaf0ec]' />
           </Link>
           <div className={styled.arrowButtonGroup}>
-            <Link className='dark:border-[#646870]' href={`/notices/detail/${Number(id)+1}`}>
+            <Link className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' href={`/notices/detail/${Number(id)+1}`}>
               <Image src={UpArrow} alt='up arrow icon' width={23} height={23} />
             </Link>
-            <Link className='dark:border-[#646870]' href={`/notices/detail/${Number(id)-1}`}>
+            <Link className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' href={`/notices/detail/${Number(id)-1}`}>
               <Image src={DownArrow} alt='down arrow icon' width={23} height={23} />
             </Link>
           </div>
@@ -220,8 +220,8 @@ export default function Detail() {
         {/* 관리자 버튼 */}
         {session?.user?.role === true && 
         <div className={styled.postBodyRow + ' ' + styled.postManager}>
-          <Link className='border-[1px] border-[#e6e8ec] dark:border-[#646870] dark:text-[#eaf0ec]' href={`/notices/update/${id}`}>수정</Link>
-          <span className='border-[1px] border-[#e6e8ec] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={() => postDelete(Number(id))}>삭제</span>
+          <Link className='border-[1px] border-[#e6e8ec] text-[#353945] dark:border-[#646870] dark:text-[#eaf0ec]' href={`/notices/update/${id}`}>수정</Link>
+          <span className='border-[1px] border-[#e6e8ec] text-[#353945] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={() => postDelete(Number(id))}>삭제</span>
         </div>
         }
         
@@ -244,7 +244,7 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{nextPostData.viewCount}</span>
             </div>
-            <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-1 border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
+            <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{nextPostData.recomendCount}</span>
             </div>
@@ -267,7 +267,7 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
             </div>
-            <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-1 border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
+            <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{postData.recomendCount}</span>
             </div>
@@ -290,7 +290,7 @@ export default function Detail() {
               <Image src={EyeIcon} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{prevPostData.viewCount}</span>
             </div>
-            <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-1 border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
+            <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
               <Image src={MococoIcon} alt='mococo icon' />
               <span>{prevPostData.recomendCount}</span>
             </div>

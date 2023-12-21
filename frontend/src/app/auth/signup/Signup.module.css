@@ -38,8 +38,8 @@
 
 .idGroup button,
 .authNumberGroup button {
-  background-color: white;
-  border: 0 solid #e5e7eb;
+  /* background-color: white; */
+  /* border: 0 solid #e5e7eb; */
   border-top-width: 2px;
   border-right-width: 2px;
   border-bottom-width: 2px;

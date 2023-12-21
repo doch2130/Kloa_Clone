@@ -267,7 +267,7 @@ export default function Signup() {
             disabled={authMailStatus}
             className='border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           />
-          <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
+          <button type='button' onClick={emailAuthenticationSend} className={authMailStatus || isLoading ? `${styled.sendButtonUnActive} bg-white border-t-2 border-r-2 border-b-2 border-[#e5e7eb] dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.sendButton} bg-white border-t-2 border-r-2 border-b-2 border-[#e5e7eb] dark:bg-[#33353a] dark:border-[#42464D]`} disabled={authMailStatus || isLoading} >전송</button>
         </div>
         <p className={styled.warningMessage}>{errors.email?.message}</p>
 
@@ -281,7 +281,7 @@ export default function Signup() {
             className='border-2 border-[#e6e8ec] text-[#353945] dark:bg-[#33353a] dark:border-[#42464D] dark:text-[#eaf0ec]'
           />
           <button type='button' 
-          disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? `${styled.authNumberButton} dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.authNumberButtonActive} dark:bg-[#33353a] dark:border-[#42464D]`}
+          disabled={!authNumberBtnStatus ? true : false} className={!authNumberBtnStatus ? `${styled.authNumberButton} bg-white border-t-2 border-r-2 border-b-2 border-[#e5e7eb] dark:bg-[#33353a] dark:border-[#42464D]` : `${styled.authNumberButtonActive} bg-white border-t-2 border-r-2 border-b-2 border-[#e5e7eb] dark:bg-[#33353a] dark:border-[#42464D]`}
           onClick={() => emailAuthenticationCheck()} >확인</button>
           {(authMailStatus && authNumberBtnStatus) && <p className={styled.authNumberTimer}>{authMailTimerView}초</p>}
         </div>

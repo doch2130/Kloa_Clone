@@ -154,6 +154,7 @@
 .arrowButtonGroup {
   display: flex;
   align-items: center;
+  height: 46px;
 }
 
 .arrowButtonGroup a:nth-child(2) {
@@ -251,7 +252,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(53 57 69);
+  /* color: rgb(53 57 69); */
   cursor: pointer;
 }
 
