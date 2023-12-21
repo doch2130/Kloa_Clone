@@ -301,6 +301,11 @@ Character Name 페이지 API 테스트 작업 완료
 => 각인 탭 Hover 시 설명 추가 완료 (장비 각인이랑은 다름) (tailwind Hover CSS 방식)
 => 장비 Hover 설명 추가 완료 (엘릭서, 달인 미완료)
 
+44일차:
+캐릭터 상세정보 UI 5차 작업 (오른쪽)
+=> 장착 각인, 돌 Hover 설명 추가 완료
+=> 악세, 팔찌 Hover 설명 추가 완료
+
 *CSS 참고용*
 placeholder
 #7d8395
