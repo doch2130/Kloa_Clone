@@ -28,6 +28,32 @@ type equipArrayType = {
   imageSrc: string;
 }
 
+type equipAccessoriesArrayType = {
+  name: string;
+  tear: string;
+  rating: string;
+  equipmentType: string;
+  quality: string;
+  basicEffect: string;
+  additionalEffectOne: string,
+  additionalEffectTwo?: string,
+  gagInOne: string,
+  gagInTwo: string,
+  gagInDecrease: string,
+  imageSrc: string;
+}
+
+type equipAccessorieBraceletType = {
+  name: string;
+  tear: string;
+  rating: string;
+  equipmentType: string;
+  basicEffectArray: string[];
+  imageSrc: string;
+}
+
+
+
 
 export default function CharacterDetail() {
   const params = useParams();
@@ -103,7 +129,7 @@ export default function CharacterDetail() {
       itemLevel: '1620',
       tear: '티어 3',
       rating: '고대',
-      equipmentType: '상의',
+      equipmentType: '장갑',
       quality: '90',
       setEffect: '환각 Lv.3',
       basicEffect: '물리 방어력 +4831\r\n마법 방어력+4831\r\n민첩 +42473\r\n체력 +3388',
@@ -124,6 +150,97 @@ export default function CharacterDetail() {
       imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_165.png',
     }
   ];
+
+
+  const equipAccessoriesArray:equipAccessoriesArrayType[] = [
+    {
+      name: '참혹한 파멸의 목걸이',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '목걸이',
+      quality: '92',
+      basicEffect: '민첩 +12546\r\n체력 +3308',
+      additionalEffectOne: '치명 +493',
+      additionalEffectTwo: '특화 +491',
+      gagInOne: '돌격대장 +6',
+      gagInTwo: '바리케이드 +3',
+      gagInDecrease: '공격력 감소 +2',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/acc/acc_213.png',
+    },
+    {
+      name: '참혹한 몰락의 귀걸이',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '귀걸이',
+      quality: '91',
+      basicEffect: '민첩 +9758\r\n체력 +2363',
+      additionalEffectOne: '특화 +295',
+      gagInOne: '아드레날린 +6',
+      gagInTwo: '원한 +3',
+      gagInDecrease: '공격속도 감소 +1',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/acc/acc_113.png',
+    },
+    {
+      name: '거룩한 예언자의 귀걸이',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '귀걸이',
+      quality: '81',
+      basicEffect: '민첩 +9758\r\n체력 +2363',
+      additionalEffectOne: '특화 +289',
+      gagInOne: '진화의 유산 +6',
+      gagInTwo: '돌격대장 +3',
+      gagInDecrease: '이동속도 감소 +1',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/acc/acc_104.png',
+    },
+    {
+      name: '참혹한 종말의 반지',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '반지',
+      quality: '92',
+      basicEffect: '민첩 +9061\r\n체력 +1890',
+      additionalEffectOne: '특화 +197',
+      gagInOne: '바리케이드 +6',
+      gagInTwo: '예리한 둔기 +3',
+      gagInDecrease: '방어력 감소 +1',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/acc/acc_20.png',
+    },
+    {
+      name: '참혹한 종말의 반지',
+      tear: '티어 3',
+      rating: '고대',
+      equipmentType: '반지',
+      quality: '90',
+      basicEffect: '민첩 +9061\r\n체력 +1890',
+      additionalEffectOne: '특화 +196',
+      gagInOne: '돌격대장 +6',
+      gagInTwo: '바리케이드 +3',
+      gagInDecrease: '공격력 감소 +1',
+      imageSrc: 'https://pica.korlark.com/efui_iconatlas/acc/acc_20.png',
+    },
+  ];
+
+  const equipAccessorieBracelet:equipAccessorieBraceletType = {
+    name: '찬란한 영웅의 팔찌',
+    tear: '티어 3',
+    rating: '고대',
+    equipmentType: '팔찌',
+    basicEffectArray: ['치명 +100', '특화 +97', '민첩 +3400', '정밀 하'],
+    imageSrc: 'https://pica.korlark.com/efui_iconatlas/acc/acc_304.png',
+  }
+
+  type accessorieBraceletDescriptionType = {
+    [key:string]: string;
+  }
+
+  const accessorieBraceletDescription:accessorieBraceletDescriptionType = {
+    '정밀': "몬스터에게 공격 적중 시 치명타 적중이 3% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)",
+    '습격': "몬스터에게 공격 적중 시 치명타 피해량이 6% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)",
+    '우월': "몬스터에게 공격 적중 시 주는 피해가 3% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)",
+    '열정': "자신의 생명력이 40% 이상일 경우 적에게 공격 적중 시 3초 동안 '열정' 효과를 획득한다. '냉정' 효과를 보유 중 일 때 '열정' 효과가 1% 추가 증가한다. 열정 : 몬스터에게 주는 피해가 3% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)"
+  }
+  
 
 
   const favoriteCheckHandler = () => {
@@ -259,8 +376,6 @@ export default function CharacterDetail() {
       },
     ]
   });
-
-
 
   const dataLoadHandler = async (name:string) => {
     const characterName = decodeURIComponent(name.trim());
@@ -682,40 +797,148 @@ export default function CharacterDetail() {
                       </div>
                       {/* 장비 정보 - 악세 */}
                       <div>
-                      {accessoriesCount.map((accessorie:number, index:number) => {
-                        let divWrapStyle = 'flex items-center w-full gap-x-2';
+                      {equipAccessoriesArray.map((accessorie:equipAccessoriesArrayType, index:number) => {
+                        let divWrapStyle = 'flex items-center w-full gap-x-2 relative group/item';
                         if(index > 0) {
                           divWrapStyle += ' mt-3'
                         }
                         return (
-                        <div key={accessorie} className={divWrapStyle}>
+                        <div key={index} className={divWrapStyle}>
                           {/* 악세 사진 */}
                           <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-                            <Image src={'https://pica.korlark.com/efui_iconatlas/acc/acc_213.png'} alt='참혹한 파멸의 목걸이' width={50} height={50} loading="lazy" decoding="async" />
+                            <Image src={accessorie.imageSrc} alt={accessorie.name} width={50} height={50} loading="lazy" decoding="async" />
                             <div className='class="w-full h-4 text-center bg-[#8045dd]'>
-                              <p className='text-xs font-semibold text-white'>92</p>
+                              <p className='text-xs font-semibold text-white'>{accessorie.quality}</p>
                             </div>
                           </div>
                           {/* 악세 정보 */}
                           <div>
-                          {/* <p className='truncate text-[0.9rem] font-semibold text-[#D9AB48]'><span className='text-base'>+25</span> 차오른 몽환의 환각 서브 머신건</p> */}
-                            <p className='truncate text-[0.9rem] leading-4 font-semibold text-[#D9AB48]'>참혹한 파멸의 목걸이</p>
+                            <p className='truncate text-[0.9rem] leading-4 font-semibold text-[#D9AB48]'>{accessorie.name}</p>
                             <p className='text-sm font-semibold mt-0.5'>
-                              <span>치명 493</span>
-                              { index === 0 && <span className='ml-1.5'>특화 491</span> }
+                              <span>{accessorie.additionalEffectOne.replace('+', '')}</span>
+                              {accessorie.additionalEffectTwo && <span className='ml-1.5'>{accessorie.additionalEffectTwo.replace('+', '')}</span>}
                             </p>
                             <p className='text-sm font-semibold mt-0.5'>
-                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>돌격대장 6</span>
-                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>바리케이드 3</span>
-                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>공격력 감소 2</span>
+                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{accessorie.gagInOne.replace('+', '')}</span>
+                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>{accessorie.gagInTwo.replace('+', '')}</span>
+                              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>{accessorie.gagInDecrease.replace('+', '')}</span>
                             </p>
+                          </div>
+                          {/* 악세 Hover */}
+                          <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                            <p className='truncate text-[0.95rem] font-semibold text-[#D9AB48] mb-2'>{accessorie.name}</p>
+                            <div className='flex w-full'>
+                              <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                                <Image src={accessorie.imageSrc} alt={accessorie.name} loading="lazy" width={44} height={44} decoding="async" />
+                              </div>
+                              <div className='ml-1 w-full h-auto flex flex-col justify-around'>
+                                <div className='text-xs font-semibold flex items-center'>
+                                  <span className='text-[#D9AB48]'>{accessorie.rating} {accessorie.equipmentType}</span>
+                                  <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
+                                  <span className=''>{accessorie.tear}</span>
+                                </div>
+                                <div className='flex items-center'>
+                                  <span className='text-[0.85rem] font-semibold text-[#D9AB48] mr-2'>{accessorie.quality}</span>
+                                  <div className="w-full h-[9px] mt-[2px] bg-[#4d4f55] dark:bg-[#e6e8ec] relative">
+                                    <div className={`rounded-r-sm h-[9px] mt-[2px] bg-[#f9ae00] dark:bg-[#eba70c] absolute bottom-0`} style={{width: `${accessorie.quality}%`}}></div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            {/* 악세 Hover 기본 효과 */}
+                            <div className='mt-4 w-full'>
+                              <pre className='text-[0.78rem] leading-5 font-semibold'>{accessorie.basicEffect}</pre>
+                            </div>
+                            {/* 악세 Hover 특성 효과 */}
+                            <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
+                            <div className='w-full'>
+                              <p className='text-[0.8rem] leading-5 font-semibold'>{accessorie.additionalEffectOne}</p>
+                              {accessorie.additionalEffectTwo && <p className='text-[0.8rem] leading-5 font-semibold'>{accessorie.additionalEffectTwo}</p>}
+                            </div>
+                            {/* 악세 각인 효과 */}
+                            <div className='w-full mt-4'>
+                              <p className='text-[0.8rem] leading-5 font-semibold'>{accessorie.gagInOne}</p>
+                              <p className='text-[0.8rem] leading-5 font-semibold my-[2px]'>{accessorie.gagInTwo}</p>
+                              <p className='text-[0.8rem] leading-5 font-semibold text-[#f95126]'>{accessorie.gagInDecrease}</p>
+                            </div>
                           </div>
                         </div>
                         )
                         })}
+                        {/* 팔찌 */}
+                        <div className='flex items-center w-full gap-x-2 mt-3 relative group/item'>
+                          {/* 팔찌 사진 */}
+                          <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                            <Image src={equipAccessorieBracelet.imageSrc} alt={equipAccessorieBracelet.name} width={50} height={50} loading="lazy" decoding="async" />
+                            <div className='class="w-full h-4 text-center bg-[#8045dd]'>
+                              <p className='text-xs font-semibold text-white'>9.64%</p>
+                            </div>
+                          </div>
+                          {/* 팔찌 정보 */}
+                          <div>
+                            <p className='truncate text-[0.9rem] leading-4 font-semibold text-[#D9AB48]'>{equipAccessorieBracelet.name}</p>
+                            <p className='text-sm font-semibold mt-0.5'>
+                              <span>{equipAccessorieBracelet.basicEffectArray[0].replace('+', '')}</span>
+                              {equipAccessorieBracelet.basicEffectArray[1] && <span className='ml-1.5'>{equipAccessorieBracelet.basicEffectArray[1].replace('+', '')}</span>}
+                            </p>
+                            {/* 팔찌 특옵 */}
+                            <p className='text-sm font-semibold mt-0.5'>
+                              {equipAccessorieBracelet.basicEffectArray[2] && <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{equipAccessorieBracelet.basicEffectArray[2].slice(0, equipAccessorieBracelet.basicEffectArray[2].indexOf(' '))}</span>}
+                              {equipAccessorieBracelet.basicEffectArray[3] && <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>{equipAccessorieBracelet.basicEffectArray[3].slice(0, equipAccessorieBracelet.basicEffectArray[3].indexOf(' '))}</span>}
+                              {equipAccessorieBracelet.basicEffectArray[4] && <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{equipAccessorieBracelet.basicEffectArray[4].slice(0, equipAccessorieBracelet.basicEffectArray[4].indexOf(' '))}</span>}
+                            </p>
+                          </div>
+                          {/* 팔찌 Hover */}
+                          <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                            <p className='truncate text-[0.95rem] font-semibold text-[#D9AB48] mb-2'>{equipAccessorieBracelet.name}</p>
+                            <div className='flex w-full'>
+                              <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                                <Image src={equipAccessorieBracelet.imageSrc} alt={'준엄한 비상의 돌 IV'} loading="lazy" width={44} height={44} decoding="async" />
+                              </div>
+                              <div className='ml-1 w-full h-auto flex flex-col justify-evenly'>
+                                <div className='text-xs font-semibold flex items-center'>
+                                  <span className='text-[#D9AB48]'>{equipAccessorieBracelet.rating} {equipAccessorieBracelet.equipmentType}</span>
+                                  <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
+                                  <span className=''>티어 3</span>
+                                </div>
+                                <div className='flex items-center ml-[2px]'>
+                                  <div className="w-full flex items-center font-semibold text-xs">
+                                    {equipAccessorieBracelet.basicEffectArray.map((basicEffect:string, index:number) => {
+                                      if(index === 0) {
+                                        return (
+                                          <Fragment key={index}>
+                                          <span>{basicEffect.slice(0, basicEffect.indexOf(' '))}</span>
+                                          </Fragment>
+                                        )
+                                      }
+                                      return (
+                                      <Fragment key={index}>
+                                      <div className='w-[3px] h-[3px] rounded-full bg-[#7d8395] mx-[4px]'></div>
+                                      <span>{basicEffect.slice(0, basicEffect.indexOf(' '))}</span>
+                                      </Fragment>)
+                                    })}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            {/* 팔찌 옵션 */}
+                            <div className='w-full mt-4'>
+                              {equipAccessorieBracelet.basicEffectArray.map((basicEffect:string, index:number) => (
+                                <div key={index} className='flex flex-col my-[4px]'>
+                                  <div className='flex items-center'>
+                                    <span className='text-[0.8rem] leading-5 font-bold '>{basicEffect}</span>
+                                    <span className="text-[0.8rem] font-bold leading-5 ml-2 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center">2.68%</span>
+                                  </div>
+                                  {accessorieBraceletDescription[basicEffect.slice(0, basicEffect.indexOf(' '))] && <p className='text-[0.8rem] leading-5 font-bold my-[4px]'>{accessorieBraceletDescription[basicEffect.slice(0, basicEffect.indexOf(' '))]}</p>}
+                                </div>
+                              )
+                              )}
+                            </div>
+                          </div>
+                        </div>
                         {/* 어빌리티 스톤 (돌) */}
                         <div className='flex'>
-                          <div className='flex items-center text-left gap-x-2 mt-3 relative group/item '>
+                          <div className='flex items-center text-left gap-x-2 mt-3 relative group/item'>
                             <div className='w-[50px] h-[50px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
                               <Image src={'https://pica.korlark.com/efui_iconatlas/ability/ability_257.png'} alt='준엄한 비상의 돌 IV' width={50} height={50} decoding="async" />
                             </div>
