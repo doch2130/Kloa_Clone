@@ -308,6 +308,10 @@ Character Name 페이지 API 테스트 작업 완료
 배포 후 DarkMode 미적용 현상 발견
 => CSS 전체 수정
 
+45일차:
+메인 페이지 반응형 작업
+=> 모바일 셋팅 페이지 작업
+
 *CSS 참고용*
 placeholder
 #7d8395
