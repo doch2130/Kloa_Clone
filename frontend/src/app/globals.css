@@ -328,12 +328,12 @@ input::-webkit-inner-spin-button {
 ::-webkit-scrollbar {
   margin-right: 12px;
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #cbcdd4;
   border-radius: 3px;
-  height: 10%;
 }
 
 ::-webkit-scrollbar-track {
@@ -345,4 +345,36 @@ input::-webkit-inner-spin-button {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+}
+
+@media (min-width: 1046px) and (max-width: 1119px) {
+  .nav-left {
+    flex-basis: auto;
+  }
+}
+
+@media (min-width: 1046px) and (max-width: 1200px) {
+  .nav-left {
+    padding: 0 8px;
+  }
+  .nav-right {
+    padding-right: 8px;
+  }
+  .nav-center {
+    margin-right: -2rem;
+  }
+}
+
+
+@media (max-width: 1045px) {
+  .nav-center {
+    justify-content: flex-end;
+    padding-right: 2rem;
+  }
+  .nav-list {
+    display: none;
+  }
+  .nav-right {
+    display: none;
+  }
 }

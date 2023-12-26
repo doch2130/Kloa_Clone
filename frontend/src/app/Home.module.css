@@ -82,3 +82,29 @@
   text-overflow: ellipsis;
   align-self: center;
 }
+
+
+@media (max-width: 960px) {
+  .slideImage {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .subTitle {
+    padding-left: 30px;
+    padding-bottom: 0px;
+    margin: 0;
+    padding-top: 12px;
+  }
+  .noticeTable {
+    border-radius: 0px;
+    border: 0;
+  }
+  .lostarkNotice, .kloaNotice {
+    max-width: none;
+  }
+  .kloaNotice {
+    margin-top: 12px;
+  }
+}

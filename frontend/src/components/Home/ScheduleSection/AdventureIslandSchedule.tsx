@@ -88,7 +88,7 @@ export default function AdventureIslandSchedule({ today, currentDate, adventureI
         }
         
         return (
-          <div className={isSameDate(today, currentDate) ? `${ScheduleIslandBoxStyle} dark:bg-[#2b2d31] dark:border-[0]`
+          <div className={isSameDate(today, currentDate) ? `${ScheduleIslandBoxStyle} bg-[#f5f6f7] border-2 border-[#f5f6f7] dark:bg-[#2b2d31] dark:border-[0]`
             : `${styled.scheduleIslandBox} ${styled.scheduleIslandBoxOpacity} bg-[#f5f6f7] border-2 border-[#f5f6f7] dark:bg-[#2b2d31] dark:border-[0]`} key={el.ContentsName}>
     
             <Image src={el.ContentsIcon} alt={el.ContentsName} className={styled.scheduleIslandImage} width={64} height={64} />

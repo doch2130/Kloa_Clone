@@ -97,7 +97,7 @@ export default async function Home() {
       </section>
       <section className={styled.notices}>
         <div className={styled.lostarkNotice}>
-          <div className={`${styled.subTitle} dark:text-[#eaf0ec]`}>
+          <div className={`${styled.subTitle} dark:text-[#eaf0ec] mlg:bg-white mlg:dark:bg-[#33353a]`}>
             <Link href='https://lostark.game.onstove.com/News/Notice/List'>로스트아크 공지사항</Link>
           </div>
           <div className={`${styled.noticeTable} bg-[#fff] border-2 border-[#e6e8ec] dark:bg-[#33353a] dark:border-[#42464D]`}>
@@ -113,7 +113,7 @@ export default async function Home() {
           </div>
         </div>
         <div className={styled.kloaNotice}>
-          <div className={`${styled.subTitle} dark:text-[#eaf0ec]`}>
+          <div className={`${styled.subTitle} dark:text-[#eaf0ec] mlg:bg-white mlg:dark:bg-[#33353a]`}>
             <Link href='/notices?page=1'>클로아 공지사항</Link>
           </div>
           <div className={`${styled.noticeTable} bg-[#fff] border-2 border-[#e6e8ec] dark:bg-[#33353a] dark:border-[#42464D]`}>

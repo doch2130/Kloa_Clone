@@ -120,6 +120,7 @@
   /* border: 2px solid rgb(245 246 247); */
   border-radius: 10px;
   display: flex;
+  min-width: 300px;
 }
 
 .scheduleIslandBoxOpacity {
@@ -204,4 +205,43 @@
   min-width: 70px;
   color: rgb(177 181 195);
   font-size: 0.8rem;
+}
+
+
+/* 한 줄이지만, scroll 방식 */
+/* @media (max-width: 1069px) {
+  .scheduleIsland {
+    overflow-x: scroll;
+  }
+  .scheduleIslandRow {
+    flex-wrap: nowrap;
+    min-height: 115px;
+  }
+  .scheduleIslandBox{
+    margin: 0 8px;
+  }
+} */
+
+/* 한 줄 1개 방식 */
+@media (max-width: 1069px) {
+  .scheduleTable {
+    border: none;
+    border-radius: 0px;
+  }
+  .scheduleEtc {
+    width: 340px;
+    margin: auto;
+  }
+  .scheduleEtcRow {
+    margin: 4px 0;
+  }
+  .scheduleIsland {
+    margin-top: 0px;
+  }
+  .scheduleIslandRow {
+    justify-content: center;
+  }
+  .scheduleIslandBox{
+    margin: 8px;
+  }
 }
