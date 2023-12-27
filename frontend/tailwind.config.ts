@@ -22,7 +22,9 @@ const config: Config = {
       // max-width: 500px
       'smlg': {'min': '500px', 'max': '1069px'},
       // min-width: 500px and max-width: 1069px
-      'md': '960px',
+      'md': {'max': '960px'},
+      // max-width: 960px
+      // 'md': '960px',
       // => @media (min-width: 960px) { ... }
       'mlg': {'max': '1069px'},
       // max-width: 1069px
