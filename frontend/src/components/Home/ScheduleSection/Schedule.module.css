@@ -1,11 +1,11 @@
 .subTitle {
   display: flex;
   justify-content: space-between;
-  margin-right: 1.25rem;
   font-size: 1.3rem;
   font-weight: 700;
-  margin-left: 1.25rem;
-  margin-bottom: 0.875rem;
+  /* margin-right: 1.25rem; */
+  /* margin-left: 1.25rem; */
+  /* margin-bottom: 0.875rem; */
 }
 
 .subTitle > div:nth-child(1) {
@@ -19,8 +19,8 @@
 }
 
 .scheduleDateChange {
-  display: flex;
-  align-items: center;
+  /* display: flex; */
+  /* align-items: center; */
 }
 
 .scheduleDateChange p {

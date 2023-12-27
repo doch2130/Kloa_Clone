@@ -6,9 +6,6 @@ export default function Setting() {
   const [showThema, setShowThema] = useState<boolean>(false);
 
   const toggleThemaPanel = () => {
-    // setTimeout(() => {
-    //   setShowThema((prev) => !prev);
-    // }, 500)
     setShowThema((prev) => !prev);
   };
 
@@ -39,7 +36,7 @@ export default function Setting() {
   
   return (
     <>
-    <div className='absolute top-0 z-[99] w-full min-h-full bg-[#f5f6f7] dark:bg-[#2b2d31] dark:text-[#fff]'>
+    <div className='absolute top-0 z-[99] w-full min-h-[100%] bg-[#f5f6f7] dark:bg-[#2b2d31] dark:text-[#fff]'>
       <div>
         <div className='bg-white dark:bg-[#33353a]'>
           <p className='p-4 pb-2 text-2xl font-bold'>설정</p>

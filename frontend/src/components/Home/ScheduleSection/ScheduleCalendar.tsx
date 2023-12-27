@@ -55,7 +55,7 @@ export default function ScheduleCalendar({ today, currentDate, setCurrentDate }:
             if(el === -7) {
               return (
                 <div className={`${styled.calendarDateWrap} ${styled.calendarToday}`}
-                key={el} onClick={() => changeDate(clone, setCurrentDate)}>
+                key={el} onClick={() => changeDate(today, setCurrentDate)}>
                   <p className={`${styled.calendarDay} text-[#7d8395] dark:text-[#eaf0ec]`}>{dayParsing[today.getDay()]}</p>
                   <p className={`${styled.calendarDate} text-[#7d8395] dark:text-[#eaf0ec]`}>{today.getDate()}</p>
                 </div>
