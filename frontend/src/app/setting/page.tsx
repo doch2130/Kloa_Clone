@@ -81,6 +81,27 @@ export default function Setting() {
       </div>
 
       <div className='mt-[10px]'>
+        <div className='bg-white dark:bg-[#33353a]'>
+          <Link href='/' className='w-full h-[58px] pl-5 pr-4 flex items-center justify-between bg-white dark:bg-[#33353a] transition-colors duration-100 ease-linear active:bg-[#F9FBFB] dark:active:bg-[#3a3b41] touch-callout-none'>
+            <div className='flex items-center gap-x-3'>
+              <p className='text-[15px] leading-[15px] font-bold'>이용약관</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true" className="w-4 h-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </Link>
+          <Link href='/' className='w-full h-[58px] pl-5 pr-4 flex items-center justify-between bg-white dark:bg-[#33353a] transition-colors duration-100 ease-linear active:bg-[#F9FBFB] dark:active:bg-[#3a3b41] touch-callout-none'>
+            <div className='flex items-center gap-x-3'>
+              <p className='text-[15px] leading-[15px] font-bold'>개인정보 처리 방침</p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true" className="w-4 h-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </Link>
+        </div>
+      </div>
+
+      <div className='mt-[10px]'>
         <div className='w-full border-b last:border-b-0 border-[#e6e8ec] dark:border-[#2b2d31] h-[48px] pl-5 pr-4 flex items-center justify-between bg-white dark:bg-[#33353a]'>
           <div className='flex items-center gap-x-3'>
             <p className='font-medium text-xs text-[#7d8395]'>버전 v1.0.0-beta</p>

@@ -152,7 +152,7 @@ export default function DayOfWeekEventSchedule({ today, currentDate, category }:
 
   return (
     <>
-      <div className={styled.scheduleName}>
+      <div className={`${styled.scheduleName} w-full sm:w-1/2 sm:min-w-[150px]`}>
         <Image src={ appearanceDate[category].includes(dayEventScheduleDate.getDay()) ? 
           dayEventScheduleIcon[category][0] : dayEventScheduleIcon[category][1] }
           alt={`${category} ICON`}

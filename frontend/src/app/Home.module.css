@@ -5,7 +5,6 @@
 
 /* 스케줄 타이틀 */
 .schedule {
-  margin-top: 2.5rem;
 }
 
 /* 공지사항 */
@@ -13,7 +12,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 2.5rem;
+  /* margin-top: 2.5rem; */
   position: relative;
   z-index: 10;
 }

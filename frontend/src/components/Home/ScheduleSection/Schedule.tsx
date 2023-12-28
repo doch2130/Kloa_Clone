@@ -71,7 +71,7 @@ export default function Schedule({ adventureIslandData }:ScheduleProps) {
           : el === '카오스게이트' ? `${styled.chaosGate}`
           : el === '태초의 섬' ? `${styled.battleArena}` : '';
           return (
-            <div className={`${styled.scheduleEtcRow} ${categodyStyled}`} key={el}>
+            <div className={`${styled.scheduleEtcRow} ${categodyStyled} sm:justify-center`} key={el}>
               <DayOfWeekEventSchedule today={today} currentDate={currentDate} category={el} />
             </div>
           )

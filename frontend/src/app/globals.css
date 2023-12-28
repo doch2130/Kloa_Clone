@@ -378,7 +378,6 @@ input::-webkit-inner-spin-button {
     display: none;
   }
   footer {
-    margin: 1rem auto 0;
-    padding-bottom: 50px;
+    display: none;
   }
 }

@@ -17,14 +17,14 @@ export default function Header() {
   return (
     <>
     <header className='relative z-20'>
-      <nav className='nav-bar bg-white dark:bg-[#33353a] dark:border-[#42464D]'>
-        <div className='nav-left sm:pl-[8px]'>
+      <nav className='nav-bar bg-white dark:bg-[#33353a] dark:border-[#42464D] sm:flex-wrap sm:h-[110px]'>
+        <div className='nav-left sm:pt-4 sm:pb-2 sm:px-0 sm:justify-center sm:flex-auto'>
           <Link href='/' as='/' className='logo-image-container'>
             <Image src={Kloa1Icon} alt='KLOA ICON' width={100} height={30} className='default-image' />
             <Image src={Kloa2Icon} alt='KLOA ICON Hover' width={100} height={30} className='hover-image' />
           </Link>
         </div>
-        <div className='nav-center sm:pr-[8px]'>
+        <div className='nav-center sm:pr-0 sm:pb-4 sm:justify-center '>
           <div className='nav-list'>
             <Link href='/notices?page=1' as='/notices?page=1' className={`drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc] ${pathName.includes('/notices') ? 'text-[#8045dd] dark:text-[#a36bfc] drop-in-underline-active' : 'text-[#7d8395]'}`}>공지사항</Link>
             <Link href='/characters' as='/characters' className={`drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc] ${pathName.includes('/characters') ? 'text-[#8045dd] dark:text-[#a36bfc] drop-in-underline-active' : 'text-[#7d8395]'}`}>전투정보실</Link>

@@ -92,10 +92,10 @@ export default async function Home() {
       <section className={styled.slideImage}>
         <SlideImage />
       </section>
-      <section className={styled.schedule}>
+      <section className={`${styled.schedule} mt-[2.5rem] sm:mt-3`}>
         <Schedule adventureIslandData={adventureIslandData?.result} />
       </section>
-      <section className={styled.notices}>
+      <section className={`${styled.notices} mt-[2.5rem] sm:mt-3`}>
         <div className={styled.lostarkNotice}>
           <div className={`${styled.subTitle} dark:text-[#eaf0ec] mlg:bg-white mlg:dark:bg-[#33353a]`}>
             <Link href='https://lostark.game.onstove.com/News/Notice/List'>로스트아크 공지사항</Link>
