@@ -62,7 +62,8 @@ export default function HeaderSearchForm() {
     }
     
     setSearchValue('');
-    router.push(`./characters/${searchValue}`);
+    // router.replace(`./${searchValue}`);
+    router.push(`./${searchValue}`);
     return ;
   }
 
