@@ -322,6 +322,29 @@ date-fns 사용하는 방식으로 캘린더 생성 방법을 확인하였지만
 메인 페이지 반응형 작업 - 3
 Header, 주간 스케줄 레이아웃 sm 사이즈에서 css 변경 작업
 
+48일차:
+React-Query 셋팅
+=> Character 캐릭터 검색 테스트
+참고1: https://velog.io/@ckstn0777/Next.js-13%EC%97%90%EC%84%9C-React-Query-SSR-%EC%A0%81%EC%9A%A9%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95
+참고2: https://velog.io/@baby_dev/Next13-with-react-query
+참고3: https://toby2009.tistory.com/54
+==> new QueryClient 대신 useQueryClient를 사용해야하는 이유
+참고4: https://velog.io/@cnsrn1874/%EB%B2%88%EC%97%AD-React-Query-FAQs
+==> 읽으면 좋은 글
+참고5: https://11001.tistory.com/221
+=> 셋팅
+참고6: https://velog.io/@bohongu/Next.js%EC%97%90%EC%84%9C-React-Query-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-v5
+=> 셋팅2
+
+Fetch의 revalidate 기능 체크
+=> Next에서 제공하는 캐시 기능
+=> 정적인 페이지에 적합, 빈번한 업데이트되는 정보에는 부적합
+=> 캐릭 상세 페이지에서는 해당 기능을 사용하여 데이터를 요청하고 관리하려고 하였지만, use client 컴포넌트에서 데이터를 요청하여 사용하는 경우에는 적합하지 않다고 한다.
+
+==> 결론은 React-Query를 이용하여 데이터 관리를 하는 방식으로 사용하면 될 것 같다.
+=> new QueryClient 방식에서 useQueryClient 방식으로 수정해야 할 듯 (내용 좀 더 찾아보고 결정)
+
+
 *CSS 참고용*
 placeholder
 #7d8395
