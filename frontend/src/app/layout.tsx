@@ -1,8 +1,9 @@
 import type { Metadata } from 'next'
 // import { Inter } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/Header/Header'
+import Providers from './Provider'
 import AuthSession from './AuthSession'
+import Header from '@/components/Header/Header'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html>
       <body className='bg-[#f5f6f7] dark:bg-[#2b2d31] h-full'>
-        <AuthSession>
-          <Header />
-          {children}
-        </AuthSession>
+        <Providers>
+          <AuthSession>
+            <Header />
+            {children}
+          </AuthSession>
+        </Providers>
       </body>
     </html>
   )

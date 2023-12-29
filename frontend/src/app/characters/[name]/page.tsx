@@ -14,6 +14,9 @@ import UpArrowSvg from '@/components/UI/UpArrowSvg'
 import { useState } from 'react'
 import { Tab, Disclosure } from '@headlessui/react'
 
+import { QueryFunction, useQuery } from '@tanstack/react-query'
+import { getCharacter } from './getCharacter'
+
 type equipArrayType = {
   reinforcementLevel: string;
   name: string;
@@ -411,6 +414,20 @@ export default function CharacterDetail() {
     // dataLoadHandler(name);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // This useQuery could just as well happen in some deeper child to
+  // the "HydratedPosts"-component, data will be available immediately either way
+  const { data } = useQuery({ queryKey: ['character', name], queryFn: () => getCharacter(name) });
+  console.log('data ', data);
+
+  // This query was not prefetched on the server and will not start
+  // fetching until on the client, both patterns are fine to mix
+  const { data: otherData } = useQuery({
+    queryKey: ["posts-not-ssr", name],
+    queryFn: () => getCharacter(name),
+  });
+  console.log('otherData ', otherData);
+
 
   const characterBackgroundColor = {
     maskImage: 'linear-gradient(100deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 70%)',
