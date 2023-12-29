@@ -54,13 +54,15 @@ export default function HeaderSearchForm() {
     if(!searchValueRef.current) {
       return ;
     }
-    if(searchValueRef.current.value.trim() === '') {
+    const searchValue = searchValueRef.current.value.trim();
+    if(searchValue === '') {
       alert('캐릭터명을 입력해주세요.');
       searchValueRef.current.focus();
       return ;
     }
-
-    router.push(`./characters/${searchValueRef.current.value.trim()}`);
+    
+    setSearchValue('');
+    router.push(`./characters/${searchValue}`);
     return ;
   }
 
