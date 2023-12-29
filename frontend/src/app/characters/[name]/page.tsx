@@ -419,7 +419,7 @@ export default function CharacterDetail() {
 
   return (
     <div className='w-full min-h-full bg-lightGrey dark:bg-[#2b2d31] text-[#353945] dark:text-[#eaf0ec] min-[1260px]:flex min-[1260px]:justify-center relative'>
-      <div className='shrink-0 w-[1200px] flex justify-between relative'>
+      <div className='shrink-0 w-[1200px] flex justify-between relative m-auto'>
         <Tab.Group>
           <section className='shrink-0 w-[400px] bg-white dark:bg-[#33353a] border-l dark:border-l-[#4d4f55] shadow-[5px_1px_8px_0_rgba(0,0,0,.06)] z-[1]'>
             <div className='w-full h-[300px] bg-[#15181d] relative overflow-hidden'>
