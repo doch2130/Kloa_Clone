@@ -344,6 +344,8 @@ Fetch의 revalidate 기능 체크
 ==> 결론은 React-Query를 이용하여 데이터 관리를 하는 방식으로 사용하면 될 것 같다.
 => new QueryClient 방식에서 useQueryClient 방식으로 수정해야 할 듯 (내용 좀 더 찾아보고 결정)
 
+49일차:
+getCharacter API의 Type 설정
 
 *CSS 참고용*
 placeholder
