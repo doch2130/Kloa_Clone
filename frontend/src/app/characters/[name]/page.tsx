@@ -14,7 +14,7 @@ import UpArrowSvg from '@/components/UI/UpArrowSvg'
 import { useState } from 'react'
 import { Tab, Disclosure } from '@headlessui/react'
 
-import { QueryFunction, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { getCharacter } from './getCharacter'
 
 type equipArrayType = {
@@ -380,54 +380,8 @@ export default function CharacterDetail() {
     ]
   });
 
-  const dataLoadHandler = async (name:string) => {
-    const characterName = decodeURIComponent(name.trim());
-    try {
-      const resposneCharacter = await fetch(`/api/lostark/characters?characterName=${characterName}`, {
-        method: 'get'
-      });
-  
-      if(resposneCharacter.ok) {
-        const result = await resposneCharacter.json();
-  
-        if(result.status === 200) {
-          // 최근 검색 로컬 스토리지 저장
-          // localStorageSaveHandler('recently', searchValueRef.current.value, setRecentlyData);
-          console.log('result ', result);
-        } else if(result.status === 404) {
-          console.log('not found character');
-        } else {
-          alert('캐릭터 검색 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
-        }
-        return ;
-  
-      } else {
-        throw new Error('Network response was not ok');
-      }
-    } catch (error) {
-      alert('캐릭터 검색 중 에러가 발생하였습니다. 잠시 후 다시 시도 해주세요.');
-      return ;
-    }
-  }
-
-  useEffect(() => {
-    // dataLoadHandler(name);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // This useQuery could just as well happen in some deeper child to
-  // the "HydratedPosts"-component, data will be available immediately either way
   const { data } = useQuery({ queryKey: ['character', name], queryFn: () => getCharacter(name) });
   console.log('data ', data);
-
-  // This query was not prefetched on the server and will not start
-  // fetching until on the client, both patterns are fine to mix
-  const { data: otherData } = useQuery({
-    queryKey: ["posts-not-ssr", name],
-    queryFn: () => getCharacter(name),
-  });
-  console.log('otherData ', otherData);
-
 
   const characterBackgroundColor = {
     maskImage: 'linear-gradient(100deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 70%)',
