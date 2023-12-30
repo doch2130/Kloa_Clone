@@ -1,5 +1,6 @@
 'use client'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 import HeaderSearchFormRecently from './HeaderSearchFormRecently'
@@ -8,13 +9,13 @@ import HeaderSearchFormFavorite from './HeaderSearchFormFavorite'
 import { Character } from '@/type/characters'
 
 import SearchIcon from '@/assets/Icon/search.svg'
-import { useRouter } from 'next/navigation'
 
 export default function HeaderSearchForm() {
   const searchWrap = useRef<HTMLDivElement>(null);
   const searchValueRef = useRef<HTMLInputElement>(null);
   const [searchValue, setSearchValue] = useState<string>('');
   const router = useRouter();
+  const pathname = usePathname()
 
   // Input Focus에 따른 pop 출력
   const [isInputFocus, setIsInputFocus] = useState<boolean>(false);
@@ -60,10 +61,13 @@ export default function HeaderSearchForm() {
       searchValueRef.current.focus();
       return ;
     }
-    
+        
     setSearchValue('');
-    // router.replace(`./${searchValue}`);
-    router.push(`./${searchValue}`);
+    if(pathname.includes('/characters/')) {
+      router.replace(`./${searchValue}`);
+    } else {
+      router.push(`./characters/${searchValue}`);
+    }
     return ;
   }
 
