@@ -347,6 +347,10 @@ Fetch의 revalidate 기능 체크
 49일차:
 getCharacter API의 Type 설정
 
+50일차:
+Character Detail 페이지 컴포넌트 분리 작업
+React-Query를 이용한 데이터 출력 작업 진행
+
 *CSS 참고용*
 placeholder
 #7d8395
