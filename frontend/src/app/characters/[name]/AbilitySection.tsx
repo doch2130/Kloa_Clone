@@ -1,14 +1,15 @@
 'use client'
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import Image from 'next/image'
+import { Disclosure } from '@headlessui/react'
+import { ArmoryCard, ArmoryEquipment, Stat, CardEffect, Effect } from './CharacterResponseType'
 
+import UpArrowSvg from '@/components/UI/UpArrowSvg'
 import transcendance from '@/assets/Icon/transcendance.svg'
 import elixir from '@/assets/Icon/elixir.svg'
 
-import UpArrowSvg from '@/components/UI/UpArrowSvg'
-
-import { Disclosure } from '@headlessui/react'
-import { ArmoryCard, ArmoryEquipment, Card, Stat, CardEffect } from './CharacterResponseType'
+import CardGrade from '@/assets/Card/imgCardGrade.webp'
+import CardAwake from '@/assets/Card/imgCardAwake.webp'
 
 type equipArrayType = {
   reinforcementLevel: string;
@@ -220,21 +221,39 @@ const accessorieBraceletDescription:accessorieBraceletDescriptionType = {
 }
 
 
-const transformSetString = (input:string) => {
+const transformSetString = (input:string, isTitle:boolean) => {
   // const regex = /(\d+)세트 \((\d+)각성합계\)/g;
   // const matches = input.match(regex);
 
   const regex = /(\d+)세트(?: \((\d+)각성합계\))?/g;
   const matches = input.match(regex);
   if(matches !== null) {
-    return matches[0].replace(regex, (match, set, awakening) => {
-      if (awakening) {
-        return awakening + '각';
-      } else {
-        return set + '세트';
-      }
-    });
+    if(isTitle) {
+      return matches[0].replace(regex, (match, set, awakening) => {
+        if (awakening) {
+          return awakening + '각';
+        } else {
+          return set + '세트';
+        }
+      });
+    } else {
+      return matches[0].replace(regex, (match, set, awakening) => {
+        if (awakening) {
+          return awakening + '각성';
+        } else {
+          return set + '세트';
+        }
+      });
+    }
   }
+}
+
+const findValueInText = (str:string) => {
+  // 정규 표현식을 사용하여 숫자를 찾습니다.
+  const regex = /<font color='#99ff99'>(\d+)<\/font>/;
+  const match = str.match(regex);
+  // 매치된 값이 있다면 반환하고, 없으면 null을 반환합니다.
+  return match ? parseInt(match[1], 10).toLocaleString() : null;
 }
 
 interface AbilitySection {
@@ -244,11 +263,28 @@ interface AbilitySection {
 }
 
 export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, ArmoryCard }:AbilitySection) {
-  console.log('ArmoryCard ', ArmoryCard !== undefined && ArmoryCard);
-  const cardCount = [1,2,3,4,5,6];
-  const jewelCount = [1,2,3,4,5,6,7,8,9,10,11];
-  const gagInCount = [1,2,3,4,5,6];
-  const equipGagInCount = [1,2,3];
+  const cardArrayCount = [0,1,2,3,4,5];
+  const jewelCount = [0,1,2,3,4,5,6,7,8,9,10];
+  const gagInCount = [0,1,2,3,4,5];
+  const equipGagInCount = [0,1,2];
+  const ArmoryProfileStatsCloenOne = ArmoryProfileStats !== undefined ? ArmoryProfileStats.slice(0, 3) : [];
+  const ArmoryProfileStatsCloenTwo = ArmoryProfileStats !== undefined ? ArmoryProfileStats.slice(3, 6) : [];
+  const [statusMaxValue, setStatusMaxValue] = useState(['치명', '치명']);
+  const [statusSum, setStatusSum] = useState(0);
+
+  useEffect(() => {
+    if(ArmoryProfileStats !== undefined) {
+      const sortedData = ArmoryProfileStats.slice(0, 6).sort((a, b) => parseInt(b.Value) - parseInt(a.Value));
+
+      let sum = 0;
+      sortedData.forEach((data) => {
+        sum += Number(data.Value);
+      });
+      setStatusSum(sum);
+      setStatusMaxValue([sortedData[0].Type, sortedData[1].Type]);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -659,24 +695,23 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
             <div className='mt-4 text-sm leading-[17px] pl-1'>
               <div className='flex justify-between'>
                 <p className='text-[#7d8395]'>공격력</p>
-                <p className='font-semibold text-[#353945] dark:text-inherit'>86,102</p>
-                
+                <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats[7].Value).toLocaleString()}</p>
               </div>
               <div className='flex justify-between text-sm mt-2.5'>
                 <p className='text-[#7d8395]'>
                   <><span className='ml-2.5 mr-2 w-[6px] h-[4px] border-l border-b inline-block mb-1 border-[#7d8395]'></span>기본</>
                 </p>
-                <p className='font-semibold text-[#353945] dark:text-inherit'>70,385</p>
+                <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && findValueInText(ArmoryProfileStats[7].Tooltip[1])}</p>
               </div>
               <div className='flex justify-between text-sm mt-0.5'>
                 <p className='text-[#7d8395]'>
                   <><span className='ml-2.5 mr-2 w-[6px] h-[4px] border-l border-b inline-block mb-1  border-[#7d8395]'></span>효과</>
                 </p>
-                <p className='font-semibold text-[#353945] dark:text-inherit'>15,717</p>
+                <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && findValueInText(ArmoryProfileStats[7].Tooltip[2])}</p>
               </div>
               <div className='flex justify-between mt-3'>
                 <p className='text-[#7d8395]'>최대 생명력</p>
-                <p className="font-semibold text-[#353945] dark:text-inherit">250,639</p>
+                <p className="font-semibold text-[#353945] dark:text-inherit">{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats[6].Value).toLocaleString()}</p>
               </div>
             </div>
           </div>
@@ -687,40 +722,34 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
                 <p className='text-sm font-bold text-[#8045dd]'>전투 특성</p>
               </div>
               <hr className='grow mx-3 border-[#e6e8ec] dark:border-[#7d8395]' />
-              <p className='text-sm font-semibold'>합계 2779</p>
+              <p className='text-sm font-semibold'>합계 {statusSum}</p>
             </div>
             <div className='mt-4 pl-1'>
               <div className='space-y-2.5 text-[0.925rem] items-between'>
-                {/* 치특신 */}
                 {/* 가장 높은 값: #8045dd, 2번쨰 높은 값: 5865f2 */}
+                {/* 치특신 */}
                 <div className='flex justify-between'>
-                  <div className='flex justify-between max-w-[75px] w-full'>
-                    <p className='text-[#7d8395]'>치명</p>
-                    <p className='font-semibold text-[#5865f2] dark:text-[#8991ee]'>559</p>
-                  </div>
-                  <div className='flex justify-between max-w-[75px] w-full'>
-                    <p className='text-[#7d8395]'>특화</p>
-                    <p className='font-semibold text-[#8045dd] dark:text-[#a36bfc]'>1852</p>
-                  </div>
-                  <div className='flex justify-between max-w-[75px] w-full'>
-                    <p className='text-[#7d8395]'>신속</p>
-                    <p className='font-semibold text-[#353945] dark:text-inherit'>166</p>
-                  </div>
+                  {ArmoryProfileStatsCloenOne.map((status:Stat, index:number) => {
+                    const valueStyle = status.Type === statusMaxValue[0] ? 'font-semibold text-[#8045dd] dark:text-[#a36bfc]' : status.Type === statusMaxValue[1] ? 'font-semibold text-[#5865f2] dark:text-[#8991ee]' : 'font-semibold text-[#353945] dark:text-inherit';
+                    return (
+                      <div className='flex justify-between max-w-[75px] w-full' key={index}>
+                        <p className='text-[#7d8395]'>{status.Type}</p>
+                        <p className={valueStyle}>{status.Value}</p>
+                      </div>
+                      )
+                  })}
                 </div>
                 {/* 제인숙 */}
                 <div className='flex justify-between'>
-                  <div className='flex justify-between max-w-[75px] w-full'>
-                    <p className='text-[#7d8395]'>제압</p>
-                    <p className='font-semibold text-[#353945] dark:text-inherit'>70</p>
-                  </div>
-                  <div className='flex justify-between max-w-[75px] w-full'>
-                    <p className='text-[#7d8395]'>인내</p>
-                    <p className='font-semibold text-[#353945] dark:text-inherit'>66</p>
-                  </div>
-                  <div className='flex justify-between max-w-[75px] w-full'>
-                    <p className='text-[#7d8395]'>숙련</p>
-                    <p className='font-semibold text-[#353945] dark:text-inherit'>66</p>
-                  </div>
+                  {ArmoryProfileStatsCloenTwo.map((status:Stat, index:number) => {
+                    const valueStyle = status.Type === statusMaxValue[0] ? 'font-semibold text-[#8045dd] dark:text-[#a36bfc]' : status.Type === statusMaxValue[1] ? 'font-semibold text-[#5865f2] dark:text-[#8991ee]' : 'font-semibold text-[#353945] dark:text-inherit';
+                    return (
+                      <div className='flex justify-between max-w-[75px] w-full' key={index}>
+                        <p className='text-[#7d8395]'>{status.Type}</p>
+                        <p className={valueStyle}>{status.Value}</p>
+                      </div>
+                      )
+                  })}
                 </div>
               </div>
             </div>
@@ -771,15 +800,13 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
               </div>
               <hr className='grow mx-3 border-[#e6e8ec] dark:border-[#7d8395]' />
               <div className='flex items-center space-x-1.5'>
-                <p className='font-semibold'>
-                  {/* 세상을 구하는 빛&nbsp;
-                  <span className='text-[#8045dd] dark:text-[#a36bfc]'>30각</span> */}
-                  {ArmoryCard !== undefined && ArmoryCard?.Effects.map((CardEffect:CardEffect, index:number) => {
+                <p className='font-semibold whitespace-pre overflow-hidden max-w-[500px] text-ellipsis'>
+                  {ArmoryCard !== undefined && ArmoryCard?.Effects?.map((CardEffect:CardEffect, index:number) => {
                     return (
                     <Fragment key={index}>
                     {index > 0 && ' · '}
                     {CardEffect.Items[CardEffect.Items.length - 1].Name.replace(/\d세트(?: \(\d+각성합계\))?/g, '').trim()}&nbsp;
-                    <span className='text-[#8045dd] dark:text-[#a36bfc]'>{transformSetString(CardEffect.Items[CardEffect.Items.length - 1].Name)}</span>
+                    <span className='text-[#8045dd] dark:text-[#a36bfc]'>{transformSetString(CardEffect.Items[CardEffect.Items.length - 1].Name, true)}</span>
                     </Fragment>
                   )})}
                 </p>
@@ -787,61 +814,53 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
               </div>
             </div>
             <div className='mt-3 grid grid-cols-6 gap-x-3'>
-              {ArmoryCard !== undefined && ArmoryCard?.Cards.map((card:Card, index:number) => (
-                <div className='w-full' key={index}>
-                  <div className='relative aspect-[248/362] -mr-1'>
-                    <div className='absolute inset-0 pl-[1.8%] pr-[4.2%] pt-[5.2%]'>
-                      <Image alt={card.Name} width={248} height={362} decoding="async" data-nimg="1" src={card.Icon} />
-                    </div>
-                    {/* 카드 등급에 따라 bg postion 값이 달라짐 (X 값) */}
-                    <div className='absolute inset-0 bg-cover aspect-[248/362] bg-[url(https://pica.korlark.com/2018/obt/assets/images/pc/profile/img_card_grade.png?f9e0ffc8a709611354db408dd0e7a7bb)]'
-                      style={{backgroundPositionX: '80.4%', backgroundPositionY: 'top'}}></div>
-                    <div className='absolute bottom-[6.5%] left-[5%] right-[7.5%] overflow-hidden'>
-                      {/* Left를 이용하여 1,2,3,4,5 각 그림 표시 */}
-                      <div className='relative bg-cover aspect-[10/3] bg-[url(https://pica.korlark.com/2018/obt/assets/images/pc/profile/img_profile_awake.png)] drop-shadow-xl'>
-                        <div className={`absolute top-0 bottom-0 w-full bg-bottom bg-cover left-[${card.AwakeCount*20 -100}%] bg-[url(https://pica.korlark.com/2018/obt/assets/images/pc/profile/img_profile_awake.png)]`}></div>
+              {cardArrayCount.map((index:number) => {
+                if(ArmoryCard !== undefined && ArmoryCard.Cards[index]) {
+                  const positionXValue = ArmoryCard.Cards[index].Grade === '일반' ? '0%' : ArmoryCard.Cards[index].Grade === '고급' ? '20.1%' : ArmoryCard.Cards[index].Grade === '희귀' ? '40.2%' : ArmoryCard.Cards[index].Grade === '영웅' ? '60.29%' : '80.4%';
+                  return (
+                    <div className='w-full' key={index}>
+                      <div className='relative aspect-[248/362] -mr-1'>
+                        <div className='absolute inset-0 pl-[1.8%] pr-[4.2%] pt-[5.2%]'>
+                          <Image alt={ArmoryCard.Cards[index].Name} width={248} height={362} decoding="async" data-nimg="1" src={ArmoryCard.Cards[index].Icon} />
+                        </div>
+                        {/* 카드 등급에 따라 bg postion 값이 달라짐 (X 값) */}
+                        <div className={`absolute inset-0 bg-cover aspect-[248/362]`}
+                          style={{backgroundPositionX: positionXValue, backgroundPositionY: 'top', backgroundImage: `url('${CardGrade.src}')`}}></div>
+                        <div className='absolute bottom-[6.5%] left-[5%] right-[7.5%] overflow-hidden'>
+                          {/* Left를 이용하여 1,2,3,4,5 각 그림 표시 */}
+                          <div className='relative bg-cover aspect-[10/3] drop-shadow-xl' style={{backgroundImage: `url('${CardAwake.src}')`}}>
+                            <div className={`absolute top-0 bottom-0 w-full bg-bottom bg-cover left-[${ArmoryCard.Cards[index].AwakeCount*20 -100}%]`} style={{backgroundImage: `url('${CardAwake.src}')`}}></div>
+                          </div>
+                        </div>
                       </div>
+                      <p className='mt-[6px] -mb-2 px-1 w-full text-center text-xs font-semibold select-text break-keep'>{ArmoryCard.Cards[index].Name}</p>
                     </div>
-                  </div>
-                  <p className='mt-[6px] -mb-2 px-1 w-full text-center text-xs font-semibold select-text break-keep'>{card.Name}</p>
-                </div>
-              ))}
+                  )
+                } else {
+                  return (
+                    <div key={index} className='w-full mt-0.5 aspect-[248/375] bg-[#e6e8ec] dark:bg-[#2b2d31] rounded-md'></div>
+                  )
+                }
+              })}
             </div>
           </Disclosure.Button>
             <Disclosure.Panel className="mt-4 transform scale-100 opacity-100">
-              <div className='grid gap-3 grid-cols-1'>
+              <div className={ArmoryCard === undefined ? 'grid gap-3 grid-cols-1' : ArmoryCard?.Effects?.length >= 2 ? 'grid gap-3 grid-cols-2' : 'grid gap-3 grid-cols-1'}>
                 {/* 카드 종류에 따라 div 태그 추가 */}
-                {/* 지금은 1종류만 설정 */}
-                <div className='px-[17px] py-4 bg-[#f5f6f7] dark:bg-[#2b2d31] rounded-xl'>
-                  <p className='font-semibold'>세상을 구하는 빛</p>
+                {ArmoryCard !== undefined && ArmoryCard?.Effects?.map((Effect:CardEffect, index:number) => (
+                <div className='px-[17px] py-4 bg-[#f5f6f7] dark:bg-[#2b2d31] rounded-xl' key={index}>
+                  <p className='font-semibold'>{Effect.Items[Effect.Items.length - 1].Name.replace(/\d세트(?: \(\d+각성합계\))?/g, '').trim()}</p>
                   <div className='mt-3 space-y-2'>
                     {/* 같은 종류 카드에서 효과 리스트 */}
-                    <div className='flex'>
-                      <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>2세트</span>
-                      <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>암속성 피해 감소 +10.00%</p>
-                    </div>
-                    <div className='flex'>
-                      <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>4세트</span>
-                      <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>암속성 피해 감소 +10.00%</p>
-                    </div>
-                    <div className='flex'>
-                      <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>6세트</span>
-                      <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>암속성 피해 감소 +10.00%</p>
-                    </div>
-                    <div className='flex'>
-                      <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>12각성</span>
-                      <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>공격 속성을 성속성으로 변환</p>
-                    </div>
-                    <div className='flex'>
-                      <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>18각성</span>
-                      <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>성속성 피해 +7.00%</p>
-                    </div>
-                    <div className='flex'>
-                      <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>30각성</span>
-                      <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>성속성 피해 +8.00%</p>
-                    </div>
+                    {Effect.Items.map((item:Effect, index:number) => (
+                      <div className='flex' key={`${index}_${item.Name}`}>
+                        <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>{transformSetString(item.Name, false)}</span>
+                        <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>{item.Description}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
+                ))}
               </div>
             </Disclosure.Panel>
           </>
