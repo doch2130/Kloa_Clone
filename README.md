@@ -351,6 +351,13 @@ getCharacter API의 Type 설정
 Character Detail 페이지 컴포넌트 분리 작업
 React-Query를 이용한 데이터 출력 작업 진행
 
+51일차:
+React-Query Loading 기능 임시 설정
+카드 데이터 연동 완료
+캐릭터 기본, 전투 특성 연동 완료
+=> 장비, 악세, 각인, 보석 셋팅 필요
+
+
 *CSS 참고용*
 placeholder
 #7d8395
