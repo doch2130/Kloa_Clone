@@ -83,7 +83,7 @@ export default function CharacterDetailLeft({ ArmoryProfile }:CharacterDetailLef
                     : 'text-xl font-[450]'
                     }
                   >
-                    혈석 길드
+                    {ArmoryProfile?.GuildName}
                   </p>
                 </div>
               </div>
