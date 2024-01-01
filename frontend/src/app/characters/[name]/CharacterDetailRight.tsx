@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Tab } from '@headlessui/react'
 
 import AbilitySection from './AbilitySection'
@@ -10,6 +10,10 @@ interface CharacterDetailRight {
 }
 
 export default function CharacterDetailRight({ data }:CharacterDetailRight) {
+  if(data !== undefined && data !== null) {
+    [data.ArmoryProfile.Stats[2], data.ArmoryProfile.Stats[3]] = [data?.ArmoryProfile.Stats[3], data?.ArmoryProfile.Stats[2]];
+  }
+  
   return (
     <section className='grow pb-[50px]'>
       <div className='pl-[60px] pt-[25px] h-full'>
