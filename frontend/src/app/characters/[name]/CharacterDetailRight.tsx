@@ -1,18 +1,110 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Tab } from '@headlessui/react'
 
 import AbilitySection from './AbilitySection'
-import { CharacterArmories } from './CharacterResponseType'
+import { ArmoryGem, CharacterArmories, Gem } from './CharacterResponseType'
 
 interface CharacterDetailRight {
   data?: CharacterArmories | null | undefined
 }
 
-export default function CharacterDetailRight({ data }:CharacterDetailRight) {
-  if(data !== undefined && data !== null) {
-    [data.ArmoryProfile.Stats[2], data.ArmoryProfile.Stats[3]] = [data?.ArmoryProfile.Stats[3], data?.ArmoryProfile.Stats[2]];
+const findValuesInText = (str: string) => {
+  const regex = /<FONT COLOR='#FFD200'>([^<]+)<\/FONT>\s([^<]+)\s?/;
+  const match = str.match(regex);
+
+  return match ? { skilName: match[1].trim(), skilEffect: match[2].trim() } : { skilName: '', skilEffect: '' };
+};
+
+const gemTooltipJsonChange = (gem: Gem) => {
+  try {
+    return JSON.parse(gem.Tooltip);
+  } catch (error) {
+    console.error('Error parsing gem.Tooltip JSON:', error);
+    return null;
   }
+};
+
+export default function CharacterDetailRight({ data }:CharacterDetailRight) {
+  const [updatedArmoryGemData, setUpdatedArmoryGemData] = useState<ArmoryGem  | undefined>(data?.ArmoryGem);
+  
+  useEffect(() => {
+    const updateStats = () => {
+      if (data) {
+        [data.ArmoryProfile.Stats[2], data.ArmoryProfile.Stats[3]] = [data.ArmoryProfile.Stats[3], data.ArmoryProfile.Stats[2]];
+      }
+    };
+
+    const updateGems = async () => {
+      if (data?.ArmoryGem) {
+        let prominenceJewelCount = 0;
+        let extinctionJewelCount = 0;
+    
+        const updatedGems = await Promise.all(
+          data.ArmoryGem.Gems?.map(async (gem: Gem) => {
+            const gemType = gem.Name.includes('홍염') ? '홍염' : gem.Name.includes('멸화') ? '멸화' : '';
+            gemType === '홍염' ? prominenceJewelCount++ : gemType === '멸화' ? extinctionJewelCount++ : null;
+    
+            const gemTooltipJson = gemTooltipJsonChange(gem);
+            let skilName = '';
+            let skilEffect = '';
+            if (gemTooltipJson.Element_004.value.Element_001) {
+              const values = findValuesInText(gemTooltipJson.Element_004.value.Element_001);
+              skilName = values.skilName;
+              skilEffect = values.skilEffect;
+            } else {
+              const values = findValuesInText(gemTooltipJson.Element_005.value.Element_001);
+              skilName = values.skilName;
+              skilEffect = values.skilEffect;
+            }
+    
+            return {
+              ...gem,
+              Type: gemType,
+              SkilName: skilName,
+              SkilEffect: skilEffect,
+            };
+          }) || []
+        );
+    
+        const updatedArmoryGem = {
+          Gems: updatedGems,
+          Effects: data.ArmoryGem.Effects,
+          Total: [extinctionJewelCount, prominenceJewelCount],
+        };
+    
+        // 업데이트된 ArmoryGem 객체로 상태를 업데이트합니다.
+        // 이렇게 함으로써 React는 변경 사항을 올바르게 감지하고 다시 렌더링을 트리거할 수 있습니다.
+        data.ArmoryGem = updatedArmoryGem;
+      }
+    };
+
+    const sortedGems = () => {
+      if(data?.ArmoryGem) {
+        const sortedArmoryGemData = data?.ArmoryGem.Gems.sort((a, b) => {
+          const typeA = a.Type || '';
+          const typeB = b.Type || '';
+          const typeComparison = typeA.localeCompare(typeB);
+          if (typeComparison !== 0) {
+            return typeComparison;
+          }
+          return b.Level - a.Level;
+        });
+
+        data.ArmoryGem.Gems = sortedArmoryGemData;
+      }
+    }
+
+    async function fetchData() {
+      updateStats();
+      await updateGems();
+      sortedGems();
+      setUpdatedArmoryGemData(data?.ArmoryGem);
+    }
+
+    fetchData();
+
+  }, [data]);
   
   return (
     <section className='grow pb-[50px]'>
@@ -31,7 +123,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
         {/* 탭에 따른 데이터 출력 위치 */}
         <Tab.Panels>
           <Tab.Panel>
-            <AbilitySection ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard} />
+            <AbilitySection ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard} ArmoryGem={updatedArmoryGemData} />
           </Tab.Panel>
           <Tab.Panel>Content 2</Tab.Panel>
           <Tab.Panel>Content 3</Tab.Panel>

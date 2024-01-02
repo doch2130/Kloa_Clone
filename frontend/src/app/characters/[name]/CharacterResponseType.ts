@@ -125,6 +125,7 @@ export interface Effect {
 export interface ArmoryGem {
   Gems: Gem[]
   Effects: GemEffect[]
+  Total?: number[]
 }
 
 export interface Gem {
@@ -134,6 +135,9 @@ export interface Gem {
   Level: number
   Grade: string
   Tooltip: string
+  Type?: string
+  SkilName?: string | null
+  SkilEffect?: string | null
 }
 
 export interface GemEffect {
