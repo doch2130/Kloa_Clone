@@ -113,13 +113,31 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
 
     const updateAbilityStone = async () => {
       if (data?.ArmoryEquipment) {
+        let abilityStoneHealthy = '';
+
         const updateArmoryEquipmentAbilityStone = await Promise.all(
           data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
             let result: ArmoryEquipmentPoint[] = [];
             if (armoryEquipment.Type === '어빌리티 스톤') {
-              const abilityStoneJson = tooltipJsonChange(armoryEquipment.Tooltip)
+              const abilityStoneJson = tooltipJsonChange(armoryEquipment.Tooltip);
 
-              if (abilityStoneJson.Element_005.value.Element_000) {
+              if(abilityStoneJson.Element_004.value.Element_001) {
+                abilityStoneHealthy = abilityStoneJson.Element_004.value.Element_001;
+              }
+
+              if (abilityStoneJson.Element_006.value.Element_000) {
+                const tempArray = [0, 1, 2]
+                result = await Promise.all(
+                  tempArray.map(async (el: number) => {
+                    const contentStrElement = abilityStoneJson.Element_006.value.Element_000?.contentStr
+                    const elementNumber = `Element_00${el}`
+
+                    const extractedData = abilityStoneExtractedData(contentStrElement[elementNumber].contentStr);
+                
+                    return extractedData || { Name: '', Value: '' }; // 만약 값이 undefined이면 기본값을 반환
+                  })
+                )
+              } else if (abilityStoneJson.Element_005.value.Element_000) {
                 const tempArray = [0, 1, 2]
                 result = await Promise.all(
                   tempArray.map(async (el: number) => {
@@ -128,14 +146,14 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
 
                     const extractedData = abilityStoneExtractedData(contentStrElement[elementNumber].contentStr);
                 
-                    return extractedData || { Name: '', Value: '0' }; // 만약 값이 undefined이면 기본값을 반환
+                    return extractedData || { Name: '', Value: '' }; // 만약 값이 undefined이면 기본값을 반환
                   })
                 )
               } else {
                 // 이벤트 돌은 각인이 없음
-                result.push({ Name: '', Value: '0' });
-                result.push({ Name: '', Value: '0' });
-                result.push({ Name: '', Value: '0' });
+                result.push({ Name: '', Value: '' });
+                result.push({ Name: '', Value: '' });
+                result.push({ Name: '', Value: '' });
               }
               return result
             }
@@ -147,18 +165,82 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
         if (updateArmoryEquipmentAbilityStone[abilityStoneIndex] !== null && updateArmoryEquipmentAbilityStone[abilityStoneIndex] !== undefined) {
           data.ArmoryEquipment[abilityStoneIndex] = {
             ...data.ArmoryEquipment[abilityStoneIndex],
-            'ArmoryEquipmentPoint': updateArmoryEquipmentAbilityStone[abilityStoneIndex] as ArmoryEquipmentPoint[]
+            'ArmoryEquipmentPoint': updateArmoryEquipmentAbilityStone[abilityStoneIndex] as ArmoryEquipmentPoint[],
+            'Healthy': abilityStoneHealthy
           };
         }
       }
     }
 
+    const updateBracelet = async () => {
+      if (data?.ArmoryEquipment) {
+        const updateArmoryEquipmentBracelet = await Promise.all(
+          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
+            if (armoryEquipment.Type === '팔찌') {
+              const braceletJson = tooltipJsonChange(armoryEquipment.Tooltip);
+
+              if(braceletJson.Element_004.value.Element_001) {
+                let braceletArraySplitImg = braceletJson.Element_004.value.Element_001.split('</img>');
+                braceletArraySplitImg.shift();
+
+                let braceletJsonStr = braceletArraySplitImg.map((braceletSplitImg:string) => {
+                  const updateBraceletSplitImg = braceletSplitImg.replace(/<[^>]*>/g, '').trim();
+                  if(updateBraceletSplitImg.indexOf(']') >= 0) {
+                    return [updateBraceletSplitImg.slice(1, updateBraceletSplitImg.indexOf(']')).trim(), updateBraceletSplitImg.slice(updateBraceletSplitImg.indexOf(']')+1).trim()];
+                  } else {
+                    return [updateBraceletSplitImg.slice(0, updateBraceletSplitImg.indexOf(' +')).trim(), updateBraceletSplitImg.slice(updateBraceletSplitImg.indexOf(' +')+1).trim()];
+                  }
+                });
+
+                // console.log('braceletJsonStr ', braceletJsonStr);
+
+                // 정렬할 순서를 정의한 배열
+                const order = ['치명', '신속', '특화', '제압', '숙련', '인내'];
+                // split을 이용하여 배열로 만들기
+      
+                // 정렬 함수
+                braceletJsonStr.sort((a:string, b:string) => {
+                  // console.log('a.includes(str.trim().slice(0, 2)) ', a.trim().includes(a.trim().slice(0, 2)), a);
+                    let indexA = order.findIndex(str => a.slice(0, 2).includes(str));
+                    let indexB = order.findIndex(str => b.slice(0, 2).includes(str));
+
+                    // 해당 문자열이 order 배열에 없으면 맨 뒤로 보내기
+                    if (indexA === -1) indexA = order.length;
+                    if (indexB === -1) indexB = order.length;
+
+                    return indexA - indexB;
+                });
+                
+                const result = braceletJsonStr.filter((braceletJson:string) => braceletJson[1] !== '효과 부여 가능');
+                // console.log('result ', result);
+                
+                return result;
+              }
+            }
+            return undefined
+          })
+        );
+
+        const braceletIndex = data?.ArmoryEquipment.findIndex(item => item.Type === '팔찌');
+        // console.log('updateArmoryEquipmentBracelet[braceletIndex] ', updateArmoryEquipmentBracelet[braceletIndex]);
+
+        data.ArmoryEquipment[braceletIndex] = {
+          ...data.ArmoryEquipment[braceletIndex],
+          'Effects': updateArmoryEquipmentBracelet[braceletIndex]
+        }
+      }
+    }
+
+
+  
+
     async function fetchData() {
       updateStats();
       await updateGems();
       sortedGems();
-      setUpdatedArmoryGemData(data?.ArmoryGem);
       await updateAbilityStone();
+      await updateBracelet();
+      setUpdatedArmoryGemData(data?.ArmoryGem);
     }
 
     fetchData();

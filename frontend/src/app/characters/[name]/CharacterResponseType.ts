@@ -39,6 +39,8 @@ export interface ArmoryEquipment {
   Grade: string
   Tooltip: string
   ArmoryEquipmentPoint?: ArmoryEquipmentPoint[]
+  Healthy?: string
+  Effects?: string[][]
 }
 
 export interface ArmoryEquipmentPoint {

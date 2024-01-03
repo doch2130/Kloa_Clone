@@ -2,7 +2,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Disclosure } from '@headlessui/react'
-import { ArmoryCard, ArmoryEquipment, Stat, CardEffect, Effect, ArmoryGem, ArmoryEngraving, Engraving, EngravingEffect } from './CharacterResponseType'
+import { ArmoryCard, ArmoryEquipment, Stat, CardEffect, Effect, ArmoryGem, ArmoryEngraving, EngravingEffect, ArmoryEquipmentPoint } from './CharacterResponseType'
 
 import UpArrowSvg from '@/components/UI/UpArrowSvg'
 import transcendance from '@/assets/Icon/transcendance.svg'
@@ -11,6 +11,7 @@ import elixir from '@/assets/Icon/elixir.svg'
 import CardGrade from '@/assets/Card/imgCardGrade.webp'
 import CardAwake from '@/assets/Card/imgCardAwake.webp'
 import { allEngravingDescriptionList } from '@/data/EngravingsData'
+import { itemGradeStyleBackground, itemGradeStyleColor } from '../ItemGradeStyle'
 
 type equipArrayType = {
   reinforcementLevel: string;
@@ -38,15 +39,6 @@ type equipAccessoriesArrayType = {
   gagInOne: string,
   gagInTwo: string,
   gagInDecrease: string,
-  imageSrc: string;
-}
-
-type equipAccessorieBraceletType = {
-  name: string;
-  tear: string;
-  rating: string;
-  equipmentType: string;
-  basicEffectArray: string[];
   imageSrc: string;
 }
 
@@ -201,26 +193,6 @@ const equipAccessoriesArray:equipAccessoriesArrayType[] = [
   },
 ];
 
-const equipAccessorieBracelet:equipAccessorieBraceletType = {
-  name: '찬란한 영웅의 팔찌',
-  tear: '티어 3',
-  rating: '고대',
-  equipmentType: '팔찌',
-  basicEffectArray: ['치명 +100', '특화 +97', '민첩 +3400', '정밀 하'],
-  imageSrc: 'https://pica.korlark.com/efui_iconatlas/acc/acc_304.png',
-}
-
-type accessorieBraceletDescriptionType = {
-  [key:string]: string;
-}
-
-const accessorieBraceletDescription:accessorieBraceletDescriptionType = {
-  '정밀': "몬스터에게 공격 적중 시 치명타 적중이 3% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)",
-  '습격': "몬스터에게 공격 적중 시 치명타 피해량이 6% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)",
-  '우월': "몬스터에게 공격 적중 시 주는 피해가 3% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)",
-  '열정': "자신의 생명력이 40% 이상일 경우 적에게 공격 적중 시 3초 동안 '열정' 효과를 획득한다. '냉정' 효과를 보유 중 일 때 '열정' 효과가 1% 추가 증가한다. 열정 : 몬스터에게 주는 피해가 3% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)"
-}
-
 const transformSetString = (input:string, isTitle:boolean) => {
   const regex = /(\d+)세트(?: \((\d+)각성합계\))?/g;
   const matches = input.match(regex);
@@ -295,6 +267,9 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
   const [statusMaxValue, setStatusMaxValue] = useState(['치명', '치명']);
   const [statusSum, setStatusSum] = useState(0);
   const [armoryEngravingList, setArmoryEngravingList] = useState<string[][]>([[], []]);
+
+  const braceletIndex = ArmoryEquipment?.findIndex(item => item.Type === '팔찌');
+  const abilityStoneIndex = ArmoryEquipment?.findIndex(item => item.Type === '어빌리티 스톤');
 
   useEffect(() => {
     if(ArmoryProfileStats !== undefined) {
@@ -549,56 +524,76 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
           )
           })}
           {/* 팔찌 */}
+          {ArmoryEquipment !== undefined && braceletIndex !== undefined && braceletIndex > 0 ?
           <div className='flex items-center w-full gap-x-2 mt-3 relative group/item'>
             {/* 팔찌 사진 */}
-            <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-              <Image src={equipAccessorieBracelet.imageSrc} alt={equipAccessorieBracelet.name} width={50} height={50} loading="lazy" decoding="async" />
+            <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={itemGradeStyleBackground[ArmoryEquipment?.[braceletIndex].Grade]}>
+              <Image src={ArmoryEquipment?.[braceletIndex].Icon} alt={ArmoryEquipment?.[braceletIndex].Name} width={50} height={50} loading="lazy" decoding="async" />
               <div className='class="w-full h-4 text-center bg-[#8045dd]'>
+                {/* 팔찌 계산기는 적용 안함, 고정 값 */}
                 <p className='text-xs font-semibold text-white'>9.64%</p>
               </div>
             </div>
             {/* 팔찌 정보 */}
             <div>
-              <p className='truncate text-[0.9rem] leading-4 font-semibold text-[#D9AB48]'>{equipAccessorieBracelet.name}</p>
+              <p className='truncate text-[0.9rem] leading-4 font-semibold' style={itemGradeStyleColor[ArmoryEquipment?.[braceletIndex].Grade]}>{ArmoryEquipment?.[braceletIndex].Name}</p>
               <p className='text-sm font-semibold mt-0.5'>
-                <span>{equipAccessorieBracelet.basicEffectArray[0].replace('+', '')}</span>
-                {equipAccessorieBracelet.basicEffectArray[1] && <span className='ml-1.5'>{equipAccessorieBracelet.basicEffectArray[1].replace('+', '')}</span>}
+                {/* <span>{equipAccessorieBracelet.basicEffectArray[0].replace('+', '')}</span> */}
+                {/* {equipAccessorieBracelet.basicEffectArray[1] && <span className='ml-1.5'>{equipAccessorieBracelet.basicEffectArray[1].replace('+', '')}</span>} */}
+                {ArmoryEquipment?.[braceletIndex].Effects?.map((effect:string[], index:number) => {
+                  const order = ['치명', '신속', '특화', '제압', '숙련', '인내'];
+                  if(order.findIndex(str => effect[0].includes(str)) >= 0) {
+                    return (
+                    <span key={`${effect[0]}_${index}`} className={index === 1 ? 'ml-1.5' : ''}>{`${effect[0]} ${effect[1].replace('+', '')}`}</span>
+                    )
+                  } else {
+                  return (
+                    <Fragment key={`${effect[0]}_${index}`}></Fragment>
+                    )
+                  }
+                })}
               </p>
               {/* 팔찌 특옵 */}
               <p className='text-sm font-semibold mt-0.5'>
-                {equipAccessorieBracelet.basicEffectArray[2] && <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{equipAccessorieBracelet.basicEffectArray[2].slice(0, equipAccessorieBracelet.basicEffectArray[2].indexOf(' '))}</span>}
-                {equipAccessorieBracelet.basicEffectArray[3] && <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>{equipAccessorieBracelet.basicEffectArray[3].slice(0, equipAccessorieBracelet.basicEffectArray[3].indexOf(' '))}</span>}
-                {equipAccessorieBracelet.basicEffectArray[4] && <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{equipAccessorieBracelet.basicEffectArray[4].slice(0, equipAccessorieBracelet.basicEffectArray[4].indexOf(' '))}</span>}
+                {ArmoryEquipment?.[braceletIndex].Effects?.map((effect:string[], index:number) => {
+                  const order = ['치명', '신속', '특화', '제압', '숙련', '인내'];
+                  if(order.findIndex(str => effect[0].includes(str)) === -1) {
+                    return (
+                    <span key={`${effect[0]}_${index}`} className={'rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] mr-1.5'}>{`${effect[0]}`}</span>
+                    )
+                  } else {
+                  return (
+                    <Fragment key={`${effect[0]}_${index}`}></Fragment>
+                    )
+                  }
+                })}
               </p>
             </div>
             {/* 팔찌 Hover */}
             <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
-              <p className='truncate text-[0.95rem] font-semibold text-[#D9AB48] mb-2'>{equipAccessorieBracelet.name}</p>
+              <p className='truncate text-[0.95rem] font-semibold text-[#D9AB48] mb-2'>{ArmoryEquipment?.[braceletIndex].Name}</p>
               <div className='flex w-full'>
-                <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-                  <Image src={equipAccessorieBracelet.imageSrc} alt={'준엄한 비상의 돌 IV'} loading="lazy" width={44} height={44} decoding="async" />
+                <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={itemGradeStyleBackground[ArmoryEquipment?.[braceletIndex].Grade]}>
+                  <Image src={ArmoryEquipment?.[braceletIndex].Icon} alt={ArmoryEquipment?.[braceletIndex].Name} loading="lazy" width={44} height={44} decoding="async" />
                 </div>
                 <div className='ml-1 w-full h-auto flex flex-col justify-evenly'>
                   <div className='text-xs font-semibold flex items-center'>
-                    <span className='text-[#D9AB48]'>{equipAccessorieBracelet.rating} {equipAccessorieBracelet.equipmentType}</span>
+                    <span style={itemGradeStyleColor[ArmoryEquipment?.[braceletIndex].Grade]}>{ArmoryEquipment?.[braceletIndex].Grade} {ArmoryEquipment?.[braceletIndex].Type}</span>
                     <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
                     <span className=''>티어 3</span>
                   </div>
                   <div className='flex items-center ml-[2px]'>
-                    <div className="w-full flex items-center font-semibold text-xs">
-                      {equipAccessorieBracelet.basicEffectArray.map((basicEffect:string, index:number) => {
+                    <div className="w-full flex items-center font-semibold text-xs whitespace-pre">
+                      {ArmoryEquipment?.[braceletIndex].Effects !== undefined && ArmoryEquipment?.[braceletIndex]?.Effects?.map((effect:string[], index:number) => {
                         if(index === 0) {
-                          return (
-                            <Fragment key={index}>
-                            <span>{basicEffect.slice(0, basicEffect.indexOf(' '))}</span>
-                            </Fragment>
-                          )
+                          return <span key={`${effect[0]}_${index}`}>{effect[0]}</span>
                         }
                         return (
-                        <Fragment key={index}>
-                        <div className='w-[3px] h-[3px] rounded-full bg-[#7d8395] mx-[4px]'></div>
-                        <span>{basicEffect.slice(0, basicEffect.indexOf(' '))}</span>
-                        </Fragment>)
+                          <Fragment key={`${effect[0]}_${index}`}>
+                          <div className='w-[3px] h-[3px] rounded-full bg-[#7d8395] mx-[4px]'></div>
+                          <span>{effect[0]}</span>
+                          </Fragment>
+                        )
                       })}
                     </div>
                   </div>
@@ -606,70 +601,95 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
               </div>
               {/* 팔찌 옵션 */}
               <div className='w-full mt-4'>
-                {equipAccessorieBracelet.basicEffectArray.map((basicEffect:string, index:number) => (
-                  <div key={index} className='flex flex-col my-[4px]'>
+                {ArmoryEquipment?.[braceletIndex].Effects !== undefined && ArmoryEquipment?.[braceletIndex]?.Effects?.map((effect:string[], index:number) => {
+                  const order = ['치명', '신속', '특화', '제압', '숙련', '인내', '마법 방어력', '물리 방어력', '전투 중 생명력 회복량', '최대 마나', '최대 생명력', '체력' , '힘', '민첩', '지능'];
+                  console.log('test ', order.findIndex(str => effect[0].includes(str)));
+                  const findValue = order.findIndex(str => effect[0].includes(str));
+                  return (
+                  <div key={`${effect[0]}_${index}`} className='flex flex-col my-[4px]'>
                     <div className='flex items-center'>
-                      <span className='text-[0.8rem] leading-5 font-bold '>{basicEffect}</span>
-                      <span className="text-[0.8rem] font-bold leading-5 ml-2 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center">2.68%</span>
+                      <span className='text-[0.8rem] leading-5 font-bold'>{findValue >= 0 ? `${effect[0]} ${effect[1]}` : effect[0]}</span>
+                      <span className="text-[0.8rem] font-bold leading-5 ml-2 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center">2.77%</span>
                     </div>
-                    {accessorieBraceletDescription[basicEffect.slice(0, basicEffect.indexOf(' '))] && <p className='text-[0.8rem] leading-5 font-bold my-[4px]'>{accessorieBraceletDescription[basicEffect.slice(0, basicEffect.indexOf(' '))]}</p>}
+                    {findValue < 0 && <p className='text-[0.8rem] leading-5 font-bold my-[4px]'>{effect[1]}</p>}
                   </div>
-                )
-                )}
+                )})}
               </div>
             </div>
           </div>
+          : <div className="w-[50px] h-[66px] rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31] mt-3"></div>
+          }
+
           {/* 어빌리티 스톤 (돌) */}
           <div className='flex'>
+            {ArmoryEquipment !== undefined && abilityStoneIndex !== undefined && abilityStoneIndex > 0 ?
             <div className='flex items-center text-left gap-x-2 mt-3 relative group/item'>
-              <div className='w-[50px] h-[50px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-                <Image src={'https://pica.korlark.com/efui_iconatlas/ability/ability_257.png'} alt='준엄한 비상의 돌 IV' width={50} height={50} decoding="async" />
+              <div className='w-[50px] h-[50px] rounded-md overflow-hidden shrink-0' style={itemGradeStyleBackground[ArmoryEquipment[abilityStoneIndex].Grade]}>
+                <Image src={ArmoryEquipment[abilityStoneIndex].Icon} alt={ArmoryEquipment[abilityStoneIndex].Name} width={50} height={50} decoding="async" />
               </div>
               <div>
-                <p className='text-[0.9rem] font-semibold leading-4 text-[#D9AB48]'>준엄한 비상의 돌 IV</p>
+                <p className='text-[0.9rem] font-semibold leading-4' style={itemGradeStyleColor[ArmoryEquipment[abilityStoneIndex].Grade]}>{ArmoryEquipment[ArmoryEquipment?.findIndex(item => item.Type === '어빌리티 스톤')].Name}</p>
                 <p className='mt-1'>
-                  <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>바리케이드 4</span>
-                  <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>아드레날린 9</span>
-                  <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>공격속도 감소 3</span>
+                  {ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint !== undefined &&
+                  ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.map((armoryEquipmentPoint:ArmoryEquipmentPoint, index:number) => {
+                    if(armoryEquipmentPoint.Name !== '') {
+                      if(index === 2) {
+                        return <span key={`${armoryEquipmentPoint.Name}_${index}`} className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>{`${armoryEquipmentPoint.Name} ${armoryEquipmentPoint.Value}`}</span>
+                      } else {
+                        return <span key={`${armoryEquipmentPoint.Name}_${index}`} className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{`${armoryEquipmentPoint.Name} ${armoryEquipmentPoint.Value}`}</span>
+                      }
+                    } else {
+                      return <Fragment key={`${armoryEquipmentPoint.Name}_${index}`}></Fragment>
+                    }
+                  })
+                  }
                 </p>
               </div>
               {/* 어빌리티 스톤 (돌) Hover */}
               <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
-                <p className='truncate text-[0.95rem] font-semibold text-[#D9AB48] mb-2'>준엄한 비상의 돌 IV</p>
+                <p className='truncate text-[0.95rem] font-semibold mb-2' style={itemGradeStyleColor[ArmoryEquipment[abilityStoneIndex].Grade]}>{ArmoryEquipment[abilityStoneIndex].Name}</p>
                 <div className='flex w-full'>
-                  <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-                    <Image src={'https://pica.korlark.com/efui_iconatlas/ability/ability_257.png'} alt={'준엄한 비상의 돌 IV'} loading="lazy" width={44} height={44} decoding="async" />
+                  <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={itemGradeStyleBackground[ArmoryEquipment[abilityStoneIndex].Grade]}>
+                    <Image src={ArmoryEquipment[abilityStoneIndex].Icon} alt={ArmoryEquipment[abilityStoneIndex].Name} loading="lazy" width={44} height={44} decoding="async" />
                   </div>
                   <div className='ml-1 w-full h-auto flex flex-col justify-evenly'>
                     <div className='text-xs font-semibold flex items-center'>
-                      <span className='text-[#D9AB48]'>고대 어빌리티 스톤</span>
+                      <span style={itemGradeStyleColor[ArmoryEquipment[abilityStoneIndex].Grade]}>{`${ArmoryEquipment[abilityStoneIndex].Grade} ${ArmoryEquipment[abilityStoneIndex].Type}`}</span>
                       <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
                       <span className=''>티어 3</span>
                     </div>
                     <div className='flex items-center ml-[2px]'>
                       <div className="w-full flex items-center">
-                        <span className='text-[0.85rem] font-semibold'>4</span>
+                        <span className='text-[0.85rem] font-semibold'>{ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[0].Value}</span>
                         <div className='w-[3px] h-[3px] rounded-full bg-[#7d8395] mt-[3px] mx-[6px]'></div>
-                        <span className='text-[0.85rem] font-semibold'>9</span>
+                        <span className='text-[0.85rem] font-semibold'>{ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[1].Value}</span>
                         <div className='w-[3px] h-[3px] rounded-full bg-[#7d8395] mt-[3px] mx-[6px]'></div>
-                        <span className='text-[0.85rem] font-semibold text-[#f95126]'>3</span>
+                        <span className='text-[0.85rem] font-semibold text-[#f95126]'>{ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[2].Value}</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 {/* 돌 체력 */}
                 <div className='w-full mt-4'>
-                  <p className='text-sm font-bold'>체력 +21326</p>
+                  <p className='text-sm font-bold'>{ArmoryEquipment[abilityStoneIndex].Healthy}</p>
                 </div>
                 <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
                 {/* 돌 옵션 */}
                 <div className='w-full'>
-                  <p className='text-[0.8rem] leading-5 font-bold'>바리케이드 +4</p>
-                  <p className='text-[0.8rem] leading-5 font-bold my-[2px]'>아드레날린 +9</p>
-                  <p className='text-[0.8rem] leading-5 font-bold text-[#f95126]'>공격속도 감소 +3</p>
+                  {ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[0].Name !== '' && 
+                    <p className='text-[0.8rem] leading-5 font-bold'>{ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[0].Name} +{ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[0].Value}</p>
+                  }
+                  {ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[1].Name !== '' && 
+                    <p className='text-[0.8rem] leading-5 font-bold my-[2px]'>{ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[1].Name} +{ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[1].Value}</p>
+                  }
+                  {ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[2].Name !== '' && 
+                    <p className='text-[0.8rem] leading-5 font-bold text-[#f95126]'>{ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[2].Name} +{ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.[2].Value}</p>
+                  }
                 </div>
               </div>
             </div>
+            : <div className="w-[50px] h-[50px] rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31] mt-3"></div>
+            }
           </div>
         </div>
       </div>
@@ -680,7 +700,7 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
         {jewelCount.map((jewel:number) => {
           if(ArmoryGem?.Gems[jewel] !== undefined) {
             return (
-              <div key={jewel} className='relative w-[44px] h-[44px] rounded-md group/item' style={{background: `linear-gradient(135deg, #3b1303, #a23405)`}}>
+              <div key={jewel} className='relative w-[44px] h-[44px] rounded-md group/item' style={itemGradeStyleBackground[ArmoryGem?.Gems[jewel].Grade]}>
                 <Image src={ArmoryGem?.Gems[jewel].Icon} alt='jewel' width={44} height={44} decoding='async' />
                 <div className='absolute bottom-0 right-0 w-4 h-4 rounded-[4px] rounded-tr-md bg-white dark:bg-[#33353a] opacity-90 flex justify-center items-center'>
                   <p className='text-[11px] text-[#FF6000] dark:text-[#ff9e63] font-medium'>{ArmoryGem?.Gems[jewel] !== undefined && ArmoryGem?.Gems[jewel].Level}</p>
@@ -693,8 +713,7 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
             )
           } else {
             return (
-              <div key={jewel} className='relative w-[44px] aspect-square h-full rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31]'>
-              </div>
+              <div key={jewel} className='relative w-[44px] aspect-square h-full rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31]'></div>
             )
           }
         })}
