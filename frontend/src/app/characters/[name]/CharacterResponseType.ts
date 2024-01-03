@@ -38,6 +38,12 @@ export interface ArmoryEquipment {
   Icon: string
   Grade: string
   Tooltip: string
+  ArmoryEquipmentPoint?: ArmoryEquipmentPoint[]
+}
+
+export interface ArmoryEquipmentPoint {
+  Name: string
+  Value: string
 }
 
 export interface ArmoryAvatar {

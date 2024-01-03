@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Tab } from '@headlessui/react'
 
 import AbilitySection from './AbilitySection'
-import { ArmoryGem, CharacterArmories, Gem } from './CharacterResponseType'
+import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, CharacterArmories, Gem } from './CharacterResponseType'
 
 interface CharacterDetailRight {
   data?: CharacterArmories | null | undefined
@@ -16,13 +16,29 @@ const findValuesInText = (str: string) => {
   return match ? { skilName: match[1].trim(), skilEffect: match[2].trim() } : { skilName: '', skilEffect: '' };
 };
 
-const gemTooltipJsonChange = (gem: Gem) => {
+const tooltipJsonChange = (tooltip: string) => {
   try {
-    return JSON.parse(gem.Tooltip);
+    return JSON.parse(tooltip);
   } catch (error) {
-    console.error('Error parsing gem.Tooltip JSON:', error);
+    console.error('Error parsing Tooltip JSON:', error);
     return null;
   }
+};
+
+const abilityStoneExtractedData = (str: string) => {
+  // 정규 표현식을 사용하여 데이터 추출
+  const regex = /<FONT COLOR='#[A-Fa-f0-9]+?'>(.*?)<\/FONT>.*?활성도\s*\+(-?\d+)/;
+  const match = str.match(regex);
+
+  // 매치 결과에서 데이터 추출
+  if (match && match.length >= 3) {
+    const name = match[1];
+    const value = match[2];
+
+    return { Name: name, Value: value };
+  }
+
+  return null; // 매치가 실패한 경우
 };
 
 export default function CharacterDetailRight({ data }:CharacterDetailRight) {
@@ -45,7 +61,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
             const gemType = gem.Name.includes('홍염') ? '홍염' : gem.Name.includes('멸화') ? '멸화' : '';
             gemType === '홍염' ? prominenceJewelCount++ : gemType === '멸화' ? extinctionJewelCount++ : null;
     
-            const gemTooltipJson = gemTooltipJsonChange(gem);
+            const gemTooltipJson = tooltipJsonChange(gem.Tooltip);
             let skilName = '';
             let skilEffect = '';
             if (gemTooltipJson.Element_004.value.Element_001) {
@@ -95,7 +111,46 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
       }
     }
 
-    const updateAbilityStone = () => {
+    const updateAbilityStone = async () => {
+      if (data?.ArmoryEquipment) {
+        const updateArmoryEquipmentAbilityStone = await Promise.all(
+          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
+            let result: ArmoryEquipmentPoint[] = [];
+            if (armoryEquipment.Type === '어빌리티 스톤') {
+              const abilityStoneJson = tooltipJsonChange(armoryEquipment.Tooltip)
+
+              if (abilityStoneJson.Element_005.value.Element_000) {
+                const tempArray = [0, 1, 2]
+                result = await Promise.all(
+                  tempArray.map(async (el: number) => {
+                    const contentStrElement = abilityStoneJson.Element_005.value.Element_000?.contentStr
+                    const elementNumber = `Element_00${el}`
+
+                    const extractedData = abilityStoneExtractedData(contentStrElement[elementNumber].contentStr);
+                
+                    return extractedData || { Name: '', Value: '0' }; // 만약 값이 undefined이면 기본값을 반환
+                  })
+                )
+              } else {
+                // 이벤트 돌은 각인이 없음
+                result.push({ Name: '', Value: '0' });
+                result.push({ Name: '', Value: '0' });
+                result.push({ Name: '', Value: '0' });
+              }
+              return result
+            }
+            return undefined
+          })
+        );
+
+        const abilityStoneIndex = data?.ArmoryEquipment.findIndex(item => item.Type === '어빌리티 스톤');
+        if (updateArmoryEquipmentAbilityStone[abilityStoneIndex] !== null && updateArmoryEquipmentAbilityStone[abilityStoneIndex] !== undefined) {
+          data.ArmoryEquipment[abilityStoneIndex] = {
+            ...data.ArmoryEquipment[abilityStoneIndex],
+            'ArmoryEquipmentPoint': updateArmoryEquipmentAbilityStone[abilityStoneIndex] as ArmoryEquipmentPoint[]
+          };
+        }
+      }
     }
 
     async function fetchData() {
@@ -103,6 +158,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
       await updateGems();
       sortedGems();
       setUpdatedArmoryGemData(data?.ArmoryGem);
+      await updateAbilityStone();
     }
 
     fetchData();
