@@ -2,7 +2,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Disclosure } from '@headlessui/react'
-import { ArmoryCard, ArmoryEquipment, Stat, CardEffect, Effect, ArmoryGem } from './CharacterResponseType'
+import { ArmoryCard, ArmoryEquipment, Stat, CardEffect, Effect, ArmoryGem, ArmoryEngraving, Engraving, EngravingEffect } from './CharacterResponseType'
 
 import UpArrowSvg from '@/components/UI/UpArrowSvg'
 import transcendance from '@/assets/Icon/transcendance.svg'
@@ -10,6 +10,7 @@ import elixir from '@/assets/Icon/elixir.svg'
 
 import CardGrade from '@/assets/Card/imgCardGrade.webp'
 import CardAwake from '@/assets/Card/imgCardAwake.webp'
+import { allEngravingDescriptionList } from '@/data/EngravingsData'
 
 type equipArrayType = {
   reinforcementLevel: string;
@@ -220,7 +221,6 @@ const accessorieBraceletDescription:accessorieBraceletDescriptionType = {
   '열정': "자신의 생명력이 40% 이상일 경우 적에게 공격 적중 시 3초 동안 '열정' 효과를 획득한다. '냉정' 효과를 보유 중 일 때 '열정' 효과가 1% 추가 증가한다. 열정 : 몬스터에게 주는 피해가 3% 증가한다. (60레벨 초과 몬스터에게는 효과 감소)"
 }
 
-
 const transformSetString = (input:string, isTitle:boolean) => {
   const regex = /(\d+)세트(?: \((\d+)각성합계\))?/g;
   const matches = input.match(regex);
@@ -253,22 +253,48 @@ const findValueInText = (str:string) => {
   return match ? parseInt(match[1], 10).toLocaleString() : null;
 }
 
+const findValueInEngravingPoint = (str: string) => {
+  const startIndex = str.indexOf('각인 활성 포인트 ')+10;
+  const endIndex = str.indexOf('<\/FONT>', startIndex);
+
+  return str.slice(startIndex, endIndex);
+}
+
+const findArmoryEngravingValue = (armoryEngravingEffects:EngravingEffect[]) => {
+  // str = engraving.Name
+  const valueList: string[] = [];
+  const styleList: string[] = [];
+
+  armoryEngravingEffects.forEach((effects:Effect) => {
+    const value = effects.Name.slice(effects.Name.indexOf('Lv. ')+4, effects.Name.indexOf('Lv. ')+5);
+    valueList.push(value);
+    
+    const style = effects.Name.includes('감소') ? 'text-[#f95126]' : effects.Name.includes('Lv. 3') ? 'text-[#8045dd] dark:text-[#a36bfc]' : 'text-[#5865f2] dark:text-[#8991ee]';
+    styleList.push(style);
+  });
+
+  return [valueList, styleList];
+}
+
 interface AbilitySection {
   ArmoryEquipment?: ArmoryEquipment[]
   ArmoryProfileStats?: Stat[]
   ArmoryCard?: ArmoryCard
   ArmoryGem?: ArmoryGem
+  ArmoryEngraving?: ArmoryEngraving
 }
 
-export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, ArmoryCard, ArmoryGem }:AbilitySection) {
-  const cardArrayCount = [0,1,2,3,4,5];
-  const jewelCount = [0,1,2,3,4,5,6,7,8,9,10];
-  const gagInCount = [0,1,2,3,4,5];
-  const equipGagInCount = [0,1,2];
+const cardArrayCount = [0,1,2,3,4,5];
+const jewelCount = [0,1,2,3,4,5,6,7,8,9,10];
+const equipGagInArrayCount = [1,2];
+const equipGagInLevelCount = [1,2,3];
+
+export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, ArmoryCard, ArmoryGem, ArmoryEngraving }:AbilitySection) {
   const ArmoryProfileStatsCloenOne = ArmoryProfileStats !== undefined ? ArmoryProfileStats.slice(0, 3) : [];
   const ArmoryProfileStatsCloenTwo = ArmoryProfileStats !== undefined ? ArmoryProfileStats.slice(3, 6) : [];
   const [statusMaxValue, setStatusMaxValue] = useState(['치명', '치명']);
   const [statusSum, setStatusSum] = useState(0);
+  const [armoryEngravingList, setArmoryEngravingList] = useState<string[][]>([[], []]);
 
   useEffect(() => {
     if(ArmoryProfileStats !== undefined) {
@@ -281,8 +307,30 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
       setStatusSum(sum);
       setStatusMaxValue([sortedData[0].Type, sortedData[1].Type]);
     }
+
+    if(ArmoryEngraving !== undefined) {
+      const result = findArmoryEngravingValue(ArmoryEngraving.Effects);
+      setArmoryEngravingList(result);
+    }
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const armoryEngravingViewHelp = () => {
+    if (ArmoryEngraving !== undefined && ArmoryEngraving !== null) {
+      let temp = [];
+      let armoryEngravingLength = ArmoryEngraving?.Effects.length;
+  
+      while (armoryEngravingLength < 5) {
+        temp.push(<div key={`h-6-${armoryEngravingLength}`} className="h-6"></div>);
+        armoryEngravingLength++;
+      }
+  
+      return <React.Fragment>{temp}</React.Fragment>;
+    }
+  
+    return null;
+  };
 
   return (
     <>
@@ -387,68 +435,47 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
               </div>
             </div>
           )})}
-          {/* 각인 1 */}
+          {/* 장착 각인 */}
           <div className='h-[50px] px-0.5 grid grid-cols-2 items-center mt-3'>
-            <div className='relative group/item'>
-              <div className='flex items-center text-left h-11 gap-x-3'>
-                <Image src={'https://pica.korlark.com/efui_iconatlas/buff/buff_71.png'} alt='원한' width={44} height={44} decoding="async" className='rounded-full drop-shadow' />
-                <div>
-                  <p className='text-sm font-semibold'>원한</p>
-                  <p className='text-[0.7rem] font-semibold mt-0.5'>활성 포인트 +12</p>
-                </div>
-              </div>
-              {/* 각인 1 Hover */}
-              <div className='absolute z-10 opacity-98 w-[260px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
-                <div className='flex w-full'>
-                  <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' >
-                    <Image src={'https://pica.korlark.com/efui_iconatlas/buff/buff_71.png'} alt={'원한'} loading="lazy" width={44} height={44} decoding="async" />
+            {equipGagInArrayCount.map((count:number, index:number) => {
+              if(ArmoryEngraving?.Engravings) {
+                return (
+                <div key={index} className='relative group/item'>
+                  <div className='flex items-center text-left h-11 gap-x-3'>
+                    <Image src={ArmoryEngraving?.Engravings[index].Icon} alt={ArmoryEngraving?.Engravings[index].Name} width={44} height={44} decoding="async" className='rounded-full drop-shadow' />
+                    <div>
+                      <p className='text-sm font-semibold'>{ArmoryEngraving?.Engravings[index].Name}</p>
+                      <p className='text-[0.7rem] font-semibold mt-0.5'>활성 포인트 {findValueInEngravingPoint(ArmoryEngraving?.Engravings[index].Tooltip)}</p>
+                    </div>
                   </div>
-                  <div className='w-full ml-3'>
-                    <p className='text-base font-bold'>원한</p>
-                    <p className='text-[0.7rem] font-semibold text-[#7d8395] mt-0.5 pl-0.5'>활성 포인트 +12</p>
-                  </div>
-                </div>
-                <div className='flex flex-col w-full'>
-                {equipGagInCount.map((el:number) => (
-                  <div key={el} className='w-full mt-3'>
-                    <p className='text-[0.9rem] font-bold leading-6'>레벨 {el} (활설도 {el*5})</p>
-                    <p className='text-[0.85rem] font-semibold leading-5'>보스 등급 이상 몬스터에게 주는 피해가 {el === 1 ? 4 : el === 2 ? 10 : 20}% 증가하지만, 받는 피해가 20% 증가한다.</p>
-                  </div>
-                ))}
-                </div>
-              </div>
-            </div>
-
-            {/* 각인 2 */}
-            <div className='relative group/item'>
-              <div className='flex items-center text-left h-11 gap-x-3'>
-                <Image src={'https://pica.korlark.com/efui_iconatlas/achieve/achieve_03_40.png'} alt='예리한 둔기' width={44} height={44} decoding="async" className='rounded-full drop-shadow' />
-                <div>
-                  <p className='text-sm font-semibold'>예리한 둔기</p>
-                  <p className='text-[0.7rem] font-semibold mt-0.5'>활성 포인트 +12</p>
-                </div>
-              </div>
-              {/* 각인 2 Hover */}
-              <div className='absolute z-10 opacity-98 w-[260px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
-                <div className='flex w-full'>
-                  <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' >
-                    <Image src={'https://pica.korlark.com/efui_iconatlas/achieve/achieve_03_40.png'} alt='예리한 둔기' loading="lazy" width={44} height={44} decoding="async" />
-                  </div>
-                  <div className='w-full ml-3'>
-                    <p className='text-base font-bold'>예리한 둔기</p>
-                    <p className='text-[0.7rem] font-semibold text-[#7d8395] mt-0.5 pl-0.5'>활성 포인트 +12</p>
+                  {/* 장착 각인 Hover */}
+                  <div className='absolute z-10 opacity-98 w-[260px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                    <div className='flex w-full'>
+                      <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' >
+                        <Image src={ArmoryEngraving?.Engravings[index].Icon} alt={ArmoryEngraving?.Engravings[index].Name} loading="lazy" width={44} height={44} decoding="async" />
+                      </div>
+                      <div className='w-full ml-3'>
+                        <p className='text-base font-bold'>{ArmoryEngraving?.Engravings[index].Name}</p>
+                        <p className='text-[0.7rem] font-semibold text-[#7d8395] mt-0.5 pl-0.5'>활성 포인트 {findValueInEngravingPoint(ArmoryEngraving?.Engravings[index].Tooltip)}</p>
+                      </div>
+                    </div>
+                    <div className='flex flex-col w-full'>
+                    {equipGagInLevelCount.map((el:number) => (
+                      <div key={el} className='w-full mt-3'>
+                        <p className='text-[0.9rem] font-bold leading-6'>레벨 {el} (활성도 {el*5})</p>
+                        <p className='text-[0.85rem] font-semibold leading-5'>{allEngravingDescriptionList[ArmoryEngraving?.Engravings[index].Name][el-1]}</p>
+                      </div>
+                    ))}
+                    </div>
                   </div>
                 </div>
-                <div className='flex flex-col w-full'>
-                {equipGagInCount.map((el:number) => (
-                  <div key={el} className='w-full mt-3'>
-                    <p className='text-[0.9rem] font-bold leading-6'>레벨 {el} (활설도 {el*5})</p>
-                    <p className='text-[0.85rem] font-semibold leading-5'>치명타 피해량이 {el === 1 ? 10 : el === 2 ? 25 : 50}% 증가하지만, 공격시 일정 확률로 20% 감소된 피해를 준다.</p>
-                  </div>
-                ))}
-                </div>
-              </div>
-            </div>
+              )
+            } else {
+              return (
+                <div key={index} className='bg-[#e6e8ec] dark:bg-[#2b2d31] rounded-full w-11 h-11'></div>
+              )
+            }
+            })}
           </div>
         </div>
         {/* 장비 정보 - 악세 */}
@@ -768,7 +795,7 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
           </div>
         </div>
       </div>
-      {/* 각인 */}
+      {/* 각인 리스트 */}
       <div className='px-[17px] py-4 w-full h-[300px] bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] flex flex-col'>
         <div className='shrink-0 flex justify-between items-center'>
           <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
@@ -776,27 +803,28 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
           </div>
           <hr className='grow mx-3 border-[#e6e8ec] dark:border-[#7d8395]' />
           <p className='font-semibold'>
-            <span className='text-[#8045dd] dark:text-[#a36bfc]'>33333</span>
-            <span className='text-[#5865f2] dark:text-[#8991ee]'>2</span>
-            <span className='text-warning'></span>
+            {armoryEngravingList[0].map((armoryEngraving, index:number) => (
+              <span key={index} className={armoryEngravingList[1][index]}>{armoryEngraving}</span>
+            ))}
           </p>
         </div>
         <div className='mt-4 pl-1 grow flex flex-col justify-between gap-y-2 overflow-y-auto'>
-          {/* 각인 사진 */}
-          {gagInCount.map((gagIn:number) => (
-            <div key={gagIn} className='flex items-center gap-x-3 group/item'>
-              <Image src={'https://pica.korlark.com/EFUI_IconAtlas/buff/buff_71.png'} alt='gagIn' decoding="async" className='rounded-full bg-[#e6e8ec]' width={31} height={31} />
+          {/* 각인 리스트 사진 */}
+          {ArmoryEngraving?.Effects.map((engraving:EngravingEffect, index:number) => (
+            <div key={index} className='flex items-center gap-x-3 group/item'>
+              {engraving !== null && <Image src={engraving.Icon} alt={engraving.Name} decoding="async" className='rounded-full bg-[#e6e8ec]' width={31} height={31} />}
               <p className='text-lg font-semibold'>
                 <span className='text-[#7d8395]'>Lv.</span>
-                <span>3 원한</span>
+                <span className={engraving.Name.includes('감소') ? 'text-[#f95126]' : ''}>{engraving.Name.slice(engraving.Name.indexOf('Lv. ')+4, engraving.Name.indexOf('Lv. ')+5)} {engraving.Name.slice(0, engraving.Name.indexOf(' Lv.'))}</span>
               </p>
               <div className='absolute z-1 opacity-95 w-max max-w-[260px] flex flex-col justify-center items-baseline p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[18%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
-                <p className='font-bold text-[0.9rem]'>원한 Lv.3</p>
-                <p className='font-semibold text-[0.8rem] mt-[12px]'>보스 등급 이상 몬스터에게 주는 피해가 20% 증가하지만, 받는 피해가 20% 증가한다.</p>
-                {/* <p className='font-semibold text-[0.8rem] mt-[12px]'>하이퍼 싱크 모드 중 싱크 스킬이 적중했을 시 피해량이 2% 증가하는 효과를 획득하며 (최대 3중첩) 이동기 및 기상기를 제외한 다른 싱크 스킬들의 재사용 대기시간이 0.5초씩 감소한다.<br />또한 하이퍼 싱크 모드에 진입 시 싱크 스킬들의 재사용 대기시간이 초기화되며 하이퍼 싱크 모드가 해제될 시 소모한 코어 에너지의 40%를 돌려받는다.</p> */}
+                <p className='font-bold text-[0.9rem]'>{`${engraving.Name.slice(0, engraving.Name.indexOf(' Lv.'))} ${engraving.Name.slice(engraving.Name.indexOf('Lv.')).replace(' ', '')}`}</p>
+                <p className='font-semibold text-[0.8rem] mt-[12px]'>{engraving.Description}</p>
               </div>
             </div>
           ))}
+          {/* Layout을 맞추기 위한 함수 최소 5개 고정 */}
+          {ArmoryEngraving !== undefined && ArmoryEngraving?.Effects.length < 5 && armoryEngravingViewHelp()}
         </div>
       </div>
     </div>
@@ -827,7 +855,7 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
             </div>
             <div className='mt-3 grid grid-cols-6 gap-x-3'>
               {cardArrayCount.map((index:number) => {
-                if(ArmoryCard !== undefined && ArmoryCard.Cards[index]) {
+                if(ArmoryCard !== undefined && ArmoryCard?.Cards[index]) {
                   const positionXValue = ArmoryCard.Cards[index].Grade === '일반' ? '0%' : ArmoryCard.Cards[index].Grade === '고급' ? '20.1%' : ArmoryCard.Cards[index].Grade === '희귀' ? '40.2%' : ArmoryCard.Cards[index].Grade === '영웅' ? '60.29%' : '80.4%';
                   return (
                     <div className='w-full' key={index}>

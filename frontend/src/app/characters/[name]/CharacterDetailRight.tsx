@@ -95,6 +95,9 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
       }
     }
 
+    const updateAbilityStone = () => {
+    }
+
     async function fetchData() {
       updateStats();
       await updateGems();
@@ -123,7 +126,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
         {/* 탭에 따른 데이터 출력 위치 */}
         <Tab.Panels>
           <Tab.Panel>
-            <AbilitySection ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard} ArmoryGem={updatedArmoryGemData} />
+            <AbilitySection ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard} ArmoryGem={updatedArmoryGemData} ArmoryEngraving={data?.ArmoryEngraving} />
           </Tab.Panel>
           <Tab.Panel>Content 2</Tab.Panel>
           <Tab.Panel>Content 3</Tab.Panel>
