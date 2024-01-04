@@ -41,6 +41,7 @@ export interface ArmoryEquipment {
   ArmoryEquipmentPoint?: ArmoryEquipmentPoint[]
   Healthy?: string
   Effects?: string[][]
+  Tear?: string
 }
 
 export interface ArmoryEquipmentPoint {
