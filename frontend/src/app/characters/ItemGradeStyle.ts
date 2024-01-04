@@ -25,6 +25,9 @@ export const itemGradeStyleBackground:itemGradeStyleBackgroundType = {
   '희귀': {
     background: `linear-gradient(135deg, #111f2c, #113d5d)`
   },
+  '고급': {
+    background: `linear-gradient(135deg, #1a230e, #374e18)`
+  },
   '일반': {
     background: `linear-gradient(135deg, #323232, #6d6d6d)`
   }
@@ -47,6 +50,9 @@ export const itemGradeStyleColor:itemGradeStyleColorType = {
     color: '#8045DD'
   },
   '희귀': {
+    color: '#2AB1F6'
+  },
+  '고급': {
     color: '#2AB1F6'
   },
   '일반': {
