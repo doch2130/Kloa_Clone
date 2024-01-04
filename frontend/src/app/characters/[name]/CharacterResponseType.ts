@@ -43,6 +43,37 @@ export interface ArmoryEquipment {
   Effects?: string[][]
   Tear?: string
   QualityValue?: number
+  WeaponAttribute?: ArmoryEquipmentWeapon
+  ArmoryAttribute?: ArmoryEquipmentArmor
+}
+
+export interface ArmoryEquipmentWeapon {
+  basicEffect: string
+  addEffect: string
+  itemLevel: string
+  setEffectName: {
+    setName: string
+    setLevel: string
+  }
+}
+
+export interface ArmoryEquipmentArmor {
+  basicEffect: string[]
+  addEffect: string
+  elixirEffect: ElixirEffect[]
+  itemLevel: string
+  setEffectName: {
+    setName: string
+    setLevel: string
+  }
+  transcendance: (string | number)[]
+}
+
+export interface ElixirEffect {
+  additionalEffects: string[]
+  elixirEffectLevel: string
+  elixirEffectName: string
+  elixirType: string
 }
 
 export interface ArmoryEquipmentPoint {

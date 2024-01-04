@@ -1,0 +1,123 @@
+'use client'
+import React from 'react'
+import Image from 'next/image'
+import { ArmoryEquipment } from './CharacterResponseType'
+
+import { allEngravingDescriptionList } from '@/data/EngravingsData'
+import { itemGradeStyleBackground, itemGradeStyleColor } from '../ItemGradeStyle'
+import { accessoriesBasicStatus } from './AccessoriesExport'
+import { characterJobStatus } from '@/data/CharacterJobData'
+import { itemQualityCheckFunction } from '../ItemQualityStyle'
+
+import transcendance from '@/assets/Icon/transcendance.svg'
+import elixir from '@/assets/Icon/elixir.svg'
+
+interface AbilityTabEquipArmorProps {
+  ArmoryEquipment?: ArmoryEquipment[]
+  armorType: string
+}
+
+export default function AbilityTabEquipArmor({ ArmoryEquipment, armorType }:AbilityTabEquipArmorProps) {
+  const armorIndex = ArmoryEquipment?.findIndex(item => item.Type === armorType);
+  // {/* 투구, 어깨, 상의, 하의, 장갑 */}
+  // {[0,1,2,3,4]
+  
+  if(armorIndex === undefined || armorIndex < 0 || ArmoryEquipment === undefined) {
+    return (
+      <div className='w-[50px] h-[66px] rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31] mt-3'></div>
+      )
+  }
+
+  // armorType === '투구' && console.log('Tooltip ', ArmoryEquipment?.[armorIndex]?.Tooltip);
+  // armorType === '어깨' && console.log('Tooltip ', ArmoryEquipment?.[armorIndex]?.Tooltip);
+
+  // console.log('ArmoryEquipment?.[armorIndex]?.QualityValue ', ArmoryEquipment?.[armorIndex]?.QualityValue);
+
+  const divWrapStyle = armorType === '투구' ? 'relative flex items-center w-full gap-x-2 z-1 group/item' : 'relative flex items-center w-full gap-x-2 z-1 group/item mt-3';
+
+  return (
+    <div className={divWrapStyle}>
+      {/* 장비 이미지, 품질 */}
+      <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={itemGradeStyleBackground[ArmoryEquipment?.[armorIndex]?.Grade]}>
+        <Image src={ArmoryEquipment?.[armorIndex]?.Icon} alt={ArmoryEquipment?.[armorIndex]?.Name} loading="lazy" width={50} height={50} decoding="async" />
+        <div className="w-full h-4 text-center bg-[#f9ae00] dark:bg-[#eba70c]">
+          <div className={`w-full h-4 text-center ${itemQualityCheckFunction(Number(ArmoryEquipment?.[armorIndex]?.QualityValue),'background')}`}>
+            {/* 품질 */}
+            <p className='text-xs font-semibold text-white'>{ArmoryEquipment?.[armorIndex]?.QualityValue}</p>
+          </div>
+        </div>
+
+        {/* 장비 정보 */}
+        <div>
+          {/* 초월 */}
+          <div className='flex items-center'>
+            <Image src={transcendance} alt='초월' width={16} height={16} />
+            <p className='text-sm font-semibold text-yellow-500 ml-0.5'>21</p>
+            <p className='text-[0.8rem] font-semibold ml-1'>7단계</p>
+          </div>
+          {/* 강화, 장비이름 */}
+          <p className={`truncate text-[0.9rem] font-semibold`} style={itemGradeStyleColor[ArmoryEquipment?.[armorIndex]?.Grade]}><span className='text-base'>{ArmoryEquipment?.[armorIndex]?.Name.slice(0, ArmoryEquipment?.[armorIndex]?.Name.indexOf(' '))}</span>{ArmoryEquipment?.[armorIndex]?.Name.slice(ArmoryEquipment?.[armorIndex]?.Name.indexOf(' '))}</p>
+          {/* 세트, 엘릭서 */}
+          <div className='flex items-center'>
+            {ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.setEffectName.setName !== '' && <p className='text-[0.7rem] leading-3 py-0.5 text-center font-semibold bg-[#e6e8ec] dark:bg-[#4b4e58] rounded-sm px-1.5'>{ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.setEffectName.setName} <span className='text-[0.75rem]'>{ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.setEffectName.setLevel}</span></p>}
+            <div className='gap-x-1.5 font-semibold ml-1.5 flex items-center'>
+              {/* 엘릭서 length */}
+              <>
+              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>회심 (질서) <span className='text-[0.75rem]'>Lv.5</span></span>
+              <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>무력화 <span className='text-[0.75rem]'>Lv.3</span></span>
+              </>
+            </div>
+          </div>
+        </div>
+
+        {/* 장비 Hover */}
+        <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+          <p className='truncate text-[0.9rem] font-semibold mb-2' style={itemGradeStyleColor[ArmoryEquipment?.[armorIndex]?.Grade]}><span className='text-base'>{ArmoryEquipment?.[armorIndex]?.Name.slice(0, ArmoryEquipment?.[armorIndex]?.Name.indexOf(' '))}</span>{ArmoryEquipment?.[armorIndex]?.Name.slice(ArmoryEquipment?.[armorIndex]?.Name.indexOf(' '))}</p>
+          <div className='flex w-full'>
+            <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+              <Image src={ArmoryEquipment?.[armorIndex]?.Icon} alt={ArmoryEquipment?.[armorIndex]?.Name} loading="lazy" width={44} height={44} decoding="async" />
+            </div>
+            <div className='ml-1 w-full h-auto flex flex-col justify-around'>
+              <div className='text-xs font-semibold flex items-center'>
+                <span style={itemGradeStyleColor[ArmoryEquipment?.[armorIndex]?.Grade]}>{ArmoryEquipment?.[armorIndex]?.Grade} {ArmoryEquipment?.[armorIndex]?.Type}</span>
+                <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
+                <span className='pb-[1px]'>{ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.itemLevel}</span>
+                <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
+                <span className=''>{ArmoryEquipment?.[armorIndex]?.Tear}</span>
+              </div>
+              <div className='flex items-center'>
+                <span className={`text-[0.85rem] font-semibold mr-2 ${itemQualityCheckFunction(Number(ArmoryEquipment?.[armorIndex]?.QualityValue),'font')}`}>{ArmoryEquipment?.[armorIndex]?.QualityValue}</span>
+                <div className="w-full h-[9px] mt-[2px] bg-[#4d4f55] dark:bg-[#e6e8ec] relative">
+                  <div className={`h-[9px] mt-[2px] absolute bottom-0 ${ArmoryEquipment?.[armorIndex]?.QualityValue !== 100 ? 'rounded-r-sm' : ''} ${itemQualityCheckFunction(Number(ArmoryEquipment?.[armorIndex]?.QualityValue),'background')}`} style={{width: `${ArmoryEquipment?.[armorIndex]?.QualityValue}%`}}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* 장비 Hover 기본 효과 */}
+          <div className='mt-4 w-full'>
+            <pre className='text-[0.75rem] leading-5 font-semibold'>{ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.basicEffect}</pre>
+          </div>
+          {/* 장비 Hover 추가 효과 */}
+          {ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.addEffect !== undefined &&
+          <>
+          <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
+          <div className='w-full'>
+            <p className='text-[0.8rem] leading-5 font-semibold'>{ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.addEffect}</p>
+          </div>
+          </>
+          }
+          {/* 장비 세트 효과 */}
+          {ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.setEffectName.setName !== '' &&
+          <>
+          <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
+          <div className='w-full'>
+            <p className='text-[0.8rem] leading-5 font-semibold'>{ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.setEffectName.setName} {ArmoryEquipment?.[armorIndex]?.WeaponAttribute?.setEffectName.setLevel}</p>
+          </div>
+          </>
+          }
+        </div>
+        
+      </div>
+    </div>
+  )
+}

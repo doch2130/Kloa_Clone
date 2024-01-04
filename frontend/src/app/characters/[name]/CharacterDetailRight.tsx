@@ -16,7 +16,38 @@ const findValuesInText = (str: string) => {
   return match ? { skilName: match[1].trim(), skilEffect: match[2].trim() } : { skilName: '', skilEffect: '' };
 };
 
-const tooltipJsonChange = (tooltip: string) => {
+const findSetEffectValuesInText = async (str: string) => {
+  const regex = /([^<]+)\s<FONT COLOR='#FFD200'>([^<]+)<\/FONT>/;
+  const match = str.match(regex);
+
+  return match ? { setName: match[1].trim(), setLevel: match[2].trim() } : { setName: '', setLevel: '' };
+};
+
+const findElixirEffectValuesInText = async (str: string) => {
+  const regex = /<FONT color='#FFD200'>\[(.*?)\]<\/FONT>\s(.*?)\s<FONT color='#FFD200'>Lv\.(.*?)<\/FONT><br>([\s\S]*)/;
+  const match = str.match(regex);
+
+  if (match) {
+    const elixirType = match[1]?.trim();
+    const elixirEffectName = match[2]?.trim();
+    const elixirEffectLevel = match[3]?.trim();
+    const additionalEffects = match[4]?.trim().split('<BR>').filter(effect => effect.trim() !== '');
+
+    return { elixirType, elixirEffectName, elixirEffectLevel, additionalEffects };
+  } else {
+    return { elixirType: '', elixirEffectName: '', elixirEffectLevel: '', additionalEffects: [] };
+  }
+};
+
+const findTranscendenceData = async (str: string) => {
+  const regex = /<FONT COLOR='#FF9632'>\[초월\]<\/FONT>\s<FONT COLOR='#FFD200'>(\d+)<\/FONT>단계.*?<img src='emoticon_Transcendence_Grade'.*?>(\d+)/;
+  const match = str.match(regex);
+
+  return match ? [`${match[1]}단계`, parseInt(match[2], 10)] : ['', 0];
+};
+
+
+const tooltipJsonChange = async (tooltip: string) => {
   try {
     return JSON.parse(tooltip);
   } catch (error) {
@@ -61,7 +92,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
             const gemType = gem.Name.includes('홍염') ? '홍염' : gem.Name.includes('멸화') ? '멸화' : '';
             gemType === '홍염' ? prominenceJewelCount++ : gemType === '멸화' ? extinctionJewelCount++ : null;
     
-            const gemTooltipJson = tooltipJsonChange(gem.Tooltip);
+            const gemTooltipJson = await tooltipJsonChange(gem.Tooltip);
             let skilName = '';
             let skilEffect = '';
             if (gemTooltipJson.Element_004.value.Element_001) {
@@ -117,10 +148,10 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
         let itemTear = '';
 
         const updateArmoryEquipmentAbilityStone = await Promise.all(
-          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
+          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment) => {
             let result: ArmoryEquipmentPoint[] = [];
             if (armoryEquipment.Type === '어빌리티 스톤') {
-              const abilityStoneJson = tooltipJsonChange(armoryEquipment.Tooltip);
+              const abilityStoneJson = await tooltipJsonChange(armoryEquipment.Tooltip);
 
               if(abilityStoneJson.Element_001.value.leftStr2) {
                 itemTear = abilityStoneJson.Element_001.value.leftStr2.slice(-12, -7).trim();
@@ -183,9 +214,9 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
         let itemTear = '';
 
         const updateArmoryEquipmentBracelet = await Promise.all(
-          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
+          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment) => {
             if (armoryEquipment.Type === '팔찌') {
-              const braceletJson = tooltipJsonChange(armoryEquipment.Tooltip);
+              const braceletJson = await tooltipJsonChange(armoryEquipment.Tooltip);
 
               if(braceletJson.Element_001.value.leftStr2) {
                 itemTear = braceletJson.Element_001.value.leftStr2.slice(-12, -7).trim();
@@ -244,6 +275,192 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
       }
     }
 
+    const updateEquipmentWeapon = async () => {
+      if (data?.ArmoryEquipment) {
+        const updateArmoryEquipmentWeapon = await Promise.all(
+          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment) => {
+            let itemTear = '';
+            let qualityValue = 0;
+            let basicEffect = '';
+            let addEffect = '';
+            let itemLevel = '';
+            let setEffectName = {
+              setName: '',
+              setLevel: ''
+            };
+            
+            const tooltipJson = await tooltipJsonChange(armoryEquipment.Tooltip);
+
+            if(armoryEquipment.Type === '무기') {
+
+              if (tooltipJson.Element_001?.value?.leftStr2) {
+                // 티어, 품질
+                itemTear = tooltipJson.Element_001.value.leftStr2.slice(-12, -8).trim();
+                const itemLevelStartIndex = tooltipJson.Element_001.value.leftStr2.indexOf('레벨 ');
+                const itemLevelEndIndex = tooltipJson.Element_001.value.leftStr2.indexOf(' (티어');
+                itemLevel = tooltipJson.Element_001.value.leftStr2.slice(itemLevelStartIndex+3, itemLevelEndIndex).trim();
+                qualityValue = tooltipJson.Element_001.value.qualityValue;
+              }
+
+              // 기본 효과
+              if(tooltipJson.Element_005.value.Element_001) {
+                basicEffect = tooltipJson.Element_005.value.Element_001;
+              }
+
+              // 추가 효과
+              if(tooltipJson.Element_006.value.Element_001) {
+                addEffect = tooltipJson.Element_006.value.Element_001;
+              }
+
+              // 세트 효과
+              if(tooltipJson.Element_008.value.Element_001) {
+                const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_008.value.Element_001);
+                setEffectName = setFindValue;
+              }
+            }
+
+            return { itemTear, qualityValue, basicEffect, addEffect, itemLevel, setEffectName };
+          })
+        );
+
+        // 무기 업데이트
+        const weaponIndex = data?.ArmoryEquipment.findIndex(item => item.Type === '무기');
+        if (weaponIndex >= 0) {
+          const weaponAttributeData = {
+            basicEffect: updateArmoryEquipmentWeapon[weaponIndex].basicEffect,
+            addEffect: updateArmoryEquipmentWeapon[weaponIndex].addEffect,
+            itemLevel: updateArmoryEquipmentWeapon[weaponIndex].itemLevel,
+            setEffectName: updateArmoryEquipmentWeapon[weaponIndex].setEffectName
+          }
+
+          data.ArmoryEquipment[weaponIndex] = {
+            ...data.ArmoryEquipment[weaponIndex],
+            'Tear': updateArmoryEquipmentWeapon[weaponIndex].itemTear,
+            'QualityValue': updateArmoryEquipmentWeapon[weaponIndex].qualityValue,
+            'WeaponAttribute': weaponAttributeData
+          }
+        }
+      }
+    }
+
+    const updateEquipmentArmors = async () => {
+      if (data?.ArmoryEquipment) {
+        const updateArmoryEquipmentArmors = await Promise.all(
+          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment) => {
+            let itemTear = '';
+            let qualityValue = 0;
+            let basicEffect = [];
+            let addEffect = '';
+            let itemLevel = '';
+            let setEffectName = {
+              setName: '',
+              setLevel: ''
+            };
+
+            let elixirEffect = [];
+            let transcendance: (string | number)[] = [];
+            
+            const tooltipJson = await tooltipJsonChange(armoryEquipment.Tooltip);
+
+            if(armoryEquipment.Type === '투구' || armoryEquipment.Type === '어깨' || armoryEquipment.Type === '상의' || armoryEquipment.Type === '하의' || armoryEquipment.Type === '장갑') {
+            // if(armoryEquipment.Type === '어깨') {
+
+              if (tooltipJson.Element_001?.value?.leftStr2) {
+                // 티어, 품질
+                itemTear = tooltipJson.Element_001.value.leftStr2.slice(-12, -8).trim();
+                const itemLevelStartIndex = tooltipJson.Element_001.value.leftStr2.indexOf('레벨 ');
+                const itemLevelEndIndex = tooltipJson.Element_001.value.leftStr2.indexOf(' (티어');
+                itemLevel = tooltipJson.Element_001.value.leftStr2.slice(itemLevelStartIndex+3, itemLevelEndIndex).trim();
+                qualityValue = tooltipJson.Element_001.value.qualityValue;
+              }
+
+              // 기본 효과
+              if(tooltipJson.Element_005.value.Element_001) {
+                basicEffect = tooltipJson.Element_005.value.Element_001.split('<BR>');
+              }
+
+              // 추가 효과
+              if(tooltipJson.Element_006.value.Element_001) {
+                addEffect = tooltipJson.Element_006.value.Element_001;
+              }
+
+              // 세트 효과
+              if (typeof tooltipJson?.Element_011?.value?.Element_000 === 'string' && tooltipJson.Element_011.value.Element_000.includes('세트 효과 레벨')) {
+                const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_011.value.Element_001);
+                setEffectName = setFindValue;
+              } else if (typeof tooltipJson?.Element_010?.value?.Element_000 === 'string' && tooltipJson.Element_010.value.Element_000.includes('세트 효과 레벨')) {
+                const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_010.value.Element_001);
+                setEffectName = setFindValue;
+              } else if (typeof tooltipJson?.Element_009?.value?.Element_000 === 'string' && tooltipJson.Element_009.value.Element_000.includes('세트 효과 레벨')) {
+                const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_009.value.Element_001);
+                setEffectName = setFindValue;
+              } else if (typeof tooltipJson?.Element_008?.value?.Element_000 === 'string' && tooltipJson.Element_008.value.Element_000.includes('세트 효과 레벨')) {
+                const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_008.value.Element_001);
+                setEffectName = setFindValue;
+              }
+
+              // 엘릭서
+              // 특옵은 파일에서 데이터로 가져오기
+              if(typeof tooltipJson?.Element_008?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_008?.value?.Element_000?.topStr.includes('엘릭서 효과')) {
+                if(tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_000) {
+                  const findElixir = await findElixirEffectValuesInText(tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_000?.contentStr);
+                  elixirEffect.push(findElixir);
+                }
+                if(tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_001) {
+                  const findElixir = await findElixirEffectValuesInText(tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_001?.contentStr);
+                  elixirEffect.push(findElixir);
+                }
+              } else if(typeof tooltipJson?.Element_009?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_009?.value?.Element_000?.topStr.includes('엘릭서 효과')) {
+                if(tooltipJson?.Element_009?.value?.Element_000?.contentStr?.Element_000) {
+                  const findElixir = await findElixirEffectValuesInText(tooltipJson?.Element_009?.value?.Element_000?.contentStr?.Element_000?.contentStr);
+                  elixirEffect.push(findElixir);
+                }
+                if(tooltipJson?.Element_009?.value?.Element_000?.contentStr?.Element_001) {
+                  const findElixir = await findElixirEffectValuesInText(tooltipJson?.Element_009?.value?.Element_000?.contentStr?.Element_001?.contentStr);
+                  elixirEffect.push(findElixir);
+                }
+              }
+
+              // 초월
+              if(typeof tooltipJson?.Element_008?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_008?.value?.Element_000?.topStr.includes('[초월]')) {
+                if(tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_000) {
+                  const transcendanceAddEffect = tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_000?.contentStr;
+                  const findTranscendence = await findTranscendenceData(tooltipJson?.Element_008?.value?.Element_000?.topStr);
+                  findTranscendence?.push(transcendanceAddEffect);
+                  transcendance = findTranscendence;
+                }
+              }
+            }
+
+            return { itemTear, qualityValue, basicEffect, addEffect, itemLevel, setEffectName, elixirEffect, transcendance };
+          })
+        );
+
+        // console.log('updateArmoryEquipmentArmors ', updateArmoryEquipmentArmors);
+
+        ['투구', '어깨', '상의', '하의', '장갑'].forEach((el:string) => {
+          const armorIndex = data?.ArmoryEquipment.findIndex(item => item.Type === el);
+          if(armorIndex >= 0) {
+            const armorAttributeData = {
+              basicEffect: updateArmoryEquipmentArmors[armorIndex].basicEffect,
+              addEffect: updateArmoryEquipmentArmors[armorIndex].addEffect,
+              elixirEffect: updateArmoryEquipmentArmors[armorIndex].elixirEffect,
+              itemLevel: updateArmoryEquipmentArmors[armorIndex].itemLevel,
+              setEffectName: updateArmoryEquipmentArmors[armorIndex].setEffectName,
+              transcendance: updateArmoryEquipmentArmors[armorIndex].transcendance
+            }
+
+            data.ArmoryEquipment[armorIndex] = {
+              ...data.ArmoryEquipment[armorIndex],
+              'Tear': updateArmoryEquipmentArmors[armorIndex].itemTear,
+              'QualityValue': updateArmoryEquipmentArmors[armorIndex].qualityValue,
+              'ArmoryAttribute': armorAttributeData
+            }
+          }
+        });
+      }
+    }
+
     const updateAccessories = async () => {
       if (data?.ArmoryEquipment) {
         let result:ArmoryEquipmentPoint[] = [];
@@ -252,11 +469,11 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
         let ringAddEffectArray:string[][] = [];
 
         const updateArmoryEquipmentAccessrie = await Promise.all(
-          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
+          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment) => {
             let itemTear = '';
             let qualityValue = 0;
             
-            const tooltipJson = tooltipJsonChange(armoryEquipment.Tooltip);
+            const tooltipJson = await tooltipJsonChange(armoryEquipment.Tooltip);
 
             if(armoryEquipment.Type === '목걸이' || armoryEquipment.Type === '귀걸이' || armoryEquipment.Type === '반지') {
 
@@ -370,11 +587,13 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
 
     async function fetchData() {
       updateStats();
+      await updateEquipmentWeapon();
+      await updateEquipmentArmors();
+      await updateAccessories();
+      await updateBracelet();
+      await updateAbilityStone();
       await updateGems();
       sortedGems();
-      await updateAbilityStone();
-      await updateBracelet();
-      await updateAccessories();
       setUpdatedArmoryGemData(data?.ArmoryGem);
     }
 
