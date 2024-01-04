@@ -1,18 +1,27 @@
 'use client'
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment } from 'react'
 import Image from 'next/image'
-import { Disclosure } from '@headlessui/react'
-import { ArmoryCard, ArmoryEquipment, Stat, CardEffect, Effect, ArmoryGem, ArmoryEngraving, EngravingEffect, ArmoryEquipmentPoint } from './CharacterResponseType'
+import { ArmoryEquipment, ArmoryEngraving, ArmoryEquipmentPoint } from './CharacterResponseType'
 
-import UpArrowSvg from '@/components/UI/UpArrowSvg'
 import transcendance from '@/assets/Icon/transcendance.svg'
 import elixir from '@/assets/Icon/elixir.svg'
 
-import CardGrade from '@/assets/Card/imgCardGrade.webp'
-import CardAwake from '@/assets/Card/imgCardAwake.webp'
 import { allEngravingDescriptionList } from '@/data/EngravingsData'
 import { itemGradeStyleBackground, itemGradeStyleColor } from '../ItemGradeStyle'
 
+interface AbilityTabEquipSectionProps {
+  ArmoryEquipment?: ArmoryEquipment[]
+  ArmoryEngraving?: ArmoryEngraving
+}
+
+const findValueInEngravingPoint = (str: string) => {
+  const startIndex = str.indexOf('각인 활성 포인트 ')+10;
+  const endIndex = str.indexOf('<\/FONT>', startIndex);
+
+  return str.slice(startIndex, endIndex);
+}
+
+// 임시 값
 type equipArrayType = {
   reinforcementLevel: string;
   name: string;
@@ -192,123 +201,13 @@ const equipAccessoriesArray:equipAccessoriesArrayType[] = [
     imageSrc: 'https://pica.korlark.com/efui_iconatlas/acc/acc_20.png',
   },
 ];
+// 임시 값 종료
 
-const transformSetString = (input:string, isTitle:boolean) => {
-  const regex = /(\d+)세트(?: \((\d+)각성합계\))?/g;
-  const matches = input.match(regex);
-  if(matches !== null) {
-    if(isTitle) {
-      return matches[0].replace(regex, (match, set, awakening) => {
-        if (awakening) {
-          return awakening + '각';
-        } else {
-          return set + '세트';
-        }
-      });
-    } else {
-      return matches[0].replace(regex, (match, set, awakening) => {
-        if (awakening) {
-          return awakening + '각성';
-        } else {
-          return set + '세트';
-        }
-      });
-    }
-  }
-}
 
-const findValueInText = (str:string) => {
-  // 정규 표현식을 사용하여 숫자를 찾습니다.
-  const regex = /<font color='#99ff99'>(\d+)<\/font>/;
-  const match = str.match(regex);
-  // 매치된 값이 있다면 반환하고, 없으면 null을 반환합니다.
-  return match ? parseInt(match[1], 10).toLocaleString() : null;
-}
-
-const findValueInEngravingPoint = (str: string) => {
-  const startIndex = str.indexOf('각인 활성 포인트 ')+10;
-  const endIndex = str.indexOf('<\/FONT>', startIndex);
-
-  return str.slice(startIndex, endIndex);
-}
-
-const findArmoryEngravingValue = (armoryEngravingEffects:EngravingEffect[]) => {
-  // str = engraving.Name
-  const valueList: string[] = [];
-  const styleList: string[] = [];
-
-  armoryEngravingEffects.forEach((effects:Effect) => {
-    const value = effects.Name.slice(effects.Name.indexOf('Lv. ')+4, effects.Name.indexOf('Lv. ')+5);
-    valueList.push(value);
-    
-    const style = effects.Name.includes('감소') ? 'text-[#f95126]' : effects.Name.includes('Lv. 3') ? 'text-[#8045dd] dark:text-[#a36bfc]' : 'text-[#5865f2] dark:text-[#8991ee]';
-    styleList.push(style);
-  });
-
-  return [valueList, styleList];
-}
-
-interface AbilitySection {
-  ArmoryEquipment?: ArmoryEquipment[]
-  ArmoryProfileStats?: Stat[]
-  ArmoryCard?: ArmoryCard
-  ArmoryGem?: ArmoryGem
-  ArmoryEngraving?: ArmoryEngraving
-}
-
-const cardArrayCount = [0,1,2,3,4,5];
-const jewelCount = [0,1,2,3,4,5,6,7,8,9,10];
-const equipGagInArrayCount = [1,2];
-const equipGagInLevelCount = [1,2,3];
-
-export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, ArmoryCard, ArmoryGem, ArmoryEngraving }:AbilitySection) {
-  const ArmoryProfileStatsCloenOne = ArmoryProfileStats !== undefined ? ArmoryProfileStats.slice(0, 3) : [];
-  const ArmoryProfileStatsCloenTwo = ArmoryProfileStats !== undefined ? ArmoryProfileStats.slice(3, 6) : [];
-  const [statusMaxValue, setStatusMaxValue] = useState(['치명', '치명']);
-  const [statusSum, setStatusSum] = useState(0);
-  const [armoryEngravingList, setArmoryEngravingList] = useState<string[][]>([[], []]);
-
+export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngraving }:AbilityTabEquipSectionProps) {
   const braceletIndex = ArmoryEquipment?.findIndex(item => item.Type === '팔찌');
   const abilityStoneIndex = ArmoryEquipment?.findIndex(item => item.Type === '어빌리티 스톤');
-
-  useEffect(() => {
-    if(ArmoryProfileStats !== undefined) {
-      const sortedData = ArmoryProfileStats.slice(0, 6).sort((a, b) => parseInt(b.Value) - parseInt(a.Value));
-
-      let sum = 0;
-      sortedData.forEach((data) => {
-        sum += Number(data.Value);
-      });
-      setStatusSum(sum);
-      setStatusMaxValue([sortedData[0].Type, sortedData[1].Type]);
-    }
-
-    if(ArmoryEngraving !== undefined) {
-      const result = findArmoryEngravingValue(ArmoryEngraving.Effects);
-      setArmoryEngravingList(result);
-    }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const armoryEngravingViewHelp = () => {
-    if (ArmoryEngraving !== undefined && ArmoryEngraving !== null) {
-      let temp = [];
-      let armoryEngravingLength = ArmoryEngraving?.Effects.length;
-  
-      while (armoryEngravingLength < 5) {
-        temp.push(<div key={`h-6-${armoryEngravingLength}`} className="h-6"></div>);
-        armoryEngravingLength++;
-      }
-  
-      return <React.Fragment>{temp}</React.Fragment>;
-    }
-  
-    return null;
-  };
-
   return (
-    <>
     <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
       <div className='grid grid-cols-2 gap-x-3'>
         {/* 장비 정보 - 장비 */}
@@ -412,7 +311,7 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
           )})}
           {/* 장착 각인 */}
           <div className='h-[50px] px-0.5 grid grid-cols-2 items-center mt-3'>
-            {equipGagInArrayCount.map((count:number, index:number) => {
+            {[1,2].map((count:number, index:number) => {
               if(ArmoryEngraving?.Engravings) {
                 return (
                 <div key={index} className='relative group/item'>
@@ -435,7 +334,7 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
                       </div>
                     </div>
                     <div className='flex flex-col w-full'>
-                    {equipGagInLevelCount.map((el:number) => (
+                    {[1,2,3].map((el:number) => (
                       <div key={el} className='w-full mt-3'>
                         <p className='text-[0.9rem] font-bold leading-6'>레벨 {el} (활성도 {el*5})</p>
                         <p className='text-[0.85rem] font-semibold leading-5'>{allEngravingDescriptionList[ArmoryEngraving?.Engravings[index].Name][el-1]}</p>
@@ -694,238 +593,5 @@ export default function AbilitySection({ ArmoryEquipment, ArmoryProfileStats, Ar
         </div>
       </div>
     </div>
-    {/* 보석 정보 */}
-    <div className='px-[17px] pt-4 pb-2 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
-      <div className='grid grid-cols-11 gap-x-4 place-items-center'>
-        {jewelCount.map((jewel:number) => {
-          if(ArmoryGem?.Gems[jewel] !== undefined) {
-            return (
-              <div key={jewel} className='relative w-[44px] h-[44px] rounded-md group/item' style={itemGradeStyleBackground[ArmoryGem?.Gems[jewel].Grade]}>
-                <Image src={ArmoryGem?.Gems[jewel].Icon} alt='jewel' width={44} height={44} decoding='async' />
-                <div className='absolute bottom-0 right-0 w-4 h-4 rounded-[4px] rounded-tr-md bg-white dark:bg-[#33353a] opacity-90 flex justify-center items-center'>
-                  <p className='text-[11px] text-[#FF6000] dark:text-[#ff9e63] font-medium'>{ArmoryGem?.Gems[jewel] !== undefined && ArmoryGem?.Gems[jewel].Level}</p>
-                </div>
-                <div className='absolute mt-1 w-max flex flex-col justify-center items-center p-2 rounded-[8px] bg-white dark:bg-[#33353a] left-1/2 translate-x-[-50%] invisible group-hover/item:visible shadow-[1px_2px_4px_0px_rgba(0,0,0,0.25)]' >
-                  <p className='font-bold text-[0.8rem]'>{ArmoryGem?.Gems[jewel].SkilName}</p>
-                  <p className='font-semibold text-[0.7rem] mt-1'>{ArmoryGem?.Gems[jewel].SkilEffect}</p>
-                </div>
-              </div>
-            )
-          } else {
-            return (
-              <div key={jewel} className='relative w-[44px] aspect-square h-full rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31]'></div>
-            )
-          }
-        })}
-      </div>
-      {ArmoryGem?.Total &&
-        <div className='grid grid-cols-11 mt-2 gap-x-4'>
-          {ArmoryGem?.Total[0] > 0 &&
-          <div className={`flex items-center px-2 gap-x-2`} style={{gridColumn: `span ${ArmoryGem?.Total[0]} / span ${ArmoryGem?.Total[0]}`}}>
-            <div className='grow h-2 mb-[6px] border-l-2 border-b-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
-            <p className='text-sm font-semibold text-black shrink-0 dark:text-inherit'>멸화 {ArmoryGem?.Total[0]}</p>
-            <div className='grow h-2 mb-[6px] border-b-2 border-r-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
-          </div>
-          }
-          {ArmoryGem?.Total[1] > 0 &&
-          <div className={`flex items-center px-2 gap-x-2`} style={{gridColumn: `span ${ArmoryGem?.Total[1]} / span ${ArmoryGem?.Total[1]}`}}>
-            <div className='grow h-2 mb-[6px] border-l-2 border-b-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
-            <p className='text-sm font-semibold text-black shrink-0 dark:text-inherit'>홍염 {ArmoryGem?.Total[1]}</p>
-            <div className='grow h-2 mb-[6px] border-b-2 border-r-2 border-[#e6e8ec] dark:border-[#7d8395]'></div>
-          </div>
-          }
-        </div>
-      }
-    </div>
-    {/* 특성, 각인 정보 */}
-    <div className='flex gap-x-6'>
-      {/* 특성 */}
-      <div className='px-[17px] py-4 w-full h-[300px] bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
-        <div className='class="flex flex-col justify-between'>
-          {/* 기본 특성 */}
-          <div>
-            <div className='flex justify-between items-center'>
-              <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
-                <p className='text-sm font-bold text-[#8045dd]'>기본 특성</p>
-              </div>
-              <hr className='grow ml-3 border-basicGrey dark:border-[#7d8395]' />
-            </div>
-            <div className='mt-4 text-sm leading-[17px] pl-1'>
-              <div className='flex justify-between'>
-                <p className='text-[#7d8395]'>공격력</p>
-                <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats[7].Value).toLocaleString()}</p>
-              </div>
-              <div className='flex justify-between text-sm mt-2.5'>
-                <p className='text-[#7d8395]'>
-                  <><span className='ml-2.5 mr-2 w-[6px] h-[4px] border-l border-b inline-block mb-1 border-[#7d8395]'></span>기본</>
-                </p>
-                <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && findValueInText(ArmoryProfileStats[7].Tooltip[1])}</p>
-              </div>
-              <div className='flex justify-between text-sm mt-0.5'>
-                <p className='text-[#7d8395]'>
-                  <><span className='ml-2.5 mr-2 w-[6px] h-[4px] border-l border-b inline-block mb-1  border-[#7d8395]'></span>효과</>
-                </p>
-                <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && findValueInText(ArmoryProfileStats[7].Tooltip[2])}</p>
-              </div>
-              <div className='flex justify-between mt-3'>
-                <p className='text-[#7d8395]'>최대 생명력</p>
-                <p className="font-semibold text-[#353945] dark:text-inherit">{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats[6].Value).toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
-          {/* 전투 특성 */}
-          <div className='mt-7'>
-            <div className='flex justify-between items-center'>
-              <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
-                <p className='text-sm font-bold text-[#8045dd]'>전투 특성</p>
-              </div>
-              <hr className='grow mx-3 border-[#e6e8ec] dark:border-[#7d8395]' />
-              <p className='text-sm font-semibold'>합계 {statusSum}</p>
-            </div>
-            <div className='mt-4 pl-1'>
-              <div className='space-y-2.5 text-[0.925rem] items-between'>
-                {/* 가장 높은 값: #8045dd, 2번쨰 높은 값: 5865f2 */}
-                {/* 치특신 */}
-                <div className='flex justify-between'>
-                  {ArmoryProfileStatsCloenOne.map((status:Stat, index:number) => {
-                    const valueStyle = status.Type === statusMaxValue[0] ? 'font-semibold text-[#8045dd] dark:text-[#a36bfc]' : status.Type === statusMaxValue[1] ? 'font-semibold text-[#5865f2] dark:text-[#8991ee]' : 'font-semibold text-[#353945] dark:text-inherit';
-                    return (
-                      <div className='flex justify-between max-w-[75px] w-full' key={index}>
-                        <p className='text-[#7d8395]'>{status.Type}</p>
-                        <p className={valueStyle}>{status.Value}</p>
-                      </div>
-                      )
-                  })}
-                </div>
-                {/* 제인숙 */}
-                <div className='flex justify-between'>
-                  {ArmoryProfileStatsCloenTwo.map((status:Stat, index:number) => {
-                    const valueStyle = status.Type === statusMaxValue[0] ? 'font-semibold text-[#8045dd] dark:text-[#a36bfc]' : status.Type === statusMaxValue[1] ? 'font-semibold text-[#5865f2] dark:text-[#8991ee]' : 'font-semibold text-[#353945] dark:text-inherit';
-                    return (
-                      <div className='flex justify-between max-w-[75px] w-full' key={index}>
-                        <p className='text-[#7d8395]'>{status.Type}</p>
-                        <p className={valueStyle}>{status.Value}</p>
-                      </div>
-                      )
-                  })}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* 각인 리스트 */}
-      <div className='px-[17px] py-4 w-full h-[300px] bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] flex flex-col'>
-        <div className='shrink-0 flex justify-between items-center'>
-          <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
-            <p className='text-sm font-bold text-[#8045dd]'>각인</p>
-          </div>
-          <hr className='grow mx-3 border-[#e6e8ec] dark:border-[#7d8395]' />
-          <p className='font-semibold'>
-            {armoryEngravingList[0].map((armoryEngraving, index:number) => (
-              <span key={index} className={armoryEngravingList[1][index]}>{armoryEngraving}</span>
-            ))}
-          </p>
-        </div>
-        <div className='mt-4 pl-1 grow flex flex-col justify-between gap-y-2 overflow-y-auto'>
-          {/* 각인 리스트 사진 */}
-          {ArmoryEngraving?.Effects.map((engraving:EngravingEffect, index:number) => (
-            <div key={index} className='flex items-center gap-x-3 group/item'>
-              {engraving !== null && <Image src={engraving.Icon} alt={engraving.Name} decoding="async" className='rounded-full bg-[#e6e8ec]' width={31} height={31} />}
-              <p className='text-lg font-semibold'>
-                <span className='text-[#7d8395]'>Lv.</span>
-                <span className={engraving.Name.includes('감소') ? 'text-[#f95126]' : ''}>{engraving.Name.slice(engraving.Name.indexOf('Lv. ')+4, engraving.Name.indexOf('Lv. ')+5)} {engraving.Name.slice(0, engraving.Name.indexOf(' Lv.'))}</span>
-              </p>
-              <div className='absolute z-1 opacity-95 w-max max-w-[260px] flex flex-col justify-center items-baseline p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[18%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
-                <p className='font-bold text-[0.9rem]'>{`${engraving.Name.slice(0, engraving.Name.indexOf(' Lv.'))} ${engraving.Name.slice(engraving.Name.indexOf('Lv.')).replace(' ', '')}`}</p>
-                <p className='font-semibold text-[0.8rem] mt-[12px]'>{engraving.Description}</p>
-              </div>
-            </div>
-          ))}
-          {/* Layout을 맞추기 위한 함수 최소 5개 고정 */}
-          {ArmoryEngraving !== undefined && ArmoryEngraving?.Effects.length < 5 && armoryEngravingViewHelp()}
-        </div>
-      </div>
-    </div>
-    {/* 카드 정보 */}
-    <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] mt-6'>
-      <Disclosure as={Fragment}>
-        {({ open }) => (
-          <>
-          <Disclosure.Button className='w-full'>
-            <div className='flex justify-between items-center'>
-              <div className='w-20 h-6 bg-[#8045DD26] dark:bg-[#DECFF6] rounded-[13px] flex justify-center items-center'>
-                <p className='text-sm font-bold text-[#8045dd]'>카드</p>
-              </div>
-              <hr className='grow mx-3 border-[#e6e8ec] dark:border-[#7d8395]' />
-              <div className='flex items-center space-x-1.5'>
-                <p className='font-semibold whitespace-pre overflow-hidden max-w-[500px] text-ellipsis'>
-                  {ArmoryCard !== undefined && ArmoryCard?.Effects?.map((CardEffect:CardEffect, index:number) => {
-                    return (
-                    <Fragment key={index}>
-                    {index > 0 && ' · '}
-                    {CardEffect.Items[CardEffect.Items.length - 1].Name.replace(/\d세트(?: \(\d+각성합계\))?/g, '').trim()}&nbsp;
-                    <span className='text-[#8045dd] dark:text-[#a36bfc]'>{transformSetString(CardEffect.Items[CardEffect.Items.length - 1].Name, true)}</span>
-                    </Fragment>
-                  )})}
-                </p>
-                <UpArrowSvg isOpen={open} classNameDefault={'w-5 h-5 transition-transform duration-100'} classNameOpen={'rotate-180'} classNameClose={'rotate-0'} />
-              </div>
-            </div>
-            <div className='mt-3 grid grid-cols-6 gap-x-3'>
-              {cardArrayCount.map((index:number) => {
-                if(ArmoryCard !== undefined && ArmoryCard?.Cards[index]) {
-                  const positionXValue = ArmoryCard.Cards[index].Grade === '일반' ? '0%' : ArmoryCard.Cards[index].Grade === '고급' ? '20.1%' : ArmoryCard.Cards[index].Grade === '희귀' ? '40.2%' : ArmoryCard.Cards[index].Grade === '영웅' ? '60.29%' : '80.4%';
-                  return (
-                    <div className='w-full' key={index}>
-                      <div className='relative aspect-[248/362] -mr-1'>
-                        <div className='absolute inset-0 pl-[1.8%] pr-[4.2%] pt-[5.2%]'>
-                          <Image alt={ArmoryCard.Cards[index].Name} width={248} height={362} decoding="async" data-nimg="1" src={ArmoryCard.Cards[index].Icon} />
-                        </div>
-                        {/* 카드 등급에 따라 bg postion 값이 달라짐 (X 값) */}
-                        <div className={`absolute inset-0 bg-cover aspect-[248/362]`}
-                          style={{backgroundPositionX: positionXValue, backgroundPositionY: 'top', backgroundImage: `url('${CardGrade.src}')`}}></div>
-                        <div className='absolute bottom-[6.5%] left-[5%] right-[7.5%] overflow-hidden'>
-                          {/* Left를 이용하여 1,2,3,4,5 각 그림 표시 */}
-                          <div className='relative bg-cover aspect-[10/3] drop-shadow-xl' style={{backgroundImage: `url('${CardAwake.src}')`}}>
-                            <div className={`absolute top-0 bottom-0 w-full bg-bottom bg-cover left-[${ArmoryCard.Cards[index].AwakeCount*20 -100}%]`} style={{backgroundImage: `url('${CardAwake.src}')`}}></div>
-                          </div>
-                        </div>
-                      </div>
-                      <p className='mt-[6px] -mb-2 px-1 w-full text-center text-xs font-semibold select-text break-keep'>{ArmoryCard.Cards[index].Name}</p>
-                    </div>
-                  )
-                } else {
-                  return (
-                    <div key={index} className='w-full mt-0.5 aspect-[248/375] bg-[#e6e8ec] dark:bg-[#2b2d31] rounded-md'></div>
-                  )
-                }
-              })}
-            </div>
-          </Disclosure.Button>
-            <Disclosure.Panel className="mt-4 transform scale-100 opacity-100">
-              <div className={ArmoryCard === undefined ? 'grid gap-3 grid-cols-1' : ArmoryCard?.Effects?.length >= 2 ? 'grid gap-3 grid-cols-2' : 'grid gap-3 grid-cols-1'}>
-                {/* 카드 종류에 따라 div 태그 추가 */}
-                {ArmoryCard !== undefined && ArmoryCard?.Effects?.map((Effect:CardEffect, index:number) => (
-                <div className='px-[17px] py-4 bg-[#f5f6f7] dark:bg-[#2b2d31] rounded-xl' key={index}>
-                  <p className='font-semibold'>{Effect.Items[Effect.Items.length - 1].Name.replace(/\d세트(?: \(\d+각성합계\))?/g, '').trim()}</p>
-                  <div className='mt-3 space-y-2'>
-                    {/* 같은 종류 카드에서 효과 리스트 */}
-                    {Effect.Items.map((item:Effect, index:number) => (
-                      <div className='flex' key={`${index}_${item.Name}`}>
-                        <span className='shrink-0 w-[50px] h-5 bg-[#e6e8ec] dark:bg-[#373d41] rounded-[10px] flex justify-center items-center text-xs'>{transformSetString(item.Name, false)}</span>
-                        <p className='ml-[10px] font-semibold text-[0.85rem] break-all'>{item.Description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                ))}
-              </div>
-            </Disclosure.Panel>
-          </>
-        )}
-      </Disclosure>
-    </div>
-    </>
   )
 }

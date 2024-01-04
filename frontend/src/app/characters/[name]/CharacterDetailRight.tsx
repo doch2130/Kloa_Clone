@@ -1,9 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Tab } from '@headlessui/react'
-
-import AbilitySection from './AbilitySection'
 import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, CharacterArmories, Gem } from './CharacterResponseType'
+
+import AbilityTab from './AbilityTab'
 
 interface CharacterDetailRight {
   data?: CharacterArmories | null | undefined
@@ -264,7 +264,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
         {/* 탭에 따른 데이터 출력 위치 */}
         <Tab.Panels>
           <Tab.Panel>
-            <AbilitySection ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard} ArmoryGem={updatedArmoryGemData} ArmoryEngraving={data?.ArmoryEngraving} />
+            <AbilityTab ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard} ArmoryGem={updatedArmoryGemData} ArmoryEngraving={data?.ArmoryEngraving} />
           </Tab.Panel>
           <Tab.Panel>Content 2</Tab.Panel>
           <Tab.Panel>Content 3</Tab.Panel>
