@@ -131,9 +131,8 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
               }
 
               if (abilityStoneJson.Element_006.value.Element_000) {
-                const tempArray = [0, 1, 2]
                 result = await Promise.all(
-                  tempArray.map(async (el: number) => {
+                  [0, 1, 2].map(async (el: number) => {
                     const contentStrElement = abilityStoneJson.Element_006.value.Element_000?.contentStr
                     const elementNumber = `Element_00${el}`
 
@@ -143,9 +142,8 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
                   })
                 )
               } else if (abilityStoneJson.Element_005.value.Element_000) {
-                const tempArray = [0, 1, 2]
                 result = await Promise.all(
-                  tempArray.map(async (el: number) => {
+                  [0, 1, 2].map(async (el: number) => {
                     const contentStrElement = abilityStoneJson.Element_005.value.Element_000?.contentStr
                     const elementNumber = `Element_00${el}`
 
@@ -244,6 +242,69 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
       }
     }
 
+    const updateAccessories = async () => {
+      if (data?.ArmoryEquipment) {
+        let itemTear = '';
+        let qualityValue = 0;
+        let result:ArmoryEquipmentPoint[] = [];
+        let necklacetAddEffectArray:string[][] = [];
+
+        const updateArmoryEquipmentNecklace = await Promise.all(
+          data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
+            if (armoryEquipment.Type === '목걸이') {
+              const necklaceJson = tooltipJsonChange(armoryEquipment.Tooltip);
+
+              if(necklaceJson.Element_001.value.leftStr2) {
+                // 티어, 품질
+                itemTear = necklaceJson.Element_001.value.leftStr2.slice(-12, -7).trim();
+                qualityValue = necklaceJson.Element_001.value.qualityValue;
+              }
+
+              // 추가 효과
+              if(necklaceJson.Element_005.value.Element_001) {
+                necklacetAddEffectArray = necklaceJson.Element_005.value.Element_001.split('<BR>');
+                necklacetAddEffectArray = necklacetAddEffectArray.map((necklacetAddEffect:string[]) => {
+                  const updateNecklacetAddEffect = necklacetAddEffect.toString().split(' ');
+                  return updateNecklacetAddEffect;
+                });
+              }
+
+              // 각인
+              if (necklaceJson.Element_006.value.Element_000) {
+                result = await Promise.all(
+                  [0, 1, 2].map(async (el: number) => {
+                    const contentStrElement = necklaceJson.Element_006.value.Element_000?.contentStr
+                    const elementNumber = `Element_00${el}`
+
+                    const extractedData = abilityStoneExtractedData(contentStrElement[elementNumber].contentStr);
+                
+                    return extractedData || { Name: '', Value: '' }; // 만약 값이 undefined이면 기본값을 반환
+                  })
+                )
+              } else {
+                result.push({ Name: '', Value: '' });
+                result.push({ Name: '', Value: '' });
+                result.push({ Name: '', Value: '' });
+              }
+
+              return result;
+            }
+              return undefined
+          })
+        );
+
+        const necklaceIndex = data?.ArmoryEquipment.findIndex(item => item.Type === '목걸이');
+
+        data.ArmoryEquipment[necklaceIndex] = {
+          ...data.ArmoryEquipment[necklaceIndex],
+          'Effects': necklacetAddEffectArray,
+          'ArmoryEquipmentPoint': updateArmoryEquipmentNecklace[necklaceIndex],
+          'Tear': itemTear,
+          'QualityValue': qualityValue
+        }
+      }
+    }
+
 
   
 
@@ -253,6 +314,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
       sortedGems();
       await updateAbilityStone();
       await updateBracelet();
+      await updateAccessories();
       setUpdatedArmoryGemData(data?.ArmoryGem);
     }
 
@@ -277,7 +339,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
         {/* 탭에 따른 데이터 출력 위치 */}
         <Tab.Panels>
           <Tab.Panel>
-            <AbilityTab ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard} ArmoryGem={updatedArmoryGemData} ArmoryEngraving={data?.ArmoryEngraving} />
+            <AbilityTab ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard} ArmoryGem={updatedArmoryGemData} ArmoryEngraving={data?.ArmoryEngraving} CharacterClassName={data?.ArmoryProfile.CharacterClassName}/>
           </Tab.Panel>
           <Tab.Panel>Content 2</Tab.Panel>
           <Tab.Panel>Content 3</Tab.Panel>

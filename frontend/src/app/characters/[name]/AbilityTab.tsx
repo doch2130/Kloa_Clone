@@ -13,13 +13,14 @@ interface AbilityTabProps {
   ArmoryCard?: ArmoryCard
   ArmoryGem?: ArmoryGem
   ArmoryEngraving?: ArmoryEngraving
+  CharacterClassName?: string
 }
 
-export default function AbilityTab({ ArmoryEquipment, ArmoryProfileStats, ArmoryCard, ArmoryGem, ArmoryEngraving }:AbilityTabProps) {
+export default function AbilityTab({ ArmoryEquipment, ArmoryProfileStats, ArmoryCard, ArmoryGem, ArmoryEngraving, CharacterClassName }:AbilityTabProps) {
   return (
     <>
     {/* 장착 장비 정보 */}
-    <AbilityTabEquipSection ArmoryEquipment={ArmoryEquipment} ArmoryEngraving={ArmoryEngraving} />
+    <AbilityTabEquipSection ArmoryEquipment={ArmoryEquipment} ArmoryEngraving={ArmoryEngraving} CharacterClassName={CharacterClassName} />
 
     {/* 보석 정보 */}
     <AbilityTabGemSection ArmoryGem={ArmoryGem} />

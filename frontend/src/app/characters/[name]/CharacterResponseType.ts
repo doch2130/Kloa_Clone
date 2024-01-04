@@ -42,6 +42,7 @@ export interface ArmoryEquipment {
   Healthy?: string
   Effects?: string[][]
   Tear?: string
+  QualityValue?: number
 }
 
 export interface ArmoryEquipmentPoint {

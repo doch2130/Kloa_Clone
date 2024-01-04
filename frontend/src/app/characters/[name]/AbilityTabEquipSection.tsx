@@ -8,10 +8,14 @@ import elixir from '@/assets/Icon/elixir.svg'
 
 import { allEngravingDescriptionList } from '@/data/EngravingsData'
 import { itemGradeStyleBackground, itemGradeStyleColor } from '../ItemGradeStyle'
+import { accessoriesBasicStatus } from './AccessoriesExport'
+import { characterJobStatus } from '@/data/CharacterJobData'
+import { itemQualityCheckFunction } from '../ItemQualityStyle'
 
 interface AbilityTabEquipSectionProps {
   ArmoryEquipment?: ArmoryEquipment[]
   ArmoryEngraving?: ArmoryEngraving
+  CharacterClassName?: string
 }
 
 const findValueInEngravingPoint = (str: string) => {
@@ -135,20 +139,6 @@ const equipArray:equipArrayType[] = [
 
 const equipAccessoriesArray:equipAccessoriesArrayType[] = [
   {
-    name: '참혹한 파멸의 목걸이',
-    tear: '티어 3',
-    rating: '고대',
-    equipmentType: '목걸이',
-    quality: '92',
-    basicEffect: '민첩 +12546\r\n체력 +3308',
-    additionalEffectOne: '치명 +493',
-    additionalEffectTwo: '특화 +491',
-    gagInOne: '돌격대장 +6',
-    gagInTwo: '바리케이드 +3',
-    gagInDecrease: '공격력 감소 +2',
-    imageSrc: 'https://pica.korlark.com/efui_iconatlas/acc/acc_213.png',
-  },
-  {
     name: '참혹한 몰락의 귀걸이',
     tear: '티어 3',
     rating: '고대',
@@ -204,7 +194,10 @@ const equipAccessoriesArray:equipAccessoriesArrayType[] = [
 // 임시 값 종료
 
 
-export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngraving }:AbilityTabEquipSectionProps) {
+export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngraving, CharacterClassName }:AbilityTabEquipSectionProps) {
+  const necklaceIndex = ArmoryEquipment?.findIndex(item => item.Type === '목걸이');
+  const earringIndex = ArmoryEquipment?.findIndex(item => item.Type === '귀걸이');
+  const ringIndex = ArmoryEquipment?.findIndex(item => item.Type === '반지');
   const braceletIndex = ArmoryEquipment?.findIndex(item => item.Type === '팔찌');
   const abilityStoneIndex = ArmoryEquipment?.findIndex(item => item.Type === '어빌리티 스톤');
 
@@ -355,74 +348,165 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
         </div>
         {/* 장비 정보 - 악세 */}
         <div>
-        {equipAccessoriesArray.map((accessorie:equipAccessoriesArrayType, index:number) => {
-          let divWrapStyle = 'flex items-center w-full gap-x-2 relative group/item';
-          if(index > 0) {
-            divWrapStyle += ' mt-3'
-          }
-          return (
-          <div key={index} className={divWrapStyle}>
-            {/* 악세 사진 */}
-            <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-              <Image src={accessorie.imageSrc} alt={accessorie.name} width={50} height={50} loading="lazy" decoding="async" />
-              <div className='class="w-full h-4 text-center bg-[#8045dd]'>
-                <p className='text-xs font-semibold text-white'>{accessorie.quality}</p>
-              </div>
-            </div>
-            {/* 악세 정보 */}
-            <div>
-              <p className='truncate text-[0.9rem] leading-4 font-semibold text-[#D9AB48]'>{accessorie.name}</p>
-              <p className='text-sm font-semibold mt-0.5'>
-                <span>{accessorie.additionalEffectOne.replace('+', '')}</span>
-                {accessorie.additionalEffectTwo && <span className='ml-1.5'>{accessorie.additionalEffectTwo.replace('+', '')}</span>}
-              </p>
-              <p className='text-sm font-semibold mt-0.5'>
-                <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{accessorie.gagInOne.replace('+', '')}</span>
-                <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>{accessorie.gagInTwo.replace('+', '')}</span>
-                <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>{accessorie.gagInDecrease.replace('+', '')}</span>
-              </p>
-            </div>
-            {/* 악세 Hover */}
-            <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
-              <p className='truncate text-[0.95rem] font-semibold text-[#D9AB48] mb-2'>{accessorie.name}</p>
-              <div className='flex w-full'>
-                <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-                  <Image src={accessorie.imageSrc} alt={accessorie.name} loading="lazy" width={44} height={44} decoding="async" />
+          <>
+          {/* 목걸이 */}
+          {ArmoryEquipment !== undefined && necklaceIndex !== undefined && necklaceIndex > 0 ?
+            <div className={'flex items-center w-full gap-x-2 relative group/item'}>
+              {/* 목걸이 사진 */}
+              <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={itemGradeStyleBackground[ArmoryEquipment?.[necklaceIndex].Grade]}>
+                <Image src={ArmoryEquipment?.[necklaceIndex].Icon} alt={ArmoryEquipment?.[necklaceIndex].Name} width={50} height={50} loading="lazy" decoding="async" />
+                <div className={`w-full h-4 text-center ${itemQualityCheckFunction(Number(ArmoryEquipment?.[necklaceIndex].QualityValue),'background')}`}>
+                  <p className='text-xs font-semibold text-white'>{ArmoryEquipment?.[necklaceIndex].QualityValue}</p>
                 </div>
-                <div className='ml-1 w-full h-auto flex flex-col justify-around'>
-                  <div className='text-xs font-semibold flex items-center'>
-                    <span className='text-[#D9AB48]'>{accessorie.rating} {accessorie.equipmentType}</span>
-                    <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
-                    <span className=''>{accessorie.tear}</span>
+              </div>
+              {/* 목걸이 정보 */}
+              <div>
+                <p className='truncate text-[0.9rem] leading-4 font-semibold' style={itemGradeStyleColor[ArmoryEquipment?.[necklaceIndex].Grade]}>{ArmoryEquipment?.[necklaceIndex].Name}</p>
+                <p className='text-sm font-semibold mt-0.5'>
+                  {ArmoryEquipment?.[necklaceIndex].Effects?.map((effect:string[], index:number) => {
+                    let marginStyle = '';
+                    if(index > 0) {
+                      marginStyle = 'ml-1.5';
+                    }
+                    return (
+                    <Fragment key={index}>
+                      <span className={marginStyle}>{effect[0]} {effect[1].replace('+', '')}</span>
+                    </Fragment>
+                  )})}
+                </p>
+                <p className='text-sm font-semibold mt-0.5'>
+                  {ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.map((armoryEquipmentPoint:ArmoryEquipmentPoint, index:number) => {
+                    let spanStyle = 'rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]';
+                    if (index > 0) {
+                      spanStyle += ' ml-1.5';
+                    }
+
+                    if(armoryEquipmentPoint.Name === '') {
+                      return <></>
+                    }
+
+                    if (index === 2) {
+                      return (
+                        <span key={`${armoryEquipmentPoint.Name}_${index}`} className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>{armoryEquipmentPoint.Name} {armoryEquipmentPoint.Value}</span>
+                      )
+                    }
+                    return (
+                      <span key={`${armoryEquipmentPoint.Name}_${index}`} className={spanStyle}>{armoryEquipmentPoint.Name} {armoryEquipmentPoint.Value}</span>
+                    )
+                  })}
+                </p>
+              </div>
+              {/* 목걸이 Hover */}
+              <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                <p className={`truncate text-[0.95rem] font-semibold mb-2`} style={itemGradeStyleColor[ArmoryEquipment?.[necklaceIndex].Grade]}>{ArmoryEquipment?.[necklaceIndex].Name}</p>
+                <div className='flex w-full'>
+                  <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={itemGradeStyleBackground[ArmoryEquipment?.[necklaceIndex].Grade]}>
+                    <Image src={ArmoryEquipment?.[necklaceIndex].Icon} alt={ArmoryEquipment?.[necklaceIndex].Name} loading="lazy" width={44} height={44} decoding="async" />
                   </div>
-                  <div className='flex items-center'>
-                    <span className='text-[0.85rem] font-semibold text-[#D9AB48] mr-2'>{accessorie.quality}</span>
-                    <div className="w-full h-[9px] mt-[2px] bg-[#4d4f55] dark:bg-[#e6e8ec] relative">
-                      <div className={`rounded-r-sm h-[9px] mt-[2px] bg-[#f9ae00] dark:bg-[#eba70c] absolute bottom-0`} style={{width: `${accessorie.quality}%`}}></div>
+                  <div className='ml-1 w-full h-auto flex flex-col justify-around'>
+                    <div className='text-xs font-semibold flex items-center'>
+                      <span style={itemGradeStyleColor[ArmoryEquipment?.[necklaceIndex].Grade]}>{ArmoryEquipment?.[necklaceIndex].Grade} {ArmoryEquipment?.[necklaceIndex].Type}</span>
+                      <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
+                      <span className=''>{ArmoryEquipment?.[necklaceIndex].Tear}</span>
+                    </div>
+                    <div className='flex items-center'>
+                      <span className={`text-[0.85rem] font-semibold mr-2 ${itemQualityCheckFunction(Number(ArmoryEquipment?.[necklaceIndex].QualityValue),'font')}`}>{ArmoryEquipment?.[necklaceIndex].QualityValue}</span>
+                      <div className="w-full h-[9px] mt-[2px] bg-[#4d4f55] dark:bg-[#e6e8ec] relative">
+                        <div className={`h-[9px] mt-[2px] absolute bottom-0 ${ArmoryEquipment?.[necklaceIndex].QualityValue !== 100 ? 'rounded-r-sm' : ''} ${itemQualityCheckFunction(Number(ArmoryEquipment?.[necklaceIndex].QualityValue),'background')}`} style={{width: `${ArmoryEquipment?.[necklaceIndex].QualityValue}%`}}></div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              {/* 악세 Hover 기본 효과 */}
-              <div className='mt-4 w-full'>
-                <pre className='text-[0.78rem] leading-5 font-semibold'>{accessorie.basicEffect}</pre>
-              </div>
-              {/* 악세 Hover 특성 효과 */}
-              <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
-              <div className='w-full'>
-                <p className='text-[0.8rem] leading-5 font-semibold'>{accessorie.additionalEffectOne}</p>
-                {accessorie.additionalEffectTwo && <p className='text-[0.8rem] leading-5 font-semibold'>{accessorie.additionalEffectTwo}</p>}
-              </div>
-              {/* 악세 각인 효과 */}
-              <div className='w-full mt-4'>
-                <p className='text-[0.8rem] leading-5 font-semibold'>{accessorie.gagInOne}</p>
-                <p className='text-[0.8rem] leading-5 font-semibold my-[2px]'>{accessorie.gagInTwo}</p>
-                <p className='text-[0.8rem] leading-5 font-semibold text-[#f95126]'>{accessorie.gagInDecrease}</p>
+                {/* 목걸이 Hover 기본 효과 */}
+                <div className='mt-4 w-full'>
+                  <pre className='text-[0.78rem] leading-5 font-semibold'>{CharacterClassName && characterJobStatus[CharacterClassName]} {accessoriesBasicStatus[ArmoryEquipment?.[necklaceIndex]?.Type][ArmoryEquipment?.[necklaceIndex]?.Grade][0]}<br />{accessoriesBasicStatus[ArmoryEquipment?.[necklaceIndex]?.Type][ArmoryEquipment?.[necklaceIndex]?.Grade][1]}</pre>
+                </div>
+                {/* 목걸이 Hover 특성 효과 */}
+                <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
+                <div className='w-full'>
+                  <p className='text-[0.8rem] leading-5 font-semibold'>{ArmoryEquipment?.[necklaceIndex]?.Effects?.[0][0]} {ArmoryEquipment?.[necklaceIndex]?.Effects?.[0][1]}</p>
+                  <p className='text-[0.8rem] leading-5 font-semibold'>{ArmoryEquipment?.[necklaceIndex]?.Effects?.[1][0]} {ArmoryEquipment?.[necklaceIndex]?.Effects?.[1][1]}</p>
+                </div>
+                {/* 목걸이 각인 효과 */}
+                <div className='w-full mt-4'>
+                  {ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.[0].Name !== '' && <p className='text-[0.8rem] leading-5 font-semibold'>{ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.[0].Name} +{ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.[0].Value}</p>}
+                  {ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.[1].Name !== '' && <p className='text-[0.8rem] leading-5 font-semibold my-[2px]'>{ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.[1].Name} +{ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.[1].Value}</p>}
+                  {ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.[2].Name !== '' && <p className='text-[0.8rem] leading-5 font-semibold text-[#f95126]'>{ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.[2].Name} +{ArmoryEquipment?.[necklaceIndex].ArmoryEquipmentPoint?.[2].Value}</p>}
+                </div>
               </div>
             </div>
-          </div>
-          )
-          })}
+          :
+          <div className='w-[50px] h-[66px] rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31]'></div>
+          }
+
+
+          {equipAccessoriesArray.map((accessorie:equipAccessoriesArrayType, index:number) => {
+            let divWrapStyle = 'flex items-center w-full gap-x-2 relative group/item  mt-3';
+            return (
+            <div key={index} className={divWrapStyle}>
+              {/* 악세 사진 */}
+              <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                <Image src={accessorie.imageSrc} alt={accessorie.name} width={50} height={50} loading="lazy" decoding="async" />
+                <div className='class="w-full h-4 text-center bg-[#8045dd]'>
+                  <p className='text-xs font-semibold text-white'>{accessorie.quality}</p>
+                </div>
+              </div>
+              {/* 악세 정보 */}
+              <div>
+                <p className='truncate text-[0.9rem] leading-4 font-semibold text-[#D9AB48]'>{accessorie.name}</p>
+                <p className='text-sm font-semibold mt-0.5'>
+                  <span>{accessorie.additionalEffectOne.replace('+', '')}</span>
+                  {accessorie.additionalEffectTwo && <span className='ml-1.5'>{accessorie.additionalEffectTwo.replace('+', '')}</span>}
+                </p>
+                <p className='text-sm font-semibold mt-0.5'>
+                  <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{accessorie.gagInOne.replace('+', '')}</span>
+                  <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] ml-1.5'>{accessorie.gagInTwo.replace('+', '')}</span>
+                  <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>{accessorie.gagInDecrease.replace('+', '')}</span>
+                </p>
+              </div>
+              {/* 악세 Hover */}
+              <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
+                <p className='truncate text-[0.95rem] font-semibold text-[#D9AB48] mb-2'>{accessorie.name}</p>
+                <div className='flex w-full'>
+                  <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
+                    <Image src={accessorie.imageSrc} alt={accessorie.name} loading="lazy" width={44} height={44} decoding="async" />
+                  </div>
+                  <div className='ml-1 w-full h-auto flex flex-col justify-around'>
+                    <div className='text-xs font-semibold flex items-center'>
+                      <span className='text-[#D9AB48]'>{accessorie.rating} {accessorie.equipmentType}</span>
+                      <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
+                      <span className=''>{accessorie.tear}</span>
+                    </div>
+                    <div className='flex items-center'>
+                      <span className='text-[0.85rem] font-semibold text-[#D9AB48] mr-2'>{accessorie.quality}</span>
+                      <div className="w-full h-[9px] mt-[2px] bg-[#4d4f55] dark:bg-[#e6e8ec] relative">
+                        <div className={`rounded-r-sm h-[9px] mt-[2px] bg-[#f9ae00] dark:bg-[#eba70c] absolute bottom-0`} style={{width: `${accessorie.quality}%`}}></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* 악세 Hover 기본 효과 */}
+                <div className='mt-4 w-full'>
+                  <pre className='text-[0.78rem] leading-5 font-semibold'>{accessorie.basicEffect}</pre>
+                </div>
+                {/* 악세 Hover 특성 효과 */}
+                <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
+                <div className='w-full'>
+                  <p className='text-[0.8rem] leading-5 font-semibold'>{accessorie.additionalEffectOne}</p>
+                  {accessorie.additionalEffectTwo && <p className='text-[0.8rem] leading-5 font-semibold'>{accessorie.additionalEffectTwo}</p>}
+                </div>
+                {/* 악세 각인 효과 */}
+                <div className='w-full mt-4'>
+                  <p className='text-[0.8rem] leading-5 font-semibold'>{accessorie.gagInOne}</p>
+                  <p className='text-[0.8rem] leading-5 font-semibold my-[2px]'>{accessorie.gagInTwo}</p>
+                  <p className='text-[0.8rem] leading-5 font-semibold text-[#f95126]'>{accessorie.gagInDecrease}</p>
+                </div>
+              </div>
+            </div>
+            )
+            })}
+          </>
+
           {/* 팔찌 */}
           {ArmoryEquipment !== undefined && braceletIndex !== undefined && braceletIndex > 0 ?
           <div className='flex items-center w-full gap-x-2 mt-3 relative group/item'>
@@ -501,7 +585,6 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
               <div className='w-full mt-4'>
                 {ArmoryEquipment?.[braceletIndex].Effects !== undefined && ArmoryEquipment?.[braceletIndex]?.Effects?.map((effect:string[], index:number) => {
                   const order = ['치명', '신속', '특화', '제압', '숙련', '인내', '마법 방어력', '물리 방어력', '전투 중 생명력 회복량', '최대 마나', '최대 생명력', '체력' , '힘', '민첩', '지능'];
-                  console.log('test ', order.findIndex(str => effect[0].includes(str)));
                   const findValue = order.findIndex(str => effect[0].includes(str));
                   return (
                   <div key={`${effect[0]}_${index}`} className='flex flex-col my-[4px]'>
