@@ -154,9 +154,11 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
                 )
               } else {
                 // 이벤트 돌은 각인이 없음
-                result.push({ Name: '', Value: '' });
-                result.push({ Name: '', Value: '' });
-                result.push({ Name: '', Value: '' });
+                result = [
+                  { Name: '', Value: '' },
+                  { Name: '', Value: '' },
+                  { Name: '', Value: '' }
+                ];
               }
               return result
             }
@@ -244,36 +246,46 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
 
     const updateAccessories = async () => {
       if (data?.ArmoryEquipment) {
-        let itemTear = '';
-        let qualityValue = 0;
         let result:ArmoryEquipmentPoint[] = [];
         let necklacetAddEffectArray:string[][] = [];
+        let earringAddEffectArray:string[][] = [];
+        let ringAddEffectArray:string[][] = [];
 
-        const updateArmoryEquipmentNecklace = await Promise.all(
+        const updateArmoryEquipmentAccessrie = await Promise.all(
           data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
-            if (armoryEquipment.Type === '목걸이') {
-              const necklaceJson = tooltipJsonChange(armoryEquipment.Tooltip);
+            let itemTear = '';
+            let qualityValue = 0;
+            
+            const tooltipJson = tooltipJsonChange(armoryEquipment.Tooltip);
 
-              if(necklaceJson.Element_001.value.leftStr2) {
+            if(armoryEquipment.Type === '목걸이' || armoryEquipment.Type === '귀걸이' || armoryEquipment.Type === '반지') {
+
+              if (tooltipJson.Element_001?.value?.leftStr2) {
                 // 티어, 품질
-                itemTear = necklaceJson.Element_001.value.leftStr2.slice(-12, -7).trim();
-                qualityValue = necklaceJson.Element_001.value.qualityValue;
+                itemTear = tooltipJson.Element_001.value.leftStr2.slice(-12, -7).trim();
+                qualityValue = tooltipJson.Element_001.value.qualityValue;
               }
 
               // 추가 효과
-              if(necklaceJson.Element_005.value.Element_001) {
-                necklacetAddEffectArray = necklaceJson.Element_005.value.Element_001.split('<BR>');
-                necklacetAddEffectArray = necklacetAddEffectArray.map((necklacetAddEffect:string[]) => {
-                  const updateNecklacetAddEffect = necklacetAddEffect.toString().split(' ');
-                  return updateNecklacetAddEffect;
-                });
+              if(tooltipJson.Element_005.value.Element_001) {
+                if(armoryEquipment.Type === '목걸이') {
+                  necklacetAddEffectArray = tooltipJson.Element_005.value.Element_001.split('<BR>');
+                  necklacetAddEffectArray = necklacetAddEffectArray.map((necklacetAddEffect:string[]) => {
+                    const updateNecklacetAddEffect = necklacetAddEffect.toString().split(' ');
+                    return updateNecklacetAddEffect;
+                  });
+                } else if(armoryEquipment.Type === '귀걸이') {
+                  earringAddEffectArray = tooltipJson.Element_005.value.Element_001.split(' ');
+                } else if(armoryEquipment.Type === '반지') {
+                  ringAddEffectArray = tooltipJson.Element_005.value.Element_001.split(' ');
+                }
               }
 
               // 각인
-              if (necklaceJson.Element_006.value.Element_000) {
+              if (tooltipJson.Element_006.value.Element_000) {
                 result = await Promise.all(
                   [0, 1, 2].map(async (el: number) => {
-                    const contentStrElement = necklaceJson.Element_006.value.Element_000?.contentStr
+                    const contentStrElement = tooltipJson.Element_006.value.Element_000?.contentStr
                     const elementNumber = `Element_00${el}`
 
                     const extractedData = abilityStoneExtractedData(contentStrElement[elementNumber].contentStr);
@@ -282,31 +294,79 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
                   })
                 )
               } else {
-                result.push({ Name: '', Value: '' });
-                result.push({ Name: '', Value: '' });
-                result.push({ Name: '', Value: '' });
+                result = [
+                  { Name: '', Value: '' },
+                  { Name: '', Value: '' },
+                  { Name: '', Value: '' }
+                ];
               }
-
-              return result;
             }
-              return undefined
+
+            return { itemTear, qualityValue, result };
           })
         );
 
+        // 목걸이 업데이트
         const necklaceIndex = data?.ArmoryEquipment.findIndex(item => item.Type === '목걸이');
+        if (necklaceIndex >= 0) {
+          data.ArmoryEquipment[necklaceIndex] = {
+            ...data.ArmoryEquipment[necklaceIndex],
+            'Effects': necklacetAddEffectArray,
+            'ArmoryEquipmentPoint': updateArmoryEquipmentAccessrie[necklaceIndex].result,
+            'Tear': updateArmoryEquipmentAccessrie[necklaceIndex].itemTear,
+            'QualityValue': updateArmoryEquipmentAccessrie[necklaceIndex].qualityValue
+          }
+        }
 
-        data.ArmoryEquipment[necklaceIndex] = {
-          ...data.ArmoryEquipment[necklaceIndex],
-          'Effects': necklacetAddEffectArray,
-          'ArmoryEquipmentPoint': updateArmoryEquipmentNecklace[necklaceIndex],
-          'Tear': itemTear,
-          'QualityValue': qualityValue
+        // 귀걸이 업데이트
+        const earringOneIndex = data?.ArmoryEquipment.findIndex(item => item.Type === '귀걸이');
+        const earringTwoIndex = data?.ArmoryEquipment.findIndex((item, index) => index > earringOneIndex && item.Type === '귀걸이');
+
+        if (earringOneIndex >= 0) {
+          data.ArmoryEquipment[earringOneIndex] = {
+            ...data.ArmoryEquipment[earringOneIndex],
+            'Effects': earringAddEffectArray,
+            'ArmoryEquipmentPoint': updateArmoryEquipmentAccessrie[earringOneIndex].result,
+            'Tear': updateArmoryEquipmentAccessrie[earringOneIndex].itemTear,
+            'QualityValue': updateArmoryEquipmentAccessrie[earringOneIndex].qualityValue
+          }
+        }
+
+        if (earringTwoIndex >= 0) {
+          data.ArmoryEquipment[earringTwoIndex] = {
+            ...data.ArmoryEquipment[earringTwoIndex],
+            'Effects': earringAddEffectArray,
+            'ArmoryEquipmentPoint': updateArmoryEquipmentAccessrie[earringTwoIndex].result,
+            'Tear': updateArmoryEquipmentAccessrie[earringTwoIndex].itemTear,
+            'QualityValue': updateArmoryEquipmentAccessrie[earringTwoIndex].qualityValue
+          }
+        }
+
+        // 반지 업데이트
+        const ringOneIndex = data?.ArmoryEquipment.findIndex(item => item.Type === '반지');
+        const ringTwoIndex = data?.ArmoryEquipment.findIndex((item, index) => index > ringOneIndex && item.Type === '반지');
+
+        if (ringOneIndex >= 0) {
+          data.ArmoryEquipment[ringOneIndex] = {
+            ...data.ArmoryEquipment[ringOneIndex],
+            'Effects': ringAddEffectArray,
+            'ArmoryEquipmentPoint': updateArmoryEquipmentAccessrie[ringOneIndex].result,
+            'Tear': updateArmoryEquipmentAccessrie[ringOneIndex].itemTear,
+            'QualityValue': updateArmoryEquipmentAccessrie[ringOneIndex].qualityValue
+          }
+        }
+
+        if (ringTwoIndex >= 0) {
+          data.ArmoryEquipment[ringTwoIndex] = {
+            ...data.ArmoryEquipment[ringTwoIndex],
+            'Effects': ringAddEffectArray,
+            'ArmoryEquipmentPoint': updateArmoryEquipmentAccessrie[ringTwoIndex].result,
+            'Tear': updateArmoryEquipmentAccessrie[ringTwoIndex].itemTear,
+            'QualityValue': updateArmoryEquipmentAccessrie[ringTwoIndex].qualityValue
+          }
         }
       }
     }
-
-
-  
 
     async function fetchData() {
       updateStats();

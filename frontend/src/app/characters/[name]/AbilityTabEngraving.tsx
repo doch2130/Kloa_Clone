@@ -12,7 +12,7 @@ const findArmoryEngravingValue = (armoryEngravingEffects:EngravingEffect[]) => {
   const valueList: string[] = [];
   const styleList: string[] = [];
 
-  armoryEngravingEffects.forEach((effects:Effect) => {
+  armoryEngravingEffects?.forEach((effects:Effect) => {
     const value = effects.Name.slice(effects.Name.indexOf('Lv. ')+4, effects.Name.indexOf('Lv. ')+5);
     valueList.push(value);
     
@@ -28,7 +28,7 @@ export default function AbilityTabEngraving({ ArmoryEngraving }:AbilityTabEngrav
 
   useEffect(() => {
     if(ArmoryEngraving !== undefined) {
-      const result = findArmoryEngravingValue(ArmoryEngraving.Effects);
+      const result = findArmoryEngravingValue(ArmoryEngraving?.Effects);
       setArmoryEngravingList(result);
     }
 

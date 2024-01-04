@@ -11,6 +11,7 @@ interface CharacterDetailLeft {
 }
 
 export default function CharacterDetailLeft({ ArmoryProfile }:CharacterDetailLeft) {
+  console.log('ArmoryProfile?.GuildName ', ArmoryProfile);
   return (
     <section className='shrink-0 w-[400px] bg-white dark:bg-[#33353a] border-l dark:border-l-[#4d4f55] shadow-[5px_1px_8px_0_rgba(0,0,0,.06)] z-[1]'>
       <CharacterSummary ArmoryProfile={ArmoryProfile} />
@@ -59,10 +60,9 @@ export default function CharacterDetailLeft({ ArmoryProfile }:CharacterDetailLef
             </Tab>
           ))}
 
+          {ArmoryProfile?.GuildName !== null ?
           <Tab className='focus:outline-none focus-visible:ring-0'>
             {({ selected }) => (
-              // 길드 없는 경우 disabled text-[#7d8395], curcursor: not-allowed; pointer-events: all!important;
-              // 뒤에 막대기도 없애야 함
               <div className={
                 selected ?
                 'flex items-center font-semibold relative after:absolute after:left-0 after:w-full after:-bottom-0.5 after:h-0.5 after:border after:border-black after:dark:border-[#eaf0ec]'
@@ -70,12 +70,12 @@ export default function CharacterDetailLeft({ ArmoryProfile }:CharacterDetailLef
                 }
               >
                 <p className='text-xl'>길드</p>
-                <div className={
+                {ArmoryProfile?.GuildName && <div className={
                   selected ?
                   'mx-3 w-[2px] h-[18px] bg-[#e6e8ec] dark:bg-[#4d4f55] bg-black'
                   : 'mx-3 w-[2px] h-[18px] bg-[#e6e8ec] dark:bg-[#4d4f55]'
                   }
-                ></div>
+                ></div>}
                 <div className='flex items-center gap-x-1.5'>
                   <p className={
                     selected ?
@@ -89,6 +89,13 @@ export default function CharacterDetailLeft({ ArmoryProfile }:CharacterDetailLef
               </div>
             )}
           </Tab>
+          :
+          <Tab className='focus:outline-none focus-visible:ring-0' disabled>
+            <div className='flex items-center text-xl font-normal cursor-not-allowed'>
+              <p className='text-xl text-[#7d8395]'>길드</p>
+            </div>
+          </Tab>
+          }
         </Tab.List>
         <hr className='w-full h-[1px] dark:border-[#4d4f55]' />
         <p className='text-xs font-light text-center text-[#7d8395] pb-5'>
