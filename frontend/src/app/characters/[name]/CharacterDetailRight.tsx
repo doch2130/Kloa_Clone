@@ -114,12 +114,17 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
     const updateAbilityStone = async () => {
       if (data?.ArmoryEquipment) {
         let abilityStoneHealthy = '';
+        let itemTear = '';
 
         const updateArmoryEquipmentAbilityStone = await Promise.all(
           data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
             let result: ArmoryEquipmentPoint[] = [];
             if (armoryEquipment.Type === '어빌리티 스톤') {
               const abilityStoneJson = tooltipJsonChange(armoryEquipment.Tooltip);
+
+              if(abilityStoneJson.Element_001.value.leftStr2) {
+                itemTear = abilityStoneJson.Element_001.value.leftStr2.slice(-12, -7).trim();
+              }
 
               if(abilityStoneJson.Element_004.value.Element_001) {
                 abilityStoneHealthy = abilityStoneJson.Element_004.value.Element_001;
@@ -166,7 +171,8 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
           data.ArmoryEquipment[abilityStoneIndex] = {
             ...data.ArmoryEquipment[abilityStoneIndex],
             'ArmoryEquipmentPoint': updateArmoryEquipmentAbilityStone[abilityStoneIndex] as ArmoryEquipmentPoint[],
-            'Healthy': abilityStoneHealthy
+            'Healthy': abilityStoneHealthy,
+            'Tear': itemTear
           };
         }
       }
@@ -174,10 +180,16 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
 
     const updateBracelet = async () => {
       if (data?.ArmoryEquipment) {
+        let itemTear = '';
+
         const updateArmoryEquipmentBracelet = await Promise.all(
           data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment, index: number) => {
             if (armoryEquipment.Type === '팔찌') {
               const braceletJson = tooltipJsonChange(armoryEquipment.Tooltip);
+
+              if(braceletJson.Element_001.value.leftStr2) {
+                itemTear = braceletJson.Element_001.value.leftStr2.slice(-12, -7).trim();
+              }
 
               if(braceletJson.Element_004.value.Element_001) {
                 let braceletArraySplitImg = braceletJson.Element_004.value.Element_001.split('</img>');
@@ -226,7 +238,8 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
 
         data.ArmoryEquipment[braceletIndex] = {
           ...data.ArmoryEquipment[braceletIndex],
-          'Effects': updateArmoryEquipmentBracelet[braceletIndex]
+          'Effects': updateArmoryEquipmentBracelet[braceletIndex],
+          'Tear': itemTear,
         }
       }
     }

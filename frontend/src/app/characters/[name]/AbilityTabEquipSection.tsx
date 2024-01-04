@@ -207,6 +207,7 @@ const equipAccessoriesArray:equipAccessoriesArrayType[] = [
 export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngraving }:AbilityTabEquipSectionProps) {
   const braceletIndex = ArmoryEquipment?.findIndex(item => item.Type === '팔찌');
   const abilityStoneIndex = ArmoryEquipment?.findIndex(item => item.Type === '어빌리티 스톤');
+
   return (
     <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
       <div className='grid grid-cols-2 gap-x-3'>
@@ -437,8 +438,6 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
             <div>
               <p className='truncate text-[0.9rem] leading-4 font-semibold' style={itemGradeStyleColor[ArmoryEquipment?.[braceletIndex].Grade]}>{ArmoryEquipment?.[braceletIndex].Name}</p>
               <p className='text-sm font-semibold mt-0.5'>
-                {/* <span>{equipAccessorieBracelet.basicEffectArray[0].replace('+', '')}</span> */}
-                {/* {equipAccessorieBracelet.basicEffectArray[1] && <span className='ml-1.5'>{equipAccessorieBracelet.basicEffectArray[1].replace('+', '')}</span>} */}
                 {ArmoryEquipment?.[braceletIndex].Effects?.map((effect:string[], index:number) => {
                   const order = ['치명', '신속', '특화', '제압', '숙련', '인내'];
                   if(order.findIndex(str => effect[0].includes(str)) >= 0) {
@@ -479,7 +478,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
                   <div className='text-xs font-semibold flex items-center'>
                     <span style={itemGradeStyleColor[ArmoryEquipment?.[braceletIndex].Grade]}>{ArmoryEquipment?.[braceletIndex].Grade} {ArmoryEquipment?.[braceletIndex].Type}</span>
                     <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
-                    <span className=''>티어 3</span>
+                    <span className=''>{ArmoryEquipment?.[braceletIndex].Tear}</span>
                   </div>
                   <div className='flex items-center ml-[2px]'>
                     <div className="w-full flex items-center font-semibold text-xs whitespace-pre">
@@ -527,7 +526,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
                 <Image src={ArmoryEquipment[abilityStoneIndex].Icon} alt={ArmoryEquipment[abilityStoneIndex].Name} width={50} height={50} decoding="async" />
               </div>
               <div>
-                <p className='text-[0.9rem] font-semibold leading-4' style={itemGradeStyleColor[ArmoryEquipment[abilityStoneIndex].Grade]}>{ArmoryEquipment[ArmoryEquipment?.findIndex(item => item.Type === '어빌리티 스톤')].Name}</p>
+                <p className='text-[0.9rem] font-semibold leading-4' style={itemGradeStyleColor[ArmoryEquipment[abilityStoneIndex].Grade]}>{ArmoryEquipment[abilityStoneIndex].Name}</p>
                 <p className='mt-1'>
                   {ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint !== undefined &&
                   ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.map((armoryEquipmentPoint:ArmoryEquipmentPoint, index:number) => {
@@ -555,7 +554,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
                     <div className='text-xs font-semibold flex items-center'>
                       <span style={itemGradeStyleColor[ArmoryEquipment[abilityStoneIndex].Grade]}>{`${ArmoryEquipment[abilityStoneIndex].Grade} ${ArmoryEquipment[abilityStoneIndex].Type}`}</span>
                       <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
-                      <span className=''>티어 3</span>
+                      <span className=''>{ArmoryEquipment[abilityStoneIndex].Tear}</span>
                     </div>
                     <div className='flex items-center ml-[2px]'>
                       <div className="w-full flex items-center">
