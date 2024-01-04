@@ -11,7 +11,6 @@ interface CharacterDetailLeft {
 }
 
 export default function CharacterDetailLeft({ ArmoryProfile }:CharacterDetailLeft) {
-  console.log('ArmoryProfile?.GuildName ', ArmoryProfile);
   return (
     <section className='shrink-0 w-[400px] bg-white dark:bg-[#33353a] border-l dark:border-l-[#4d4f55] shadow-[5px_1px_8px_0_rgba(0,0,0,.06)] z-[1]'>
       <CharacterSummary ArmoryProfile={ArmoryProfile} />
