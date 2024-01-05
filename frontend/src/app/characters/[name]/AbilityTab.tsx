@@ -14,13 +14,15 @@ interface AbilityTabProps {
   ArmoryGem?: ArmoryGem
   ArmoryEngraving?: ArmoryEngraving
   CharacterClassName?: string
+  transcendanceTotal?: number
+  transcendanceAverage?: number
 }
 
-export default function AbilityTab({ ArmoryEquipment, ArmoryProfileStats, ArmoryCard, ArmoryGem, ArmoryEngraving, CharacterClassName }:AbilityTabProps) {
+export default function AbilityTab({ ArmoryEquipment, ArmoryProfileStats, ArmoryCard, ArmoryGem, ArmoryEngraving, CharacterClassName, transcendanceTotal, transcendanceAverage }:AbilityTabProps) {
   return (
     <>
     {/* 장착 장비 정보 */}
-    <AbilityTabEquipSection ArmoryEquipment={ArmoryEquipment} ArmoryEngraving={ArmoryEngraving} CharacterClassName={CharacterClassName} />
+    <AbilityTabEquipSection ArmoryEquipment={ArmoryEquipment} ArmoryEngraving={ArmoryEngraving} CharacterClassName={CharacterClassName} transcendanceTotal={transcendanceTotal} transcendanceAverage={transcendanceAverage} />
 
     {/* 보석 정보 */}
     <AbilityTabGemSection ArmoryGem={ArmoryGem} />

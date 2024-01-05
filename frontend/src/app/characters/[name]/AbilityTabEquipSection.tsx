@@ -18,6 +18,8 @@ interface AbilityTabEquipSectionProps {
   ArmoryEquipment?: ArmoryEquipment[]
   ArmoryEngraving?: ArmoryEngraving
   CharacterClassName?: string
+  transcendanceTotal?: number
+  transcendanceAverage?: number
 }
 
 const findValueInEngravingPoint = (str: string) => {
@@ -114,7 +116,7 @@ const equipArray:equipArrayType[] = [
 
 
 
-export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngraving, CharacterClassName }:AbilityTabEquipSectionProps) {
+export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngraving, CharacterClassName, transcendanceTotal, transcendanceAverage }:AbilityTabEquipSectionProps) {
   const weaponIndex = ArmoryEquipment?.findIndex(item => item.Type === '무기');
   const necklaceIndex = ArmoryEquipment?.findIndex(item => item.Type === '목걸이');
   const earringOneIndex = ArmoryEquipment?.findIndex(item => item.Type === '귀걸이');
@@ -143,103 +145,6 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
               </Fragment>
             )
           })}
-          {equipArray.map((equip:equipArrayType, index:number) => {
-            let divWrapStyle = 'relative flex items-center w-full gap-x-2 z-1 group/item';
-            if(index > 0) {
-              divWrapStyle += ' mt-3'
-            }
-            return (
-            <div key={`${equip.equipmentType}_${index}`} className={divWrapStyle}>
-              {/* 장비 이미지, 품질 */}
-              <div className='w-[50px] h-[66px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-                <Image src={equip.imageSrc} alt={equip.name} loading="lazy" width={50} height={50} decoding="async" />
-                <div className="w-full h-4 text-center bg-[#f9ae00] dark:bg-[#eba70c]">
-                  {/* 품질 */}
-                  <p className='text-xs font-semibold text-white'>{equip.quality}</p>
-                </div>
-              </div>
-              {/* 장비 정보 */}
-              <div>
-                {/* 초월 */}
-                {index !== 5 &&
-                <div className='flex items-center'>
-                  <Image src={transcendance} alt='초월' width={16} height={16} />
-                  <p className='text-sm font-semibold text-yellow-500 ml-0.5'>21</p>
-                  <p className='text-[0.8rem] font-semibold ml-1'>7단계</p>
-                </div>
-                }
-                {/* 강화, 장비이름 */}
-                <p className='truncate text-[0.9rem] font-semibold text-[#D9AB48]'><span className='text-base'>{equip.reinforcementLevel}</span> {equip.name}</p>
-                {/* 세트, 엘릭서 */}
-                <div className='flex items-center'>
-                  <p className='text-[0.7rem] leading-3 py-0.5 text-center font-semibold bg-[#e6e8ec] dark:bg-[#4b4e58] rounded-sm px-1.5'>{equip.setEffect.slice(0, 2)}<span className='text-[0.75rem]'>{equip.setEffect.slice(2)}</span></p>
-                  <div className='gap-x-1.5 font-semibold ml-1.5 flex items-center'>
-                    {index !== 5 ?
-                    <>
-                    <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>회심 (질서) <span className='text-[0.75rem]'>Lv.5</span></span>
-                    <span className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>무력화 <span className='text-[0.75rem]'>Lv.3</span></span>
-                    </>
-                    :
-                    <div className='flex items-center gap-x-1.5'>
-                      <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>달인 2단계</div>
-                      <div className='font-semibold text-white rounded-sm pl-0.5 pr-1 py-0.5 flex justify-center items-center gap-x-0.5 rounded-r-none last:rounded-r-sm text-xs leading-3 bg-[#2AB1F6]'>
-                        <Image src={elixir} alt='엘릭서' width={12} height={12} />
-                        <p className='flex items-end drop-shadow'>20.15%</p>
-                      </div>
-                    </div>
-                    }
-                  </div>
-                </div>
-                {/* 무기, 초월 합계 및 초월 증가 수치 */}
-                {index === 5 &&
-                <div className='flex items-center mt-1 w-fit font-semibold text-[0.75rem] leading-3 rounded-full px-1.5 py-0.5 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>
-                  <Image src={transcendance} alt='초월' width={14} height={14} />
-                  <p className='ml-1 font-semibold text-yellow-500'>합계 45</p>
-                  <p className='ml-1.5 font-semibold dark:text-[#cacdd4]'>평균 3.0단계</p>
-                  <p className='ml-1 font-semibold dark:text-[#cacdd4]'>+4.92%</p>
-                </div>
-                }
-              </div>
-              {/* 장비 Hover */}
-              <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>
-                <p className='truncate text-[0.9rem] font-semibold text-[#D9AB48] mb-2'><span className='text-base'>{equip.reinforcementLevel}</span> {equip.name}</p>
-                <div className='flex w-full'>
-                  <div className='w-[45px] h-[45px] rounded-md overflow-hidden shrink-0' style={{background: `linear-gradient(135deg, #3d3325, #dcc999)`}}>
-                    <Image src={equip.imageSrc} alt={equip.name} loading="lazy" width={44} height={44} decoding="async" />
-                  </div>
-                  <div className='ml-1 w-full h-auto flex flex-col justify-around'>
-                    <div className='text-xs font-semibold flex items-center'>
-                      <span className='text-[#D9AB48]'>{equip.rating} {equip.equipmentType}</span>
-                      <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
-                      <span className='pb-[1px]'>{equip.itemLevel}</span>
-                      <div className="mx-1 w-[2px] h-[11px] bg-[#4d4f55] dark:bg-[#e6e8ec]"></div>
-                      <span className=''>{equip.tear}</span>
-                    </div>
-                    <div className='flex items-center'>
-                      <span className='text-[0.85rem] font-semibold text-[#D9AB48] mr-2'>{equip.quality}</span>
-                      <div className="w-full h-[9px] mt-[2px] bg-[#4d4f55] dark:bg-[#e6e8ec] relative">
-                        <div className={`rounded-r-sm h-[9px] mt-[2px] bg-[#f9ae00] dark:bg-[#eba70c] absolute bottom-0`} style={{width: `${equip.quality}%`}}></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* 장비 Hover 기본 효과 */}
-                <div className='mt-4 w-full'>
-                  <pre className='text-[0.75rem] leading-5 font-semibold'>{equip.basicEffect}</pre>
-                </div>
-                {/* 장비 Hover 추가 효과 */}
-                <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
-                <div className='w-full'>
-                  <p className='text-[0.8rem] leading-5 font-semibold'>{equip.additionalEffects}</p>
-                </div>
-                {/* 장비 세트 효과 */}
-                <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
-                <div className='w-full'>
-                  <p className='text-[0.8rem] leading-5 font-semibold'>{equip.setEffect}</p>
-                </div>
-              </div>
-            </div>
-          )})}
 
           {/* 무기 */}
           {ArmoryEquipment !== undefined && weaponIndex !== undefined && weaponIndex >= 0 ?
@@ -270,12 +175,15 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
                 </div>
               </div>
               {/* 무기, 초월 합계 및 초월 증가 수치 */}
+              {transcendanceTotal !== undefined && transcendanceTotal > 0 &&
               <div className='flex items-center mt-1 w-fit font-semibold text-[0.75rem] leading-3 rounded-full px-1.5 py-0.5 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>
                 <Image src={transcendance} alt='초월' width={14} height={14} />
-                <p className='ml-1 font-semibold text-yellow-500'>합계 45</p>
-                <p className='ml-1.5 font-semibold dark:text-[#cacdd4]'>평균 3.0단계</p>
+                <p className='ml-1 font-semibold text-yellow-500'>합계 {transcendanceTotal}</p>
+                <p className='ml-1.5 font-semibold dark:text-[#cacdd4]'>평균 {transcendanceAverage}단계</p>
                 <p className='ml-1 font-semibold dark:text-[#cacdd4]'>+4.92%</p>
               </div>
+              }
+              
             </div>
             {/* 무기 Hover */}
             <div className='absolute top-0 z-10 opacity-98 w-[270px] flex flex-col justify-center items-center p-4 rounded-[8px] bg-white dark:bg-[#33353a] translate-x-[20%] invisible group-hover/item:visible shadow-[0px_1px_4px_0px_rgba(0,0,0,0.25)]'>

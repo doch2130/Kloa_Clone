@@ -27,6 +27,54 @@ export default function CharacterList() {
             <p>1 진화의 유산</p>
           </div>
         </li>
+        <li className='hover:bg-[#F9FBFB] dark:hover:bg-[#3a3b41]'>
+          <div>
+            <p>2</p>
+            <Link href='./characters/중복제거' as='./characters/중복제거'>중복제거</Link>
+            <p>1610</p>
+            <p>바드</p>
+            <p>카제로스</p>
+            <p>혈석길드</p>
+            <p>6 갈망</p>
+            <p>3 절실한 구원</p>
+          </div>
+        </li>
+        <li className='hover:bg-[#F9FBFB] dark:hover:bg-[#3a3b41]'>
+          <div>
+            <p>4</p>
+            <Link href='./characters/키토드' as='./characters/키토드'>키토드</Link>
+            <p>1580</p>
+            <p>워로드</p>
+            <p>카제로스</p>
+            <p>혈석길드</p>
+            <p>6 사멸</p>
+            <p>3 고귀한 기사 1 전투 태세</p>
+          </div>
+        </li>
+        <li className='hover:bg-[#F9FBFB] dark:hover:bg-[#3a3b41]'>
+          <div>
+            <p>3</p>
+            <Link href='./characters/u꿀주먹u' as='./characters/u꿀주먹u'>u꿀주먹u</Link>
+            <p>1520</p>
+            <p>브레이커</p>
+            <p>카제로스</p>
+            <p>혈석길드</p>
+            <p>6 사멸</p>
+            <p>3 수라의 길</p>
+          </div>
+        </li>
+        <li className='hover:bg-[#F9FBFB] dark:hover:bg-[#3a3b41]'>
+          <div>
+            <p>3</p>
+            <Link href='./characters/나만없는킹냥이' as='./characters/나만없는킹냥이'>나만없는킹냥이</Link>
+            <p>1460</p>
+            <p>도화가</p>
+            <p>카제로스</p>
+            <p>혈석길드</p>
+            <p>6 배신</p>
+            <p></p>
+          </div>
+        </li>
       </ul>
     </div>
   )

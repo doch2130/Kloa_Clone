@@ -270,6 +270,7 @@ export interface CharacterArmories {
   ArmorySkills: ArmorySkill[]
   Collectibles: Collectible[]
   ColosseumInfo: ColosseumInfo
+  transcendanceTotal?: number
 }
 
 export interface characterResponseType {

@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Tab } from '@headlessui/react'
 import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, CharacterArmories, Gem } from './CharacterResponseType'
 
@@ -74,6 +74,9 @@ const abilityStoneExtractedData = (str: string) => {
 
 export default function CharacterDetailRight({ data }:CharacterDetailRight) {
   const [updatedArmoryGemData, setUpdatedArmoryGemData] = useState<ArmoryGem  | undefined>(data?.ArmoryGem);
+  const transcendanceTotalRef = useRef<number>(0);
+  const transcendanceAverageRef = useRef<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
   
   useEffect(() => {
     const updateStats = () => {
@@ -345,6 +348,9 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
 
     const updateEquipmentArmors = async () => {
       if (data?.ArmoryEquipment) {
+        let transcendanceLevelTotal = 0;
+        let averageCount = 0;
+
         const updateArmoryEquipmentArmors = await Promise.all(
           data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment) => {
             let itemTear = '';
@@ -422,7 +428,14 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
               }
 
               // 초월
-              if(typeof tooltipJson?.Element_008?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_008?.value?.Element_000?.topStr.includes('[초월]')) {
+              if(typeof tooltipJson?.Element_007?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_007?.value?.Element_000?.topStr.includes('[초월]')) {
+                if(tooltipJson?.Element_007?.value?.Element_000?.contentStr?.Element_000) {
+                  const transcendanceAddEffect = tooltipJson?.Element_007?.value?.Element_000?.contentStr?.Element_000?.contentStr;
+                  const findTranscendence = await findTranscendenceData(tooltipJson?.Element_007?.value?.Element_000?.topStr);
+                  findTranscendence?.push(transcendanceAddEffect);
+                  transcendance = findTranscendence;
+                }
+              } else if(typeof tooltipJson?.Element_008?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_008?.value?.Element_000?.topStr.includes('[초월]')) {
                 if(tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_000) {
                   const transcendanceAddEffect = tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_000?.contentStr;
                   const findTranscendence = await findTranscendenceData(tooltipJson?.Element_008?.value?.Element_000?.topStr);
@@ -450,14 +463,22 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
               transcendance: updateArmoryEquipmentArmors[armorIndex].transcendance
             }
 
+            transcendanceTotalRef.current += Number(updateArmoryEquipmentArmors[armorIndex].transcendance[1]);
+            averageCount++
+            transcendanceLevelTotal += Number(updateArmoryEquipmentArmors[armorIndex].transcendance[0]?.toString().replace('단계', ''));
+
             data.ArmoryEquipment[armorIndex] = {
               ...data.ArmoryEquipment[armorIndex],
               'Tear': updateArmoryEquipmentArmors[armorIndex].itemTear,
               'QualityValue': updateArmoryEquipmentArmors[armorIndex].qualityValue,
-              'ArmoryAttribute': armorAttributeData
+              'ArmoryAttribute': armorAttributeData,
             }
           }
         });
+
+        if(transcendanceLevelTotal > 0 && averageCount > 0) {
+          transcendanceAverageRef.current = transcendanceLevelTotal/averageCount
+        }
       }
     }
 
@@ -595,11 +616,20 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
       await updateGems();
       sortedGems();
       setUpdatedArmoryGemData(data?.ArmoryGem);
+      setIsLoading(true);
     }
 
     fetchData();
 
   }, [data]);
+
+  if(!isLoading) {
+    return (
+      <div className='w-full h-full absolute z-[150] flex items-center justify-center opacity-[0.9]'>
+        <h1 className='text-5xl font-bold'>Loading...</h1>
+      </div>
+    )
+  }
   
   return (
     <section className='grow pb-[50px]'>
@@ -618,7 +648,12 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
         {/* 탭에 따른 데이터 출력 위치 */}
         <Tab.Panels>
           <Tab.Panel>
-            <AbilityTab ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard} ArmoryGem={updatedArmoryGemData} ArmoryEngraving={data?.ArmoryEngraving} CharacterClassName={data?.ArmoryProfile.CharacterClassName}/>
+            {isLoading && 
+            <AbilityTab ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard}
+              ArmoryGem={updatedArmoryGemData} ArmoryEngraving={data?.ArmoryEngraving} CharacterClassName={data?.ArmoryProfile.CharacterClassName}
+              transcendanceTotal={transcendanceTotalRef.current} transcendanceAverage={transcendanceAverageRef.current}
+            />
+            }
           </Tab.Panel>
           <Tab.Panel>Content 2</Tab.Panel>
           <Tab.Panel>Content 3</Tab.Panel>
