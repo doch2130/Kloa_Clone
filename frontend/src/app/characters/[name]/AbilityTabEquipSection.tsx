@@ -1,5 +1,5 @@
 'use client'
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { ArmoryEquipment, ArmoryEngraving, ArmoryEquipmentPoint } from './CharacterResponseType'
 
@@ -13,6 +13,7 @@ import { characterJobStatus } from '@/data/CharacterJobData'
 import { itemQualityCheckFunction } from '../ItemQualityStyle'
 import AbilityTabEquipAccessries from './AbilityTabEquipAccessries'
 import AbilityTabEquipArmor from './AbilityTabEquipArmor'
+import { elixirSpecialOptionDescript } from './ElixirSpecialOptionDescript'
 
 interface AbilityTabEquipSectionProps {
   ArmoryEquipment?: ArmoryEquipment[]
@@ -29,95 +30,52 @@ const findValueInEngravingPoint = (str: string) => {
   return str.slice(startIndex, endIndex);
 }
 
-// 임시 값
-type equipArrayType = {
-  reinforcementLevel: string;
-  name: string;
-  itemLevel: string;
-  tear: string;
-  rating: string;
-  equipmentType: string;
-  quality: string;
-  setEffect: string;
-  basicEffect: string;
-  additionalEffects: string;
-  imageSrc: string;
+
+const elixirSpecialEffectCheck = (ArmoryEquipment:ArmoryEquipment[]) => {
+  let isCheck = false;
+  let optionList:string[] = [];
+  let resultDescription:string[] = [];
+
+  ['투구', '장갑'].forEach((el:string) => {
+    const armorIndex = ArmoryEquipment?.findIndex(item => item.Type === el);
+
+    if(armorIndex !== undefined && armorIndex >= 0) {
+      ArmoryEquipment[armorIndex].ArmoryAttribute?.elixirEffect.forEach((effect) => {
+        if(effect.elixirEffectName.includes('(질서)') || effect.elixirEffectName.includes('(혼돈)')) {
+          optionList.push(effect.elixirEffectName);
+        }
+      });
+    }
+  });
+
+  if(optionList.length === 2) {
+    isCheck = optionList[0].replace('(질서)', '').replace('(혼돈)', '').trim() === optionList[1].replace('(질서)', '').replace('(혼돈)', '').trim();
+  }
+
+  if(isCheck) {
+    const armorIndex = ArmoryEquipment?.findIndex(item => item.Type === '투구');
+
+    if (armorIndex !== undefined && ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.elixirTotal !== undefined) {
+      const elixirTotal = ArmoryEquipment[armorIndex]?.ArmoryAttribute?.elixirTotal;
+
+      if (elixirTotal !== undefined && elixirTotal >= 40) {
+        resultDescription = elixirSpecialOptionDescript[optionList[0].replace('(질서)', '').replace('(혼돈)', '').trim()];
+      } else if (elixirTotal !== undefined && elixirTotal >= 35) {
+        resultDescription.push(elixirSpecialOptionDescript[optionList[0].replace('(질서)', '').replace('(혼돈)', '').trim()][0]);
+      } else {
+        resultDescription.push('');
+      }
+    }
+  } else {
+    resultDescription.push('');
+  }
+
+  return resultDescription;
 }
-
-const equipArray:equipArrayType[] = [
-  {
-    reinforcementLevel: '+19',
-    name: '차오른 몽환의 환각 모자',
-    itemLevel: '1620',
-    tear: '티어 3',
-    rating: '고대',
-    equipmentType: '모자',
-    quality: '95',
-    setEffect: '환각 Lv.3',
-    basicEffect: '물리 방어력 +5435\r\n마법 방어력+6039\r\n민첩 +35394\r\n체력 +5081',
-    additionalEffects: '생명 활성력 +1264',
-    imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_160.png',
-  },
-  {
-    reinforcementLevel: '+19',
-    name: '차오른 몽환의 환각 견갑',
-    itemLevel: '1620',
-    tear: '티어 3',
-    rating: '고대',
-    equipmentType: '어깨장식',
-    quality: '90',
-    setEffect: '환각 Lv.3',
-    basicEffect: '물리 방어력 +6039\r\n마법 방어력+5435\r\n민첩 +37669\r\n체력 +4404',
-    additionalEffects: '생명 활성력 +1134',
-    imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_161.png',
-  },
-  {
-    reinforcementLevel: '+19',
-    name: '차오른 몽환의 환각 상의',
-    itemLevel: '1620',
-    tear: '티어 3',
-    rating: '고대',
-    equipmentType: '상의',
-    quality: '82',
-    setEffect: '환각 Lv.3',
-    basicEffect: '물리 방어력 +7247\r\n마법 방어력+6643\r\n민첩 +28315\r\n체력 +6775',
-    additionalEffects: '생명 활성력 +942',
-    imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_163.png',
-  },
-  {
-    reinforcementLevel: '+19',
-    name: '차오른 몽환의 환각 하의',
-    itemLevel: '1620',
-    tear: '티어 3',
-    rating: '고대',
-    equipmentType: '하의',
-    quality: '99',
-    setEffect: '환각 Lv.3',
-    basicEffect: '물리 방어력 +6643\r\n마법 방어력+7247\r\n민첩 +30591\r\n체력 +5758',
-    additionalEffects: '생명 활성력 +1373',
-    imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_164.png',
-  },
-  {
-    reinforcementLevel: '+19',
-    name: '차오른 몽환의 환각 장갑',
-    itemLevel: '1620',
-    tear: '티어 3',
-    rating: '고대',
-    equipmentType: '장갑',
-    quality: '90',
-    setEffect: '환각 Lv.3',
-    basicEffect: '물리 방어력 +4831\r\n마법 방어력+4831\r\n민첩 +42473\r\n체력 +3388',
-    additionalEffects: '생명 활성력 +1134',
-    imageSrc: 'https://pica.korlark.com/efui_iconatlas/sc_item/sc_item_162.png',
-  },
-];
-// 임시 값 종료
-
-
-
 
 export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngraving, CharacterClassName, transcendanceTotal, transcendanceAverage }:AbilityTabEquipSectionProps) {
   const weaponIndex = ArmoryEquipment?.findIndex(item => item.Type === '무기');
+  const headArmorIndex = ArmoryEquipment?.findIndex(item => item.Type === '투구');
   const necklaceIndex = ArmoryEquipment?.findIndex(item => item.Type === '목걸이');
   const earringOneIndex = ArmoryEquipment?.findIndex(item => item.Type === '귀걸이');
   let earringTwoIndex: number | undefined = undefined;
@@ -132,6 +90,16 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
   const braceletIndex = ArmoryEquipment?.findIndex(item => item.Type === '팔찌');
   const abilityStoneIndex = ArmoryEquipment?.findIndex(item => item.Type === '어빌리티 스톤');
 
+  const [elixirSpecialEffectDescription, setElixirSpecialEffectDescription] = useState<string[]>(['']);
+
+  useEffect(() => {
+    if(ArmoryEquipment !== undefined) {
+      const result:string[] = elixirSpecialEffectCheck(ArmoryEquipment);
+      setElixirSpecialEffectDescription(result);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ArmoryEquipment]);
+
   return (
     <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
       <div className='grid grid-cols-2 gap-x-3'>
@@ -141,7 +109,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
           {['투구', '어깨', '상의', '하의', '장갑'].map((el:string, index:number) => {
             return (
               <Fragment key={`${el}_${index}`}>
-                <AbilityTabEquipArmor ArmoryEquipment={ArmoryEquipment} armorType={el} />
+                <AbilityTabEquipArmor ArmoryEquipment={ArmoryEquipment} armorType={el} elixirSpecialEffectDescription={elixirSpecialEffectDescription} />
               </Fragment>
             )
           })}
@@ -161,18 +129,24 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
             <div>
               {/* 강화, 장비이름 */}
               <p className={`truncate text-[0.9rem] font-semibold`} style={itemGradeStyleColor[ArmoryEquipment?.[weaponIndex]?.Grade]}><span className='text-base'>{ArmoryEquipment?.[weaponIndex]?.Name.slice(0, ArmoryEquipment?.[weaponIndex]?.Name.indexOf(' '))}</span>{ArmoryEquipment?.[weaponIndex]?.Name.slice(ArmoryEquipment?.[weaponIndex]?.Name.indexOf(' '))}</p>
-              {/* 세트, 엘릭서 */}
+              
               <div className='flex items-center'>
+                {/* 세트 */}
                 {ArmoryEquipment?.[weaponIndex]?.WeaponAttribute?.setEffectName.setName !== '' && <p className='text-[0.7rem] leading-3 py-0.5 text-center font-semibold bg-[#e6e8ec] dark:bg-[#4b4e58] rounded-sm px-1.5'>{ArmoryEquipment?.[weaponIndex]?.WeaponAttribute?.setEffectName.setName} <span className='text-[0.75rem]'>{ArmoryEquipment?.[weaponIndex]?.WeaponAttribute?.setEffectName.setLevel}</span></p>}
+                
+                {/* 엘릭서 */}
+                {(elixirSpecialEffectDescription[0] !== '' && headArmorIndex !== undefined && ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirTotal !== undefined) &&
                 <div className='gap-x-1.5 font-semibold ml-1.5 flex items-center'>
                   <div className='flex items-center gap-x-1.5'>
-                    <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>달인 2단계</div>
+                    {/* <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>달인 2단계</div> */}
+                    <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirSpecialOption} {ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirTotal! >= 40 ? '2단계' : '1단계'}</div>
                     <div className='font-semibold text-white rounded-sm pl-0.5 pr-1 py-0.5 flex justify-center items-center gap-x-0.5 rounded-r-none last:rounded-r-sm text-xs leading-3 bg-[#2AB1F6]'>
                       <Image src={elixir} alt='엘릭서' width={12} height={12} />
                       <p className='flex items-end drop-shadow'>20.15%</p>
                     </div>
                   </div>
                 </div>
+                }
               </div>
               {/* 무기, 초월 합계 및 초월 증가 수치 */}
               {transcendanceTotal !== undefined && transcendanceTotal > 0 &&

@@ -61,6 +61,8 @@ export interface ArmoryEquipmentArmor {
   basicEffect: string[]
   addEffect: string
   elixirEffect: ElixirEffect[]
+  elixirTotal: number
+  elixirSpecialOption: string
   itemLevel: string
   setEffectName: {
     setName: string

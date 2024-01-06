@@ -4,6 +4,7 @@ import { Tab } from '@headlessui/react'
 import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, CharacterArmories, Gem } from './CharacterResponseType'
 
 import AbilityTab from './AbilityTab'
+import { elixirSpecialOptionDescript } from './ElixirSpecialOptionDescript'
 
 interface CharacterDetailRight {
   data?: CharacterArmories | null | undefined
@@ -74,6 +75,7 @@ const abilityStoneExtractedData = (str: string) => {
 
 export default function CharacterDetailRight({ data }:CharacterDetailRight) {
   const [updatedArmoryGemData, setUpdatedArmoryGemData] = useState<ArmoryGem  | undefined>(data?.ArmoryGem);
+  const elixirTotalRef = useRef<number>(0);
   const transcendanceTotalRef = useRef<number>(0);
   const transcendanceAverageRef = useRef<number>(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -350,6 +352,8 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
       if (data?.ArmoryEquipment) {
         let transcendanceLevelTotal = 0;
         let averageCount = 0;
+        let elixirTotal = 0;
+        let elixirSpecialOption = '';
 
         const updateArmoryEquipmentArmors = await Promise.all(
           data.ArmoryEquipment?.map(async (armoryEquipment: ArmoryEquipment) => {
@@ -369,7 +373,6 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
             const tooltipJson = await tooltipJsonChange(armoryEquipment.Tooltip);
 
             if(armoryEquipment.Type === '투구' || armoryEquipment.Type === '어깨' || armoryEquipment.Type === '상의' || armoryEquipment.Type === '하의' || armoryEquipment.Type === '장갑') {
-            // if(armoryEquipment.Type === '어깨') {
 
               if (tooltipJson.Element_001?.value?.leftStr2) {
                 // 티어, 품질
@@ -427,6 +430,15 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
                 }
               }
 
+              elixirEffect.forEach((effect) => {
+                elixirTotal += Number(effect.elixirEffectLevel);
+
+                const elixirSpecialOptionName = effect.elixirEffectName.replace('(질서)', '').replace('(혼돈)', '').trim();
+                if(elixirSpecialOptionDescript[elixirSpecialOptionName] !== undefined) {
+                  elixirSpecialOption = elixirSpecialOptionName;
+                }
+              });
+
               // 초월
               if(typeof tooltipJson?.Element_007?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_007?.value?.Element_000?.topStr.includes('[초월]')) {
                 if(tooltipJson?.Element_007?.value?.Element_000?.contentStr?.Element_000) {
@@ -445,7 +457,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
               }
             }
 
-            return { itemTear, qualityValue, basicEffect, addEffect, itemLevel, setEffectName, elixirEffect, transcendance };
+            return { itemTear, qualityValue, basicEffect, addEffect, itemLevel, setEffectName, elixirEffect, elixirTotal, elixirSpecialOption, transcendance };
           })
         );
 
@@ -458,9 +470,11 @@ export default function CharacterDetailRight({ data }:CharacterDetailRight) {
               basicEffect: updateArmoryEquipmentArmors[armorIndex].basicEffect,
               addEffect: updateArmoryEquipmentArmors[armorIndex].addEffect,
               elixirEffect: updateArmoryEquipmentArmors[armorIndex].elixirEffect,
+              elixirTotal: updateArmoryEquipmentArmors[armorIndex].elixirTotal,
+              elixirSpecialOption: updateArmoryEquipmentArmors[armorIndex].elixirSpecialOption,
               itemLevel: updateArmoryEquipmentArmors[armorIndex].itemLevel,
               setEffectName: updateArmoryEquipmentArmors[armorIndex].setEffectName,
-              transcendance: updateArmoryEquipmentArmors[armorIndex].transcendance
+              transcendance: updateArmoryEquipmentArmors[armorIndex].transcendance,
             }
 
             transcendanceTotalRef.current += Number(updateArmoryEquipmentArmors[armorIndex].transcendance[1]);
