@@ -1,4 +1,4 @@
-import { Character } from "@/types/characters";
+import { SearchCharacter } from '@/types/characters';
 
 
 /*
@@ -11,7 +11,7 @@ export const localStorageSaveHandler = (type:string, searchValue:string, setStat
   if(type === 'recently') {
     const recentlySearchStorage = localStorage.getItem('recentlySearchStorage');
     
-    const searchData:Character = {
+    const searchData:SearchCharacter = {
       name: searchValue,
       job: '워로드',
       icon_url: 'http://aaa.com',
@@ -51,8 +51,8 @@ export const localStorageSaveHandler = (type:string, searchValue:string, setStat
 @ stateData useState
 @ setStateFunction useStateFunction
 */
-export const deleteSearchDataHandler = (type:string, characterName:string, stateData:Character[], setStateFunction:Function) => {
-  const filterData = stateData.filter((item:Character) => item.name !== characterName);
+export const deleteSearchDataHandler = (type:string, characterName:string, stateData:SearchCharacter[], setStateFunction:Function) => {
+  const filterData = stateData.filter((item:SearchCharacter) => item.name !== characterName);
 
   if(type === 'recently') {
     localStorage.setItem('recentlySearchStorage', JSON.stringify(filterData));

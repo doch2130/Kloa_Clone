@@ -6,7 +6,7 @@ import Image from 'next/image'
 import HeaderSearchFormRecently from './HeaderSearchFormRecently'
 import HeaderSearchFormFavorite from './HeaderSearchFormFavorite'
 
-import { Character } from '@/types/characters'
+import { SearchCharacter } from '@/types/characters'
 
 import { IconSearch } from '/public/svgs'
 
@@ -22,7 +22,7 @@ export default function HeaderSearchForm() {
   // 최근검색, 즐겨찾기 카테고리 변경
   const [popOverCategory, setPopOverCategory] = useState<string>('최근검색');
   // 최근검색 데이터
-  const [recentlyData, setRecentlyData] = useState<Character[]>([]);
+  const [recentlyData, setRecentlyData] = useState<SearchCharacter[]>([]);
 
   // 인풋 창 데이터 변환, 값에 따른 팝업 창 출력 상태
   const textChange = (e:React.ChangeEvent<HTMLInputElement>) => {

@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import { deleteSearchDataHandler } from './HeaderSearchUtil'
-import { Character } from '@/types/characters'
+import { SearchCharacter } from '@/types/characters'
 
 import { IconClose } from '/public/svgs'
 import { ImgAuctionEmpty2 } from '/public/images'
 
 export default function HeaderSearchFormFavorite() {
-  const [favoriteData, setFavoriteData] = useState<Character[]>([]);
+  const [favoriteData, setFavoriteData] = useState<SearchCharacter[]>([]);
 
   useEffect(() => {
     const favoriteSearchStorage = localStorage.getItem('favoriteCharactersStorage');
@@ -29,7 +29,7 @@ export default function HeaderSearchFormFavorite() {
         <br />캐릭터를 검색한 후 즐겨찾기 해보세요!</p>
       </div>
     :
-    favoriteData.map((el:Character, index:number) =>
+    favoriteData.map((el:SearchCharacter, index:number) =>
       <div key={index} className='w-full h-[55px] border-b border-basicGrey dark:border-[#4d4f55] flex justify-between items-center pl-5 last:border-b-0 hover:bg-[#f9fbfb] dark:bg-[#33353a] hover:dark:bg-[#3a3b41]'>
         <a href='/' className='flex flex-col justify-center grow dark:text-[#eaf0ec] hover:text-[#5865f2] dark:hover:text-[#8991ee]'>
           <p className='font-medium text-main1'>
