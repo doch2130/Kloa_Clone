@@ -6,7 +6,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 
 import CheckSvgComponent from '@/components/UI/CheckSvgComponent'
 
-import styled from './Signup.module.css'
+import styled from '@/styles/Signup.module.css'
 
 
 type FormValues = {

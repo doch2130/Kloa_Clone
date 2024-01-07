@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from "react-hook-form"
 
-import styled from './Rest.module.css'
+import styled from '@/styles/Rest.module.css'
 
 type FormValues = {
   email: string

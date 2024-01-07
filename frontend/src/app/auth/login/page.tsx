@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 
 import CheckSvgComponent from '@/components/UI/CheckSvgComponent'
 
-import styled from './Login.module.css'
+import styled from '@/styles/Login.module.css'
 
 export default function Login() {
   const router = useRouter();

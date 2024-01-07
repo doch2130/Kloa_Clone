@@ -1,9 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 
-import SonabelArt from '@/assets/Art/SonabelArt.webp'
+import { ImgSonabelArt } from '/public/images'
 
-import styled from './AuthLayout.module.css'
+import styled from '@/styles/AuthLayout.module.css'
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +12,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         {children}
       </div>
       <div className={styled.authArt}>
-        <Image src={SonabelArt} alt='auth art image' />
+        <Image src={ImgSonabelArt} alt='auth art image' />
       </div>
     </div>
   )
