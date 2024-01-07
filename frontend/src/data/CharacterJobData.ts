@@ -1,3 +1,11 @@
+type characterJobSkillType = {
+  [key: string]: string[];
+}
+
+type characterJobStatusType = {
+  [key: string]: string
+}
+
 export const characterJobList:string[] = [
   '전체 클래스',
   '디스트로이어',
@@ -27,10 +35,6 @@ export const characterJobList:string[] = [
   '기상술사'
 ]
 
-type characterJobSkillType = {
-  [key: string]: string[];
-}
-
 export const characterJobSkillList:characterJobSkillType = {
   '전체 클래스': [],
   '워로드': ['전체', '고독한 기사', '전투 태세'],
@@ -59,11 +63,6 @@ export const characterJobSkillList:characterJobSkillType = {
   '소울이터': ['전체', '만월의 집행자', '그믐의 경계'],
   '도화가': ['전체', '만개', '회귀'],
   '기상술사': ['전체', '질풍노도', '이슬비']
-}
-
-
-type characterJobStatusType = {
-  [key: string]: string
 }
 
 export const characterJobStatus:characterJobStatusType = {
