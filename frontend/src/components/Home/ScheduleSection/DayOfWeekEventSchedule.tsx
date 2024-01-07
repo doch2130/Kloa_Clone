@@ -3,16 +3,11 @@ import React, { useEffect, useState } from 'react'
 import Image, { StaticImageData } from 'next/image'
 
 import { isSameDate } from './scheduleUtils'
-import { StringOrNumber } from '@/type/adventureIsland'
+import { StringOrNumber } from '@/types/adventureIsland'
 
-import styled from './Schedule.module.css'
+import styled from '@/styles/Schedule.module.css'
 
-import BossOn from '@/assets/Icon/boss_on.png'
-import ChaosGateOn from '@/assets/Icon/chaosGate_on.png'
-import BattleArenaOn from '@/assets/Icon/battleArena_on.png'
-import BossOff from '@/assets/Icon/boss_off.png'
-import ChaosGateOff from '@/assets/Icon/chaosGate_off.png'
-import BattleArenaOff from '@/assets/Icon/battleArena_off.png'
+import { ImgBossOff, ImgBossOn, ImgChaosGateOff, ImgChaosGateOn, ImgBattleArenaOff, ImgBattleArenaOn } from '/public/images'
 
 type DayOfWeekEventScheduleProps = {
   today: Date;
@@ -34,9 +29,9 @@ export default function DayOfWeekEventSchedule({ today, currentDate, category }:
   };
 
   const dayEventScheduleIcon: { [key:string]:StaticImageData[] } = {
-    '필드보스': [BossOn, BossOff],
-    '카오스게이트': [ChaosGateOn, ChaosGateOff],
-    '태초의 섬': [BattleArenaOn, BattleArenaOff]
+    '필드보스': [ImgBossOn, ImgBossOff],
+    '카오스게이트': [ImgChaosGateOn, ImgChaosGateOff],
+    '태초의 섬': [ImgBattleArenaOn, ImgBattleArenaOff]
   };
 
   function calculateTimeToNextHour() {

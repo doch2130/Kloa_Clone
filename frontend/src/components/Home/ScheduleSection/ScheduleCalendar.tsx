@@ -2,7 +2,7 @@
 import React from 'react'
 import { changeDate, isSameDate } from './scheduleUtils'
 
-import styled from './ScheduleCalendar.module.css'
+import styled from '@/styles/ScheduleCalendar.module.css'
 
 type ScheduleCalendarProps = {
   today: Date;

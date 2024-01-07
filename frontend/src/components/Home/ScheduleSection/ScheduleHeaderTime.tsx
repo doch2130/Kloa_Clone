@@ -1,9 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { StringOrNumber } from '@/type/adventureIsland'
+import { StringOrNumber } from '@/types/adventureIsland'
 import { isSameDate } from './scheduleUtils'
 
-import styled from './Schedule.module.css'
+import styled from '@/styles/Schedule.module.css'
 
 type ScheduleHeaderTimeProps = {
   today: Date;

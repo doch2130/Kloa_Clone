@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 
-import { AdventureIsland } from '@/type/adventureIsland'
+import { AdventureIsland } from '@/types/adventureIsland'
 import { changeMonth, isSameDate } from './scheduleUtils'
 
 import ScheduleHeaderTime from './ScheduleHeaderTime'
@@ -10,11 +10,12 @@ import ScheduleCalendar from './ScheduleCalendar'
 import DayOfWeekEventSchedule from './DayOfWeekEventSchedule'
 import AdventureIslandSchedule from './AdventureIslandSchedule'
 
-import styled from './Schedule.module.css'
-
-import LeftArrow from '@/assets/Icon/leftArrow.svg'
-import RightArrow from '@/assets/Icon/rightArrow.svg'
 import Calendar from '@/components/Calendar/Calendar'
+
+import styled from '@/styles/Schedule.module.css'
+
+import { IconLeftArrow, IconRightArrow } from '/public/svgs'
+
 
 type ScheduleProps = {
   adventureIslandData: AdventureIsland[];
@@ -41,9 +42,9 @@ export default function Schedule({ adventureIslandData }:ScheduleProps) {
       {/* 모험 섬 시간 - Header */}
       <ScheduleHeaderTime today={today} currentDate={currentDate} />
       <div className={`${styled.scheduleDateChange} flex items-center md:hidden`}>
-        <Image src={LeftArrow} alt='left arrow' onClick={() => changeMonth(currentDate, -1, setCurrentDate)}/>
+        <Image src={IconLeftArrow} alt='left arrow' onClick={() => changeMonth(currentDate, -1, setCurrentDate)}/>
         <p className='dark:text-[#eaf0ec]'>{`${currentDate.getFullYear()}년 ${currentDate.getMonth()+1}월`}</p>
-        <Image src={RightArrow} alt='right arrow' onClick={() => changeMonth(currentDate, 1, setCurrentDate)} />
+        <Image src={IconRightArrow} alt='right arrow' onClick={() => changeMonth(currentDate, 1, setCurrentDate)} />
       </div>
       {/* 960px 이하에서는 보이는 UI */}
       <div className='md:block hidden'>

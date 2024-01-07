@@ -2,12 +2,12 @@
 import React, { useState } from 'react'
 import Image from 'next/image';
 
-import { RewardItem } from '@/type/adventureIsland'
-
-import LeftDoubleArrow from '@/assets/Icon/leftDoubleArrow.svg'
-import RightDoubleArrow from '@/assets/Icon/rightDoubleArrow.svg'
+import { RewardItem } from '@/types/adventureIsland'
 import itemFilter from '@/data/AdventureIslandData'
-import styled from './ScheduleItemList.module.css'
+
+import { IconLeftDoubleArrow, IconRightDoubleArrow } from '/public/svgs';
+
+import styled from '@/styles/ScheduleItemList.module.css'
 
 type ScheduleItemListProps = {
   islandName: string;
@@ -39,13 +39,13 @@ export default function AdventureIslandScheduleItem({ islandName, itemList }:Sch
           }
           {index === 6 && (arrowIndex &&
             <div className={styled.itemIconWrap}>
-              <Image src={RightDoubleArrow} alt='Island Item List Right Arrow'
+              <Image src={IconRightDoubleArrow} alt='Island Item List Right Arrow'
               width={30} height={30} onClick={itemListChange} className={styled.arrowIcon} />
             </div>
           )}
           {index === 6 && (!arrowIndex &&
             <div className={styled.itemIconWrap}>
-              <Image src={LeftDoubleArrow} alt='Island Item List Left Arrow'
+              <Image src={IconLeftDoubleArrow} alt='Island Item List Left Arrow'
               width={30} height={30} onClick={itemListChange} className={styled.arrowIcon} />
             </div>
           )}

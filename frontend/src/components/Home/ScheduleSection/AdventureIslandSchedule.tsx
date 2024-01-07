@@ -2,12 +2,12 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 
-import { AdventureIsland, AdventureIslandResp } from '@/type/adventureIsland'
+import { AdventureIsland, AdventureIslandResp } from '@/types/adventureIsland'
 import { isSameDate } from './scheduleUtils'
 
 import AdventureIslandScheduleItem from './AdventureIslandScheduleItem'
 
-import styled from './Schedule.module.css'
+import styled from '@/styles/Schedule.module.css'
 
 type AdventureIslandScheduleProps = {
   today: Date;
@@ -56,16 +56,6 @@ export default function AdventureIslandSchedule({ today, currentDate, adventureI
 
   useEffect(() => {
     fetchData();
-    // 주말 오전, 오후 섬 시간대 별 정리를 위한 sort 함수
-    // if(adventureIslandData?.length > 3) {
-    //   adventureIslandData.sort((a, b) => {
-    //     const dateA = new Date(a.StartTimes[0]);
-    //     const dateB = new Date(b.StartTimes[0]);
-    //     return dateA.getTime() - dateB.getTime();
-    //   });
-    // }
-    // setAdventureList(adventureIslandData);
-  // }, [adventureIslandData, currentDate]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentDate]);
 
