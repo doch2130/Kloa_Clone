@@ -1,6 +1,6 @@
 
 import { NextRequest, NextResponse } from "next/server"
-import { ContentsCalendar, OrganizeContentsCalendar, RewardItem, OrganizeRewardItem, OrganizeAdventureIslandList } from '@/type/contentsCalendar'
+import { ContentsCalendar, OrganizeContentsCalendar, RewardItem, OrganizeRewardItem, OrganizeAdventureIslandList } from '@/types/contentsCalendar'
 import { verifyStringJwt } from "@/libs/jwt"
 import path from 'path';
 import fs from "fs";
