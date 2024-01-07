@@ -85,11 +85,10 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
                 {ArmoryEquipment?.[weaponIndex]?.WeaponAttribute?.setEffectName.setName !== '' && <p className='text-[0.7rem] leading-3 py-0.5 text-center font-semibold bg-[#e6e8ec] dark:bg-[#4b4e58] rounded-sm px-1.5'>{ArmoryEquipment?.[weaponIndex]?.WeaponAttribute?.setEffectName.setName} <span className='text-[0.75rem]'>{ArmoryEquipment?.[weaponIndex]?.WeaponAttribute?.setEffectName.setLevel}</span></p>}
                 
                 {/* 엘릭서 */}
-                {(elixirSpecialEffectDescription[0] !== '' && headArmorIndex !== undefined && ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirTotal !== undefined) &&
+                {(ArmoryEquipment !== undefined && ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirTotal !== undefined && ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirTotal! > 0) &&
                 <div className='gap-x-1.5 font-semibold ml-1.5 flex items-center'>
                   <div className='flex items-center gap-x-1.5'>
-                    {/* <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>달인 2단계</div> */}
-                    <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirSpecialOption} {ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirTotal! >= 40 ? '2단계' : '1단계'}</div>
+                    {(elixirSpecialEffectDescription[0] !== '' && headArmorIndex !== undefined) && <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirSpecialOption} {ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirTotal! >= 40 ? '2단계' : '1단계'}</div>}
                     <div className='font-semibold text-white rounded-sm pl-0.5 pr-1 py-0.5 flex justify-center items-center gap-x-0.5 rounded-r-none last:rounded-r-sm text-xs leading-3 bg-[#2AB1F6]'>
                       <Image src={IconElixir} alt='엘릭서' width={12} height={12} />
                       <p className='flex items-end drop-shadow'>20.15%</p>
