@@ -5,17 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 
-import { NoticePost } from '@/type/notice'
+import { NoticePost } from '@/types/notice'
 import { recomendEventHandler } from '../../noticesUtils';
 import { getDetailPage, updateViewCount } from './detailUtils';
 
-import EyeIcon from '@/assets/Icon/eye.svg'
-import MococoIcon from '@/assets/Icon/mococo.svg'
-import ListIcon from '@/assets/Icon/list.svg'
-import UpArrow from '@/assets/Icon/upArrow.svg'
-import DownArrow from '@/assets/Icon/downArrow.svg'
+import { IconEye, IconMococo, IconList, IconUpArrow, IconDownArrow } from '/public/svgs';
 
-import styled from './Detail.module.css'
+import styled from '@/styles/NoticesDetail.module.css'
 
 
 const initPostData:NoticePost = {
@@ -111,28 +107,6 @@ export default function Detail() {
     }
   }
 
-  // const recomendEvent = () => {
-  //   const result = recomendEventHandler(postData.id, session, postData, setPostData);
-  //   // console.log('result ', result);
-
-  //   if(result.status === 401 && result.redirect === false) {
-  //     // alert('로그인 후 추천 가능합니다');
-  //     if(window.confirm('로그인 후 추천 가능합니다.\r\n로그인 페이지로 이동 하시겠습니까?')) {
-  //       router.push('/auth/login');
-  //     }
-  //     return ;
-  //   }
-
-  //   if(result.status === 401 && result.redirect === true) {
-  //     alert('로그인이 만료되었습니다. 다시 로그인 해주세요');
-  //     router.push('/auth/login');
-  //     return ;
-  //   } else {
-  //     alert('에러가 발생하였습니다. 새로 고침 후 다시 시도해주세요');
-  //     return ;
-  //   }
-  // }
-
   const recomendEvent = async () => {
     const result = await recomendEventHandler(postData.id, session);
 
@@ -188,7 +162,7 @@ export default function Detail() {
             <div className={`${styled.postTitle} text-[#353945] dark:text-[#eaf0ec]`}>{postData.title}</div>
             <div className={`${styled.postDate} text-[#353945] dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
             <div className={`${styled.postViewCount} text-[#353945] dark:text-[#eaf0eca2]`}>
-              <Image src={EyeIcon} alt='eye icon' />
+              <Image src={IconEye} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
             </div>
           </div>
@@ -199,20 +173,20 @@ export default function Detail() {
         </div>
         <div className={styled.postBodyRow}>
           <div className={`${styled.postRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a] hover:bg-[#fafbfb]`} onClick={() => recomendEvent()}>
-            <Image src={MococoIcon} alt='mococo icon' />
+            <Image src={IconMococo} alt='mococo icon' />
             <span>{postData.recomendCount}</span>
           </div>
         </div>
         <div className={styled.postBodyRow + ' ' + styled.postBodyButtonGroup}>
           <Link className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' href='/notices?page=1'>
-            <Image src={ListIcon} alt='list icon' width={23} height={23} className='dark:text-[#eaf0ec]' />
+            <Image src={IconList} alt='list icon' width={23} height={23} className='dark:text-[#eaf0ec]' />
           </Link>
           <div className={styled.arrowButtonGroup}>
             <Link className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' href={`/notices/detail/${Number(id)+1}`}>
-              <Image src={UpArrow} alt='up arrow icon' width={23} height={23} />
+              <Image src={IconUpArrow} alt='up arrow icon' width={23} height={23} />
             </Link>
             <Link className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' href={`/notices/detail/${Number(id)-1}`}>
-              <Image src={DownArrow} alt='down arrow icon' width={23} height={23} />
+              <Image src={IconDownArrow} alt='down arrow icon' width={23} height={23} />
             </Link>
           </div>
         </div>
@@ -241,11 +215,11 @@ export default function Detail() {
             </div>
             <div className={`${styled.postFooterDate} text-[#353945] dark:text-[#eaf0ec]`}>{nextPostData.createdAt}</div>
             <div className={`${styled.postFooterViewCount} text-[#353945]`}>
-              <Image src={EyeIcon} alt='eye icon' />
+              <Image src={IconEye} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{nextPostData.viewCount}</span>
             </div>
             <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
-              <Image src={MococoIcon} alt='mococo icon' />
+              <Image src={IconMococo} alt='mococo icon' />
               <span>{nextPostData.recomendCount}</span>
             </div>
           </div>
@@ -264,11 +238,11 @@ export default function Detail() {
             </div>
             <div className={`${styled.postFooterDate} text-[#353945] dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
             <div className={`${styled.postFooterViewCount} text-[#353945]`}>
-              <Image src={EyeIcon} alt='eye icon' />
+              <Image src={IconEye} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
             </div>
             <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
-              <Image src={MococoIcon} alt='mococo icon' />
+              <Image src={IconMococo} alt='mococo icon' />
               <span>{postData.recomendCount}</span>
             </div>
           </div>
@@ -287,11 +261,11 @@ export default function Detail() {
             </div>
             <div className={`${styled.postFooterDate} text-[#353945] dark:text-[#eaf0ec]`}>{prevPostData.createdAt}</div>
             <div className={`${styled.postFooterViewCount} text-[#353945]`}>
-              <Image src={EyeIcon} alt='eye icon' />
+              <Image src={IconEye} alt='eye icon' />
               <span className='dark:text-[#eaf0eca2]'>{prevPostData.viewCount}</span>
             </div>
             <div className={`${styled.postFooterRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent()}>
-              <Image src={MococoIcon} alt='mococo icon' />
+              <Image src={IconMococo} alt='mococo icon' />
               <span>{prevPostData.recomendCount}</span>
             </div>
           </div>

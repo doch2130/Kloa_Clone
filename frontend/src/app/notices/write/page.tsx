@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import dynamic from 'next/dynamic';
 
-import styled from './Write.module.css'
+import styled from '@/styles/NoticesWrite.module.css'
 
 const TextEditor = dynamic(() => import('@/components/TextEditor/TextEditor'), {
   ssr: false,

@@ -33,3 +33,20 @@ export const recomendEventHandler = async (postId:number, session:Session | null
   }
 }
 
+
+export const prevPageChangeHandler = (currentPage:number) => {
+  if (currentPage <= 1) {
+    return;
+  }
+  const prevPage = currentPage - 1;
+  return `/notices?page=${prevPage}`;
+};
+
+
+export const nextPageChangeHandler = (currentPage:number, btnTotalCount:number) => {
+  if (currentPage >= btnTotalCount) {
+    return;
+  }
+  const nextPage = currentPage + 1;
+  return `/notices?page=${nextPage}`;
+};

@@ -2,9 +2,9 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-
-import styled from './Update.module.css'
 import { useSession } from 'next-auth/react';
+
+import styled from '@/styles/NoticesUpdate.module.css'
 
 const TextEditor = dynamic(() => import('@/components/TextEditor/TextEditor'), {
   ssr: false,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { NoticePostResp } from '@/type/notice'
+import { NoticePostResp } from '@/types/notice'
 import NoticesTable from './NoticesTable';
 
 export default async function Notices({searchParams}:any) {

@@ -5,14 +5,12 @@ import Image from 'next/image';
 import Link from 'next/link'
 import { useSession } from 'next-auth/react';
 
-import { NoticePost } from '@/type/notice'
-import { recomendEventHandler } from './noticesUtils';
+import { NoticePost } from '@/types/notice'
+import { nextPageChangeHandler, prevPageChangeHandler, recomendEventHandler } from './noticesUtils';
 
-import EyeIcon from '@/assets/Icon/eye.svg'
-import MococoIcon from '@/assets/Icon/mococo.svg'
-import LeftArrow from '@/assets/Icon/leftArrow.svg'
-import RightArrow from '@/assets/Icon/rightArrow.svg'
-import styled from './Notices.module.css'
+import { IconEye, IconMococo, IconLeftArrow, IconRightArrow } from '/public/svgs';
+
+import styled from '@/styles/Notices.module.css'
 
 type NoticesTableProps = {
   postList: NoticePost[];
@@ -29,24 +27,6 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
 
   const [postData, setPostData] = useState(postList);
   const { data: session } = useSession();
-  // console.log('session ', session);
-  // console.log('session ', typeof session?.user?.role);
-
-  const prevPageChangeHandler = ():void => {
-    if (currentPage <= 1) {
-      return;
-    }
-    const prevPage = currentPage - 1;
-    router.push(`/notices?page=${prevPage}`);
-  };
-
-  const nextPageChangeHandler = ():void => {
-    if (currentPage >= btnTotalCount) {
-      return;
-    }
-    const nextPage = currentPage + 1;
-    router.push(`/notices?page=${nextPage}`);
-  };
 
   const recomendEvent = async (id:number) => {
     const result = await recomendEventHandler(id, session);
@@ -120,11 +100,11 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
           </div>
           <div className={`${styled.noticeDate} text-[#353945] dark:text-[#eaf0ec]`}>{writeTimeFormat}</div>
           <div className={`${styled.noticeViewCount} text-[#353945]`}>
-            <Image src={EyeIcon} alt='eye icon' />
+            <Image src={IconEye} alt='eye icon' />
             <span className='dark:text-[#eaf0eca2]'>{postList[i].viewCount}</span>
           </div>
           <div className={`${styled.notieRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent(postList[i].id)}>
-            <Image src={MococoIcon} alt='mococo icon' />
+            <Image src={IconMococo} alt='mococo icon' />
             <span>{postList[i].recomendCount}</span>
           </div>
         </div>
@@ -158,12 +138,22 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
       </div>
       <div className={styled.noticeBodyRow + ' ' + styled.noticeManagerBtn}>
         <div className={`${styled.noticeTableBtnGroup}`}>
-          <span className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' onClick={() => prevPageChangeHandler()}>
-            <Image src={LeftArrow} alt='left arrow icon' />
+          <span className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' onClick={() => {
+            const result = prevPageChangeHandler(currentPage);
+            if(result !== undefined) {
+              router.push(result);
+            }
+          }}>
+            <Image src={IconLeftArrow} alt='left arrow icon' />
           </span>
           {buttonViewFunction()}
-          <span className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' onClick={() => nextPageChangeHandler()}>
-            <Image src={RightArrow} alt='right arrow icon' />
+          <span className='border-[1px] border-[#e6e8ec] dark:border-[#646870]' onClick={() => {
+            const result = nextPageChangeHandler(currentPage, btnTotalCount);
+            if(result !== undefined) {
+              router.push(result);
+            }
+          }}>
+            <Image src={IconRightArrow} alt='right arrow icon' />
           </span>
         </div>
         {session?.user?.role === true && <Link href='/notices/write' className={`${styled.noticeManager} text-[#5865f2] bg-[#fff] border-2 border-[#5865f2] dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]`}>글쓰기</Link>}

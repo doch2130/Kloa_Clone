@@ -1,6 +1,5 @@
 import { xssPreventionReplace } from "@/app/api/utill/xssPrevention";
-import { NoticePost } from "@/type/notice";
-
+import { NoticePost } from "@/types/notice";
 
 // 상세 페이지 정보 가져오기, 현재, 다음, 이전 페이지
 export async function getDetailPage(id:number, setPostDataHandler:Function, 

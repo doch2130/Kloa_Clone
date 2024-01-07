@@ -1,6 +1,6 @@
 import React from 'react'
 import Footer from '@/components/Footer/Footer'
-import styled from './Notices.module.css'
+import styled from '@/styles/Notices.module.css'
 
 export default function NoticesLayout({ children }: { children: React.ReactNode }) {
   return (
