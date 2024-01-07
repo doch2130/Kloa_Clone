@@ -2,9 +2,9 @@ import NextAuth from "next-auth"
 import NaverProvider from "next-auth/providers/naver"
 import DiscordProvider from "next-auth/providers/discord"
 import CredentialsProvider from "next-auth/providers/credentials"
-import prisma from '@/app/lib/prisma'
+import prisma from '@/libs/prisma'
 import * as bcrypt from 'bcrypt'
-import { signJwtAccessToken } from "@/app/lib/jwt"
+import { signJwtAccessToken } from "@/libs/jwt"
 
 let discordRedirectUri = '';
 if(process.env.NODE_ENV === 'production') {

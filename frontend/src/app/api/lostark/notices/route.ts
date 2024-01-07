@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from '@/app/lib/prisma'
-import { verifyStringJwt } from "@/app/lib/jwt";
+import prisma from '@/libs/prisma'
+import { verifyStringJwt } from "@/libs/jwt";
 import { NoticesApiResp } from "@/type/notice";
 
 async function noticesListUpdate(data:NoticesApiResp[]) {

@@ -1,14 +1,13 @@
 import Link from 'next/link';
 
-import { NoticePostResp, NoticePost, NoticesTopFive, NoticesTopFiveResp } from '@/type/notice'
-import { AdventureIslandResp } from '@/type/adventureIsland'
+import { NoticePostResp, NoticePost, NoticesTopFive, NoticesTopFiveResp } from '@/types/notice'
+import { AdventureIslandResp } from '@/types/adventureIsland'
 import dynamic from 'next/dynamic';
 
 import SlideImage from '@/components/Home/SlideImageSection/SlideImage';
-// import Schedule from '@/components/Home/ScheduleSection/Schedule';
 import Footer from '@/components/Footer/Footer';
 
-import styled from './Home.module.css';
+import styled from '@/styles/Home.module.css';
 
 const Schedule = dynamic(() => import('@/components/Home/ScheduleSection/Schedule'), {
   ssr: false,

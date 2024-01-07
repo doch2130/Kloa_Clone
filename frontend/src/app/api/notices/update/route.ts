@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { verifyStringJwt } from "@/app/lib/jwt";
-import prisma from '@/app/lib/prisma'
+import { verifyStringJwt } from "@/libs/jwt";
+import prisma from '@/libs/prisma'
 import { xssPrevention } from "../../utill/xssPrevention";
 
 export async function PATCH(req: NextRequest) {

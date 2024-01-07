@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { transporter } from "@/config/nodemailer"
-import prisma from '@/app/lib/prisma'
+import { transporter } from "@/libs/nodemailer"
+import prisma from '@/libs/prisma'
 
 // 이메일 가입 여부 체크 (중복 검사)
 async function emailCheck(email:string):Promise<boolean> {

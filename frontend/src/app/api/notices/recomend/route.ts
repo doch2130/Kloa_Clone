@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { verifyStringJwt } from "@/app/lib/jwt"
-import prisma from '@/app/lib/prisma'
+import { verifyStringJwt } from "@/libs/jwt"
+import prisma from '@/libs/prisma'
 
 export async function PATCH(req: NextRequest) {
   const body = await req.json();

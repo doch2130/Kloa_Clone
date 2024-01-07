@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from '@/app/lib/prisma'
+import prisma from '@/libs/prisma'
 
 
 // top 5 페이지 가져오기 전용 함수

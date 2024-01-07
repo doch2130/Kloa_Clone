@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { JWT } from "next-auth/jwt"
-import { verifyJwt } from "@/app/lib/jwt"
+import { verifyJwt } from "@/libs/jwt"
 
 // 로그인 안 한 상태에서만 접속 가능 리스트
 // 비밀번호 찾기 페이지 추가 필요
