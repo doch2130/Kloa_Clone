@@ -6,9 +6,9 @@ import Image from 'next/image'
 import HeaderSearchFormRecently from './HeaderSearchFormRecently'
 import HeaderSearchFormFavorite from './HeaderSearchFormFavorite'
 
-import { Character } from '@/type/characters'
+import { Character } from '@/types/characters'
 
-import SearchIcon from '@/assets/Icon/search.svg'
+import { IconSearch } from '/public/svgs'
 
 export default function HeaderSearchForm() {
   const searchWrap = useRef<HTMLDivElement>(null);
@@ -105,7 +105,7 @@ export default function HeaderSearchForm() {
   return (
     <div ref={searchWrap} className='nav-search-wrap'>
       <div className='nav-search dark:border-[#42464D]'>
-        <Image src={SearchIcon} alt='SearchIcon' width={24} height={24} />
+        <Image src={IconSearch} alt='SearchIcon' width={24} height={24} />
         <form onSubmit={onSubmit}>
           <input id='characterName' ref={searchValueRef} className='bg-transparent dark:text-white placeholder:dark:text-[#656770]'
           type='text' placeholder='캐릭터명을 입력하세요' maxLength={12} autoComplete="off"

@@ -1,4 +1,4 @@
-import { Character } from "@/type/characters";
+import { Character } from "@/types/characters";
 
 
 /*

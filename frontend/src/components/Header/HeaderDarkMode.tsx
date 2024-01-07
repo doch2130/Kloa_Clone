@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
-import SunModeIcon from '@/assets/Icon/sun.svg'
-import MoonModeIcon from '@/assets/Icon/moon.svg'
+import { IconSun, IconMoon } from '/public/svgs'
 
 export default function HeaderDarkMode() {
   const [dark, setDark] = useState("defaultMode");
@@ -32,8 +31,8 @@ export default function HeaderDarkMode() {
     <>
     <button type='button' className='duration-300 bg-white hover:bg-[#e6e8ec] hover:text-[#8045dd] dark:bg-[#33353a] dark:hover:bg-[#40434a]' onClick={() => toggleDarkMode()}>
       {dark === 'defaultMode' ? 
-      <Image src={MoonModeIcon} alt='MoonMode Icon' width={20} />
-      : <Image src={SunModeIcon} alt='SunMode Icon' width={20} />
+      <Image src={IconMoon} alt='MoonMode Icon' width={20} />
+      : <Image src={IconSun} alt='SunMode Icon' width={20} />
       }
     </button>
     </>

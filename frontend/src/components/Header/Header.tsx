@@ -8,9 +8,9 @@ import HeaderSearchForm from './HeaderSearchForm'
 import HeaderDarkMode from './HeaderDarkMode'
 import HeaderLogin from './HeaderLogin'
 
-import Kloa1Icon from '@/assets/Logo/kloa1.webp'
-import Kloa2Icon from '@/assets/Logo/kloa2.webp'
-import SideMenu from '../SideMenu/SideMenu'
+import MobileMenu from '../MobileMenu/MobileMenu'
+
+import { Imgkloa1, Imgkloa2 } from '/public/images'
 
 export default function Header() {
   const pathName = usePathname();
@@ -20,8 +20,8 @@ export default function Header() {
       <nav className='nav-bar bg-white dark:bg-[#33353a] dark:border-[#42464D] sm:flex-wrap sm:h-[110px]'>
         <div className='nav-left sm:pt-4 sm:pb-2 sm:px-0 sm:justify-center sm:flex-auto'>
           <Link href='/' as='/' className='logo-image-container'>
-            <Image src={Kloa1Icon} alt='KLOA ICON' width={100} height={30} className='default-image' />
-            <Image src={Kloa2Icon} alt='KLOA ICON Hover' width={100} height={30} className='hover-image' />
+            <Image src={Imgkloa1} alt='KLOA ICON' width={100} height={30} className='default-image' />
+            <Image src={Imgkloa2} alt='KLOA ICON Hover' width={100} height={30} className='hover-image' />
           </Link>
         </div>
         <div className='nav-center sm:pr-0 sm:pb-4 sm:justify-center '>
@@ -40,7 +40,7 @@ export default function Header() {
         </div>
       </nav>
     </header>
-    <SideMenu />
+    <MobileMenu />
     </>
   )
 }

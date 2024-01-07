@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
 import { deleteSearchDataHandler } from './HeaderSearchUtil'
-import { Character } from '@/type/characters'
+import { Character } from '@/types/characters'
 
-import SearchListEmptyIcon from '@/assets/Mococo/img_auction_empty2.png'
-import CloseIcon from '@/assets/Icon/close.svg'
+import { IconClose } from '/public/svgs'
+import { ImgAuctionEmpty2 } from '/public/images'
 
 export default function HeaderSearchFormFavorite() {
   const [favoriteData, setFavoriteData] = useState<Character[]>([]);
@@ -24,7 +24,7 @@ export default function HeaderSearchFormFavorite() {
     <div className={favoriteData.length > 0 ? 'navSearchOverBodyFull' : 'nav-search-over-body'}>
     {favoriteData.length === 0 ?
       <div className='nav-search-over-body-empty'>
-        <Image src={SearchListEmptyIcon} alt='SearchListEmptyIcon' width={55} height={64} />
+        <Image src={ImgAuctionEmpty2} alt='SearchListEmptyIcon' width={55} height={64} />
         <p className='dark:text-[#eaf0ec]'>즐겨찾기한 캐릭터가 없습니다.
         <br />캐릭터를 검색한 후 즐겨찾기 해보세요!</p>
       </div>
@@ -39,7 +39,7 @@ export default function HeaderSearchFormFavorite() {
           <p className='text-sm font-light text-[#000] dark:text-[#eaf0ec]'>Lv. {el.item_level} {el.job}</p>
         </a>
         <button type='button' className='pr-5'>
-          <Image src={CloseIcon} alt='close button' width={16} height={16}
+          <Image src={IconClose} alt='close button' width={16} height={16}
           onClick={() => deleteSearchDataHandler('favorite', el.name, favoriteData, setFavoriteData)} />
         </button>
       </div>

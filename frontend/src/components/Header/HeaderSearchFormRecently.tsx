@@ -2,11 +2,10 @@
 import React, { useEffect } from 'react'
 import Image from 'next/image'
 
-import { Character } from '@/type/characters'
+import { Character } from '@/types/characters'
 import { deleteSearchDataHandler } from './HeaderSearchUtil'
 
-import AlertIcon from '@/assets/Icon/alertIcon.svg'
-import CloseIcon from '@/assets/Icon/close.svg'
+import { IconAlert, IconClose } from '/public/svgs'
 
 type HeaderSearchFormRecentlyProps = {
   recentlyData:Character[];
@@ -28,7 +27,7 @@ export default function HeaderSearchFormRecently({ recentlyData, setRecentlyData
     {
     recentlyData.length === 0 ?
       <div className='nav-search-over-body-empty'>
-        <Image src={AlertIcon} alt='alertIcon' width={24} height={24} />
+        <Image src={IconAlert} alt='alertIcon' width={24} height={24} />
         <p className='dark:text-[#eaf0ec]'>최근 검색한 캐릭터가 없습니다.</p>
       </div>
     :
@@ -42,7 +41,7 @@ export default function HeaderSearchFormRecently({ recentlyData, setRecentlyData
           <p className='text-sm font-light text-[#000] dark:text-[#eaf0ec]'>Lv. {el.item_level} {el.job}</p>
         </a>
         <button type='button' className='pr-5'>
-          <Image src={CloseIcon} alt='close button' width={16} height={16}
+          <Image src={IconClose} alt='close button' width={16} height={16}
           onClick={() => deleteSearchDataHandler('recently', el.name, recentlyData, setRecentlyData)} />
         </button>
       </div>
