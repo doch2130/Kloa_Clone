@@ -5,12 +5,11 @@ import { useRouter } from 'next/navigation';
 
 import Footer from '@/components/Footer/Footer';
 
-import styled from './Manager.module.css'
+import styled from '@styles/Manager.module.css'
 
 export default function Manager() {
   const router = useRouter();
   const { data: session } = useSession();
-  // console.log('session ', session);
 
   const getNoticeList = async () => {
     fetch('/api/lostark/notices', {
