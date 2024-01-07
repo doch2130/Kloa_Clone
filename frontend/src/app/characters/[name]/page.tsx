@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation'
 import { Tab } from '@headlessui/react'
 
 import { useQuery } from '@tanstack/react-query'
-import { getCharacter } from './getCharacter'
+import { getCharacter } from './utils'
 
 import CharacterDetailLeft from './CharacterDetailLeft'
 import CharacterDetailRight from './CharacterDetailRight'
@@ -18,7 +18,7 @@ export default function CharacterDetail() {
   // 페이지를 넘겨준 후 API를 호출해서 데이터가 있으면 로컬스토리지 저장도 같이 한다.
   // 여기서 1번하면 페이지 이동 후 또 해야하는 현상이 생기기 때문에 여기서는 하지 않는다.
   const { data, isLoading } = useQuery({ queryKey: ['character', name], queryFn: () => getCharacter(name) });
-  console.log('data ', data);
+  // console.log('data ', data);
 
   if(isLoading) {
     return (

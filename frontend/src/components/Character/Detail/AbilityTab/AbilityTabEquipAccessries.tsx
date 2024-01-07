@@ -1,11 +1,11 @@
 'use client'
 import React, { Fragment } from 'react'
 import Image from 'next/image'
-import { ArmoryEquipment, ArmoryEquipmentPoint } from './CharacterResponseType'
-import { itemGradeStyleBackground, itemGradeStyleColor } from '../ItemGradeStyle'
-import { itemQualityCheckFunction } from '../ItemQualityStyle'
+import { ArmoryEquipment, ArmoryEquipmentPoint } from '@/types/characters'
+
+import { itemQualityCheckFunction, itemGradeStyleBackground, itemGradeStyleColor } from '@/app/characters/[name]/utils'
 import { characterJobStatus } from '@/data/CharacterJobData'
-import { accessoriesBasicStatus } from './AccessoriesExport'
+import { accessoriesBasicStatus } from '@/data/AccessoriesExportData'
 
 interface AbilityTabEquipAccessriesProps {
   ArmoryEquipmentAccessrie:  ArmoryEquipment

@@ -1,13 +1,14 @@
 'use client'
-import React, { useState } from 'react'
+import React, { lazy, useState } from 'react'
 import Image from 'next/image'
 
-import starEmpty from '@/assets/Icon/starEmpty.svg'
-import starFull from '@/assets/Icon/starFull.svg'
-import { ArmoryProfile } from './CharacterResponseType'
+import { ArmoryProfile } from '@/types/characters'
+
+import { IconStarEmpty, IconStarFull } from '/public/svgs'
 
 
-interface CharacterSummary {
+
+interface CharacterSummaryProps {
   ArmoryProfile?: ArmoryProfile
 }
 
@@ -28,7 +29,7 @@ const characterBackgroundColor = {
 // 에스더
 // bg-[#00FFFD]" style="mask-image: linear-gradient(100deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 70%);
 
-export default function CharacterSummary({ ArmoryProfile }:CharacterSummary) {
+export default function CharacterSummary({ ArmoryProfile }:CharacterSummaryProps) {
   const [isFavoriteCheck, setIsFavoriteCheck] = useState<boolean>(false);
 
   const favoriteCheckHandler = () => {
@@ -41,7 +42,7 @@ export default function CharacterSummary({ ArmoryProfile }:CharacterSummary) {
     <div className='w-full h-[300px] bg-[#15181d] relative overflow-hidden'>
       {/* 캐릭터 사진 */}
       <div className='absolute w-[612px] right-[-180px] top-[-60px]'>
-        {ArmoryProfile?.CharacterImage && <Image src={ArmoryProfile.CharacterImage} alt='character Image' width={612} height={708} loading='lazy' />}
+        {ArmoryProfile?.CharacterImage && <Image src={ArmoryProfile.CharacterImage} alt='character Image' width={612} height={708} priority={true} />}
       </div>
       {/* 아이템 레벨에 따른 배경 색 다른 효과 */}
       <div className='absolute inset-0 mix-blend-lighten transition-colors duration-[2000ms] ease-out bg-[#EAC072]' style={characterBackgroundColor}></div>
@@ -99,7 +100,7 @@ export default function CharacterSummary({ ArmoryProfile }:CharacterSummary) {
       {/* 관심 체크 */}
       <div className='absolute top-0 right-0'>
         <button type='button' className='p-5 h-full justify-self-end text-gray-100'>
-          <Image src={isFavoriteCheck ? starFull : starEmpty} alt={isFavoriteCheck ? 'starFull' : 'starEmpty'} width={20} height={20} onClick={favoriteCheckHandler} />
+          <Image src={isFavoriteCheck ? IconStarFull : IconStarEmpty} alt={isFavoriteCheck ? 'starFull' : 'starEmpty'} width={20} height={20} onClick={favoriteCheckHandler} />
         </button>
       </div>
     </div>

@@ -1,81 +1,19 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import { Tab } from '@headlessui/react'
-import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, CharacterArmories, Gem } from './CharacterResponseType'
+import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, CharacterArmories, Gem } from '@/types/characters'
 
-import AbilityTab from './AbilityTab'
-import { elixirSpecialOptionDescript } from './ElixirSpecialOptionDescript'
+import { findValuesInText, findSetEffectValuesInText, findElixirEffectValuesInText, findTranscendenceData, tooltipJsonChange, abilityStoneExtractedData } from './utils'
+import { elixirSpecialOptionDescript } from '@/data/ElixirSpecialOptionDescript'
 
-interface CharacterDetailRight {
+import AbilityTab from '@/components/Character/Detail/AbilityTab/AbilityTab'
+
+interface CharacterDetailRightProps {
   data?: CharacterArmories | null | undefined
 }
 
-const findValuesInText = (str: string) => {
-  const regex = /<FONT COLOR='#FFD200'>([^<]+)<\/FONT>\s([^<]+)\s?/;
-  const match = str.match(regex);
-
-  return match ? { skilName: match[1].trim(), skilEffect: match[2].trim() } : { skilName: '', skilEffect: '' };
-};
-
-const findSetEffectValuesInText = async (str: string) => {
-  const regex = /([^<]+)\s<FONT COLOR='#FFD200'>([^<]+)<\/FONT>/;
-  const match = str.match(regex);
-
-  return match ? { setName: match[1].trim(), setLevel: match[2].trim() } : { setName: '', setLevel: '' };
-};
-
-const findElixirEffectValuesInText = async (str: string) => {
-  const regex = /<FONT color='#FFD200'>\[(.*?)\]<\/FONT>\s(.*?)\s<FONT color='#FFD200'>Lv\.(.*?)<\/FONT><br>([\s\S]*)/;
-  const match = str.match(regex);
-
-  if (match) {
-    const elixirType = match[1]?.trim();
-    const elixirEffectName = match[2]?.trim();
-    const elixirEffectLevel = match[3]?.trim();
-    const additionalEffects = match[4]?.trim().split('<BR>').filter(effect => effect.trim() !== '');
-
-    return { elixirType, elixirEffectName, elixirEffectLevel, additionalEffects };
-  } else {
-    return { elixirType: '', elixirEffectName: '', elixirEffectLevel: '', additionalEffects: [] };
-  }
-};
-
-const findTranscendenceData = async (str: string) => {
-  const regex = /<FONT COLOR='#FF9632'>\[초월\]<\/FONT>\s<FONT COLOR='#FFD200'>(\d+)<\/FONT>단계.*?<img src='emoticon_Transcendence_Grade'.*?>(\d+)/;
-  const match = str.match(regex);
-
-  return match ? [`${match[1]}단계`, parseInt(match[2], 10)] : ['', 0];
-};
-
-
-const tooltipJsonChange = async (tooltip: string) => {
-  try {
-    return JSON.parse(tooltip);
-  } catch (error) {
-    console.error('Error parsing Tooltip JSON:', error);
-    return null;
-  }
-};
-
-const abilityStoneExtractedData = (str: string) => {
-  // 정규 표현식을 사용하여 데이터 추출
-  const regex = /<FONT COLOR='#[A-Fa-f0-9]+?'>(.*?)<\/FONT>.*?활성도\s*\+(-?\d+)/;
-  const match = str.match(regex);
-
-  // 매치 결과에서 데이터 추출
-  if (match && match.length >= 3) {
-    const name = match[1];
-    const value = match[2];
-
-    return { Name: name, Value: value };
-  }
-
-  return null; // 매치가 실패한 경우
-};
-
-export default function CharacterDetailRight({ data }:CharacterDetailRight) {
+export default function CharacterDetailRight({ data }:CharacterDetailRightProps) {
   const [updatedArmoryGemData, setUpdatedArmoryGemData] = useState<ArmoryGem  | undefined>(data?.ArmoryGem);
-  const elixirTotalRef = useRef<number>(0);
   const transcendanceTotalRef = useRef<number>(0);
   const transcendanceAverageRef = useRef<number>(0);
   const [isLoading, setIsLoading] = useState(false);

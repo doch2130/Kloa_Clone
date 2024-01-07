@@ -1,17 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Stat } from './CharacterResponseType'
+import { Stat } from '@/types/characters'
+import { findValueInText } from './utils'
 
 interface AbilityTabStatusProps {
   ArmoryProfileStats?: Stat[]
-}
-
-const findValueInText = (str:string) => {
-  // 정규 표현식을 사용하여 숫자를 찾습니다.
-  const regex = /<font color='#99ff99'>(\d+)<\/font>/;
-  const match = str.match(regex);
-  // 매치된 값이 있다면 반환하고, 없으면 null을 반환합니다.
-  return match ? parseInt(match[1], 10).toLocaleString() : null;
 }
 
 export default function AbilityTabStatusSection({ ArmoryProfileStats }:AbilityTabStatusProps) {

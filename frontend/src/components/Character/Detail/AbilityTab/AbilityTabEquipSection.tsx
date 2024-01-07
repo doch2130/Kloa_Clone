@@ -1,19 +1,19 @@
 'use client'
 import React, { Fragment, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { ArmoryEquipment, ArmoryEngraving, ArmoryEquipmentPoint } from './CharacterResponseType'
+import { ArmoryEquipment, ArmoryEngraving, ArmoryEquipmentPoint } from '@/types/characters'
 
-import transcendance from '@/assets/Icon/transcendance.svg'
-import elixir from '@/assets/Icon/elixir.svg'
-
-import { allEngravingDescriptionList } from '@/data/EngravingsData'
-import { itemGradeStyleBackground, itemGradeStyleColor } from '../ItemGradeStyle'
-import { accessoriesBasicStatus } from './AccessoriesExport'
 import { characterJobStatus } from '@/data/CharacterJobData'
-import { itemQualityCheckFunction } from '../ItemQualityStyle'
+import { allEngravingDescriptionList } from '@/data/EngravingsData'
+import { accessoriesBasicStatus } from '@/data/AccessoriesExportData'
+
+import { itemGradeStyleBackground, itemGradeStyleColor, itemQualityCheckFunction } from '@/app/characters/[name]/utils'
+import { elixirSpecialEffectCheck, findValueInEngravingPoint } from './utils'
+
 import AbilityTabEquipAccessries from './AbilityTabEquipAccessries'
 import AbilityTabEquipArmor from './AbilityTabEquipArmor'
-import { elixirSpecialOptionDescript } from './ElixirSpecialOptionDescript'
+
+import { IconTranscendance, IconElixir } from '/public/svgs'
 
 interface AbilityTabEquipSectionProps {
   ArmoryEquipment?: ArmoryEquipment[]
@@ -21,56 +21,6 @@ interface AbilityTabEquipSectionProps {
   CharacterClassName?: string
   transcendanceTotal?: number
   transcendanceAverage?: number
-}
-
-const findValueInEngravingPoint = (str: string) => {
-  const startIndex = str.indexOf('각인 활성 포인트 ')+10;
-  const endIndex = str.indexOf('<\/FONT>', startIndex);
-
-  return str.slice(startIndex, endIndex);
-}
-
-
-const elixirSpecialEffectCheck = (ArmoryEquipment:ArmoryEquipment[]) => {
-  let isCheck = false;
-  let optionList:string[] = [];
-  let resultDescription:string[] = [];
-
-  ['투구', '장갑'].forEach((el:string) => {
-    const armorIndex = ArmoryEquipment?.findIndex(item => item.Type === el);
-
-    if(armorIndex !== undefined && armorIndex >= 0) {
-      ArmoryEquipment[armorIndex].ArmoryAttribute?.elixirEffect.forEach((effect) => {
-        if(effect.elixirEffectName.includes('(질서)') || effect.elixirEffectName.includes('(혼돈)')) {
-          optionList.push(effect.elixirEffectName);
-        }
-      });
-    }
-  });
-
-  if(optionList.length === 2) {
-    isCheck = optionList[0].replace('(질서)', '').replace('(혼돈)', '').trim() === optionList[1].replace('(질서)', '').replace('(혼돈)', '').trim();
-  }
-
-  if(isCheck) {
-    const armorIndex = ArmoryEquipment?.findIndex(item => item.Type === '투구');
-
-    if (armorIndex !== undefined && ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.elixirTotal !== undefined) {
-      const elixirTotal = ArmoryEquipment[armorIndex]?.ArmoryAttribute?.elixirTotal;
-
-      if (elixirTotal !== undefined && elixirTotal >= 40) {
-        resultDescription = elixirSpecialOptionDescript[optionList[0].replace('(질서)', '').replace('(혼돈)', '').trim()];
-      } else if (elixirTotal !== undefined && elixirTotal >= 35) {
-        resultDescription.push(elixirSpecialOptionDescript[optionList[0].replace('(질서)', '').replace('(혼돈)', '').trim()][0]);
-      } else {
-        resultDescription.push('');
-      }
-    }
-  } else {
-    resultDescription.push('');
-  }
-
-  return resultDescription;
 }
 
 export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngraving, CharacterClassName, transcendanceTotal, transcendanceAverage }:AbilityTabEquipSectionProps) {
@@ -141,7 +91,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
                     {/* <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>달인 2단계</div> */}
                     <div className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirSpecialOption} {ArmoryEquipment?.[headArmorIndex]?.ArmoryAttribute?.elixirTotal! >= 40 ? '2단계' : '1단계'}</div>
                     <div className='font-semibold text-white rounded-sm pl-0.5 pr-1 py-0.5 flex justify-center items-center gap-x-0.5 rounded-r-none last:rounded-r-sm text-xs leading-3 bg-[#2AB1F6]'>
-                      <Image src={elixir} alt='엘릭서' width={12} height={12} />
+                      <Image src={IconElixir} alt='엘릭서' width={12} height={12} />
                       <p className='flex items-end drop-shadow'>20.15%</p>
                     </div>
                   </div>
@@ -151,7 +101,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
               {/* 무기, 초월 합계 및 초월 증가 수치 */}
               {transcendanceTotal !== undefined && transcendanceTotal > 0 &&
               <div className='flex items-center mt-1 w-fit font-semibold text-[0.75rem] leading-3 rounded-full px-1.5 py-0.5 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>
-                <Image src={transcendance} alt='초월' width={14} height={14} />
+                <Image src={IconTranscendance} alt='초월' width={14} height={14} />
                 <p className='ml-1 font-semibold text-yellow-500'>합계 {transcendanceTotal}</p>
                 <p className='ml-1.5 font-semibold dark:text-[#cacdd4]'>평균 {transcendanceAverage}단계</p>
                 <p className='ml-1 font-semibold dark:text-[#cacdd4]'>+4.92%</p>

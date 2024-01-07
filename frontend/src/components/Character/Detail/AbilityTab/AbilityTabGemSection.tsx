@@ -1,8 +1,8 @@
 'use client'
 import React from 'react'
 import Image from 'next/image'
-import { itemGradeStyleBackground } from '../ItemGradeStyle'
-import { ArmoryGem } from './CharacterResponseType'
+import { itemGradeStyleBackground } from '@/app/characters/[name]/utils'
+import { ArmoryGem } from '@/types/characters'
 
 interface AbilityTabGemSectionProps {
   ArmoryGem?: ArmoryGem

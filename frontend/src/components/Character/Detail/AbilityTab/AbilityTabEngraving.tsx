@@ -1,26 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { ArmoryEngraving, Effect, EngravingEffect } from './CharacterResponseType'
+import { ArmoryEngraving, EngravingEffect } from '@/types/characters'
+import { findArmoryEngravingValue } from './utils'
 
 interface AbilityTabEngravingProps {
   ArmoryEngraving?: ArmoryEngraving
-}
-
-const findArmoryEngravingValue = (armoryEngravingEffects:EngravingEffect[]) => {
-  // str = engraving.Name
-  const valueList: string[] = [];
-  const styleList: string[] = [];
-
-  armoryEngravingEffects?.forEach((effects:Effect) => {
-    const value = effects.Name.slice(effects.Name.indexOf('Lv. ')+4, effects.Name.indexOf('Lv. ')+5);
-    valueList.push(value);
-    
-    const style = effects.Name.includes('감소') ? 'text-[#f95126]' : effects.Name.includes('Lv. 3') ? 'text-[#8045dd] dark:text-[#a36bfc]' : 'text-[#5865f2] dark:text-[#8991ee]';
-    styleList.push(style);
-  });
-
-  return [valueList, styleList];
 }
 
 export default function AbilityTabEngraving({ ArmoryEngraving }:AbilityTabEngravingProps) {

@@ -6,7 +6,7 @@ import { characterJobList, characterJobSkillList } from '@/data/CharacterJobData
 
 import ListBoxSelect from '@/components/UI/ListBoxSelect'
 
-import styled from './CharacterNavigator.module.css'
+import styled from '@/styles/CharacterNavigator.module.css'
 
 const buttonClass = 'w-full h-full border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-[#7d8395]';
 

@@ -1,14 +1,13 @@
 'use client'
 import React, { Fragment } from 'react'
 import Image from 'next/image'
-import { ArmoryEquipment, ElixirEffect } from './CharacterResponseType'
+import { ArmoryEquipment, ElixirEffect } from '@/types/characters'
 
-import { transcendanceDescript } from './TranscendanceDescript'
+import { transcendanceDescript } from '@/data/TranscendanceDescript'
 
-import { itemGradeStyleBackground, itemGradeStyleColor } from '../ItemGradeStyle'
-import { itemQualityCheckFunction } from '../ItemQualityStyle'
+import { itemQualityCheckFunction, itemGradeStyleBackground, itemGradeStyleColor } from '@/app/characters/[name]/utils'
 
-import transcendance from '@/assets/Icon/transcendance.svg'
+import { IconTranscendance } from '/public/svgs'
 
 interface AbilityTabEquipArmorProps {
   ArmoryEquipment?: ArmoryEquipment[]
@@ -46,7 +45,7 @@ export default function AbilityTabEquipArmor({ ArmoryEquipment, armorType, elixi
         {/* 초월 */}
         {ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.transcendance.length !== 0 &&
         <div className='flex items-center'>
-          <Image src={transcendance} alt='초월' width={16} height={16} />
+          <Image src={IconTranscendance} alt='초월' width={16} height={16} />
           <p className='text-sm font-semibold text-yellow-500 ml-0.5'>{ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.transcendance?.[1]}</p>
           <p className='text-[0.8rem] font-semibold ml-1'>{ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.transcendance?.[0]}</p>
         </div>
@@ -112,7 +111,7 @@ export default function AbilityTabEquipArmor({ ArmoryEquipment, armorType, elixi
           <div className='w-full flex'>
             <p className='text-[0.8rem] leading-5 font-semibold'>초월</p>
             <p className='text-[0.8rem] font-semibold mx-1'>{ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.transcendance?.[0]} </p>
-            <Image src={transcendance} alt='초월' width={16} height={16} />
+            <Image src={IconTranscendance} alt='초월' width={16} height={16} />
             <p className='text-[0.8rem] font-semibold ml-0.5'>{ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.transcendance?.[1]}</p>
           </div>
           <p className='text-[0.8rem] leading-5 font-semibold w-full mt-0.5'>{ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.transcendance?.[2]}</p>
@@ -122,7 +121,7 @@ export default function AbilityTabEquipArmor({ ArmoryEquipment, armorType, elixi
                 return (
                   <Fragment key={`${el}_${index}`}>
                     <div className='w-full flex mt-2'>
-                      <Image src={transcendance} alt='초월' width={16} height={16} />
+                      <Image src={IconTranscendance} alt='초월' width={16} height={16} />
                       <span className='text-sm leading-5 font-semibold mx-1'>{el}</span>
                       <span className='text-sm leading-5 font-semibold'>추가 효과</span>
                     </div>

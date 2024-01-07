@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArmoryCard, ArmoryEquipment, Stat, ArmoryGem, ArmoryEngraving} from './CharacterResponseType'
+import { ArmoryCard, ArmoryEquipment, Stat, ArmoryGem, ArmoryEngraving} from '@/types/characters'
 
 import AbilityTapCardSection from './AbilityTapCardSection'
 import AbilityTabGemSection from './AbilityTabGemSection'

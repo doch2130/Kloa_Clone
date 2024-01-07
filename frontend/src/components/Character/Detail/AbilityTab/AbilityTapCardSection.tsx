@@ -2,38 +2,15 @@
 import React, { Fragment } from 'react'
 import Image from 'next/image'
 import { Disclosure } from '@headlessui/react'
-import { ArmoryCard, CardEffect, Effect } from './CharacterResponseType'
+import { ArmoryCard, CardEffect, Effect } from '@/types/characters'
+
+import { transformSetString } from './utils'
 
 import UpArrowSvg from '@/components/UI/UpArrowSvg'
-import CardGrade from '@/assets/Card/imgCardGrade.webp'
-import CardAwake from '@/assets/Card/imgCardAwake.webp'
+import { ImgCardGrade, ImgCardAwake } from '/public/images'
 
 interface AbilityTapCardSectionProps {
   ArmoryCard?: ArmoryCard
-}
-
-const transformSetString = (input:string, isTitle:boolean) => {
-  const regex = /(\d+)세트(?: \((\d+)각성합계\))?/g;
-  const matches = input.match(regex);
-  if(matches !== null) {
-    if(isTitle) {
-      return matches[0].replace(regex, (match, set, awakening) => {
-        if (awakening) {
-          return awakening + '각';
-        } else {
-          return set + '세트';
-        }
-      });
-    } else {
-      return matches[0].replace(regex, (match, set, awakening) => {
-        if (awakening) {
-          return awakening + '각성';
-        } else {
-          return set + '세트';
-        }
-      });
-    }
-  }
 }
 
 export default function AbilityTapCardSection({ ArmoryCard }:AbilityTapCardSectionProps) {
@@ -74,11 +51,11 @@ export default function AbilityTapCardSection({ ArmoryCard }:AbilityTapCardSecti
                         </div>
                         {/* 카드 등급에 따라 bg postion 값이 달라짐 (X 값) */}
                         <div className={`absolute inset-0 bg-cover aspect-[248/362]`}
-                          style={{backgroundPositionX: positionXValue, backgroundPositionY: 'top', backgroundImage: `url('${CardGrade.src}')`}}></div>
+                          style={{backgroundPositionX: positionXValue, backgroundPositionY: 'top', backgroundImage: `url('${ImgCardGrade.src}')`}}></div>
                         <div className='absolute bottom-[6.5%] left-[5%] right-[7.5%] overflow-hidden'>
                           {/* Left를 이용하여 1,2,3,4,5 각 그림 표시 */}
-                          <div className='relative bg-cover aspect-[10/3] drop-shadow-xl' style={{backgroundImage: `url('${CardAwake.src}')`}}>
-                            <div className={`absolute top-0 bottom-0 w-full bg-bottom bg-cover left-[${ArmoryCard.Cards[index].AwakeCount*20 -100}%]`} style={{backgroundImage: `url('${CardAwake.src}')`}}></div>
+                          <div className='relative bg-cover aspect-[10/3] drop-shadow-xl' style={{backgroundImage: `url('${ImgCardAwake.src}')`}}>
+                            <div className={`absolute top-0 bottom-0 w-full bg-bottom bg-cover left-[${ArmoryCard.Cards[index].AwakeCount*20 -100}%]`} style={{backgroundImage: `url('${ImgCardAwake.src}')`}}></div>
                           </div>
                         </div>
                       </div>

@@ -1,16 +1,16 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import CharacterSummary from './CharacterSummary'
 import { Tab } from '@headlessui/react'
-import { ArmoryProfile } from './CharacterResponseType';
+import { ArmoryProfile } from '@/types/characters';
 
 const categories:string[] = ['아바타', '히스토리', '수집형 포인트', '보유 캐릭터'];
 
-interface CharacterDetailLeft {
+interface CharacterDetailLeftProps {
   ArmoryProfile?: ArmoryProfile
 }
 
-export default function CharacterDetailLeft({ ArmoryProfile }:CharacterDetailLeft) {
+export default function CharacterDetailLeft({ ArmoryProfile }:CharacterDetailLeftProps) {
   return (
     <section className='shrink-0 w-[400px] bg-white dark:bg-[#33353a] border-l dark:border-l-[#4d4f55] shadow-[5px_1px_8px_0_rgba(0,0,0,.06)] z-[1]'>
       <CharacterSummary ArmoryProfile={ArmoryProfile} />
