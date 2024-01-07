@@ -1,13 +1,12 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import Image from 'next/image'
 
 import { changeMonth } from '../Home/ScheduleSection/scheduleUtils'
 
 import CalendarBody from './CalendarBody'
 
-import LeftArrow from '@/assets/Icon/leftArrow.svg'
-import RightArrow from '@/assets/Icon/rightArrow.svg'
+import { IconLeftArrow, IconRightArrow } from '/public/svgs'
 
 const date = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -38,9 +37,9 @@ export default function Calendar({ showThema, setShowThema, currentDate, setCurr
             <div className='flex justify-between items-center pl-[28px] pr-[26px]'>
               <h2 className='text-xl font-bold'>날짜 선택</h2>
               <div className='flex items-center gap-x-[6px]'>
-                <Image src={LeftArrow} width={24} height={24} alt='left arrow' className='cursor-pointer' onClick={() => changeMonth(currentDate, -1, setCurrentDate)}/>
+                <Image src={IconLeftArrow} width={24} height={24} alt='left arrow' className='cursor-pointer' onClick={() => changeMonth(currentDate, -1, setCurrentDate)}/>
                 <p className='text-xl font-bold'>{`${currentDate.getFullYear()}년 ${currentDate.getMonth()+1}월`}</p>
-                <Image src={RightArrow} width={24} height={24} alt='right arrow' className='cursor-pointer' onClick={() => changeMonth(currentDate, 1, setCurrentDate)} />
+                <Image src={IconRightArrow} width={24} height={24} alt='right arrow' className='cursor-pointer' onClick={() => changeMonth(currentDate, 1, setCurrentDate)} />
               </div>
             </div>
             {/* 달력 요일 */}
