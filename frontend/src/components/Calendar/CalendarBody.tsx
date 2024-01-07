@@ -2,7 +2,7 @@
 import React from 'react'
 import { changeDays, isSameDate, isSameMonth } from '../Home/ScheduleSection/scheduleUtils'
 
-type CalendarBodyType = {
+type CalendarBodyProps = {
   currentDate: Date
   onChangeDateHandler: Function
 }
@@ -24,7 +24,7 @@ const getLastDayOfMonth = (date:Date) => {
   return lastDayOfMonth;
 }
 
-export default function CalendarBody({ currentDate, onChangeDateHandler }:CalendarBodyType) {
+export default function CalendarBody({ currentDate, onChangeDateHandler }:CalendarBodyProps) {
   const startOfWeekInMonth = getStartOfWeekInMonth(currentDate);
   // console.log("현재 달의 첫 번째 주 시작 날짜:", startOfWeekInMonth);
   const lastDay = getLastDayOfMonth(currentDate);
