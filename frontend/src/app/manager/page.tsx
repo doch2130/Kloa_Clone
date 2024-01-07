@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import Footer from '@/components/Footer/Footer';
 
-import styled from '@styles/Manager.module.css'
+import styled from '@/styles/Manager.module.css'
 
 export default function Manager() {
   const router = useRouter();
