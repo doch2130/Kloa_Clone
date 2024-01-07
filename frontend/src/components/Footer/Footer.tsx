@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import DiscordIcon from '@/assets/Icon/discord.svg'
+import { IconDiscord } from '/public/svgs'
 
 export default function Footer() {
   return (
@@ -17,7 +17,7 @@ export default function Footer() {
           <Link href='/' as='/' target='_blank' className='none-decoration'>개인정보처리방침</Link>
         </p>
         <div className='discord-wrap'>
-          <Image src={DiscordIcon} alt='discord icon' />
+          <Image src={IconDiscord} alt='discord icon' />
         </div>
       </div>
     </footer>
