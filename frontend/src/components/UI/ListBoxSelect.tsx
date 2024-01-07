@@ -3,17 +3,16 @@ import Image from 'next/image'
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 
-import downArrow from '@/assets/Icon/downArrow.svg'
-// import downArrowDark from '@/assets/Icon/downArrowDark.svg'
+import { IconDownArrow } from '/public/svgs'
 
-import styled from './ListBoxSelect.module.css'
+import styled from '@/styles/ListBoxSelect.module.css'
 
-type ListBoxSelectType = {
+type ListBoxSelectProps = {
   buttonClass: string
   listData: string[];
 };
 
-export default function ListBoxSelectCopy(props:ListBoxSelectType) {
+export default function ListBoxSelect(props:ListBoxSelectProps) {
   const { listData } = props;
   const [selected, setSelected] = useState(listData[0]);
 
@@ -21,7 +20,7 @@ export default function ListBoxSelectCopy(props:ListBoxSelectType) {
     <Listbox value={selected} onChange={setSelected}>
       <Listbox.Button className={`${props.buttonClass}`}>
         <p className='ml-4 text-sm font-semibold'>{selected === '전체' ? '직업 각인' : selected === '전체 클래스' ? '클래스' : selected}</p>
-        <Image src={downArrow} alt='down arrow' className='mr-[10px]' />
+        <Image src={IconDownArrow} alt='down arrow' className='mr-[10px]' />
       </Listbox.Button>
       <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
         <Listbox.Options className='absolute left-0 right-0 top-full mt-1.5 max-h-[200px] rounded-[10px] border border-basicGrey dark:border-[#4d4f55] shadow-lg overflow-y-auto z-10 bg-white dark:bg-[#33353a] leading-5 text-sm'>
