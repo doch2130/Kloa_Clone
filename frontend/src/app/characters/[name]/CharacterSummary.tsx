@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { ArmoryProfile } from '@/types/characters'
 
 import { IconStarEmpty, IconStarFull } from '/public/svgs'
+import { deleteFavoriteDataHandler, localStorageSaveHandler } from '@/components/Header/HeaderSearchUtil'
 
 
 
@@ -33,6 +34,22 @@ export default function CharacterSummary({ ArmoryProfile }:CharacterSummaryProps
   const [isFavoriteCheck, setIsFavoriteCheck] = useState<boolean>(false);
 
   const favoriteCheckHandler = () => {
+
+    if(ArmoryProfile !== undefined) {
+      const searchData = {
+        'name': ArmoryProfile?.CharacterName,
+        'job': ArmoryProfile?.CharacterClassName,
+        'itemLevel': ArmoryProfile?.ItemAvgLevel,
+        'server': ArmoryProfile?.ServerName,
+      };
+
+      if(isFavoriteCheck) {
+        deleteFavoriteDataHandler('favorite', searchData);
+      } else {
+        localStorageSaveHandler('favorite', searchData);
+      }
+    }
+      
     setIsFavoriteCheck((prev) => !prev);
     return ;
   }

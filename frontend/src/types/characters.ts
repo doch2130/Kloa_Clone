@@ -1,12 +1,8 @@
 export interface SearchCharacter {
   name: string;
   job: string;
-  icon_url: string;
-  level: number;
-  item_level: number;
-  max_item_level: number;
-  guild: string;
-  server: number;
+  itemLevel: string;
+  server: string;
 }
 
 // API 공식 문서 Type

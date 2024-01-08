@@ -7,36 +7,75 @@ import { SearchCharacter } from '@/types/characters';
 @ searchValue input data
 @ setStateFunction useStateFunction
 */
-export const localStorageSaveHandler = (type:string, searchValue:string, setStateFunction:Function) => {
+
+type searchDataType = {
+  'name': string
+  'job': string
+  'itemLevel': string
+  'server': string
+}
+
+// export const localStorageSaveHandler = (type:string, searchValue:string, setStateFunction:Function) => {
+export const localStorageSaveHandler = (type:'recently'|'favorite', searchData:searchDataType) => {
   if(type === 'recently') {
     const recentlySearchStorage = localStorage.getItem('recentlySearchStorage');
     
-    const searchData:SearchCharacter = {
-      name: searchValue,
-      job: '워로드',
-      icon_url: 'http://aaa.com',
-      level: 60,
-      item_level: 1543,
-      max_item_level: 1543,
-      guild: '명품길드',
-      server: 7
-    }
-    
     if(recentlySearchStorage !== null) {
       const recentlySearchStorageJson = JSON.parse(recentlySearchStorage);
-      recentlySearchStorageJson.unshift(searchData);
-      
-      if(recentlySearchStorageJson.length > 5) {
-        recentlySearchStorageJson.pop();
-      }
+      const isCheckName = recentlySearchStorageJson.filter((el:SearchCharacter) => el.name === searchData.name);
 
-      localStorage.setItem('recentlySearchStorage', JSON.stringify(recentlySearchStorageJson));
-      setStateFunction(recentlySearchStorageJson);
+      if(isCheckName.length === 0) {
+        recentlySearchStorageJson.unshift(searchData);
+        
+        if(recentlySearchStorageJson.length > 5) {
+          recentlySearchStorageJson.pop();
+        }
+
+        localStorage.setItem('recentlySearchStorage', JSON.stringify(recentlySearchStorageJson));
+      } else {
+        const updateRecentlySearchStorageJson = recentlySearchStorageJson.filter((el:SearchCharacter) => el.name !== searchData.name);
+        updateRecentlySearchStorageJson.unshift(searchData);
+
+        if(updateRecentlySearchStorageJson.length > 5) {
+          updateRecentlySearchStorageJson.pop();
+        }
+
+        localStorage.setItem('recentlySearchStorage', JSON.stringify(updateRecentlySearchStorageJson));
+      }
     } else {
       const recentlySearchDataArray = [];
       recentlySearchDataArray.push(searchData);
       localStorage.setItem('recentlySearchStorage', JSON.stringify(recentlySearchDataArray));
-      setStateFunction(recentlySearchDataArray);
+    }
+  } else {
+    const favoriteSearchStorage = localStorage.getItem('favoriteCharactersStorage');
+
+    if(favoriteSearchStorage !== null) {
+      const favoriteSearchStorageJson = JSON.parse(favoriteSearchStorage);
+      const isCheckName = favoriteSearchStorageJson.filter((el:SearchCharacter) => el.name === searchData.name);
+
+      if(isCheckName.length === 0) {
+        favoriteSearchStorageJson.unshift(searchData);
+        
+        if(favoriteSearchStorageJson.length > 5) {
+          favoriteSearchStorageJson.pop();
+        }
+
+        localStorage.setItem('favoriteCharactersStorage', JSON.stringify(favoriteSearchStorageJson));
+      } else {
+        const updateFavoriteCharactersStorage = favoriteSearchStorageJson.filter((el:SearchCharacter) => el.name !== searchData.name);
+        updateFavoriteCharactersStorage.unshift(searchData);
+
+        if(updateFavoriteCharactersStorage.length > 5) {
+          updateFavoriteCharactersStorage.pop();
+        }
+
+        localStorage.setItem('favoriteCharactersStorage', JSON.stringify(updateFavoriteCharactersStorage));
+      }
+    } else {
+      const recentlySearchDataArray = [];
+      recentlySearchDataArray.push(searchData);
+      localStorage.setItem('favoriteCharactersStorage', JSON.stringify(recentlySearchDataArray));
     }
   }
 
@@ -62,5 +101,22 @@ export const deleteSearchDataHandler = (type:string, characterName:string, state
 
   setStateFunction(filterData);
 
+  return ;
+}
+
+
+export const deleteFavoriteDataHandler = (type:string, searchData:searchDataType) => {
+  const favoriteSearchStorage = localStorage.getItem('favoriteCharactersStorage');
+
+  if(favoriteSearchStorage !== null) {
+    const favoriteSearchStorageJson = JSON.parse(favoriteSearchStorage);
+    const isCheckName = favoriteSearchStorageJson.filter((el:SearchCharacter) => el.name === searchData.name);
+
+    if(isCheckName.length > 0) {
+      const updateFavoriteCharactersStorage = favoriteSearchStorageJson.filter((el:SearchCharacter) => el.name !== searchData.name);
+      localStorage.setItem('favoriteCharactersStorage', JSON.stringify(updateFavoriteCharactersStorage));
+    }
+  }
+  
   return ;
 }

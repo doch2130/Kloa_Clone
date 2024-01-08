@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'next/navigation'
 
 import { Tab } from '@headlessui/react'
@@ -9,6 +9,9 @@ import { getCharacter } from './utils'
 
 import CharacterDetailLeft from './CharacterDetailLeft'
 import CharacterDetailRight from './CharacterDetailRight'
+import { SearchCharacter } from '@/types/characters'
+
+import { localStorageSaveHandler } from '@/components/Header/HeaderSearchUtil'
 
 export default function CharacterDetail() {
   const params = useParams();
@@ -19,6 +22,20 @@ export default function CharacterDetail() {
   // 여기서 1번하면 페이지 이동 후 또 해야하는 현상이 생기기 때문에 여기서는 하지 않는다.
   const { data, isLoading } = useQuery({ queryKey: ['character', name], queryFn: () => getCharacter(name) });
   // console.log('data ', data);
+
+  useEffect(() => {
+    if(data !== undefined && data?.status === 200 && data?.data?.ArmoryProfile !== undefined) {
+      
+      const searchData = {
+        'name': data?.data?.ArmoryProfile?.CharacterName,
+        'job': data?.data?.ArmoryProfile?.CharacterClassName,
+        'itemLevel': data?.data?.ArmoryProfile?.ItemAvgLevel,
+        'server': data?.data?.ArmoryProfile?.ServerName,
+      };
+      
+      localStorageSaveHandler('recently', searchData);
+    }
+  }, [data, isLoading]);
 
   if(isLoading) {
     return (

@@ -478,7 +478,11 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
                     const contentStrElement = tooltipJson.Element_006.value.Element_000?.contentStr
                     const elementNumber = `Element_00${el}`
 
-                    const extractedData = abilityStoneExtractedData(contentStrElement[elementNumber].contentStr);
+                    let extractedData = null;
+
+                    if(contentStrElement[elementNumber]?.contentStr) {
+                      extractedData = abilityStoneExtractedData(contentStrElement[elementNumber]?.contentStr);
+                    }
                 
                     return extractedData || { Name: '', Value: '' }; // 만약 값이 undefined이면 기본값을 반환
                   })
