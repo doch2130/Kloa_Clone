@@ -33,7 +33,7 @@ export default function Detail() {
   const [nextPostData, setNextPostData] = useState(initPostData);
   const [prevPostData, setPrevPostData] = useState(initPostData);
 
-  const [width, setWidth] = useState(window?.innerWidth);
+  const [width, setWidth] = useState(window?.innerWidth | 0);
 
   const { data: session } = useSession();
 
