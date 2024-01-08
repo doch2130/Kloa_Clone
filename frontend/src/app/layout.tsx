@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body className='bg-[#f5f6f7] dark:bg-[#2b2d31] h-full'>
+      <body className='bg-[#f5f6f7] dark:bg-[#2b2d31] h-fit'>
         <Providers>
           <AuthSession>
             <Header />

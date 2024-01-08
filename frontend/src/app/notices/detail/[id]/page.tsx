@@ -33,6 +33,8 @@ export default function Detail() {
   const [nextPostData, setNextPostData] = useState(initPostData);
   const [prevPostData, setPrevPostData] = useState(initPostData);
 
+  const [width, setWidth] = useState(window?.innerWidth);
+
   const { data: session } = useSession();
 
   const pageLoadHandler = async (id:number) => {
@@ -159,11 +161,17 @@ export default function Detail() {
               : `${styled.postCategory} text-[#353945] border-[1px] border-[#e5e7eb] dark:text-[#eaf0ec] dark:border-[#646870]`}>
                 {postData.category}
             </div>
-            <div className={`${styled.postTitle} text-[#353945] dark:text-[#eaf0ec]`}>{postData.title}</div>
-            <div className={`${styled.postDate} text-[#353945] dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
-            <div className={`${styled.postViewCount} text-[#353945] dark:text-[#eaf0eca2]`}>
-              <Image src={IconEye} alt='eye icon' />
-              <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
+            <div className={`${styled.postTitle} text-[#353945] dark:text-[#eaf0ec]`}>
+              <span>
+                {postData.title}
+              </span>
+            </div>
+            <div className={styled.postSecondWrap}>
+              <div className={`${styled.postDate} text-[#353945] dark:text-[#eaf0ec]`}>{postData.createdAt}</div>
+              <div className={`${styled.postViewCount} text-[#353945] dark:text-[#eaf0eca2]`}>
+                <Image src={IconEye} alt='eye icon' />
+                <span className='dark:text-[#eaf0eca2]'>{postData.viewCount}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -199,7 +207,10 @@ export default function Detail() {
         </div>
         }
         
-        {/* 다음, 현재, 이전 페이지 묶음 */}
+        {/* 모바일에서는 안보이게 설정 */}
+        {width > 1023 &&
+
+        // {/* 다음, 현재, 이전 페이지 묶음 */}
         <div className={styled.postBodyRow + ' ' + styled.postBodyFooter}>
           {/* 다음 페이지 */}
           {nextPostData.id !== 0 && 
@@ -271,6 +282,7 @@ export default function Detail() {
           </div>
           }
         </div>
+        }
       </div>
     </div>
   )

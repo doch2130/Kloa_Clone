@@ -98,14 +98,16 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
           <div className={`${styled.noticeTitle} text-[#353945]`}>
             <Link href={`/notices/detail/${postList[i].id}`} className='text-[#353945] dark:text-[#eaf0ec]'>{postList[i].title}</Link>
           </div>
-          <div className={`${styled.noticeDate} text-[#353945] dark:text-[#eaf0ec]`}>{writeTimeFormat}</div>
-          <div className={`${styled.noticeViewCount} text-[#353945]`}>
-            <Image src={IconEye} alt='eye icon' />
-            <span className='dark:text-[#eaf0eca2]'>{postList[i].viewCount}</span>
-          </div>
-          <div className={`${styled.notieRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent(postList[i].id)}>
-            <Image src={IconMococo} alt='mococo icon' />
-            <span>{postList[i].recomendCount}</span>
+          <div className={styled.noticeSecondWrap}>
+            <div className={`${styled.noticeDate} text-[#353945] dark:text-[#eaf0ec]`}>{writeTimeFormat}</div>
+            <div className={`${styled.noticeViewCount} text-[#353945]`}>
+              <Image src={IconEye} alt='eye icon' />
+              <span className='dark:text-[#eaf0eca2]'>{postList[i].viewCount}</span>
+            </div>
+            <div className={`${styled.notieRecomendCount} text-[#7d8395] border-[1px] border-[#e6e8ec] dark:border-[#646870] bg-white dark:bg-[#33353a]`} onClick={() => recomendEvent(postList[i].id)}>
+              <Image src={IconMococo} alt='mococo icon' />
+              <span>{postList[i].recomendCount}</span>
+            </div>
           </div>
         </div>
       )

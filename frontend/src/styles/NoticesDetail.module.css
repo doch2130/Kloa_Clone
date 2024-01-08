@@ -77,6 +77,7 @@
 .postDate {
   /* color: rgb(53 57 69); */
   font-size: 13px;
+  min-width: 70px;
   width: 80px;
   height: 22px;
 }
@@ -262,4 +263,71 @@
 
 .postManager span {
   margin-left: 10px;
+}
+
+.postSecondWrap {
+  display: flex;
+  margin-left: 8px;
+}
+
+.postViewCount {
+  margin-left: 8px;
+}
+
+
+@media (max-width: 600px) {
+  .postBodyWrap {
+    padding-bottom: 30px;
+  }
+  .postBodyRow {
+    padding: 0px;
+  }
+  .postTableRow {
+    flex-wrap: wrap;
+    height: auto;
+    margin-top: 4px;
+    padding-bottom: 4px;
+  }
+  .postCategory {
+    font-size: 12px;
+    width: 55px;
+    height: 26px;
+    margin-left: 10px;
+  }
+  .postTitle {
+    flex: 1 0;
+    min-width: 300px;
+  }
+  .postTitle > span {
+    width: inherit;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+  }
+  .postSecondWrap {
+    width: 100%;
+    min-width: 220px;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+    margin-top: 4px;
+  }
+  .postViewCount {
+    margin-left: 10px;
+  }
+  .postBodyText {
+    margin: 20px 15px;
+  }
+  .postRecomendCount {
+    margin: 0 10px;
+  }
+
+  .postBodyButtonGroup {
+    padding: 30px 10px 65px;
+  }
+
+  .postManager {
+    padding: 0 10px;
+  }
 }
