@@ -65,6 +65,44 @@ import IconIslandLylaitoy1 from './Item/ico_island_lylaitoy1.png'
 import IconIslandLylaitoy2 from './Item/ico_island_lylaitoy2.png'
 import IconIslandLylaitoy3 from './Item/ico_island_lylaitoy3.png'
 
+import IconWarrior from './Character/basic/warrior.webp'
+import IconWarrior_female from './Character/basic/warrior_female.webp'
+import IconHunter from './Character/basic/hunter.webp'
+import IconHunter_female from './Character/basic/hunter_female.webp'
+import IconFighter from './Character/basic/fighter.webp'
+import IconFighter_male from './Character/basic/fighter_male.webp'
+import IconMagician from './Character/basic/magician.webp'
+import IconSpecialist from './Character/basic/specialist.webp'
+
+import IconAeromancer from './Character/aeromancer.png'
+import IconArcana from './Character/arcana.png'
+import IconArtist from './Character/artist.png'
+import IconBard from './Character/bard.png'
+import IconBattlemaster from './Character/battlemaster.png'
+import IconBerserker from './Character/berserker.png'
+import IconBlade from './Character/blade.png'
+import IconBlaster from './Character/blaster.png'
+import IconBreaker from './Character/breaker.png'
+import IconDemonic from './Character/demonic.png'
+import IconDestroyer from './Character/destroyer.png'
+import IconDevilhunter from './Character/devilhunter.png'
+import IconGunslinger from './Character/gunslinger.png'
+import IconHawkeye from './Character/hawkeye.png'
+import IconHolyknight from './Character/holyknight.png'
+import IconInfighter from './Character/infighter.png'
+import IconLancemaster from './Character/lancemaster.png'
+import IconReaper from './Character/reaper.png'
+import IconScouter from './Character/scouter.png'
+import IconSlayer from './Character/slayer.png'
+import IconSorceress from './Character/sorceress.png'
+import IconSouleater from './Character/souleater.png'
+import IconSoulmaster from './Character/soulmaster.png'
+import IconStriker from './Character/striker.png'
+import IconSummoner from './Character/summoner.png'
+import IconWarlord from './Character/warlord.png'
+import { StaticImageData } from 'next/image';
+
+
 
 export const islandIconList = {
   IconIslandCoinbox,
@@ -135,3 +173,44 @@ export {
   ImgMainImage3,
   ImgMainImage4,
 };
+
+type characterJobIconListType = {
+  [key:string]: StaticImageData
+}
+
+export const characterJobIconList:characterJobIconListType = {
+  '전사(남)': IconWarrior,
+  '전사(여)': IconWarrior_female,
+  '헌터(남)': IconHunter,
+  '헌터(여)': IconHunter_female,
+  '무도가(남)': IconFighter_male,
+  '무도가(여)': IconFighter,
+  '마법사': IconMagician,
+  '스페셜리스트': IconSpecialist,
+  '디스트로이어': IconDestroyer,
+  '워로드': IconWarlord,
+  '버서커': IconBerserker,
+  '홀리나이트': IconHolyknight,
+  '슬레이어': IconSlayer,
+  '브레이커': IconBreaker,
+  '스트라이커': IconStriker,
+  '배틀마스터': IconBattlemaster,
+  '인파이터': IconInfighter,
+  '기공사': IconSoulmaster,
+  '창술사': IconLancemaster,
+  '데빌헌터': IconDevilhunter,
+  '블래스터': IconBlaster,
+  '호크아이': IconHawkeye,
+  '스카우터': IconScouter,
+  '건슬링어': IconGunslinger,
+  '바드': IconBard,
+  '서머너': IconSummoner,
+  '아르카나': IconArcana,
+  '소서리스': IconSorceress,
+  '블레이드': IconBlade,
+  '데모닉': IconDemonic,
+  '리퍼': IconReaper,
+  '소울이터': IconSouleater,
+  '도화가': IconArtist,
+  '기상술사': IconAeromancer,
+}
