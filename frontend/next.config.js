@@ -23,7 +23,11 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'pica.korlark.com',
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.korlark.com',
+      },
     ],
   },
 }
