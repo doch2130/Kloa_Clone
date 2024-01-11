@@ -8,6 +8,7 @@ import { elixirSpecialOptionDescript } from '@/data/ElixirSpecialOptionDescript'
 
 import AbilityTab from '@/components/Character/Detail/AbilityTab/AbilityTab'
 import AvatarTab from '@/components/Character/Detail/AvatarTab/AvatarTab'
+import OwnedCharacterTab from '@/components/Character/Detail/OwnedCharacterTab/OwnedCharacterTab'
 
 interface CharacterDetailRightProps {
   data?: CharacterArmories | null | undefined
@@ -620,7 +621,9 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
           </Tab.Panel>
           <Tab.Panel>히스토리</Tab.Panel>
           <Tab.Panel>수집형 포인트</Tab.Panel>
-          <Tab.Panel>보유 캐릭터</Tab.Panel>
+          <Tab.Panel>
+            <OwnedCharacterTab />
+          </Tab.Panel>
           <Tab.Panel>길드</Tab.Panel>
         </Tab.Panels>
         }
