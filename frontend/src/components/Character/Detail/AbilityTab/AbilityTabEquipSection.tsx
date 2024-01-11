@@ -332,7 +332,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
             }
 
             return (
-              <div key={`${el}_${index}`} className='w-[50px] h-[66px] rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31]'></div>
+              <div key={`${el}_${index}`} className='w-[50px] h-[66px] rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31] mt-3'></div>
             )
           })}
           </>

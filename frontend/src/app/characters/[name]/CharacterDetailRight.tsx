@@ -9,6 +9,7 @@ import { elixirSpecialOptionDescript } from '@/data/ElixirSpecialOptionDescript'
 import AbilityTab from '@/components/Character/Detail/AbilityTab/AbilityTab'
 import AvatarTab from '@/components/Character/Detail/AvatarTab/AvatarTab'
 import OwnedCharacterTab from '@/components/Character/Detail/OwnedCharacterTab/OwnedCharacterTab'
+import GuildTab from '@/components/Character/Detail/GuildTab/GuildTab'
 
 interface CharacterDetailRightProps {
   data?: CharacterArmories | null | undefined
@@ -22,7 +23,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
   
   useEffect(() => {
     const updateStats = () => {
-      if (data) {
+      if (data && data.ArmoryProfile.Stats !== null) {
         [data.ArmoryProfile.Stats[2], data.ArmoryProfile.Stats[3]] = [data.ArmoryProfile.Stats[3], data.ArmoryProfile.Stats[2]];
       }
     };
@@ -589,7 +590,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
     )
   }
 
-  // console.log('data ', data);
+  console.log('data ', data);
   
   return (
     <section className='grow pb-[50px]'>
@@ -624,7 +625,9 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
           <Tab.Panel>
             <OwnedCharacterTab />
           </Tab.Panel>
-          <Tab.Panel>길드</Tab.Panel>
+          <Tab.Panel>
+            <GuildTab />
+          </Tab.Panel>
         </Tab.Panels>
         }
       </div>

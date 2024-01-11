@@ -22,8 +22,9 @@ export default function AbilityTabEquipArmor({ ArmoryEquipment, armorType, elixi
   // {[0,1,2,3,4]
   
   if(armorIndex === undefined || armorIndex < 0 || ArmoryEquipment === undefined) {
+    const divWrapStyle = armorType === '투구' ? 'w-[50px] h-[66px] rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31]' : 'w-[50px] h-[66px] rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31] mt-3';
     return (
-      <div className='w-[50px] h-[66px] rounded-md bg-[#e6e8ec] dark:bg-[#2b2d31] mt-3'></div>
+      <div className={divWrapStyle}></div>
       )
   }
 

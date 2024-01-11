@@ -1,27 +1,40 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-
-import { useQuery } from '@tanstack/react-query'
-import { getOwnedCharacter, itemLevelBorderStyleFunction } from '../utils'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useQuery } from '@tanstack/react-query'
+
+import { getOwnedCharacter, itemLevelBorderStyleFunction } from '../utils'
 import { CharacterInfo } from '@/types/siblings'
+import { characterJobIconList } from '/public/images'
 
 export default function OwnedCharacterTab() {
   const params = useParams();
   const name = Array.isArray(params.name) ? params.name.join(',') : params.name;
+  const [serverList, setServerList] = useState<string[]>([]);
 
-  const { data:havaCharacterList, isLoading:isHavaCharacterListLoading } = useQuery({ queryKey: ['havaCharacterList', name], queryFn: () => getOwnedCharacter(name) });
+  const { data:haveCharacterList, isLoading:isHavaCharacterListLoading } = useQuery({ queryKey: ['havaCharacterList', name], queryFn: () => getOwnedCharacter(name) });
 
   useEffect(() => {
-    if(havaCharacterList !== undefined) {
-      const havaCharacterListData = havaCharacterList?.data;
-      const findSearchCharacter = havaCharacterListData?.filter((characterInfo:CharacterInfo) => characterInfo.CharacterName === name);
-      
-      // const updateHavaCharacterList:CharacterInfo[] = havaCharacterList.data.map((list:CharacterInfo) => )
+    if(haveCharacterList !== undefined) {
+      const havaCharacterListData = haveCharacterList?.data;
+      const findSearchCharacter = havaCharacterListData?.filter((characterInfo:CharacterInfo) => characterInfo.CharacterName === decodeURIComponent(name));
+
+      const updateServerList:string[] = [];
+
+      if(findSearchCharacter !== undefined && findSearchCharacter.length > 0) {
+        havaCharacterListData?.forEach((characterInfo) => {
+          if(updateServerList.indexOf(characterInfo.ServerName) < 0 && characterInfo.ServerName !== findSearchCharacter[0].ServerName) {
+            updateServerList.push(characterInfo.ServerName);
+          }
+        });
+
+        updateServerList.unshift(findSearchCharacter[0].ServerName);
+        setServerList(updateServerList);
+      }
     }
-  }, []);
+  }, [haveCharacterList, name]);
   
   if(isHavaCharacterListLoading) {
     return (
@@ -31,58 +44,80 @@ export default function OwnedCharacterTab() {
     )
   }
 
-  console.log('havaCharacterList ', havaCharacterList);
-  // console.log('havaCharacterList.ServerName ', havaCharacterList?.data?.[0]?.ServerName);
-
   return (
     <>
       {/* 주간 획득 골드량 */}
       <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'></div>
 
-      {/* 서버 및 캐릭터 리스트 */}
-      <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] mt-6'>
-        <div className='flex items-end justify-between mb-4 font-semibold text-head dark:text-[#eaf0ec]'>
-          <p className='text-xl'>카제로스</p>
-          <p>
-            <span className='text-[#7d8395]'>보유 캐릭터</span>&nbsp;7
-          </p>
-        </div>
-        {/* 캐릭 정렬 */}
-        <div className='grid grid-cols-2 gap-4'>
-          {/* 액티브 일때 border 설정 다름 */}
-          {/* 액티브 아닐때 border-[#e6e8ec] dark:border-[#57585e] */}
-          <Link href={`./characters/${'키토단'}`} className='border rounded-lg overflow-hidden border-[#7d8395]'>
-            {/* 레벨에 따른 border-l- 설정 다름, itemLevelBorderStyleFunction 함수 사용 */}
-            <div className='border-l-[6px] px-3 py-2 flex items-center gap-x-3 border-l-[#D9AB48]'>
-              {/* 캐릭터 아이콘 */}
-              <div className='bg-[#e6e8ec] dark:bg-[#2b2d31] rounded-full'>
-                <Image src="https://cdn.korlark.com/lostark/avatars/scouter.png" alt="스카우터" loading="lazy" width={44} height={44} decoding="async" />
+      {haveCharacterList !== undefined && serverList.map((list:string, index:number) => {
+        const filterHaveCharacterList = haveCharacterList.data?.filter((characterInfo) => characterInfo.ServerName === list);
+        const sortedFilterHaveCharacterList = filterHaveCharacterList?.sort((a: CharacterInfo, b: CharacterInfo) => {
+          const itemAvgLevelA = parseFloat(a.ItemAvgLevel.replace(/,/g, '')) || 0;
+          const itemAvgLevelB = parseFloat(b.ItemAvgLevel.replace(/,/g, '')) || 0;
+        
+          if (itemAvgLevelA > itemAvgLevelB) {
+            return -1;
+          } else if (itemAvgLevelA < itemAvgLevelB) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
+        if(sortedFilterHaveCharacterList !== undefined && sortedFilterHaveCharacterList.length > 0) {
+          return (
+            // 서버 및 캐릭터 리스트
+            <div key={`${list}_${index}`} className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] mt-6'>
+              <div className='flex items-end justify-between mb-4 font-semibold text-head dark:text-[#eaf0ec]'>
+                <p className='text-xl'>{sortedFilterHaveCharacterList[0].ServerName}</p>
+                <p>
+                  <span className='text-[#7d8395]'>보유 캐릭터</span>&nbsp;{sortedFilterHaveCharacterList.length}
+                </p>
               </div>
-              {/* 캐릭터 정보 */}
-              <div className='grow space-y-[1px]'>
-                <p className='text-sm font-medium text-[#7d8395] dark:text-[#b6b9c2]'>Lv.60 스카우터</p>
-                <p className='text-base font-[650]'>키토단</p>
-                <div className='flex items-center justify-between'>
-                  <div className='flex items-center gap-x-1'>
-                    <svg className="fill-[#353945] dark:fill-white" xmlns="http://www.w3.org/2000/svg" width="12.444" height="16" viewBox="0 0 12.444 16">
-                      <defs>
-                        <clipPath id="clip-path">
-                          <rect id="사각형_91" data-name="사각형 91" width="12.444" height="16"></rect>
-                        </clipPath>
-                      </defs>
-                      <g id="ico_itemlevel_black" clipPath="url(#clip-path)">
-                        <path id="패스_94" data-name="패스 94" d="M12.015,4.16h-.336a5.472,5.472,0,0,0-3.359-2.7L6.221,0l-2.1,1.462A5.468,5.468,0,0,0,.766,4.16H.428a15.187,15.187,0,0,0-.419,4.2l.5-.352v3.322a1.392,1.392,0,0,0,.4.969L4.5,16V8.469l-.867.651c-1.052.78-1.246.17-1.274-.225V7.051A2.607,2.607,0,0,1,4.04,7.32L5.888,8.357V9.588l-.605.54.939.836.939-.836-.605-.54V8.357L8.4,7.32a2.609,2.609,0,0,1,1.685-.269V8.895c-.028.4-.221,1.006-1.273.225l-.869-.651V16L11.532,12.3a1.392,1.392,0,0,0,.4-.969V8.005l.5.352a15.226,15.226,0,0,0-.42-4.2" transform="translate(0 -0.001)"></path>
-                      </g>
-                    </svg>
-                    <p className='text-base font-semibold'>1627.50</p>
-                  </div>
-                  <p className='text-sm text-placeholder'>길드 이름</p>
-                </div>
+              {/* 캐릭 정렬 */}
+              <div className='grid grid-cols-2 gap-4'>
+                {sortedFilterHaveCharacterList.map((sortedFilterHaveCharacter, iindex:number) => {
+                  const activeCharacterStyle = sortedFilterHaveCharacter.CharacterName === decodeURIComponent(name) ? 'border rounded-lg overflow-hidden border-[#7d8395]' : 'border rounded-lg overflow-hidden border-[#e6e8ec] dark:border-[#57585e]';
+                  return (
+                    <Link key={`${iindex}_${sortedFilterHaveCharacter.CharacterName}`} href={`./characters/${sortedFilterHaveCharacter.CharacterName}`} className={activeCharacterStyle}>
+                    <div className={`border-l-[6px] px-3 py-2 flex items-center gap-x-3 ${itemLevelBorderStyleFunction(parseFloat(sortedFilterHaveCharacter.ItemAvgLevel.replace(/,/g, '')))}`}>
+                      {/* 캐릭터 아이콘 */}
+                      <div className='bg-[#e6e8ec] dark:bg-[#2b2d31] rounded-full'>
+                        <Image src={characterJobIconList[sortedFilterHaveCharacter.CharacterClassName]} alt={sortedFilterHaveCharacter.CharacterClassName} loading="lazy" width={44} height={44} decoding="async" />
+                      </div>
+                      {/* 캐릭터 정보 */}
+                      <div className='grow space-y-[1px]'>
+                        <p className='text-sm font-medium text-[#7d8395] dark:text-[#b6b9c2]'>Lv.{sortedFilterHaveCharacter.CharacterLevel} {sortedFilterHaveCharacter.CharacterClassName}</p>
+                        <p className='text-base font-[650]'>{sortedFilterHaveCharacter.CharacterName}</p>
+                        <div className='flex items-center justify-between'>
+                          <div className='flex items-center gap-x-1'>
+                            <svg className="fill-[#353945] dark:fill-white" xmlns="http://www.w3.org/2000/svg" width="12.444" height="16" viewBox="0 0 12.444 16">
+                              <defs>
+                                <clipPath id="clip-path">
+                                  <rect id="사각형_91" data-name="사각형 91" width="12.444" height="16"></rect>
+                                </clipPath>
+                              </defs>
+                              <g id="ico_itemlevel_black" clipPath="url(#clip-path)">
+                                <path id="패스_94" data-name="패스 94" d="M12.015,4.16h-.336a5.472,5.472,0,0,0-3.359-2.7L6.221,0l-2.1,1.462A5.468,5.468,0,0,0,.766,4.16H.428a15.187,15.187,0,0,0-.419,4.2l.5-.352v3.322a1.392,1.392,0,0,0,.4.969L4.5,16V8.469l-.867.651c-1.052.78-1.246.17-1.274-.225V7.051A2.607,2.607,0,0,1,4.04,7.32L5.888,8.357V9.588l-.605.54.939.836.939-.836-.605-.54V8.357L8.4,7.32a2.609,2.609,0,0,1,1.685-.269V8.895c-.028.4-.221,1.006-1.273.225l-.869-.651V16L11.532,12.3a1.392,1.392,0,0,0,.4-.969V8.005l.5.352a15.226,15.226,0,0,0-.42-4.2" transform="translate(0 -0.001)"></path>
+                              </g>
+                            </svg>
+                            <p className='text-base font-semibold'>{sortedFilterHaveCharacter.ItemAvgLevel}</p>
+                          </div>
+                          {/* API 데이터에 길드이름은 포함되어 있지 않아서 삭제하기로 결정 */}
+                          {/* <p className='text-sm text-placeholder'>길드 이름</p> */}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                  )
+                })}
               </div>
             </div>
-          </Link>
-        </div>
-      </div>
+          )
+        } else {
+          <Fragment key={`${list}_${index}`}></Fragment>
+        }
+      })}
     </>
   )
 }

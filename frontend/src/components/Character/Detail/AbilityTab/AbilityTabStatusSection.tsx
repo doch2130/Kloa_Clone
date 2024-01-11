@@ -8,21 +8,21 @@ interface AbilityTabStatusProps {
 }
 
 export default function AbilityTabStatusSection({ ArmoryProfileStats }:AbilityTabStatusProps) {
-  const ArmoryProfileStatsCloenOne = ArmoryProfileStats !== undefined ? ArmoryProfileStats.slice(0, 3) : [];
-  const ArmoryProfileStatsCloenTwo = ArmoryProfileStats !== undefined ? ArmoryProfileStats.slice(3, 6) : [];
+  const ArmoryProfileStatsCloenOne = ArmoryProfileStats !== undefined ? ArmoryProfileStats?.slice(0, 3) : [];
+  const ArmoryProfileStatsCloenTwo = ArmoryProfileStats !== undefined ? ArmoryProfileStats?.slice(3, 6) : [];
   const [statusSum, setStatusSum] = useState(0);
   const [statusMaxValue, setStatusMaxValue] = useState(['치명', '치명']);
 
   useEffect(() => {
     if(ArmoryProfileStats !== undefined) {
-      const sortedData = ArmoryProfileStats.slice(0, 6).sort((a, b) => parseInt(b.Value) - parseInt(a.Value));
+      const sortedData = ArmoryProfileStats?.slice(0, 6).sort((a, b) => parseInt(b.Value) - parseInt(a.Value));
 
       let sum = 0;
-      sortedData.forEach((data) => {
+      sortedData?.forEach((data) => {
         sum += Number(data.Value);
       });
       setStatusSum(sum);
-      setStatusMaxValue([sortedData[0].Type, sortedData[1].Type]);
+      setStatusMaxValue([sortedData?.[0].Type, sortedData?.[1].Type]);
     }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,23 +42,23 @@ export default function AbilityTabStatusSection({ ArmoryProfileStats }:AbilityTa
           <div className='mt-4 text-sm leading-[17px] pl-1'>
             <div className='flex justify-between'>
               <p className='text-[#7d8395]'>공격력</p>
-              <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats[7].Value).toLocaleString()}</p>
+              <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats?.[7].Value).toLocaleString()}</p>
             </div>
             <div className='flex justify-between text-sm mt-2.5'>
               <p className='text-[#7d8395]'>
                 <><span className='ml-2.5 mr-2 w-[6px] h-[4px] border-l border-b inline-block mb-1 border-[#7d8395]'></span>기본</>
               </p>
-              <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && findValueInText(ArmoryProfileStats[7].Tooltip[1])}</p>
+              <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && findValueInText(ArmoryProfileStats?.[7].Tooltip[1] || '')}</p>
             </div>
             <div className='flex justify-between text-sm mt-0.5'>
               <p className='text-[#7d8395]'>
                 <><span className='ml-2.5 mr-2 w-[6px] h-[4px] border-l border-b inline-block mb-1  border-[#7d8395]'></span>효과</>
               </p>
-              <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && findValueInText(ArmoryProfileStats[7].Tooltip[2])}</p>
+              <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && findValueInText(ArmoryProfileStats?.[7].Tooltip[2] || '')}</p>
             </div>
             <div className='flex justify-between mt-3'>
               <p className='text-[#7d8395]'>최대 생명력</p>
-              <p className="font-semibold text-[#353945] dark:text-inherit">{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats[6].Value).toLocaleString()}</p>
+              <p className="font-semibold text-[#353945] dark:text-inherit">{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats?.[6].Value).toLocaleString()}</p>
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@ export default function AbilityTabStatusSection({ ArmoryProfileStats }:AbilityTa
               {/* 가장 높은 값: #8045dd, 2번쨰 높은 값: 5865f2 */}
               {/* 치특신 */}
               <div className='flex justify-between'>
-                {ArmoryProfileStatsCloenOne.map((status:Stat, index:number) => {
+                {ArmoryProfileStatsCloenOne?.map((status:Stat, index:number) => {
                   const valueStyle = status.Type === statusMaxValue[0] ? 'font-semibold text-[#8045dd] dark:text-[#a36bfc]' : status.Type === statusMaxValue[1] ? 'font-semibold text-[#5865f2] dark:text-[#8991ee]' : 'font-semibold text-[#353945] dark:text-inherit';
                   return (
                     <div className='flex justify-between max-w-[75px] w-full' key={index}>
@@ -88,7 +88,7 @@ export default function AbilityTabStatusSection({ ArmoryProfileStats }:AbilityTa
               </div>
               {/* 제인숙 */}
               <div className='flex justify-between'>
-                {ArmoryProfileStatsCloenTwo.map((status:Stat, index:number) => {
+                {ArmoryProfileStatsCloenTwo?.map((status:Stat, index:number) => {
                   const valueStyle = status.Type === statusMaxValue[0] ? 'font-semibold text-[#8045dd] dark:text-[#a36bfc]' : status.Type === statusMaxValue[1] ? 'font-semibold text-[#5865f2] dark:text-[#8991ee]' : 'font-semibold text-[#353945] dark:text-inherit';
                   return (
                     <div className='flex justify-between max-w-[75px] w-full' key={index}>

@@ -13,6 +13,7 @@ export const characterJobList:string[] = [
   '버서커',
   '홀리나이트',
   '슬레이어',
+  '브레이커',
   '스트라이커',
   '배틀마스터',
   '인파이터',
