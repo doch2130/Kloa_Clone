@@ -38,7 +38,7 @@ export default function AbilityTabEquipAccessries({ ArmoryEquipmentAccessrie, Ch
           {ArmoryEquipmentAccessrie?.ArmoryEquipmentPoint?.map((armoryEquipmentPoint:ArmoryEquipmentPoint, index:number) => {
             let spanStyle = 'rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]';
             if (index > 0) {
-              spanStyle += ' ml-1.5';
+              spanStyle += ' ml-[2px]';
             }
 
             if(armoryEquipmentPoint.Name === '') {
@@ -47,7 +47,7 @@ export default function AbilityTabEquipAccessries({ ArmoryEquipmentAccessrie, Ch
 
             if (index === 2) {
               return (
-                <span key={`${armoryEquipmentPoint.Name}_${index}`} className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>{armoryEquipmentPoint.Name} {armoryEquipmentPoint.Value}</span>
+                <span key={`${armoryEquipmentPoint.Name}_${index}`} className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-[2px]'>{armoryEquipmentPoint.Name} {armoryEquipmentPoint.Value}</span>
               )
             }
             return (

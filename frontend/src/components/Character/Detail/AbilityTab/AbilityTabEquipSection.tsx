@@ -371,7 +371,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
                   const order = ['치명', '신속', '특화', '제압', '숙련', '인내'];
                   if(order.findIndex(str => effect[0].includes(str)) === -1) {
                     return (
-                    <span key={`${effect[0]}_${index}`} className={'rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] mr-1.5'}>{`${effect[0]}`}</span>
+                    <span key={`${effect[0]}_${index}`} className={'rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4] mr-[2px]'}>{`${effect[0]}`}</span>
                     )
                   } else {
                   return (
@@ -445,7 +445,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
                   ArmoryEquipment[abilityStoneIndex].ArmoryEquipmentPoint?.map((armoryEquipmentPoint:ArmoryEquipmentPoint, index:number) => {
                     if(armoryEquipmentPoint.Name !== '') {
                       if(index === 2) {
-                        return <span key={`${armoryEquipmentPoint.Name}_${index}`} className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-1.5'>{`${armoryEquipmentPoint.Name} ${armoryEquipmentPoint.Value}`}</span>
+                        return <span key={`${armoryEquipmentPoint.Name}_${index}`} className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] text-[#c94c4c] ml-[2px]'>{`${armoryEquipmentPoint.Name} ${armoryEquipmentPoint.Value}`}</span>
                       } else {
                         return <span key={`${armoryEquipmentPoint.Name}_${index}`} className='rounded-full px-1.5 py-0.5 font-semibold text-[0.7rem] leading-3 border dark:border-[#cacdd4] dark:text-[#cacdd4]'>{`${armoryEquipmentPoint.Name} ${armoryEquipmentPoint.Value}`}</span>
                       }
