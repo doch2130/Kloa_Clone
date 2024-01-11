@@ -7,6 +7,7 @@ import { findValuesInText, findSetEffectValuesInText, findElixirEffectValuesInTe
 import { elixirSpecialOptionDescript } from '@/data/ElixirSpecialOptionDescript'
 
 import AbilityTab from '@/components/Character/Detail/AbilityTab/AbilityTab'
+import AvatarTab from '@/components/Character/Detail/AvatarTab/AvatarTab'
 
 interface CharacterDetailRightProps {
   data?: CharacterArmories | null | undefined
@@ -586,6 +587,8 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
       </div>
     )
   }
+
+  // console.log('data ', data);
   
   return (
     <section className='grow pb-[50px]'>
@@ -602,22 +605,25 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
           </div>
         </div>
         {/* 탭에 따른 데이터 출력 위치 */}
+        {isLoading &&
         <Tab.Panels>
           <Tab.Panel>
-            {isLoading && 
             <AbilityTab ArmoryEquipment={data?.ArmoryEquipment} ArmoryProfileStats={data?.ArmoryProfile.Stats} ArmoryCard={data?.ArmoryCard}
               ArmoryGem={updatedArmoryGemData} ArmoryEngraving={data?.ArmoryEngraving} CharacterClassName={data?.ArmoryProfile.CharacterClassName}
               transcendanceTotal={transcendanceTotalRef.current} transcendanceAverage={transcendanceAverageRef.current}
             />
-            }
           </Tab.Panel>
-          <Tab.Panel>Content 2</Tab.Panel>
-          <Tab.Panel>Content 3</Tab.Panel>
-          <Tab.Panel>Content 4</Tab.Panel>
-          <Tab.Panel>Content 5</Tab.Panel>
-          <Tab.Panel>Content 6</Tab.Panel>
-          <Tab.Panel>Content 7</Tab.Panel>
+          <Tab.Panel>스킬</Tab.Panel>
+          <Tab.Panel>
+            <AvatarTab characterTendencies={data?.ArmoryProfile.Tendencies} characterName={data?.ArmoryProfile.CharacterName}
+            characterImage={data?.ArmoryProfile.CharacterImage} armoryAvatars={data?.ArmoryAvatars} />
+          </Tab.Panel>
+          <Tab.Panel>히스토리</Tab.Panel>
+          <Tab.Panel>수집형 포인트</Tab.Panel>
+          <Tab.Panel>보유 캐릭터</Tab.Panel>
+          <Tab.Panel>길드</Tab.Panel>
         </Tab.Panels>
+        }
       </div>
     </section>
   )
