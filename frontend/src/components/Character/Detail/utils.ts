@@ -6,7 +6,11 @@ export async function getOwnedCharacter(characterName:string):Promise<CharacterI
   return ownedCharacter;
 }
 
-
+// export async function getGuildData(characterName:string):Promise<CharacterInfoResponseType> {
+//   const response = await fetch(`/api/lostark/siblings?characterName=${characterName}`);
+//   const ownedCharacter = (await response.json()) as CharacterInfoResponseType;
+//   return ownedCharacter;
+// }
 
 
 export const itemLevelBorderStyleFunction = (level:number) => {

@@ -626,7 +626,8 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
             <OwnedCharacterTab />
           </Tab.Panel>
           <Tab.Panel>
-            <GuildTab />
+            길드 탭은 보류
+            {/* <GuildTab /> */}
           </Tab.Panel>
         </Tab.Panels>
         }
