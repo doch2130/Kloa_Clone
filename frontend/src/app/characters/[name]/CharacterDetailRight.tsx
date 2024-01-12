@@ -3,8 +3,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Tab } from '@headlessui/react'
 import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, CharacterArmories, Gem } from '@/types/characters'
 
-import { findValuesInText, findSetEffectValuesInText, findElixirEffectValuesInText, findTranscendenceData, tooltipJsonChange, abilityStoneExtractedData } from './utils'
+import { findValuesInText, findSetEffectValuesInText, findElixirEffectValuesInText, findTranscendenceData, tooltipJsonChange, abilityStoneExtractedData, updateCharacterInfo } from './utils'
 import { elixirSpecialOptionDescript } from '@/data/ElixirSpecialOptionDescript'
+import { jobEngravingDescriptionList } from '@/data/EngravingsData'
 
 import AbilityTab from '@/components/Character/Detail/AbilityTab/AbilityTab'
 import AvatarTab from '@/components/Character/Detail/AvatarTab/AvatarTab'
@@ -576,6 +577,35 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
       sortedGems();
       setUpdatedArmoryGemData(data?.ArmoryGem);
       setIsLoading(true);
+      fetchInfoData();
+    }
+
+    async function fetchInfoData() {
+      if(data !== null && data !== undefined) {
+        // console.log('data ', data);
+
+        const characterName = data.ArmoryProfile.CharacterName;
+        const characterImage = data.ArmoryProfile.CharacterImage || '';
+        const engravingList:string[] = [];
+
+        data?.ArmoryEngraving?.Effects?.forEach((effect) => {
+          // console.log('effect.Name ', effect.Name);
+          // const regex = /Lv\.\s(\d+)\s(.+)/;
+          const regex = /(.*)(?:\sLv\.\s\d+)/;
+          const match = effect.Name.match(regex);
+          // console.log('match ', match);
+          if(match) {
+            const jobEngraving = match[1].trim();
+            // console.log('test ', jobEngravingDescriptionList[jobEngraving]);
+            if(jobEngravingDescriptionList[jobEngraving] !== undefined) {
+              engravingList.push(effect.Name);
+            }
+          }
+        });
+
+        updateCharacterInfo(characterName, characterImage, engravingList);
+
+      }
     }
 
     fetchData();

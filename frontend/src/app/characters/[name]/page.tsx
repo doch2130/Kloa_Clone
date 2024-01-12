@@ -26,7 +26,7 @@ export default function CharacterDetail() {
   useEffect(() => {
     if(data !== undefined && data?.status === 200 && data?.data?.ArmoryProfile !== undefined) {
       
-      const searchData = {
+      const searchData:SearchCharacter = {
         'name': data?.data?.ArmoryProfile?.CharacterName,
         'job': data?.data?.ArmoryProfile?.CharacterClassName,
         'itemLevel': data?.data?.ArmoryProfile?.ItemAvgLevel,
@@ -34,7 +34,9 @@ export default function CharacterDetail() {
       };
       
       localStorageSaveHandler('recently', searchData);
+
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isLoading]);
 
   if(isLoading) {

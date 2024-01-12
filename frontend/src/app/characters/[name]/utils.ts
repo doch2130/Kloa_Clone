@@ -1,4 +1,4 @@
-import { characterResponseType } from "@/types/characters";
+import { characterInfoUpdateResponseType, characterResponseType } from "@/types/characters";
 
 export async function getCharacter(characterName:string):Promise<characterResponseType> {
   const response = await fetch(`/api/lostark/characters?characterName=${characterName}`);
@@ -35,6 +35,23 @@ export async function getCharacter(characterName:string):Promise<characterRespon
 //     return ;
 //   }
 // }
+
+// export async function updateCharacterInfo(characterName:string):Promise<characterInfoUpdateResponseType> {
+export async function updateCharacterInfo(characterName:string, characterImage:string, engravingList:string[]):Promise<characterInfoUpdateResponseType> {
+  const response = await fetch(`/api/lostark/characters/info`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      characterName: characterName,
+      characterImage: characterImage,
+      engravingList: engravingList,
+    }),
+  });
+  const characterInfoUpdate = (await response.json()) as characterInfoUpdateResponseType;
+  return characterInfoUpdate;
+}
 
 type itemGradeStyleBackgroundType = {
   [key:string]: { background: string }

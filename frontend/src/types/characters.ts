@@ -287,3 +287,9 @@ export interface characterResponseType {
   message: string;
   status: number;
 }
+
+
+export interface characterInfoUpdateResponseType {
+  message: string;
+  status: number;
+}
