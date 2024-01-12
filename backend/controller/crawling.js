@@ -6,6 +6,7 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
   const characterName = req.body.characterName;
   const characterImageAddress = req.body.characterImage;
   const engravingList = [];
+  const setArmorEffect = req.body.weapon;
  
 
   if(req.body.engravingList !== undefined && req.body.engravingList !== null && req.body.engravingList.length > 0) {
@@ -55,6 +56,7 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
       itemLevel: Number(itemLevel).toFixed(2),
       guildName: guildName,
       itemLevelDate: itemLevelDate,
+      setArmorEffect: setArmorEffect,
       jobEngraving: engravingList,
       imgAddress: characterImageAddress,
     }
@@ -112,6 +114,7 @@ const lostarkCharacterUpdateInfo = async (info) => {
           jobClass: info.jobClass,
           itemLevel: info.itemLevel,
           itemLevelUpdateDate: info.itemLevelDate,
+          setArmorEffect: info.setArmorEffect,
           jobEngraving: jobEngraving,
           imgAddress: info.imgAddress,
         }, {
@@ -125,6 +128,7 @@ const lostarkCharacterUpdateInfo = async (info) => {
           server: info.server,
           guildName: info.guildName,
           jobClass: info.jobClass,
+          setArmorEffect: info.setArmorEffect,
           jobEngraving: jobEngraving,
           imgAddress: info.imgAddress,
         }, {
