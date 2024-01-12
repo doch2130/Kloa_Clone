@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
         characterName: body.characterName,
         characterImage: body.characterImage,
         engravingList: body.engravingList,
+        weapon: body.weapon,
       }),
     });
 

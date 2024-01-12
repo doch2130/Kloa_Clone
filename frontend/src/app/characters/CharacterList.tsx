@@ -30,7 +30,7 @@ export default function CharacterList({ rankingList }:CharacterListProps) {
                 <p>{list.jobClass}</p>
                 <p>{list.server}</p>
                 <p>{list.guildName}</p>
-                <p>{list.setArmorEffect}</p>
+                <p className="text-center text-[#1AB9B6]">{list.setArmorEffect}</p>
                 <p className='whitespace-pre'>{list.jobEngraving}</p>
               </div>
             </li>

@@ -586,6 +586,12 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
 
         const characterName = data.ArmoryProfile.CharacterName;
         const characterImage = data.ArmoryProfile.CharacterImage || '';
+
+        const weaponArray = data.ArmoryEquipment.filter((armory) => armory.Type === '무기')?.[0];
+        const weaponGrade = weaponArray?.Grade;
+        const weaponLevel = weaponArray?.Name?.slice(0, weaponArray.Name.indexOf(' ')).trim();
+        const weapon = weaponGrade === '에스더' ? `${weaponLevel} ${weaponGrade}` : '';
+
         const engravingList:string[] = [];
 
         data?.ArmoryEngraving?.Effects?.forEach((effect) => {
@@ -603,7 +609,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
           }
         });
 
-        updateCharacterInfo(characterName, characterImage, engravingList);
+        updateCharacterInfo(characterName, characterImage, engravingList, weapon);
 
       }
     }

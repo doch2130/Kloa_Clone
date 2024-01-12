@@ -37,7 +37,7 @@ export async function getCharacter(characterName:string):Promise<characterRespon
 // }
 
 // export async function updateCharacterInfo(characterName:string):Promise<characterInfoUpdateResponseType> {
-export async function updateCharacterInfo(characterName:string, characterImage:string, engravingList:string[]):Promise<characterInfoUpdateResponseType> {
+export async function updateCharacterInfo(characterName:string, characterImage:string, engravingList:string[], weapon:string):Promise<characterInfoUpdateResponseType> {
   const response = await fetch(`/api/lostark/characters/info`, {
     method: 'POST',
     headers: {
@@ -47,6 +47,7 @@ export async function updateCharacterInfo(characterName:string, characterImage:s
       characterName: characterName,
       characterImage: characterImage,
       engravingList: engravingList,
+      weapon: weapon,
     }),
   });
   const characterInfoUpdate = (await response.json()) as characterInfoUpdateResponseType;
