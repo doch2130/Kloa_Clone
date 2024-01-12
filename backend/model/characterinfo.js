@@ -13,7 +13,7 @@ const CharacterInfo = (Sequelize, DataTypes) => {
         allowNull: false
       },
       itemLevel: {
-        type: DataTypes.DECIMAL(5, 2),
+        type: DataTypes.DOUBLE,
         allowNull: false,
         defaultValue: 0.00,
       },

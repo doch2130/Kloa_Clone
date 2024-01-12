@@ -41,16 +41,16 @@ model user {
   email       String        @unique(map: "User_email_key")
   password    String
   privacy     Boolean       @default(false)
+  role        Boolean       @default(false)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now())
-  role        Boolean       @default(false)
   mainnotices mainnotices[]
 }
 
 model characterinfo {
   id                  Int       @id @default(autoincrement())
   name                String
-  itemLevel           Decimal   @default(0.00) @db.Decimal(5, 2)
+  itemLevel           Float     @default(0)
   server              String    @default("")
   jobClass            String    @default("")
   guildName           String?   @default("")
@@ -59,4 +59,3 @@ model characterinfo {
   itemLevelUpdateDate DateTime? @default(now()) @db.DateTime(0)
   imgAddress          String?   @db.Text
 }
-
