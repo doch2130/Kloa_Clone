@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use('/', router);
 // app.get('/api/hello', (req, res) => {});
 
-app.get('/lostark/crawling/update', lostarkCharacterUpdateCrawling);
+app.post('/lostark/crawling/update', lostarkCharacterUpdateCrawling);
 
 app.get('*', (req, res) => {
   res.send('잘못된 접근 주소 입니다.');
