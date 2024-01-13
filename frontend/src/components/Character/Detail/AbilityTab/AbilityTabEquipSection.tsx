@@ -72,7 +72,7 @@ export default function AbilityTabEquipSection({ ArmoryEquipment, ArmoryEngravin
               <Image src={ArmoryEquipment?.[weaponIndex]?.Icon} alt={ArmoryEquipment?.[weaponIndex]?.Name} loading="lazy" width={50} height={50} decoding="async" />
               <div className={`w-full h-4 text-center ${itemQualityCheckFunction(Number(ArmoryEquipment?.[weaponIndex]?.QualityValue),'background')}`}>
                 {/* 품질 */}
-                <p className='text-xs font-semibold text-white'>{ArmoryEquipment?.[weaponIndex]?.QualityValue}</p>
+                <p className='text-xs font-semibold text-white'>{ArmoryEquipment?.[weaponIndex]?.QualityValue === undefined ? 0 : ArmoryEquipment?.[weaponIndex]?.QualityValue! < 0 ? 0 : ArmoryEquipment?.[weaponIndex]?.QualityValue}</p>
               </div>
             </div>
             {/* 무기 정보 */}

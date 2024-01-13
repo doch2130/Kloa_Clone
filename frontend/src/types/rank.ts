@@ -23,3 +23,11 @@ export interface rankListType {
   itemLevelUpdateDate: Date | null
   imgAddress: string | null
 }
+
+export interface queryFilterType {
+  server: string
+  job: string
+  engraving: string
+  minLevel: number
+  maxLevel: number
+}

@@ -36,6 +36,11 @@ export default function CharacterList({ rankingList }:CharacterListProps) {
             </li>
           )
         })}
+        {rankingList !== undefined && rankingList !== null && rankingList?.length >= 100 &&
+        <button type='button' className='w-full h-[40px] flex justify-center items-center text-[#5865f2] dark:text-[#8991EE] select-none'>
+          <p className='font-bold text-[13px] leading-[16px]'>더 보기</p>
+        </button>
+        }
       </ul>
     </div>
   )

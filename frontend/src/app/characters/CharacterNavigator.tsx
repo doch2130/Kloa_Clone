@@ -4,17 +4,24 @@ import React, { useEffect, useRef, useState } from 'react'
 import { serverList } from '@/data/ServerListData'
 import { characterJobList, characterJobSkillList } from '@/data/CharacterJobData'
 
+import { queryFilterType } from '@/types/rank'
+
 import ListBoxSelect from '@/components/UI/ListBoxSelect'
 
 import styled from '@/styles/CharacterNavigator.module.css'
 
-const buttonClass = 'w-full h-full border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-[#7d8395]';
+type CharacterNavigatorProps = {
+  queryFilter: queryFilterType
+  setQueryFilter: Function
+}
 
-export default function CharacterNavigator() {
-  const [rangeMinValue, setRangeMinValue] = useState<number>(0); 
-  const [rangeMaxValue, setRangeMaxValue] = useState<number>(1655);
-  const [rangeMinPercent, setRangeMinPercent] = useState<number>(0);
-  const [rangeMaxPercent, setRangeMaxPercent] = useState<number>(0);
+const buttonClass = 'w-full h-full border-2 border-[#e6e8ec] dark:border-[#4d4f55] rounded-[10px] flex justify-between items-center text-[#7d8395]';
+
+export default function CharacterNavigator({ queryFilter, setQueryFilter }:CharacterNavigatorProps) {
+  const [rangeMinValue, setRangeMinValue] = useState<number>(queryFilter.minLevel); 
+  const [rangeMaxValue, setRangeMaxValue] = useState<number>(queryFilter.maxLevel);
+  const [rangeMinPercent, setRangeMinPercent] = useState<number>((queryFilter.minLevel / 1655) * 100);
+  const [rangeMaxPercent, setRangeMaxPercent] = useState<number>(100 - (queryFilter.maxLevel / 1655) * 100);
 
   const levelBar = useRef<HTMLDivElement>(null);
 
@@ -51,30 +58,52 @@ export default function CharacterNavigator() {
 
     levelBar.current.style.left = `${rangeMinPercent}%`;
     levelBar.current.style.right = `${rangeMaxPercent}%`;
-    return ;
 
+    return ;
   }, [rangeMinPercent, rangeMaxPercent]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setQueryFilter((prev:queryFilterType) => (
+        {
+          ...prev,
+          minLevel: rangeMinValue,
+          maxLevel: rangeMaxValue,
+        }
+      ));
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rangeMaxValue, rangeMinValue]);
+
   
   return (
     <div className='w-full h-[54px] bg-white dark:bg-[#33353a] rounded-[10px] flex justify-between items-center px-[10px] mt-[28px]'>
       <div className='flex items-center space-x-5'>
         <div className='relative w-[150px] h-[38px]'>
-          <ListBoxSelect buttonClass={buttonClass} listData={serverList} />
+          <ListBoxSelect buttonClass={buttonClass} listData={serverList}
+            type={'server'} setQueryFilter={setQueryFilter} initData={queryFilter.server} />
         </div>
         <div className='relative w-[150px] h-[38px]'>
-          <ListBoxSelect buttonClass={buttonClass} listData={characterJobList} />
+          <ListBoxSelect buttonClass={buttonClass} listData={characterJobList}
+            type={'job'} setQueryFilter={setQueryFilter} initData={queryFilter.job} />
         </div>
         {/* 데이터에 따른 밑에 UI 출력 */}
-        {characterJobSkillList[characterJobList[0]].length > 0 &&
+        {characterJobSkillList[queryFilter.job].length > 0 &&
         <div className='relative w-[150px] h-[38px]'>
-          <ListBoxSelect buttonClass={buttonClass} listData={characterJobSkillList[characterJobList[0]]} />
+          <ListBoxSelect buttonClass={buttonClass} listData={characterJobSkillList[queryFilter.job]}
+            type={'engraving'} setQueryFilter={setQueryFilter} initData={queryFilter.engraving} />
         </div>
         }
       </div>
       {/* Level Range Option */}
       <div className='flex items-center space-x-5'>
         <input type='number' value={rangeMinValue}
-          className='w-[68px] h-[38px] flex justify-center items-center border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] font-base text-placeholder dark:text-[#eaf0ec] text-center outline-none bg-white dark:bg-[#33353a]'
+          className='w-[68px] h-[38px] flex justify-center items-center border-2 border-[#e6e8ec] dark:border-[#4d4f55] rounded-[10px] font-base text-[#7d8395] dark:text-[#eaf0ec] text-center outline-none bg-white dark:bg-[#33353a]'
           onChange={(e) => {
             levelMinValueHandler(e);
             rangeValueHandler();
@@ -104,7 +133,7 @@ export default function CharacterNavigator() {
         </div>
 
         <input type='number' value={rangeMaxValue}
-          className='w-[68px] h-[38px] flex justify-center items-center border-2 border-basicGrey dark:border-[#4d4f55] rounded-[10px] font-base text-placeholder dark:text-[#eaf0ec] text-center outline-none bg-white dark:bg-[#33353a]'
+          className='w-[68px] h-[38px] flex justify-center items-center border-2 border-[#e6e8ec] dark:border-[#4d4f55] rounded-[10px] font-base text-[#7d8395] dark:text-[#eaf0ec] text-center outline-none bg-white dark:bg-[#33353a]'
           onChange={(e) => {
             levelMaxValueHandler(e);
             rangeValueHandler();

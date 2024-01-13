@@ -260,7 +260,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
               }
 
               // 세트 효과
-              if(tooltipJson.Element_008.value.Element_001) {
+              if(tooltipJson.Element_008?.value.Element_001) {
                 const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_008.value.Element_001);
                 setEffectName = setFindValue;
               }

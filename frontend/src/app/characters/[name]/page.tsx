@@ -47,6 +47,14 @@ export default function CharacterDetail() {
     )
   }
 
+  if(!isLoading && data?.status === 404) {
+    return (
+      <div className='w-full h-[50%] min-h-[500px] absolute z-[150] flex items-center justify-center opacity-[0.9]'>
+        <h1 className='text-5xl font-bold'>캐릭터가 존재하지 않습니다.</h1>
+      </div>
+    )
+  }
+
   return (
     <div className='w-full min-h-full bg-lightGrey dark:bg-[#2b2d31] text-[#353945] dark:text-[#eaf0ec] min-[1260px]:flex min-[1260px]:justify-center relative'>
       <div className='shrink-0 w-[1200px] flex justify-between relative m-auto'>

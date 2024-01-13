@@ -133,7 +133,7 @@ export const itemQualityCheckFunction = (quality:number, type:'background'|'font
       result = 'bg-[#FFE81D] dark:bg-[#d9c514]';
     } else if (quality >= 1) {
       result = 'bg-[#FF7F37]';
-    } else if (quality === 0) {
+    } else if (quality <= 0) {
       result = 'bg-[#CBCDD4]';
     }
   } else if ('font') {
@@ -149,7 +149,7 @@ export const itemQualityCheckFunction = (quality:number, type:'background'|'font
       result = 'text-[#FFE81D] dark:text-[#d9c514]';
     } else if (quality >= 1) {
       result = 'text-[#FF7F37]';
-    } else if (quality === 0) {
+    } else if (quality <= 0) {
       result = 'text-[#CBCDD4]';
     }
   }

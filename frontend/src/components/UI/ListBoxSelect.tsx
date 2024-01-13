@@ -1,7 +1,8 @@
 'use client'
 import Image from 'next/image'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
+import { queryFilterType } from '@/types/rank'
 
 import { IconDownArrow } from '/public/svgs'
 
@@ -9,17 +10,48 @@ import styled from '@/styles/ListBoxSelect.module.css'
 
 type ListBoxSelectProps = {
   buttonClass: string
-  listData: string[];
+  listData: string[]
+  type: string
+  initData: string
+  setQueryFilter: Function
 };
 
-export default function ListBoxSelect(props:ListBoxSelectProps) {
-  const { listData } = props;
-  const [selected, setSelected] = useState(listData[0]);
+export default function ListBoxSelect({ buttonClass, listData, type, initData, setQueryFilter}:ListBoxSelectProps) {
+  const onChangeHandler = (value:string) => {
+    // console.log('e ', value);
+    setQueryFilter((prev:queryFilterType) => {
+      if(type === 'server') {
+        return (
+          {
+            ...prev,
+            server: value
+          }
+        )
+      } else if(type === 'job') {
+        return (
+          {
+            ...prev,
+            job: value,
+            engraving: '전체'
+          }
+        )
+      } else if(type === 'engraving') {
+        return (
+          {
+            ...prev,
+            engraving: value
+          }
+        )
+      } else {
+        return prev;
+      }
+    });
+  }
 
   return (
-    <Listbox value={selected} onChange={setSelected}>
-      <Listbox.Button className={`${props.buttonClass}`}>
-        <p className='ml-4 text-sm font-semibold'>{selected === '전체' ? '직업 각인' : selected === '전체 클래스' ? '클래스' : selected}</p>
+    <Listbox value={initData} onChange={(e) => onChangeHandler(e)}>
+      <Listbox.Button className={`${buttonClass}`}>
+        <p className='ml-4 text-sm font-semibold'>{initData === '전체' ? '직업 각인' : initData === '전체 클래스' ? '클래스' : initData}</p>
         <Image src={IconDownArrow} alt='down arrow' className='mr-[10px]' />
       </Listbox.Button>
       <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
