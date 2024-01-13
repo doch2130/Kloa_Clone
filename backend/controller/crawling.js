@@ -7,7 +7,6 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
   const characterImageAddress = req.body.characterImage;
   const engravingList = [];
   const setArmorEffect = req.body.weapon;
- 
 
   if(req.body.engravingList !== undefined && req.body.engravingList !== null && req.body.engravingList.length > 0) {
     req.body.engravingList.forEach((list) => {
@@ -16,9 +15,6 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
       engravingList.push([level, name]);
     });
   }
-
-  // console.log('engravingList ', engravingList);
-
 
   let server = '';
   let jobClass = '';
@@ -48,7 +44,7 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
     const infoList = $('div.content--profile > div.profile-ingame > div.profile-info');
     itemLevel = $(infoList).find('div.level-info2 > div.level-info2__expedition > span:nth-child(2)').text().replace('Lv.', '').replace(',', '');
     guildName = $(infoList).find('div.game-info > div.game-info__guild > span:nth-child(2)').text();
-
+    
     const updateInfo = {
       name: characterName,
       server: server.replace('@', ''),
@@ -89,22 +85,22 @@ const lostarkCharacterUpdateInfo = async (info) => {
       }
     });
 
+    let jobEngraving = '';
+
+    if(info.jobEngraving.length > 1) {
+      info.jobEngraving.forEach((list) => {
+        // console.log('list ', list);
+        // console.log('list.join() ', list.join(' '));
+        jobEngraving += list.join(' ');
+        jobEngraving += '\r\n';
+      })
+    } else if (info.jobEngraving.length > 0) {
+      // console.log('list.join() ', info.jobEngraving[0].join(' '));
+      jobEngraving += info.jobEngraving[0].join(' ');
+    }
+
     if(characterInfoFind) {
       let updateInfoResult;
-
-      let jobEngraving = '';
-
-      if(info.jobEngraving.length > 1) {
-        info.jobEngraving.forEach((list) => {
-          // console.log('list ', list);
-          // console.log('list.join() ', list.join(' '));
-          jobEngraving += list.join(' ');
-          jobEngraving += '\r\n';
-        })
-      } else if (info.jobEngraving.length > 0) {
-        // console.log('list.join() ', info.jobEngraving[0].join(' '));
-        jobEngraving += info.jobEngraving[0].join(' ');
-      }
 
       if(characterInfoFind.itemLevel !== Number(info.itemLevel)) {
         // console.log('itemlevel change');
@@ -150,7 +146,19 @@ const lostarkCharacterUpdateInfo = async (info) => {
       }
       
     } else {
-      const createInfo = await CharacterInfo.create(info);
+      const updateInfo = {
+        name: info.name,
+        server: info.server,
+        guildName: info.guildName,
+        jobClass: info.jobClass,
+        itemLevel: info.itemLevel,
+        itemLevelUpdateDate: info.itemLevelDate,
+        setArmorEffect: info.setArmorEffect,
+        jobEngraving: jobEngraving,
+        imgAddress: info.imgAddress,
+      }
+
+      const createInfo = await CharacterInfo.create(updateInfo);
       if(createInfo) {
         // 데이터 새로 생성 성공
         return true;
