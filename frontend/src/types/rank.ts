@@ -22,6 +22,7 @@ export interface rankListType {
   jobEngraving: string | null
   itemLevelUpdateDate: Date | null
   imgAddress: string | null
+  ranking: number
 }
 
 export interface queryFilterType {
@@ -30,4 +31,16 @@ export interface queryFilterType {
   engraving: string
   minLevel: number
   maxLevel: number
+}
+
+export interface rankResponseInfiniteQueryType {
+  pageParams: Array<{
+    start: number
+    limit: number
+  }>
+  pages: Array<{
+    data: rankListType[];
+    message: string;
+    status: number;
+  }>;
 }

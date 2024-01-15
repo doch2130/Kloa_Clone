@@ -4,9 +4,12 @@ import { rankListType } from '@/types/rank'
 
 type CharacterListProps = {
   rankingList: rankListType[] | undefined | null
+  rankFetchNextPage: Function
+  rankIsFetchingNextPage: boolean
 }
 
-export default function CharacterList({ rankingList }:CharacterListProps) {
+
+export default function CharacterList({ rankingList, rankFetchNextPage, rankIsFetchingNextPage }:CharacterListProps) {
   return (
     <div>
       <div className='w-full px-5 py-[7px] mt-[31px] grid grid-cols-[76px_196px_110px_134px_112px_202px_140px_110px] grid-rows-1 text-xs text-[#7d8395] dark:text-[#c7c9d1] font-bold'>
@@ -36,9 +39,14 @@ export default function CharacterList({ rankingList }:CharacterListProps) {
             </li>
           )
         })}
-        {rankingList !== undefined && rankingList !== null && rankingList?.length >= 100 &&
-        <button type='button' className='w-full h-[40px] flex justify-center items-center text-[#5865f2] dark:text-[#8991EE] select-none'>
+        {rankingList !== undefined && rankingList !== null && rankingList.length % 100 === 0 &&
+        <button type='button' onClick={() => rankFetchNextPage()} className='w-full h-[40px] flex justify-center items-center text-[#5865f2] dark:text-[#8991EE] select-none'>
+          {
+          rankIsFetchingNextPage ?
+          <p className='font-bold text-[13px] leading-[16px]'>로딩 중...</p>
+          :
           <p className='font-bold text-[13px] leading-[16px]'>더 보기</p>
+          }
         </button>
         }
       </ul>

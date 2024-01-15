@@ -635,9 +635,9 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
           <div className='flex justify-end items-center gap-x-1.5 mb-[10px] mr-[1px]'>
             {/* 갱신 2분 이후부터 활성화 되는 방식 */}
             {/* 1분 이내면 몇 초 전, 1분 이후부터는 X분전 */}
-            <p className='text-sm'>14분전</p>
+            <p className='text-sm'>0분전</p>
             {/* 임시로 disabled 즐겨찾기 변수 사용 */}
-            <button type='button' disabled={false} className='w-16 h-6 bg-[#dadada] dark:bg-[#44474d] disabled:bg-[#ececec] dark:disabled:bg-[#33353a] disabled:text-[#7d8395] rounded-lg flex items-center justify-center select-none'>
+            <button type='button' disabled={true} className='w-16 h-6 bg-[#dadada] dark:bg-[#44474d] disabled:bg-[#ececec] dark:disabled:bg-[#33353a] disabled:text-[#7d8395] rounded-lg flex items-center justify-center select-none'>
               <p className='text-sm'>갱신하기</p>
             </button>
           </div>

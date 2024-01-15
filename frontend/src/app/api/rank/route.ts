@@ -10,9 +10,11 @@ export async function GET(req: NextRequest) {
   const engraving = searchParams.get('engraving') || '';
   const minLevel = searchParams.get('minLevel') || '';
   const maxLevel = searchParams.get('maxLevel') || '';
+  const skipStart = searchParams.get('start') || '0';
+  const limit = searchParams.get('limit') || '0';
 
   try {
-    const getRanks = await getRankList(server, job, engraving, minLevel, maxLevel);
+    const getRanks = await getRankList(server, job, engraving, minLevel, maxLevel, Number(skipStart), Number(limit));
 
     if(getRanks.status === 500) {
       return NextResponse.json({ data: undefined, message: 'Rank Data Get error', status: 500 });
@@ -23,11 +25,10 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error('Error:', error);
     return NextResponse.json({ data: undefined, message: 'Rank Data Get error', status: 500 });
-    // return new NextResponse(JSON.stringify({message: 'LostArk Notices Update error', status: 500}));
   }
 }
 
-const getRankList = async (server:string, job:string, engraving:string, minLevel:string, maxLevel:string) => {
+const getRankList = async (server:string, job:string, engraving:string, minLevel:string, maxLevel:string, skipStart:number, limit:number) => {
   let rankWhere = [];
 
   if (server !== '' && server !== '전 서버') {
@@ -50,15 +51,20 @@ const getRankList = async (server:string, job:string, engraving:string, minLevel
   try {
     const rankList = await prisma.characterinfo.findMany({
       where: lastRankWhere,
-      skip: 0,
-      take: 100,
+      skip: skipStart,
+      take: limit,
       orderBy: [
         { itemLevel: 'desc' },
         { itemLevelUpdateDate: 'asc' }
       ],
     });
 
-    return { rankList, status:200 };
+    const updateRankList = rankList.map((rank, index:number) => ({
+      ...rank,
+      ranking: skipStart + index
+    }));
+
+    return { rankList: updateRankList, status:200 };
 
   } catch (error) {
     console.error('Error: ', error);
