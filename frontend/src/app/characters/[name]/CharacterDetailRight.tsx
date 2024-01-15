@@ -626,7 +626,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
     )
   }
 
-  console.log('data ', data);
+  // console.log('data ', data);
   
   return (
     <section className='grow pb-[50px]'>
