@@ -1,3 +1,5 @@
+import { StaticImageData } from 'next/image';
+
 import ImgSonabelArt from './Art/SonabelArt.webp';
 import ImgNaverBtnDark from './Auth/Naver/btnD_완성형.png';
 import ImgNaverBtnDefault from './Auth/Naver/btnG_완성형.png';
@@ -102,7 +104,33 @@ import IconSoulmaster from './Character/soulmaster.png'
 import IconStriker from './Character/striker.png'
 import IconSummoner from './Character/summoner.png'
 import IconWarlord from './Character/warlord.png'
-import { StaticImageData } from 'next/image';
+
+import IconEmblemArcana from './Character/emblem/emblem_arcana.webp'
+import IconEmblemArtist from './Character/emblem/emblem_artist.webp'
+import IconEmblemBard from './Character/emblem/emblem_bard.webp'
+import IconEmblemBattlemaster from './Character/emblem/emblem_battlemaster.webp'
+import IconEmblemBerserker from './Character/emblem/emblem_berserker.webp'
+import IconEmblemSlayer from './Character/emblem/emblem_berserker_female.webp'
+import IconEmblemBlade from './Character/emblem/emblem_blade.webp'
+import IconEmblemBlaster from './Character/emblem/emblem_blaster.webp'
+import IconEmblemDemonic from './Character/emblem/emblem_demonic.webp'
+import IconEmblemDestroyer from './Character/emblem/emblem_destroyer.webp'
+import IconEmblemDevilhunter from './Character/emblem/emblem_devilhunter.webp'
+import IconEmblemGunslinger from './Character/emblem/emblem_gunslinger.webp'
+import IconEmblemHawkeye from './Character/emblem/emblem_hawkeye.webp'
+import IconEmblemHolyknight from './Character/emblem/emblem_holyknight.webp'
+import IconEmblemInfighter from './Character/emblem/emblem_infighter.webp'
+import IconEmblemBreaker from './Character/emblem/emblem_infighter_male.webp'
+import IconEmblemLancemaster from './Character/emblem/emblem_lancemaster.webp'
+import IconEmblemReaper from './Character/emblem/emblem_reaper.webp'
+import IconEmblemScouter from './Character/emblem/emblem_scouter.webp'
+import IconEmblemSorceress from './Character/emblem/emblem_sorceress.webp'
+import IconEmblemSoulEater from './Character/emblem/emblem_soul_eater.webp'
+import IconEmblemSoulmaster from './Character/emblem/emblem_soulmaster.webp'
+import IconEmblemStriker from './Character/emblem/emblem_striker.webp'
+import IconEmblemSummoner from './Character/emblem/emblem_summoner.webp'
+import IconEmblemWarlord from './Character/emblem/emblem_warlord.webp'
+import IconEmblemWeatherArtist from './Character/emblem/emblem_weather_artist.webp'
 
 
 
@@ -216,4 +244,33 @@ export const characterJobIconList:characterJobIconListType = {
   '소울이터': IconSouleater,
   '도화가': IconArtist,
   '기상술사': IconAeromancer,
+}
+
+export const characterEmblemList:characterJobIconListType = {
+  '워로드': IconEmblemWarlord,
+  '디스트로이어': IconEmblemDestroyer,
+  '버서커': IconEmblemBerserker,
+  '홀리나이트': IconEmblemHolyknight,
+  '슬레이어': IconEmblemSlayer,
+  '스트라이커': IconEmblemStriker,
+  '브레이커': IconEmblemBreaker,
+  '배틀마스터': IconEmblemBattlemaster,
+  '인파이터': IconEmblemInfighter,
+  '기공사': IconEmblemSoulmaster,
+  '창술사': IconEmblemLancemaster,
+  '데빌헌터': IconEmblemDevilhunter,
+  '블래스터': IconEmblemBlaster,
+  '호크아이': IconEmblemHawkeye,
+  '스카우터': IconEmblemScouter,
+  '건슬링어': IconEmblemGunslinger,
+  '바드': IconEmblemBard,
+  '서머너': IconEmblemSummoner,
+  '아르카나': IconEmblemArcana,
+  '소서리스': IconEmblemSorceress,
+  '블레이드': IconEmblemBlade,
+  '데모닉': IconEmblemDemonic,
+  '리퍼': IconEmblemReaper,
+  '소울이터': IconEmblemSoulEater,
+  '도화가': IconEmblemWeatherArtist,
+  '기상술사': IconEmblemArtist
 }
