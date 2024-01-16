@@ -14,6 +14,7 @@ export interface rankResponseType {
 export interface rankListType {
   id: number
   name: string
+  battleLevel: number
   itemLevel: number
   server: string
   jobClass: string
