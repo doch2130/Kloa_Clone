@@ -18,6 +18,7 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
 
   let server = '';
   let jobClass = '';
+  let battleLevel = Number(req.body.battleLevel);
   let itemLevel = 0;
   let guildName = '';
   let guildMaster = '';
@@ -51,6 +52,7 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
       name: characterName,
       server: server.replace('@', ''),
       jobClass: jobClass,
+      battleLevel: battleLevel,
       itemLevel: Number(itemLevel).toFixed(2),
       guildName: guildName,
       guildMaster: guildMaster,
@@ -112,6 +114,7 @@ const lostarkCharacterUpdateInfo = async (info) => {
           guildName: info.guildName,
           guildMaster: info.guildMaster,
           jobClass: info.jobClass,
+          battleLevel: info.battleLevel,
           itemLevel: info.itemLevel,
           itemLevelUpdateDate: info.itemLevelDate,
           setArmorEffect: info.setArmorEffect,
@@ -129,6 +132,7 @@ const lostarkCharacterUpdateInfo = async (info) => {
           guildName: info.guildName,
           guildMaster: info.guildMaster,
           jobClass: info.jobClass,
+          battleLevel: info.battleLevel,
           setArmorEffect: info.setArmorEffect,
           jobEngraving: jobEngraving,
           imgAddress: info.imgAddress,
@@ -157,6 +161,7 @@ const lostarkCharacterUpdateInfo = async (info) => {
         guildName: info.guildName,
         guildMaster: info.guildMaster,
         jobClass: info.jobClass,
+        battleLevel: info.battleLevel,
         itemLevel: info.itemLevel,
         itemLevelUpdateDate: info.itemLevelDate,
         setArmorEffect: info.setArmorEffect,

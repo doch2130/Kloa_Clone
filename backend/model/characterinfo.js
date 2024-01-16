@@ -12,6 +12,11 @@ const CharacterInfo = (Sequelize, DataTypes) => {
         type: DataTypes.STRING(191),
         allowNull: false
       },
+      battleLevel: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
       itemLevel: {
         type: DataTypes.DOUBLE,
         allowNull: false,
