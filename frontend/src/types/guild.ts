@@ -1,5 +1,8 @@
 export interface guildResponseType {
-  data: guildListType[] | null
+  data: {
+    guildList: guildListType[],
+    jobClassListCount: jobClassListCountType
+  } | null
   message: string
   status: number
 }
@@ -18,4 +21,9 @@ export interface guildListType {
   itemLevelUpdateDate: Date | null
   imgAddress: string | null
   ranking: number
+}
+
+
+export interface jobClassListCountType {
+  [key:string]:number
 }

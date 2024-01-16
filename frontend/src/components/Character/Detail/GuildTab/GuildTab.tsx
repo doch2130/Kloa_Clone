@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useQuery } from '@tanstack/react-query'
@@ -7,16 +7,40 @@ import { useQuery } from '@tanstack/react-query'
 import { getGuildInfo } from './utils'
 import { itemLevelBorderStyleFunction } from '../utils'
 
-import { characterJobIconList, guildMaster } from '/public/images'
+import { characterEmblemList, characterJobIconList, guildMaster } from '/public/images'
 
-type GuildTabType = {
+type GuildTabProps = {
   characterName: string
   guildName: string
 }
 
-export default function GuildTab({ characterName, guildName }:GuildTabType) {
+const jobArray = Object.keys(characterEmblemList);
 
+export default function GuildTab({ characterName, guildName }:GuildTabProps) {
   const { data:guildInfoList, isLoading:isGuildInfoListLoading } = useQuery({ queryKey: ['guildInfoList', characterName, guildName], queryFn: () => getGuildInfo(guildName) });
+  const [levelRange, setLevelRange] = useState<number[]>([0, 1655]);
+
+  useEffect(() => {
+    if(guildInfoList !== undefined) {
+      let minLevel = 1655;
+      let maxLevel = 0;
+      guildInfoList.data?.guildList.forEach((list) => {
+        if(list.itemLevel < minLevel) {
+          minLevel = list.itemLevel;
+        }
+        if(list.itemLevel > maxLevel) {
+          maxLevel = list.itemLevel;
+        }
+      });
+
+      if(minLevel > maxLevel) {
+        maxLevel = minLevel;
+      }
+
+      setLevelRange([minLevel, maxLevel]);
+    }
+
+  }, [guildInfoList]);
 
   if(isGuildInfoListLoading) {
     return (
@@ -26,8 +50,6 @@ export default function GuildTab({ characterName, guildName }:GuildTabType) {
     )
   }
 
-  console.log('guildInfoList ', guildInfoList);
-
   return (
     <>
     {/* 길드 인원, 직업 정보 */}
@@ -35,7 +57,7 @@ export default function GuildTab({ characterName, guildName }:GuildTabType) {
       <div className='grid grid-cols-2 gap-x-3'>
         <div className='flex flex-col items-center justify-between'>
           <div className='flex flex-col items-center'>
-            <p className='text-[0.85rem] leading-5 font-semibold text-[#7d8395]'>{`${guildInfoList?.data?.[0].server} 서버`}</p>
+            <p className='text-[0.85rem] leading-5 font-semibold text-[#7d8395]'>{`${guildInfoList?.data?.guildList?.[0].server} 서버`}</p>
             <p className='text-xl font-bold'>{guildName}</p>
             <div className='flex mt-3 gap-x-5'>
               <div className='flex items-center'>
@@ -43,7 +65,7 @@ export default function GuildTab({ characterName, guildName }:GuildTabType) {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                 </svg>
                 {/* 전체 인원 */}
-                <p className='text-base font-medium'>132</p>
+                <p className='text-base font-medium'>{guildInfoList?.data?.guildList?.length}</p>
               </div>
               <div className='flex gap-x-1.5 items-center'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -53,7 +75,7 @@ export default function GuildTab({ characterName, guildName }:GuildTabType) {
                   <path d="M10 5.5l-2 -2.5h-5v5l3 2.5"></path>
                 </svg>
                 {/* 서폿 제외 */}
-                <p className='text-base font-medium'>108</p>
+                <p className='text-base font-medium'>{guildInfoList?.data?.jobClassListCount['dealer']}</p>
               </div>
               <div className='flex gap-x-1.5 items-center'>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -62,19 +84,44 @@ export default function GuildTab({ characterName, guildName }:GuildTabType) {
                 <path d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z"></path>
               </svg>
                 {/* 서폿 */}
-                <p className='text-base font-medium'>24</p>
+                <p className='text-base font-medium'>{guildInfoList?.data?.jobClassListCount['supporter']}</p>
               </div>
             </div>
           </div>
-          <div className='w-[320px] flex flex-col items-between gap-y-2'></div>
+          {/* 레벨 범위 그래프 */}
+          <div className='w-[320px] flex flex-col items-between gap-y-2'>
+            <div className='w-[270px] h-[3px] bg-[#5865f2] relative mx-auto'>
+              {guildInfoList?.data?.guildList?.map((list, index:number) => {
+                const levelPercent = 100 / (levelRange[1] - levelRange[0]);
+                const levelPositionStyle = (list.itemLevel - levelRange[0]) * levelPercent;
+                return (
+                  <div key={`${list.name}_${index}`} className='w-2.5 h-2.5 rounded-full bg-white border-2 border-[#5865f2] absolute top-1/2 -translate-x-1/2 -translate-y-1/2 drop-shadow' style={{left: `${levelPositionStyle}%`}}></div>
+                )
+              })}
+            </div>
+            <div className='flex justify-between text-sm font-medium'>
+              <p className="w-14 text-center">{levelRange[0]}</p>
+              <p className="w-14 text-center">{levelRange[1]}</p>
+            </div>
+          </div>
         </div>
-        <div className='px-[17px] py-4 bg-[#f5f6f7] dark:bg-[#2b2d31] rounded-xl grid grid-cols-5 place-items-stretch gap-y-1'></div>
+        {/* 엠블럼 */}
+        <div className='px-[17px] py-4 bg-[#f5f6f7] dark:bg-[#2b2d31] rounded-xl grid grid-cols-5 place-items-stretch gap-y-1'>
+          {
+            jobArray.map((el:string, index:number) => (
+              <div key={`${el}_${index}`} className='flex items-center justify-center gap-x-1'>
+                <Image className='brightness-[70%]' alt={el} src={characterEmblemList[el]} loading={'lazy'} width={20} height={20} decoding={'async'} />
+                <p className="w-5 text-base">{guildInfoList?.data?.jobClassListCount[el]}</p>
+              </div>
+            ))
+          }
+        </div>
       </div>
     </div>
       {/* 캐릭 정렬 */}
       <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] mt-6'>
         <div className='grid grid-cols-2 gap-4'>
-          {guildInfoList?.data?.map((guildInfo, index:number) => {
+          {guildInfoList?.data?.guildList?.map((guildInfo, index:number) => {
               const activeCharacterStyle = guildInfo.name === characterName ? 'border rounded-lg overflow-hidden border-[#7d8395]' : 'border rounded-lg overflow-hidden border-[#e6e8ec] dark:border-[#57585e]';
             return (
               <Link key={`${index}_${guildInfo.name}`} href={`/characters/${guildInfo.name}`} className={activeCharacterStyle}>
