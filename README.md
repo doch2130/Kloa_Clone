@@ -451,6 +451,18 @@ React-Query infinite Query 설정 완료
 - 더보기 기능 설정 완료
 - 필터에 따른 데이터 출력 정상 확인
 
+62일차:
+Guild API 테스트 => 로스트아크 Guild APi 확인결과 TOP30위 정도의 정보만 제공, 서버 필터만 가능
+=> 현재 사이트에서는 불필요하다고 판단
+
+전투정보실에서 Guild Master 체크 여부 확인 가능
+=> 캐릭터 Crawling Update 시 체크하여 MySQL에 데이터 저장 방식으로 변경
+=> Backend, Frontend 컬럼 수정 및 작업 완료
+=> 데이터 갱신 정상 확인
+
+길드 탭을 위한 BattleLevel 컬럼 추가
+=> 데이터 갱신 정상 확인
+
 
 *캐릭터 정보 참고용*
 키토단
