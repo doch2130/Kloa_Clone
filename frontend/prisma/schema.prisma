@@ -54,6 +54,7 @@ model characterinfo {
   server              String    @default("")
   jobClass            String    @default("")
   guildName           String?   @default("")
+  guildMaster         Boolean   @default(false)
   setArmorEffect      String?   @default("")
   jobEngraving        String?   @default("")
   itemLevelUpdateDate DateTime? @default(now()) @db.DateTime(0)
