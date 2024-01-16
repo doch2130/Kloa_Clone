@@ -39,7 +39,7 @@ export default function CharacterList({ rankingList, rankFetchNextPage, rankIsFe
             </li>
           )
         })}
-        {rankingList !== undefined && rankingList !== null && rankingList.length % 100 === 0 &&
+        {rankingList !== undefined && rankingList !== null && rankingList.length > 0 && rankingList.length % 100 === 0 &&
         <button type='button' onClick={() => rankFetchNextPage()} className='w-full h-[40px] flex justify-center items-center text-[#5865f2] dark:text-[#8991EE] select-none'>
           {
           rankIsFetchingNextPage ?
