@@ -1,43 +1,48 @@
-
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
+import prisma from '@/libs/prisma'
 
 export async function GET(req: NextRequest) {
+  // 로스트아크 길드 정보 가져오기
   const { searchParams } = new URL(req.url);
   const guildName = searchParams.get('guildName') || '';
-  const serverName = searchParams.get('serverName') || '';
-
-  // console.log('guildName ', guildName);
-  // console.log('serverName ', serverName);
-  // decodeURIComponent
-  // 로스트아크 API 길드 랭킹 가져오기
-  const url = `https://developer-lostark.game.onstove.com/guilds/rankings?serverName=${serverName}&GuildName='NextStep'`;
-  // const url = `https://developer-lostark.game.onstove.com/guilds/rankings?serverName=${guildName}`;
-
-  // console.log('url ', url);
 
   try {
-    const response = await fetch(url, {
-      method: 'GET',
-      cache: 'no-cache',
-      headers: {
-        'accept': 'application/json',
-        'authorization': `bearer ${process.env.NEXT_PUBLIC_LOSTARK_API}`
-      },
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('data ', data);
-      if(data !== null) {
-        return NextResponse.json({ message: 'Character Guild Search Success', status: 200, data });
-      } else {
-        return NextResponse.json({ message: 'Character Guild Search Not Found', status: 404, data });
-      }
-    } else {
-      return NextResponse.json({ message: 'Character Guild Search error', status: response.status });
+    if(guildName.trim() === '') {
+      return NextResponse.json({ data: undefined, message: 'Guild Data Get Bad Request', status: 400 });
     }
+
+    const getGuildInfos = await getGuildInfo(guildName);
+    // console.log('getGuildInfos ', getGuildInfos);
+
+    if(getGuildInfos.status === 500) {
+      return NextResponse.json({ data: undefined, message: 'Guild Data Get error', status: 500 });
+    }
+
+    return NextResponse.json({ data: getGuildInfos.guildList, message: 'Guild Data Get Success', status: 200 });
+    
   } catch (error) {
     console.error('Error:', error);
-    return NextResponse.json({ message: 'Character Guild Search error', status: 500 });
+    return NextResponse.json({ data: undefined, message: 'Guild Data Get error', status: 500 });
+  }
+}
+
+const getGuildInfo = async (guildName:string) => {
+  try {
+    const guildList = await prisma.characterinfo.findMany({
+      where: {
+        guildName: guildName
+      },
+      orderBy: [
+        { guildMaster: 'desc'},
+        { itemLevel: 'desc' },
+        { itemLevelUpdateDate: 'asc' }
+      ],
+    });
+
+    return { guildList: guildList, status:200 };
+
+  } catch (error) {
+    console.error('Error: ', error);
+    return { guildList: [], status: 500 };
   }
 }
