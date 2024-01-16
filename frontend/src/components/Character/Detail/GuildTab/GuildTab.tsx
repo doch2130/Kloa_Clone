@@ -26,13 +26,49 @@ export default function GuildTab({ characterName, guildName }:GuildTabType) {
     )
   }
 
-  // console.log('guildInfoList ', guildInfoList);
+  console.log('guildInfoList ', guildInfoList);
 
   return (
     <>
     {/* 길드 인원, 직업 정보 */}
     <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] rounded-xl border border-[#5865f2] box-border shadow-[2px_2px_14px_0_rgba(49,85,181,.1)] mt-6'>
       <div className='grid grid-cols-2 gap-x-3'>
+        <div className='flex flex-col items-center justify-between'>
+          <div className='flex flex-col items-center'>
+            <p className='text-[0.85rem] leading-5 font-semibold text-[#7d8395]'>{`${guildInfoList?.data?.[0].server} 서버`}</p>
+            <p className='text-xl font-bold'>{guildName}</p>
+            <div className='flex mt-3 gap-x-5'>
+              <div className='flex items-center'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                {/* 전체 인원 */}
+                <p className='text-base font-medium'>132</p>
+              </div>
+              <div className='flex gap-x-1.5 items-center'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M21 3v5l-11 9l-4 4l-3 -3l4 -4l9 -11z"></path>
+                  <path d="M5 13l6 6"></path><path d="M14.32 17.32l3.68 3.68l3 -3l-3.365 -3.365"></path>
+                  <path d="M10 5.5l-2 -2.5h-5v5l3 2.5"></path>
+                </svg>
+                {/* 서폿 제외 */}
+                <p className='text-base font-medium'>108</p>
+              </div>
+              <div className='flex gap-x-1.5 items-center'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M12 21a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12.01 12.01 0 0 1 .378 5"></path>
+                <path d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z"></path>
+              </svg>
+                {/* 서폿 */}
+                <p className='text-base font-medium'>24</p>
+              </div>
+            </div>
+          </div>
+          <div className='w-[320px] flex flex-col items-between gap-y-2'></div>
+        </div>
+        <div className='px-[17px] py-4 bg-[#f5f6f7] dark:bg-[#2b2d31] rounded-xl grid grid-cols-5 place-items-stretch gap-y-1'></div>
       </div>
     </div>
       {/* 캐릭 정렬 */}
