@@ -53,7 +53,7 @@ export default function GuildTab({ characterName, guildName }:GuildTabProps) {
   return (
     <>
     {/* 길드 인원, 직업 정보 */}
-    <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] rounded-xl border border-[#5865f2] box-border shadow-[2px_2px_14px_0_rgba(49,85,181,.1)] mt-6'>
+    <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] rounded-xl border border-[#5865f2] box-border shadow-[2px_2px_14px_0_rgba(49,85,181,.1)]'>
       <div className='grid grid-cols-2 gap-x-3'>
         <div className='flex flex-col items-center justify-between'>
           <div className='flex flex-col items-center'>

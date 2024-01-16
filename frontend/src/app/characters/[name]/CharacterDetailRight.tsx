@@ -658,7 +658,6 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
             <AvatarTab characterTendencies={data?.ArmoryProfile.Tendencies} characterName={data?.ArmoryProfile.CharacterName}
             characterImage={data?.ArmoryProfile.CharacterImage} armoryAvatars={data?.ArmoryAvatars} />
           </Tab.Panel>
-          <Tab.Panel>히스토리</Tab.Panel>
           <Tab.Panel>수집형 포인트</Tab.Panel>
           <Tab.Panel>
             <OwnedCharacterTab />

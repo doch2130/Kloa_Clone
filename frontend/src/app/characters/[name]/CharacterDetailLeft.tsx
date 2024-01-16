@@ -4,7 +4,7 @@ import CharacterSummary from './CharacterSummary'
 import { Tab } from '@headlessui/react'
 import { ArmoryProfile } from '@/types/characters';
 
-const categories:string[] = ['아바타', '히스토리', '수집형 포인트', '보유 캐릭터'];
+const categories:string[] = ['아바타', '수집형 포인트', '보유 캐릭터'];
 
 interface CharacterDetailLeftProps {
   ArmoryProfile?: ArmoryProfile
