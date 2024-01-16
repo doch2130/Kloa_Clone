@@ -18,6 +18,7 @@ export interface rankListType {
   server: string
   jobClass: string
   guildName: string | null
+  guildMaster: boolean
   setArmorEffect: string | null
   jobEngraving: string | null
   itemLevelUpdateDate: Date | null
