@@ -14,11 +14,25 @@ import { characterJobIconList } from '/public/images'
 // API에서는 길드 데이터를 가져오는 방법이 없음
 // 서버별 길드 랭킹 데이터를 가져오는 것만 있음
 
+const guildGetFunction = async () => {
+  let serverName = '카제로스';
+  const result = await fetch(`/api/lostark/guilds?serverName=${serverName}`);
+  // const response = await fetch(`/api/lostark/siblings?characterName=${characterName}`);
+
+  const guildJson = (await result.json()) as any;
+
+  // console.log('guildJson ' , guildJson);
+}
 
 export default function GuildTab() {
   const temp = [1,2,3,4];
   const params = useParams();
   const name = Array.isArray(params.name) ? params.name.join(',') : params.name;
+
+  useEffect(() => {
+    guildGetFunction();
+  }, []);
+
   // const { data:guildData, isLoading:isGuildDataLoading } = useQuery({ queryKey: ['guildData', name], queryFn: () => getOwnedCharacter(name) });
 
   return (
