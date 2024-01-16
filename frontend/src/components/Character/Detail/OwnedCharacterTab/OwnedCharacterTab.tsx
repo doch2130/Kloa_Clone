@@ -38,7 +38,7 @@ export default function OwnedCharacterTab() {
   
   if(isHavaCharacterListLoading) {
     return (
-      <div className='w-full h-full absolute z-[150] flex items-center justify-center opacity-[0.9]'>
+      <div className='w-full max-w-[700px] h-full absolute z-[150] flex items-center justify-center opacity-[0.9]'>
         <h1 className='text-5xl font-bold'>Loading...</h1>
       </div>
     )
@@ -79,7 +79,7 @@ export default function OwnedCharacterTab() {
                 {sortedFilterHaveCharacterList.map((sortedFilterHaveCharacter, iindex:number) => {
                   const activeCharacterStyle = sortedFilterHaveCharacter.CharacterName === decodeURIComponent(name) ? 'border rounded-lg overflow-hidden border-[#7d8395]' : 'border rounded-lg overflow-hidden border-[#e6e8ec] dark:border-[#57585e]';
                   return (
-                    <Link key={`${iindex}_${sortedFilterHaveCharacter.CharacterName}`} href={`./characters/${sortedFilterHaveCharacter.CharacterName}`} className={activeCharacterStyle}>
+                    <Link key={`${iindex}_${sortedFilterHaveCharacter.CharacterName}`} href={`/characters/${sortedFilterHaveCharacter.CharacterName}`} className={activeCharacterStyle}>
                     <div className={`border-l-[6px] px-3 py-2 flex items-center gap-x-3 ${itemLevelBorderStyleFunction(parseFloat(sortedFilterHaveCharacter.ItemAvgLevel.replace(/,/g, '')))}`}>
                       {/* 캐릭터 아이콘 */}
                       <div className='bg-[#e6e8ec] dark:bg-[#2b2d31] rounded-full'>
