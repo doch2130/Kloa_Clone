@@ -50,6 +50,7 @@ model user {
 model characterinfo {
   id                  Int       @id @default(autoincrement())
   name                String
+  battleLevel         Int       @default(0)
   itemLevel           Float     @default(0)
   server              String    @default("")
   jobClass            String    @default("")
