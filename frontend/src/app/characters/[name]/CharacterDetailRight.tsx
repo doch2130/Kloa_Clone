@@ -592,6 +592,8 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
         const weaponLevel = weaponArray?.Name?.slice(0, weaponArray.Name.indexOf(' ')).trim();
         const weapon = weaponGrade === '에스더' ? `${weaponLevel} ${weaponGrade}` : '';
 
+        const battleLevel = data.ArmoryProfile.CharacterLevel;
+
         const engravingList:string[] = [];
 
         data?.ArmoryEngraving?.Effects?.forEach((effect) => {
@@ -609,7 +611,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
           }
         });
 
-        updateCharacterInfo(characterName, characterImage, engravingList, weapon);
+        updateCharacterInfo(characterName, characterImage, engravingList, weapon, battleLevel);
 
       }
     }
@@ -662,8 +664,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
             <OwnedCharacterTab />
           </Tab.Panel>
           <Tab.Panel>
-            {/* 길드 탭은 보류 */}
-            <GuildTab />
+            <GuildTab characterName={data?.ArmoryProfile.CharacterName || ''} guildName={data?.ArmoryProfile.GuildName || ''} />
           </Tab.Panel>
         </Tab.Panels>
         }
