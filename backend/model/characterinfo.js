@@ -32,6 +32,11 @@ const CharacterInfo = (Sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: '',
       },
+      guildMaster: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+      },
       setArmorEffect: {
         type: DataTypes.STRING(191),
         allowNull: true,

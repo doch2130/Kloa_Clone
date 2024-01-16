@@ -20,6 +20,7 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
   let jobClass = '';
   let itemLevel = 0;
   let guildName = '';
+  let guildMaster = '';
   let itemLevelDate = new Date();
   
   if(characterName.trim() === '' || characterName === undefined || characterName === null) {
@@ -44,6 +45,7 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
     const infoList = $('div.content--profile > div.profile-ingame > div.profile-info');
     itemLevel = $(infoList).find('div.level-info2 > div.level-info2__expedition > span:nth-child(2)').text().replace('Lv.', '').replace(',', '');
     guildName = $(infoList).find('div.game-info > div.game-info__guild > span:nth-child(2)').text();
+    guildMaster = $(infoList).find('div.game-info > div.game-info__guild > span:nth-child(2) > img').length > 0;
     
     const updateInfo = {
       name: characterName,
@@ -51,6 +53,7 @@ exports.lostarkCharacterUpdateCrawling = async (req, res) => {
       jobClass: jobClass,
       itemLevel: Number(itemLevel).toFixed(2),
       guildName: guildName,
+      guildMaster: guildMaster,
       itemLevelDate: itemLevelDate,
       setArmorEffect: setArmorEffect,
       jobEngraving: engravingList,
@@ -107,6 +110,7 @@ const lostarkCharacterUpdateInfo = async (info) => {
         updateInfoResult = await CharacterInfo.update({
           server: info.server,
           guildName: info.guildName,
+          guildMaster: info.guildMaster,
           jobClass: info.jobClass,
           itemLevel: info.itemLevel,
           itemLevelUpdateDate: info.itemLevelDate,
@@ -123,6 +127,7 @@ const lostarkCharacterUpdateInfo = async (info) => {
         updateInfoResult = await CharacterInfo.update({
           server: info.server,
           guildName: info.guildName,
+          guildMaster: info.guildMaster,
           jobClass: info.jobClass,
           setArmorEffect: info.setArmorEffect,
           jobEngraving: jobEngraving,
@@ -150,6 +155,7 @@ const lostarkCharacterUpdateInfo = async (info) => {
         name: info.name,
         server: info.server,
         guildName: info.guildName,
+        guildMaster: info.guildMaster,
         jobClass: info.jobClass,
         itemLevel: info.itemLevel,
         itemLevelUpdateDate: info.itemLevelDate,
