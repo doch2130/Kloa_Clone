@@ -17,6 +17,8 @@ import ImgGhostShipOn from './Icon/ghostShip_on.png';
 import Imgkloa1 from './Logo/kloa1.webp';
 import Imgkloa2 from './Logo/kloa2.webp';
 import ImgAuctionEmpty2 from './Mococo/img_auction_empty2.png';
+import guildMaster from './Icon/guildMaster.webp';
+
 import ImgMainImage1 from './SlideImage/main_image_1.webp';
 import ImgMainImage2 from './SlideImage/main_image_2.webp';
 import ImgMainImage3 from './SlideImage/main_image_3.webp';
@@ -172,6 +174,7 @@ export {
   ImgMainImage2,
   ImgMainImage3,
   ImgMainImage4,
+  guildMaster,
 };
 
 type characterJobIconListType = {
