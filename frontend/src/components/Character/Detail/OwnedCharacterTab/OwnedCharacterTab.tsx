@@ -4,15 +4,24 @@ import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useQuery } from '@tanstack/react-query'
+import { Disclosure } from '@headlessui/react'
 
 import { getOwnedCharacter, itemLevelBorderStyleFunction } from '../utils'
+
+import { dungeonLevelList } from '@/data/DungeonData'
+
 import { CharacterInfo } from '@/types/siblings'
+
 import { characterJobIconList } from '/public/images'
+import UpArrowSvg from '@/components/UI/UpArrowSvg'
+import GoldSelect from './GoldSelect'
 
 export default function OwnedCharacterTab() {
   const params = useParams();
   const name = Array.isArray(params.name) ? params.name.join(',') : params.name;
   const [serverList, setServerList] = useState<string[]>([]);
+  const [goldCharacterList, setGoldCharacterList] = useState<CharacterInfo[]>([]);
+  const [totalGoldList, setTotalGoldList] = useState<Number[]>([]);
 
   const { data:haveCharacterList, isLoading:isHavaCharacterListLoading } = useQuery({ queryKey: ['havaCharacterList', name], queryFn: () => getOwnedCharacter(name) });
 
@@ -32,7 +41,30 @@ export default function OwnedCharacterTab() {
 
         updateServerList.unshift(findSearchCharacter[0].ServerName);
         setServerList(updateServerList);
+
+        const filterGoldCharacterList = (haveCharacterList.data || []).filter((characterInfo) => characterInfo.ServerName === findSearchCharacter[0].ServerName);
+        const sortedFilterGoldCharacterList = filterGoldCharacterList?.sort((a: CharacterInfo, b: CharacterInfo) => {
+          const itemAvgLevelA = parseFloat(a.ItemAvgLevel.replace(/,/g, '')) || 0;
+          const itemAvgLevelB = parseFloat(b.ItemAvgLevel.replace(/,/g, '')) || 0;
+        
+          if (itemAvgLevelA > itemAvgLevelB) {
+            return -1;
+          } else if (itemAvgLevelA < itemAvgLevelB) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
+        if (sortedFilterGoldCharacterList.length > 6) {
+          const slicedGoldCharacterList = sortedFilterGoldCharacterList.slice(0, 6);
+          setGoldCharacterList(slicedGoldCharacterList);
+        } else {
+          setGoldCharacterList(sortedFilterGoldCharacterList);
+        }
+
       }
+
     }
   }, [haveCharacterList, name]);
   
@@ -44,10 +76,51 @@ export default function OwnedCharacterTab() {
     )
   }
 
+  // console.log('haveCharacterList ', haveCharacterList);
+  // console.log('serverList ', serverList);
+  // console.log('goldCharacterList ', goldCharacterList);
+
   return (
     <>
       {/* 주간 획득 골드량 */}
-      <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'></div>
+      <div className='px-[17px] py-4 w-full bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
+        <Disclosure as={Fragment}>
+          {({ open }) => (
+          <>
+          <Disclosure.Button className='flex items-center justify-between w-full'>
+            <p className="text-base font-semibold">주간 골드 획득량</p>
+            <div className='flex items-center'>
+              <p className='mr-1.5 text-[#d79412] font-semibold text-base'>{totalGoldList.reduce((acc, currentNumber) => acc.valueOf() + currentNumber.valueOf(), 0).toString()} G</p>
+              <UpArrowSvg isOpen={open} classNameDefault={'w-5 h-5 transition-transform duration-100'} classNameOpen={'rotate-180'} classNameClose={'rotate-0'} />
+            </div>
+          </Disclosure.Button>
+          <Disclosure.Panel className="mt-4 transform scale-100 opacity-100">
+            <div className='px-[17px] py-4 bg-[#f5f6f7] dark:bg-[#2b2d31] rounded-xl grid grid-cols-2 gap-x-8 gap-y-3'>
+              {goldCharacterList?.map((characterInfo:CharacterInfo, index:number) => {
+                const dungeonList = dungeonLevelList(Number(characterInfo.ItemAvgLevel.replace(/,/g, '')));
+                return (
+                  <div key={`${characterInfo.CharacterName}_${index}`}>
+                    <div className='flex justify-between'>
+                      <p className='text-sm font-semibold'>{characterInfo.CharacterName}</p>
+                      <p className='text-sm font-semibold'>총골드</p>
+                    </div>
+                    <div className='flex justify-between'>
+                      <div>
+                        <p className='text-xs text-[#7d8395]'>{`${parseInt(characterInfo.ItemAvgLevel.replace(/,/g, ''))} ${characterInfo.CharacterClassName}`}</p>
+                      </div>
+                      <div className='border-l-2 dark:border-l-[#4d4f55] mt-0.5 pl-2'>
+                        <GoldSelect characterName={characterInfo.CharacterName} dungeonList={dungeonList} setTotalGoldList={setTotalGoldList} itemLevel={Number(characterInfo.ItemAvgLevel.replace(/,/g, ''))} />
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </Disclosure.Panel>
+          </>
+          )}
+        </Disclosure>
+      </div>
 
       {haveCharacterList !== undefined && serverList.map((list:string, index:number) => {
         const filterHaveCharacterList = haveCharacterList.data?.filter((characterInfo) => characterInfo.ServerName === list);
