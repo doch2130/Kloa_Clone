@@ -114,9 +114,9 @@ export default function Write() {
             <TextEditor placeholderText={'내용을 입력해주세요'} name={'textarea'}
             setValueHandler={setContent} initialValue={content} height={300} />
           </div>
-          <div className={`${styled.buttonGroup} text-[#5865f2] border-2 border-[#5865f2] bg-[#fff]`}>
-            <button type='button' className='dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={cancel}>취소</button>
-            <button type='button' className='dark:bg-[#33353a] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={onSubmit}>완료</button>
+          <div className={`${styled.buttonGroup} text-[#5865f2]`}>
+            <button type='button' className='dark:bg-[#33353a] border-2 border-[#5865f2] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={cancel}>취소</button>
+            <button type='button' className='dark:bg-[#33353a] border-2 border-[#5865f2] dark:border-[#646870] dark:text-[#eaf0ec]' onClick={onSubmit}>완료</button>
           </div>
         </form>
       </div>

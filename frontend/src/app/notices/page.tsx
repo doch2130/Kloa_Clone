@@ -14,7 +14,7 @@ export default async function Notices({searchParams}:any) {
   
   
   const postList:NoticePostResp = await postListResp.json();
-  // console.log('postList ', postList);
+  console.log('postList ', postList);
   // console.log('postList.result ', postList.result);
 
   return (

@@ -123,7 +123,7 @@ export default function NoticesTable({ postList }: NoticesTableProps) {
       return ;
     }
 
-    if(pageValue !== null) {
+    if(pageValue !== null && totalCount !== 0) {
       if(Number(pageValue) > btnTotalCount) {
         alert('잘못된 경로입니다');
         router.push('/notices?page=1');
