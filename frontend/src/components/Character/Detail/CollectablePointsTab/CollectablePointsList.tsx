@@ -1,6 +1,7 @@
 import React from 'react'
 import { Tab, Switch, Transition } from '@headlessui/react'
 import { Collectible, CollectiblePoint } from '@/types/characters'
+import { collectionAcquisitionMethod } from '@/data/CollectionAcquisitionMethod'
 
 type CollectablePointsListProps = {
   filterCollect:Collectible[]
@@ -67,7 +68,7 @@ export default function CollectablePointsList({ filterCollect, category, enabled
                     <line id="characters_skill_dash" y2="40" transform="translate(1)" fill="none" stroke="#e6e8ec" strokeWidth="2" strokeDasharray="2 4"></line>
                   </svg>
                   {/* 얻는 방법, 위치 */}
-                  <span className='!ml-[14px] text-[#7d8395] font-semibold text-sm select-text'>테스트</span>
+                  <span className='!ml-[14px] text-[#7d8395] font-semibold text-sm select-text'>{collectionAcquisitionMethod(category, collectibles.PointName)}</span>
                   </>
                   }
                 </div>
@@ -100,7 +101,7 @@ export default function CollectablePointsList({ filterCollect, category, enabled
                     <line id="characters_skill_dash" y2="40" transform="translate(1)" fill="none" stroke="#e6e8ec" strokeWidth="2" strokeDasharray="2 4"></line>
                   </svg>
                   {/* 얻는 방법, 위치 */}
-                  <span className='!ml-[14px] text-[#7d8395] font-semibold text-sm select-text'>테스트</span>
+                  <span className='!ml-[14px] text-[#7d8395] font-semibold text-sm select-text'>{collectionAcquisitionMethod(category, collectibles.PointName)}</span>
                   </>
                   }
                 </div>
