@@ -11,6 +11,7 @@ import AbilityTab from '@/components/Character/Detail/AbilityTab/AbilityTab'
 import AvatarTab from '@/components/Character/Detail/AvatarTab/AvatarTab'
 import OwnedCharacterTab from '@/components/Character/Detail/OwnedCharacterTab/OwnedCharacterTab'
 import GuildTab from '@/components/Character/Detail/GuildTab/GuildTab'
+import CollectablePointsTab from '@/components/Character/Detail/CollectablePointsTab/CollectablePointsTab'
 
 interface CharacterDetailRightProps {
   data?: CharacterArmories | null | undefined
@@ -658,7 +659,13 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
             <AvatarTab characterTendencies={data?.ArmoryProfile.Tendencies} characterName={data?.ArmoryProfile.CharacterName}
             characterImage={data?.ArmoryProfile.CharacterImage} armoryAvatars={data?.ArmoryAvatars} />
           </Tab.Panel>
-          <Tab.Panel>수집형 포인트</Tab.Panel>
+          <Tab.Panel>
+            <CollectablePointsTab
+              compass={data?.ArmoryEquipment[data?.ArmoryEquipment.findIndex((equip) => equip.Type === '나침반')]}
+              charm={data?.ArmoryEquipment[data?.ArmoryEquipment.findIndex((equip) => equip.Type === '부적')]}
+              sentence={data?.ArmoryEquipment[data?.ArmoryEquipment.findIndex((equip) => equip.Type === '문장')]}
+              collectibles={data?.Collectibles} />
+          </Tab.Panel>
           <Tab.Panel>
             <OwnedCharacterTab />
           </Tab.Panel>
