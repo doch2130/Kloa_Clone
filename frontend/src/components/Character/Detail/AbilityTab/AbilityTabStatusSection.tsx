@@ -42,7 +42,7 @@ export default function AbilityTabStatusSection({ ArmoryProfileStats }:AbilityTa
           <div className='mt-4 text-sm leading-[17px] pl-1'>
             <div className='flex justify-between'>
               <p className='text-[#7d8395]'>공격력</p>
-              <p className='font-semibold text-[#353945] dark:text-inherit'>{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats?.[7].Value).toLocaleString()}</p>
+              <p className='font-semibold text-[#353945] dark:text-inherit'>{(ArmoryProfileStats !== undefined && ArmoryProfileStats !== null) ? Number(ArmoryProfileStats?.[7].Value).toLocaleString() : 0}</p>
             </div>
             <div className='flex justify-between text-sm mt-2.5'>
               <p className='text-[#7d8395]'>
@@ -58,7 +58,7 @@ export default function AbilityTabStatusSection({ ArmoryProfileStats }:AbilityTa
             </div>
             <div className='flex justify-between mt-3'>
               <p className='text-[#7d8395]'>최대 생명력</p>
-              <p className="font-semibold text-[#353945] dark:text-inherit">{ArmoryProfileStats !== undefined && Number(ArmoryProfileStats?.[6].Value).toLocaleString()}</p>
+              <p className="font-semibold text-[#353945] dark:text-inherit">{(ArmoryProfileStats !== undefined && ArmoryProfileStats !== null) ? Number(ArmoryProfileStats?.[6].Value).toLocaleString() : 0}</p>
             </div>
           </div>
         </div>
