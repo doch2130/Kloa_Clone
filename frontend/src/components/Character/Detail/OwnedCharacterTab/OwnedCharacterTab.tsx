@@ -140,7 +140,7 @@ export default function OwnedCharacterTab() {
         });
 
         const lastGoldCharacterList = characterDungeonList(sortedFilterGoldCharacterList?.slice(0, 6) || []);
-        console.log('lastGoldCharacterList ', lastGoldCharacterList);
+        // console.log('lastGoldCharacterList ', lastGoldCharacterList);
         
         const updateTotalGold = goldTotalCalculator(lastGoldCharacterList);
         // console.log('updateTotalGold ', updateTotalGold);
@@ -254,6 +254,14 @@ export default function OwnedCharacterTab() {
                             </label>
                           )
                         })}
+
+                        {dungeonList.length === 0 && 
+                        <label className='flex items-center'>
+                          <input type='checkbox' value={''} disabled={true} />
+                          <span className='ml-2 inline-block w-[130px] text-[0.82rem] leading-5 text-[#7d8395]'>획득불가</span>
+                          <span className='inline-block w-[58px] justify-self-end text-right text-sm font-semibold'>0G</span>
+                        </label>
+                        }
                       </div>
                     </div>
                   </div>
