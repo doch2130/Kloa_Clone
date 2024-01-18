@@ -132,7 +132,15 @@ import IconEmblemSummoner from './Character/emblem/emblem_summoner.webp'
 import IconEmblemWarlord from './Character/emblem/emblem_warlord.webp'
 import IconEmblemWeatherArtist from './Character/emblem/emblem_weather_artist.webp'
 
-
+import ImgWarrior from './Character/basic/fullImage/warrior.png'
+import ImgWarriorFemale from './Character/basic/fullImage/warrior_female.png'
+import ImgHunter from './Character/basic/fullImage/hunter.png'
+import ImgHunterFemale from './Character/basic/fullImage/hunter_female.png'
+import ImgMagician from './Character/basic/fullImage/magician.png'
+import ImgFighter from './Character/basic/fullImage/fighter.png'
+import ImgFighterMale from './Character/basic/fullImage/fighter_male.png'
+import ImgAssassin from './Character/basic/fullImage/assassin.png'
+import ImgSpecialist from './Character/basic/fullImage/specialist.png'
 
 export const islandIconList = {
   IconIslandCoinbox,
@@ -217,6 +225,7 @@ export const characterJobIconList:characterJobIconListType = {
   '무도가(남)': IconFighter_male,
   '무도가(여)': IconFighter,
   '마법사': IconMagician,
+  '암살자': IconHunter_female,
   '스페셜리스트': IconSpecialist,
   '디스트로이어': IconDestroyer,
   '워로드': IconWarlord,
@@ -273,4 +282,17 @@ export const characterEmblemList:characterJobIconListType = {
   '소울이터': IconEmblemSoulEater,
   '도화가': IconEmblemWeatherArtist,
   '기상술사': IconEmblemArtist
+}
+
+
+export const characterFullImageList:characterJobIconListType = {
+  '전사(남)': ImgWarrior,
+  '전사(여)': ImgWarriorFemale,
+  '헌터(남)': ImgHunter,
+  '헌터(여)': ImgHunterFemale,
+  '무도가(남)': ImgFighterMale,
+  '무도가(여)': ImgFighter,
+  '마법사': ImgMagician,
+  '암살자': ImgAssassin,
+  '스페셜리스트': ImgSpecialist,
 }
