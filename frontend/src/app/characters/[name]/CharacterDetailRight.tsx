@@ -588,7 +588,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
         const characterName = data.ArmoryProfile.CharacterName;
         const characterImage = data.ArmoryProfile.CharacterImage || '';
 
-        const weaponArray = data.ArmoryEquipment.filter((armory) => armory.Type === '무기')?.[0];
+        const weaponArray = data.ArmoryEquipment?.filter((armory) => armory.Type === '무기')?.[0];
         const weaponGrade = weaponArray?.Grade;
         const weaponLevel = weaponArray?.Name?.slice(0, weaponArray.Name.indexOf(' ')).trim();
         const weapon = weaponGrade === '에스더' ? `${weaponLevel} ${weaponGrade}` : '';
@@ -656,21 +656,21 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
           </Tab.Panel>
           <Tab.Panel>스킬</Tab.Panel>
           <Tab.Panel>
-            <AvatarTab characterTendencies={data?.ArmoryProfile.Tendencies} characterName={data?.ArmoryProfile.CharacterName}
-            characterImage={data?.ArmoryProfile.CharacterImage} armoryAvatars={data?.ArmoryAvatars} />
+            <AvatarTab characterTendencies={data?.ArmoryProfile?.Tendencies} characterName={data?.ArmoryProfile?.CharacterName}
+            characterImage={data?.ArmoryProfile?.CharacterImage || ''} characterClassName={data?.ArmoryProfile?.CharacterClassName || ''} armoryAvatars={data?.ArmoryAvatars} />
           </Tab.Panel>
           <Tab.Panel>
             <CollectablePointsTab
-              compass={data?.ArmoryEquipment[data?.ArmoryEquipment.findIndex((equip) => equip.Type === '나침반')]}
-              charm={data?.ArmoryEquipment[data?.ArmoryEquipment.findIndex((equip) => equip.Type === '부적')]}
-              sentence={data?.ArmoryEquipment[data?.ArmoryEquipment.findIndex((equip) => equip.Type === '문장')]}
+              compass={data?.ArmoryEquipment?.[data?.ArmoryEquipment?.findIndex((equip) => equip.Type === '나침반')]}
+              charm={data?.ArmoryEquipment?.[data?.ArmoryEquipment?.findIndex((equip) => equip.Type === '부적')]}
+              sentence={data?.ArmoryEquipment?.[data?.ArmoryEquipment?.findIndex((equip) => equip.Type === '문장')]}
               collectibles={data?.Collectibles} />
           </Tab.Panel>
           <Tab.Panel>
             <OwnedCharacterTab />
           </Tab.Panel>
           <Tab.Panel>
-            <GuildTab characterName={data?.ArmoryProfile.CharacterName || ''} guildName={data?.ArmoryProfile.GuildName || ''} />
+            <GuildTab characterName={data?.ArmoryProfile?.CharacterName || ''} guildName={data?.ArmoryProfile?.GuildName || ''} />
           </Tab.Panel>
         </Tab.Panels>
         }

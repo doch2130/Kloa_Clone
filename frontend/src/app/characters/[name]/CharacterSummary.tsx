@@ -6,6 +6,7 @@ import { ArmoryProfile } from '@/types/characters'
 
 import { IconStarEmpty, IconStarFull } from '/public/svgs'
 import { deleteFavoriteDataHandler, localStorageSaveHandler } from '@/components/Header/HeaderSearchUtil'
+import { characterFullImageList } from '/public/images'
 
 
 
@@ -58,8 +59,8 @@ export default function CharacterSummary({ ArmoryProfile }:CharacterSummaryProps
     <>
     <div className='w-full h-[300px] bg-[#15181d] relative overflow-hidden'>
       {/* 캐릭터 사진 */}
-      <div className='absolute w-[612px] right-[-180px] top-[-60px]'>
-        {ArmoryProfile?.CharacterImage && <Image src={ArmoryProfile.CharacterImage} alt='character Image' width={612} height={708} priority={true} />}
+      <div className={`absolute w-[612px] right-[-180px] ${ArmoryProfile!.CharacterImage! !== null ? 'top-[-60px]' : 'top-[60px]'}`}>
+        {<Image src={ArmoryProfile!.CharacterImage! !== null ? ArmoryProfile!.CharacterImage : characterFullImageList[ArmoryProfile!.CharacterClassName]} alt='character Image' width={612} height={708} priority={true} />}
       </div>
       {/* 아이템 레벨에 따른 배경 색 다른 효과 */}
       <div className='absolute inset-0 mix-blend-lighten transition-colors duration-[2000ms] ease-out bg-[#EAC072]' style={characterBackgroundColor}></div>
