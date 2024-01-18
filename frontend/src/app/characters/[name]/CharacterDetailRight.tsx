@@ -12,6 +12,7 @@ import AvatarTab from '@/components/Character/Detail/AvatarTab/AvatarTab'
 import OwnedCharacterTab from '@/components/Character/Detail/OwnedCharacterTab/OwnedCharacterTab'
 import GuildTab from '@/components/Character/Detail/GuildTab/GuildTab'
 import CollectablePointsTab from '@/components/Character/Detail/CollectablePointsTab/CollectablePointsTab'
+import SkillsTab from '@/components/Character/Detail/SkillsTab/SkillsTab'
 
 interface CharacterDetailRightProps {
   data?: CharacterArmories | null | undefined
@@ -665,7 +666,9 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
               transcendanceTotal={transcendanceTotalRef.current} transcendanceAverage={transcendanceAverageRef.current}
             />
           </Tab.Panel>
-          <Tab.Panel>스킬</Tab.Panel>
+          <Tab.Panel>
+            <SkillsTab />
+          </Tab.Panel>
           <Tab.Panel>
             <AvatarTab characterTendencies={data?.ArmoryProfile?.Tendencies} characterName={data?.ArmoryProfile?.CharacterName}
             characterImage={data?.ArmoryProfile?.CharacterImage || ''} characterClassName={data?.ArmoryProfile?.CharacterClassName || ''} armoryAvatars={data?.ArmoryAvatars} />
