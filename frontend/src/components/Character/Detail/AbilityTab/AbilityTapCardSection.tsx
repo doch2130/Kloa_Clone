@@ -55,7 +55,7 @@ export default function AbilityTapCardSection({ ArmoryCard }:AbilityTapCardSecti
                         <div className='absolute bottom-[6.5%] left-[5%] right-[7.5%] overflow-hidden'>
                           {/* Left를 이용하여 1,2,3,4,5 각 그림 표시 */}
                           <div className='relative bg-cover aspect-[10/3] drop-shadow-xl' style={{backgroundImage: `url('${ImgCardAwake.src}')`}}>
-                            <div className={`absolute top-0 bottom-0 w-full bg-bottom bg-cover left-[${ArmoryCard.Cards[index].AwakeCount*20 -100}%]`} style={{backgroundImage: `url('${ImgCardAwake.src}')`}}></div>
+                            <div className={`absolute top-0 bottom-0 w-full bg-bottom bg-cover`} style={{backgroundImage: `url('${ImgCardAwake.src}')`, right: `${100 - (ArmoryCard.Cards[index].AwakeCount*20)}%`}}></div>
                           </div>
                         </div>
                       </div>
