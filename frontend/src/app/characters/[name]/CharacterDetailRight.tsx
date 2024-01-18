@@ -353,7 +353,16 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
 
               // 엘릭서
               // 특옵은 파일에서 데이터로 가져오기
-              if(typeof tooltipJson?.Element_008?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_008?.value?.Element_000?.topStr.includes('엘릭서 효과')) {
+              if(typeof tooltipJson?.Element_007?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_007?.value?.Element_000?.topStr.includes('엘릭서 효과')) {
+                if(tooltipJson?.Element_007?.value?.Element_000?.contentStr?.Element_000) {
+                  const findElixir = await findElixirEffectValuesInText(tooltipJson?.Element_007?.value?.Element_000?.contentStr?.Element_000?.contentStr);
+                  elixirEffect.push(findElixir);
+                }
+                if(tooltipJson?.Element_007?.value?.Element_000?.contentStr?.Element_001) {
+                  const findElixir = await findElixirEffectValuesInText(tooltipJson?.Element_007?.value?.Element_000?.contentStr?.Element_001?.contentStr);
+                  elixirEffect.push(findElixir);
+                }
+              } else if(typeof tooltipJson?.Element_008?.value?.Element_000?.topStr === 'string' && tooltipJson?.Element_008?.value?.Element_000?.topStr.includes('엘릭서 효과')) {
                 if(tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_000) {
                   const findElixir = await findElixirEffectValuesInText(tooltipJson?.Element_008?.value?.Element_000?.contentStr?.Element_000?.contentStr);
                   elixirEffect.push(findElixir);
@@ -406,6 +415,8 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
 
         // console.log('updateArmoryEquipmentArmors ', updateArmoryEquipmentArmors);
 
+        const shoulderArmorIndex = data?.ArmoryEquipment.findIndex(item => item.Type === '어깨');
+
         ['투구', '어깨', '상의', '하의', '장갑'].forEach((el:string) => {
           const armorIndex = data?.ArmoryEquipment.findIndex(item => item.Type === el);
           if(armorIndex >= 0) {
@@ -413,7 +424,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
               basicEffect: updateArmoryEquipmentArmors[armorIndex].basicEffect,
               addEffect: updateArmoryEquipmentArmors[armorIndex].addEffect,
               elixirEffect: updateArmoryEquipmentArmors[armorIndex].elixirEffect,
-              elixirTotal: updateArmoryEquipmentArmors[armorIndex].elixirTotal,
+              elixirTotal: updateArmoryEquipmentArmors[shoulderArmorIndex].elixirTotal,
               elixirSpecialOption: updateArmoryEquipmentArmors[armorIndex].elixirSpecialOption,
               itemLevel: updateArmoryEquipmentArmors[armorIndex].itemLevel,
               setEffectName: updateArmoryEquipmentArmors[armorIndex].setEffectName,

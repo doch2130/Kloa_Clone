@@ -49,7 +49,7 @@ export const elixirSpecialEffectCheck = (ArmoryEquipment:ArmoryEquipment[]) => {
   }
 
   if(isCheck) {
-    const armorIndex = ArmoryEquipment?.findIndex(item => item.Type === '투구');
+    const armorIndex = ArmoryEquipment?.findIndex(item => item.Type === '어깨');
 
     if (armorIndex !== undefined && ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.elixirTotal !== undefined) {
       const elixirTotal = ArmoryEquipment[armorIndex]?.ArmoryAttribute?.elixirTotal;
