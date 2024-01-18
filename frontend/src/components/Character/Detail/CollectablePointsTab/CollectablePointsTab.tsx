@@ -16,7 +16,7 @@ const categoriesBackgroundPosition = ['-234px -24px', '-205px -173px', '-234px -
 export default function CollectablePointsTab({ compass, charm, sentence, collectibles }:CollectablePointsProps) {
   const [enabled, setEnabled] = useState<boolean>(false);
 
-  console.log('collectibles ',collectibles);
+  // console.log('collectibles ',collectibles);
   
   return (
     <Tab.Group>
