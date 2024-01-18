@@ -4,14 +4,17 @@ import Image from 'next/image'
 import AvatarTabLeft from './AvatarTabLeft'
 import AvatarTabRight from './AvatarTabRight'
 
+import { characterFullImageList } from '/public/images'
+
 interface AvatarTabProps {
   characterTendencies?: Tendency[]
   characterName?: string
-  characterImage?: string
+  characterImage: string
+  characterClassName: string
   armoryAvatars?: ArmoryAvatar[]
 }
 
-export default function AvatarTab({ characterTendencies, characterName, characterImage, armoryAvatars }:AvatarTabProps) {
+export default function AvatarTab({ characterTendencies, characterName, characterImage, characterClassName, armoryAvatars }:AvatarTabProps) {
   return (
     <>
       <div className='px-[17px] py-4 w-full h-[58px] bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)]'>
@@ -30,7 +33,7 @@ export default function AvatarTab({ characterTendencies, characterName, characte
         <div className='w-full p-3 relative flex justify-center items-center mx-auto'>
           {/* 캐릭터 이미지 */}
           <div className='w-[60%] my-6 relative'>
-            <Image alt={characterName !== undefined ? characterName : ''} src={characterImage !== undefined ? characterImage : ''}
+            <Image alt={characterClassName} src={characterImage !== '' ? characterImage : characterFullImageList[characterClassName || '']}
               loading='lazy' width={389} height={450} decoding='async' />
           </div>
           {/* 아바타 왼쪽, 무기, 상의, 하의 */}

@@ -71,11 +71,11 @@ export default function AvatarTabRight({ armoryAvatars }:AvatarTabRightProps) {
         :
         // 전설, 영웅 없는 경우
         <div>
-          <div className='flex items-center gap-x-2.5 rounded-lg text-left'>
+          <div className='flex items-center gap-x-2.5 rounded-lg flex-row-reverse text-right'>
             <div className="w-[50px] h-[50px] rounded-md bg-[#2b2d31]"></div>
             <p className='text-sm font-medium text-[#cacdd4] drop-shadow'>머리 아바타</p>
           </div>
-          <div className='flex items-center gap-x-2.5 rounded-lg mt-3'>
+          <div className='flex items-center gap-x-2.5 rounded-lg flex-row-reverse text-right mt-3'>
             <div className='w-[50px] h-[50px] rounded-md bg-[#2b2d31]'></div>
             <p className='text-sm font-medium text-[#cacdd4] drop-shadow'>머리 덧입기</p>
           </div>
@@ -85,11 +85,11 @@ export default function AvatarTabRight({ armoryAvatars }:AvatarTabRightProps) {
       :
       // 장비 값이 없는 경우
       <div>
-        <div className='flex items-center gap-x-2.5 rounded-lg text-left'>
+        <div className='flex items-center gap-x-2.5 rounded-lg flex-row-reverse text-right'>
           <div className="w-[50px] h-[50px] rounded-md bg-[#2b2d31]"></div>
           <p className='text-sm font-medium text-[#cacdd4] drop-shadow'>머리 아바타</p>
         </div>
-        <div className='flex items-center gap-x-2.5 rounded-lg mt-3'>
+        <div className='flex items-center gap-x-2.5 rounded-lg flex-row-reverse text-right mt-3'>
           <div className='w-[50px] h-[50px] rounded-md bg-[#2b2d31]'></div>
           <p className='text-sm font-medium text-[#cacdd4] drop-shadow'>머리 덧입기</p>
         </div>
