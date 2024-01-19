@@ -50,7 +50,7 @@ const characterDungeonList = (goldCharacterList:CharacterInfo[]) => {
       }
     });
 
-    if(goldList.includes('카멘 하드 3')) {
+    if(goldList.includes('카멘 하드 1~3')) {
       goldList.unshift('카멘 하드 4');
     }
 
@@ -68,7 +68,7 @@ const characterDungeonList = (goldCharacterList:CharacterInfo[]) => {
 
     // console.log('character ', character.CharacterName);
     // console.log('characterDungeon ', characterDungeon);
-    // console.log('goldList ', goldList);
+    console.log('goldList ', goldList);
 
     let total = 0;
     goldList?.forEach((dungeon) => {
