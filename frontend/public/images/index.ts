@@ -5,9 +5,6 @@ import ImgNaverBtnDark from './Auth/Naver/btnD_완성형.png';
 import ImgNaverBtnDefault from './Auth/Naver/btnG_완성형.png';
 import ImgCardAwake from './Card/imgCardAwake.webp';
 import ImgCardGrade from './Card/imgCardGrade.webp';
-import ImgCharacterImage1 from './Character/characterImage1.png';
-import ImgCharacterImage2 from './Character/characterImage2.png';
-import ImgCharacterImage3 from './Character/characterImage3.png';
 import ImgBattleArenaOff from './Icon/battleArena_off.png';
 import ImgBattleArenaOn from './Icon/battleArena_on.png';
 import ImgBossOff from './Icon/boss_off.png';
@@ -142,6 +139,33 @@ import ImgFighterMale from './Character/basic/fullImage/fighter_male.png'
 import ImgAssassin from './Character/basic/fullImage/assassin.png'
 import ImgSpecialist from './Character/basic/fullImage/specialist.png'
 
+import IconFullImageArcana from './Character/basic/fullImage/arcana.png'
+import IconFullImageArtist from './Character/basic/fullImage/yinyangshi.png'
+import IconFullImageBard from './Character/basic/fullImage/bard.png'
+import IconFullImageBattlemaster from './Character/basic/fullImage/battle_master.png'
+import IconFullImageBerserker from './Character/basic/fullImage/berserker.png'
+import IconFullImageSlayer from './Character/basic/fullImage/berserker_female.png'
+import IconFullImageBlade from './Character/basic/fullImage/blade.png'
+import IconFullImageBlaster from './Character/basic/fullImage/blaster.png'
+import IconFullImageDemonic from './Character/basic/fullImage/demonic.png'
+import IconFullImageDestroyer from './Character/basic/fullImage/destroyer.png'
+import IconFullImageDevilhunter from './Character/basic/fullImage/devil_hunter.png'
+import IconFullImageGunslinger from './Character/basic/fullImage/devil_hunter_female.png'
+import IconFullImageHawkeye from './Character/basic/fullImage/hawk_eye.png'
+import IconFullImageHolyknight from './Character/basic/fullImage/holyknight.png'
+import IconFullImageInfighter from './Character/basic/fullImage/infighter.png'
+import IconFullImageBreaker from './Character/basic/fullImage/infighter_male.png'
+import IconFullImageLancemaster from './Character/basic/fullImage/lance_master.png'
+import IconFullImageReaper from './Character/basic/fullImage/reaper.png'
+import IconFullImageScouter from './Character/basic/fullImage/scouter.png'
+import IconFullImageSorceress from './Character/basic/fullImage/elemental_master.png'
+import IconFullImageSoulEater from './Character/basic/fullImage/soul_eater.png'
+import IconFullImageSoulmaster from './Character/basic/fullImage/force_master.png'
+import IconFullImageStriker from './Character/basic/fullImage/battle_master_male.png'
+import IconFullImageSummoner from './Character/basic/fullImage/summoner.png'
+import IconFullImageWarlord from './Character/basic/fullImage/warlord.png'
+import IconFullImageWeatherArtist from './Character/basic/fullImage/weather_artist.png'
+
 export const islandIconList = {
   IconIslandCoinbox,
   IconIslandCoin1,
@@ -192,9 +216,6 @@ export {
   ImgNaverBtnDefault,
   ImgCardAwake,
   ImgCardGrade,
-  ImgCharacterImage1,
-  ImgCharacterImage2,
-  ImgCharacterImage3,
   ImgBattleArenaOff,
   ImgBattleArenaOn,
   ImgBossOff,
@@ -284,7 +305,6 @@ export const characterEmblemList:characterJobIconListType = {
   '기상술사': IconEmblemArtist
 }
 
-
 export const characterFullImageList:characterJobIconListType = {
   '전사(남)': ImgWarrior,
   '전사(여)': ImgWarriorFemale,
@@ -295,4 +315,30 @@ export const characterFullImageList:characterJobIconListType = {
   '마법사': ImgMagician,
   '암살자': ImgAssassin,
   '스페셜리스트': ImgSpecialist,
+  '워로드': IconFullImageWarlord,
+  '디스트로이어': IconFullImageDestroyer,
+  '버서커': IconFullImageBerserker,
+  '홀리나이트': IconFullImageHolyknight,
+  '슬레이어': IconFullImageSlayer,
+  '스트라이커': IconFullImageStriker,
+  '브레이커': IconFullImageBreaker,
+  '배틀마스터': IconFullImageBattlemaster,
+  '인파이터': IconFullImageInfighter,
+  '기공사': IconFullImageSoulmaster,
+  '창술사': IconFullImageLancemaster,
+  '데빌헌터': IconFullImageDevilhunter,
+  '블래스터': IconFullImageBlaster,
+  '호크아이': IconFullImageHawkeye,
+  '스카우터': IconFullImageScouter,
+  '건슬링어': IconFullImageGunslinger,
+  '바드': IconFullImageBard,
+  '서머너': IconFullImageSummoner,
+  '아르카나': IconFullImageArcana,
+  '소서리스': IconFullImageSorceress,
+  '블레이드': IconFullImageBlade,
+  '데모닉': IconFullImageBlaster,
+  '리퍼': IconFullImageReaper,
+  '소울이터': IconFullImageSoulEater,
+  '도화가': IconFullImageWeatherArtist,
+  '기상술사': IconFullImageArtist
 }
