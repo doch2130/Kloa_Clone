@@ -428,7 +428,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
               basicEffect: updateArmoryEquipmentArmors[armorIndex].basicEffect,
               addEffect: updateArmoryEquipmentArmors[armorIndex].addEffect,
               elixirEffect: updateArmoryEquipmentArmors[armorIndex].elixirEffect,
-              elixirTotal: updateArmoryEquipmentArmors[shoulderArmorIndex].elixirTotal,
+              elixirTotal: updateArmoryEquipmentArmors[shoulderArmorIndex]?.elixirTotal || 0,
               elixirSpecialOption: updateArmoryEquipmentArmors[armorIndex].elixirSpecialOption,
               itemLevel: updateArmoryEquipmentArmors[armorIndex].itemLevel,
               setEffectName: updateArmoryEquipmentArmors[armorIndex].setEffectName,

@@ -59,9 +59,9 @@ export default function SkillsTab({ ArmoryProfileStats, ArmoryEngravingEffects, 
 
   useEffect(() => {
     if(ArmoryEquipment !== undefined) {
-      const filterArmoryEquipment = ArmoryEquipment.filter((el) => el.Type === '무기' || el.Type === '투구' || el.Type === '상의' || el.Type === '하의' || el.Type === '장갑' || el.Type === '어깨');
+      const filterArmoryEquipment = ArmoryEquipment?.filter((el) => el.Type === '무기' || el.Type === '투구' || el.Type === '상의' || el.Type === '하의' || el.Type === '장갑' || el.Type === '어깨');
       
-      const setNameList = filterArmoryEquipment.map((el) => {
+      const setNameList = filterArmoryEquipment?.map((el) => {
         let setName = '';
         if(el.Type === '무기') {
           setName = el?.WeaponAttribute?.setEffectName?.setName || '';
@@ -72,7 +72,7 @@ export default function SkillsTab({ ArmoryProfileStats, ArmoryEngravingEffects, 
       });
 
       const setNameCount:setNameCountType = {};
-      setNameList.forEach((list) => {
+      setNameList?.forEach((list) => {
         setNameCount[list] = (setNameCount[list] || 0) + 1
       })
 
@@ -90,9 +90,9 @@ export default function SkillsTab({ ArmoryProfileStats, ArmoryEngravingEffects, 
 
   useEffect(() => {
     if(ArmorySkills !== undefined) {
-      const filterArmorySkills = ArmorySkills.filter((skill) => {
+      const filterArmorySkills = ArmorySkills?.filter((skill) => {
         if(characterClassName === '스카우터' || characterClassName === '블래스터' || characterClassName === '데모닉') {
-          const engraving = ArmoryEngravingEffects?.filter((effect) => effect.Name.includes(classEngraving[characterClassName]));
+          const engraving = ArmoryEngravingEffects?.filter((effect) => effect?.Name?.includes(classEngraving[characterClassName]));
           if(engraving !== undefined && engraving.length !== 0) {
             if(skill.SkillType === classEngravingSkill[characterClassName] || skill.Level !== 1 || skill.SkillType === '각성기') {
               return skill;
@@ -120,7 +120,7 @@ export default function SkillsTab({ ArmoryProfileStats, ArmoryEngravingEffects, 
       let neutralize = 0;
       let partDestruction = 0;
 
-      filterArmorySkills.forEach((skill) => {
+      filterArmorySkills?.forEach((skill) => {
         if(skill.SkillAttributes?.['카운터'] !== '') {
           counter++
         }
@@ -131,7 +131,7 @@ export default function SkillsTab({ ArmoryProfileStats, ArmoryEngravingEffects, 
           partDestruction++
         }
 
-        skill.Tripods.forEach((tripod) => {
+        skill.Tripods?.forEach((tripod) => {
           if(tripod.Level === 5) {
             levelFiveTripod++
           }
@@ -167,7 +167,7 @@ export default function SkillsTab({ ArmoryProfileStats, ArmoryEngravingEffects, 
                 <path d='M14.32 17.32l3.68 3.68l3 -3l-3.365 -3.365'></path>
                 <path d='M10 5.5l-2 -2.5h-5v5l3 2.5'></path>
               </svg>
-              <p className='font-semibold leading-[15px] text-lg'>{stats?.[0]?.Type} {stats?.[0]?.Value} · {stats?.[1]?.Type} {stats?.[1]?.Value}</p>
+              <p className='font-semibold leading-[15px] text-lg'>{stats?.[0]?.Type !== undefined ? stats?.[0]?.Type : '치명'} {stats?.[0]?.Value !== undefined ? stats?.[0]?.Value : 0} · {stats?.[1]?.Type !== undefined ? stats?.[1]?.Type : '특화'} {stats?.[1]?.Value !== undefined ? stats?.[1]?.Value : 0}</p>
             </div>
             <div className='flex items-center gap-x-2'>
               <svg className='w-6 text-[#7d8395]' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' strokeWidth='2' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
@@ -184,7 +184,7 @@ export default function SkillsTab({ ArmoryProfileStats, ArmoryEngravingEffects, 
                 <path d='M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0'></path>
               </svg>
               <p className='font-semibold leading-[15px] text-lg'>{setEffect.length <= 1 ? `${setEffect?.[0]?.[1] || ''} ${setEffect?.[0]?.[0] || ''}`
-              : setEffect.map((list, index:number) => <Fragment key={index}>{`${list[1]}${list[0].slice(0, 1)} `}</Fragment>)}</p>
+              : setEffect?.map((list, index:number) => <Fragment key={index}>{`${list[1]}${list[0].slice(0, 1)} `}</Fragment>)}</p>
             </div>
           </div>
         </div>

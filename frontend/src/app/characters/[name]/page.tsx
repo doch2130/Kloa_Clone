@@ -59,7 +59,7 @@ export default function CharacterDetail() {
     <div className='w-full min-h-full bg-lightGrey dark:bg-[#2b2d31] text-[#353945] dark:text-[#eaf0ec] min-[1260px]:flex min-[1260px]:justify-center relative'>
       <div className='shrink-0 w-[1200px] flex justify-between relative m-auto'>
         <Tab.Group>
-          <CharacterDetailLeft ArmoryProfile={data?.data?.ArmoryProfile} />
+          <CharacterDetailLeft ArmoryProfile={data?.data?.ArmoryProfile} ArmoryEquipment={data?.data?.ArmoryEquipment} />
           <CharacterDetailRight data={data?.data} />
         </Tab.Group>
       </div>

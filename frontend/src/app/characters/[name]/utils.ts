@@ -117,6 +117,32 @@ export const itemGradeStyleColor:itemGradeStyleColorType = {
   }
 }
 
+export const characterSummaryBackgroundColor = (grade:string, level:number) => {
+  let result = 'bg-[000]';
+
+  if(grade === '에스더') {
+    result = 'bg-[#00FFFD]';
+  } else if (level >= 24) {
+    result = 'bg-[#EAC072]';
+  } else if (level >= 22) {
+    result = 'bg-[#F25068]';
+  } else if (level >= 21) {
+    result = 'bg-[#315AFE]';
+  } else if (level >= 20) {
+    result = 'bg-[#F9F9FC]';
+  } else if (level >= 18) {
+    result = 'bg-[#D26A50]';
+  } else if (level >= 15) {
+    result = 'bg-[#C05EA9]';
+  } else if (level >= 13) {
+    result = 'bg-[#325AB7]';
+  } else if (level >= 10) {
+    result = 'bg-[#274026]';
+  }
+  
+  return result;
+}
+
 
 export const itemQualityCheckFunction = (quality:number, type:'background'|'font') => {
   let result = '';

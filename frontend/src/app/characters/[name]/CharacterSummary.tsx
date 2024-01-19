@@ -2,37 +2,26 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
-import { ArmoryProfile, SearchCharacter } from '@/types/characters'
+import { ArmoryEquipment, ArmoryProfile, SearchCharacter } from '@/types/characters'
 
 import { IconStarEmpty, IconStarFull } from '/public/svgs'
 import { deleteFavoriteDataHandler, localStorageSaveHandler } from '@/components/Header/HeaderSearchUtil'
 import { characterFullImageList } from '/public/images'
+import { characterSummaryBackgroundColor } from './utils'
 
-
-
-interface CharacterSummaryProps {
+type CharacterSummaryProps = {
   ArmoryProfile?: ArmoryProfile
+  ArmoryEquipment?: ArmoryEquipment[]
 }
 
-// 무기 강화에 따른 효과 설정
-// 23강
-// bg-[#F25068]
 const characterBackgroundColor = {
   maskImage: 'linear-gradient(100deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 70%)',
   WebkitMaskImage: 'linear-gradient(100deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 70%)'
 };
 
-// 24강
-// bg-[#EAC072]" style="mask-image: linear-gradient(100deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 70%)
-
-// 25강
-// bg-[#EAC072]" style="mask-image: linear-gradient(100deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 70%);
-
-// 에스더
-// bg-[#00FFFD]" style="mask-image: linear-gradient(100deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 70%);
-
-export default function CharacterSummary({ ArmoryProfile }:CharacterSummaryProps) {
+export default function CharacterSummary({ ArmoryProfile, ArmoryEquipment }:CharacterSummaryProps) {
   const [isFavoriteCheck, setIsFavoriteCheck] = useState<boolean>(false);
+  const [backgroundColor, setBackgroundColor] = useState<string>('bg-[#000]');
 
   const favoriteCheckHandler = () => {
 
@@ -69,6 +58,21 @@ export default function CharacterSummary({ ArmoryProfile }:CharacterSummaryProps
         }
       }
     }
+
+    if(ArmoryEquipment !== undefined) {
+      const weapon = ArmoryEquipment?.filter((equipment) => equipment.Type === '무기');
+      if(weapon !== undefined && weapon.length > 0) {
+        const grade = weapon[0].Grade;
+        let weaponLevel = Number(weapon[0].Name.slice(0, weapon[0].Name.indexOf(' ')).replace('+', ''));
+
+        if(isNaN(weaponLevel)) {
+          weaponLevel = 0;
+        }
+
+        const summaryBackgroundColor = characterSummaryBackgroundColor(grade, weaponLevel);
+        setBackgroundColor(summaryBackgroundColor);
+      }
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -80,7 +84,7 @@ export default function CharacterSummary({ ArmoryProfile }:CharacterSummaryProps
         {<Image src={ArmoryProfile!.CharacterImage! !== null ? ArmoryProfile!.CharacterImage : characterFullImageList[ArmoryProfile!.CharacterClassName]} alt='character Image' width={612} height={708} priority={true} />}
       </div>
       {/* 아이템 레벨에 따른 배경 색 다른 효과 */}
-      <div className='absolute inset-0 mix-blend-lighten transition-colors duration-[2000ms] ease-out bg-[#EAC072]' style={characterBackgroundColor}></div>
+      <div className={`absolute inset-0 mix-blend-lighten transition-colors duration-[2000ms] ease-out ${backgroundColor}`} style={characterBackgroundColor}></div>
       {/* 직업, 서버, 이름, 레벨 */}
       <div className='absolute text-white top-5 left-5 drop-shadow'>
         <p className='text-base drop-shadow'>{`Lv. ${ArmoryProfile?.CharacterLevel} ${ArmoryProfile?.CharacterClassName} @${ArmoryProfile?.ServerName}`}</p>

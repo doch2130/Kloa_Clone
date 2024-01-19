@@ -2,18 +2,19 @@
 import React from 'react'
 import CharacterSummary from './CharacterSummary'
 import { Tab } from '@headlessui/react'
-import { ArmoryProfile } from '@/types/characters';
+import { ArmoryEquipment, ArmoryProfile } from '@/types/characters';
 
 const categories:string[] = ['아바타', '수집형 포인트', '보유 캐릭터'];
 
 interface CharacterDetailLeftProps {
   ArmoryProfile?: ArmoryProfile
+  ArmoryEquipment?: ArmoryEquipment[]
 }
 
-export default function CharacterDetailLeft({ ArmoryProfile }:CharacterDetailLeftProps) {
+export default function CharacterDetailLeft({ ArmoryProfile, ArmoryEquipment }:CharacterDetailLeftProps) {
   return (
     <section className='shrink-0 w-[400px] bg-white dark:bg-[#33353a] border-l dark:border-l-[#4d4f55] shadow-[5px_1px_8px_0_rgba(0,0,0,.06)] z-[1]'>
-      <CharacterSummary ArmoryProfile={ArmoryProfile} />
+      <CharacterSummary ArmoryProfile={ArmoryProfile} ArmoryEquipment={ArmoryEquipment} />
       <div className='mx-10 mt-8 space-y-8'>
         <Tab.List className="space-y-3 [&>*]:py-1 select-none">
           <div className='flex items-center'>
