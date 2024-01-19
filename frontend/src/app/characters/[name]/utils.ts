@@ -222,3 +222,69 @@ export const abilityStoneExtractedData = (str: string) => {
 
   return null; // 매치가 실패한 경우
 };
+
+export const findSkillTypeExtracted = (input:string) => {
+  // 정규표현식을 사용하여 원하는 문자열 추출
+  const awakeningSkillRegex = /<FONT SIZE='14'><FONT COLOR='#E73517'>(.*?)<\/FONT><\/FONT>/g;
+  const normalSkillRegex = /\[일반 스킬\]/g;
+  const syncSkillRegex = /\[싱크 스킬\]/g;
+  const dronecSkillRegex = /\[드론 스킬\]/g;
+  const collaborationSkillRegex = /\[합작 스킬\]/g;
+  const devilSkillRegex = /\[악마 스킬\]/g;
+  const bombardmentModeRegex = /\[포격 모드\]/g;
+
+  // 추출된 문자열을 반환
+  let result = "";
+
+  if (syncSkillRegex.test(input)) {
+      result = '싱크 스킬';
+  } else if (devilSkillRegex.test(input)) {
+      result = '악마 스킬';
+  } else if (bombardmentModeRegex.test(input)) {
+      result = '포격 모드';
+  } else if (awakeningSkillRegex.test(input)) {
+      // result = input.match(awakeningSkillRegex)[0].replace(/<.*?>/g, '');
+      result = '각성기';
+  } else if (normalSkillRegex.test(input)) {
+      result = '일반 스킬';
+  } else if (dronecSkillRegex.test(input)) {
+    result = '드론 스킬';
+  } else if (collaborationSkillRegex.test(input)) {
+    result = '합작 스킬';
+  }
+
+  return result;
+}
+
+export const findAdditionalSkillAttributesExtract = (input: string) => {
+  const attributes: Record<string, string> = {
+    '부위 파괴': '',
+    '무력화': '',
+    '공격 타입': '',
+    '슈퍼아머': '',
+    '카운터': ''
+  };
+
+  const attributeCount = Object.keys(attributes).filter(attr => input.includes(attr)).length;
+
+  // 정규표현식을 사용하여 각 속성의 값을 추출
+  const attributeString = `<BR><FONT SIZE='12'><FONT COLOR='#EEA839'>(.*?)<\/FONT><\/FONT>`.repeat(attributeCount);
+  const attributeRegex = new RegExp(attributeString, 'g');
+  const match = attributeRegex.exec(input);
+
+  if(match === null) {
+    return attributes; 
+  }
+
+  for(let index = 1; index < match.length; index++) {
+    const el = match[index];
+    if (el !== undefined && el !== '') {
+      const splitText = el.split(' : ');
+      attributes[splitText[0]] = splitText[1];
+    }
+  }
+
+  // console.log('attributes ', attributes);
+
+  return attributes;
+};

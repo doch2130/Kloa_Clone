@@ -64,7 +64,15 @@ export default function SkillsTab({ ArmoryProfileStats, ArmoryEngravingEffects, 
 
   }, [ArmoryEquipment]);
 
-  console.log('ArmorySkills ', ArmorySkills);
+  // useEffect(() => {
+  //   if(ArmorySkills !== undefined) {
+  //     console.log('ArmorySkills ', ArmorySkills);
+
+  //     const filterArmorySkills = ArmorySkills.filter((skill) => skill.Level)
+
+  //   }
+  // }, []);
+
 
   return (
     <>

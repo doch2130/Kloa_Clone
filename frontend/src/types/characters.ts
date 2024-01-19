@@ -109,6 +109,8 @@ export interface ArmorySkill {
   Tripods: SkillTripod[]
   Rune: SkillRune
   Tooltip: string
+  SkillType?: string
+  SkillAttributes?: Record<string, string>
 }
 
 export interface SkillTripod {

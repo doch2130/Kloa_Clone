@@ -1,9 +1,9 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import { Tab } from '@headlessui/react'
-import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, CharacterArmories, Gem } from '@/types/characters'
+import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, ArmorySkill, CharacterArmories, Gem } from '@/types/characters'
 
-import { findValuesInText, findSetEffectValuesInText, findElixirEffectValuesInText, findTranscendenceData, tooltipJsonChange, abilityStoneExtractedData, updateCharacterInfo } from './utils'
+import { findValuesInText, findSetEffectValuesInText, findElixirEffectValuesInText, findTranscendenceData, tooltipJsonChange, abilityStoneExtractedData, updateCharacterInfo, findSkillTypeExtracted, findAdditionalSkillAttributesExtract } from './utils'
 import { elixirSpecialOptionDescript } from '@/data/ElixirSpecialOptionDescript'
 import { jobEngravingDescriptionList } from '@/data/EngravingsData'
 
@@ -582,6 +582,90 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
       }
     }
 
+    const updateSkills = async () => {
+      if (data?.ArmorySkills) {
+        const updateArmorySkills = await Promise.all(
+          data.ArmorySkills?.map(async (armorySkill: ArmorySkill) => {
+            // 스킬 이름
+            const skillName = armorySkill.Name;
+            // 스킬 종류 (일반, 각성기, 싱크, 악마, 포격)
+            let skillType = '';
+            // 부위 파괴, 무력화, 슈퍼아머, 카운터, 공격 타입
+            let skillAttributes:Record<string, string> = {};
+            // 부위 파괴
+            let partDestruction = '';
+            // 무력화
+            let neutralize = '';
+            // 슈퍼아머
+            let superArmor = '';
+            // 카운터
+            let counter = '';
+            // 공격 타입
+            let attackType = '';
+
+            const tooltipJson = await tooltipJsonChange(armorySkill.Tooltip);
+
+            // 스킬 종류 (일반, 각성기, 싱크, 악마, 포격)
+            if(tooltipJson.Element_001?.value?.level) {
+              skillType = findSkillTypeExtracted(tooltipJson.Element_001?.value?.level);
+            }
+
+            // 부위 파괴, 무력화, 슈퍼아머, 카운터, 공격 타입
+            if(typeof tooltipJson.Element_005?.value === 'string') {
+              skillAttributes = findAdditionalSkillAttributesExtract(tooltipJson.Element_005?.value);
+            } else if(typeof tooltipJson.Element_004?.value === 'string') {
+              skillAttributes = findAdditionalSkillAttributesExtract(tooltipJson.Element_004?.value);
+            }
+
+            // 룬은 API 제공
+            // 보석은 가공한 Gem 데이터 활용
+            
+            // if (tooltipJson.Element_001?.value?.leftStr2) {
+            //   // 티어, 품질
+            //   itemTear = tooltipJson.Element_001.value.leftStr2.slice(-12, -8).trim();
+            //   const itemLevelStartIndex = tooltipJson.Element_001.value.leftStr2.indexOf('레벨 ');
+            //   const itemLevelEndIndex = tooltipJson.Element_001.value.leftStr2.indexOf(' (티어');
+            //   itemLevel = tooltipJson.Element_001.value.leftStr2.slice(itemLevelStartIndex+3, itemLevelEndIndex).trim();
+            //   qualityValue = tooltipJson.Element_001.value.qualityValue;
+            // }
+
+            // // 기본 효과
+            // if(tooltipJson.Element_005.value.Element_001) {
+            //   basicEffect = tooltipJson.Element_005.value.Element_001;
+            // }
+
+            // // 추가 효과
+            // if(tooltipJson.Element_006.value.Element_001) {
+            //   addEffect = tooltipJson.Element_006.value.Element_001;
+            // }
+
+            // // 세트 효과
+            // if(tooltipJson.Element_008?.value.Element_001) {
+            //   const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_008.value.Element_001);
+            //   setEffectName = setFindValue;
+            // } else if(tooltipJson.Element_007?.value.Element_001) {
+            //   const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_007.value.Element_001);
+            //   setEffectName = setFindValue;
+            // }
+            
+
+            return { skillName, skillType, skillAttributes };
+          })
+        );
+
+        // 스킬 업데이트
+        // console.log('updateArmorySkills ', updateArmorySkills);
+
+        updateArmorySkills.forEach((skill, index:number) => {
+          data.ArmorySkills[index] = {
+            ...data.ArmorySkills[index],
+            'SkillType': skill.skillType,
+            'SkillAttributes': skill.skillAttributes
+          }
+        })
+      }
+    }
+
     async function fetchData() {
       updateStats();
       await updateEquipmentWeapon();
@@ -589,17 +673,16 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
       await updateAccessories();
       await updateBracelet();
       await updateAbilityStone();
+      await updateSkills();
       await updateGems();
       sortedGems();
       setUpdatedArmoryGemData(data?.ArmoryGem);
-      setIsLoading(true);
       fetchInfoData();
+      setIsLoading(true);
     }
 
     async function fetchInfoData() {
       if(data !== null && data !== undefined) {
-        // console.log('data ', data);
-
         const characterName = data.ArmoryProfile.CharacterName;
         const characterImage = data.ArmoryProfile.CharacterImage || '';
 
@@ -613,14 +696,10 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
         const engravingList:string[] = [];
 
         data?.ArmoryEngraving?.Effects?.forEach((effect) => {
-          // console.log('effect.Name ', effect.Name);
-          // const regex = /Lv\.\s(\d+)\s(.+)/;
           const regex = /(.*)(?:\sLv\.\s\d+)/;
           const match = effect.Name.match(regex);
-          // console.log('match ', match);
           if(match) {
             const jobEngraving = match[1].trim();
-            // console.log('test ', jobEngravingDescriptionList[jobEngraving]);
             if(jobEngravingDescriptionList[jobEngraving] !== undefined) {
               engravingList.push(effect.Name);
             }
@@ -644,7 +723,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
     )
   }
 
-  // console.log('data ', data);
+  console.log('data ', data);
   
   return (
     <section className='grow pb-[50px]'>
