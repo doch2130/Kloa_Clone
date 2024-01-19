@@ -68,7 +68,7 @@ const characterDungeonList = (goldCharacterList:CharacterInfo[]) => {
 
     // console.log('character ', character.CharacterName);
     // console.log('characterDungeon ', characterDungeon);
-    console.log('goldList ', goldList);
+    // console.log('goldList ', goldList);
 
     let total = 0;
     goldList?.forEach((dungeon) => {
