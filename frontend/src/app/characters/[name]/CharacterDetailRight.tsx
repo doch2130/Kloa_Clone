@@ -592,16 +592,6 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
             let skillType = '';
             // 부위 파괴, 무력화, 슈퍼아머, 카운터, 공격 타입
             let skillAttributes:Record<string, string> = {};
-            // 부위 파괴
-            let partDestruction = '';
-            // 무력화
-            let neutralize = '';
-            // 슈퍼아머
-            let superArmor = '';
-            // 카운터
-            let counter = '';
-            // 공격 타입
-            let attackType = '';
 
             const tooltipJson = await tooltipJsonChange(armorySkill.Tooltip);
 
@@ -619,35 +609,6 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
 
             // 룬은 API 제공
             // 보석은 가공한 Gem 데이터 활용
-            
-            // if (tooltipJson.Element_001?.value?.leftStr2) {
-            //   // 티어, 품질
-            //   itemTear = tooltipJson.Element_001.value.leftStr2.slice(-12, -8).trim();
-            //   const itemLevelStartIndex = tooltipJson.Element_001.value.leftStr2.indexOf('레벨 ');
-            //   const itemLevelEndIndex = tooltipJson.Element_001.value.leftStr2.indexOf(' (티어');
-            //   itemLevel = tooltipJson.Element_001.value.leftStr2.slice(itemLevelStartIndex+3, itemLevelEndIndex).trim();
-            //   qualityValue = tooltipJson.Element_001.value.qualityValue;
-            // }
-
-            // // 기본 효과
-            // if(tooltipJson.Element_005.value.Element_001) {
-            //   basicEffect = tooltipJson.Element_005.value.Element_001;
-            // }
-
-            // // 추가 효과
-            // if(tooltipJson.Element_006.value.Element_001) {
-            //   addEffect = tooltipJson.Element_006.value.Element_001;
-            // }
-
-            // // 세트 효과
-            // if(tooltipJson.Element_008?.value.Element_001) {
-            //   const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_008.value.Element_001);
-            //   setEffectName = setFindValue;
-            // } else if(tooltipJson.Element_007?.value.Element_001) {
-            //   const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_007.value.Element_001);
-            //   setEffectName = setFindValue;
-            // }
-            
 
             return { skillName, skillType, skillAttributes };
           })
@@ -723,7 +684,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
     )
   }
 
-  console.log('data ', data);
+  // console.log('data ', data);
   
   return (
     <section className='grow pb-[50px]'>
@@ -756,7 +717,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
                 UsingSkillPoint: data?.ArmoryProfile?.UsingSkillPoint || 0
               }
             }
-            ArmorySkills={data?.ArmorySkills} />
+            ArmorySkills={data?.ArmorySkills} ArmoryGem={updatedArmoryGemData} characterClassName={data?.ArmoryProfile?.CharacterClassName} />
           </Tab.Panel>
           <Tab.Panel>
             <AvatarTab characterTendencies={data?.ArmoryProfile?.Tendencies} characterName={data?.ArmoryProfile?.CharacterName}

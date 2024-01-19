@@ -226,31 +226,16 @@ export const abilityStoneExtractedData = (str: string) => {
 export const findSkillTypeExtracted = (input:string) => {
   // 정규표현식을 사용하여 원하는 문자열 추출
   const awakeningSkillRegex = /<FONT SIZE='14'><FONT COLOR='#E73517'>(.*?)<\/FONT><\/FONT>/g;
-  const normalSkillRegex = /\[일반 스킬\]/g;
-  const syncSkillRegex = /\[싱크 스킬\]/g;
-  const dronecSkillRegex = /\[드론 스킬\]/g;
-  const collaborationSkillRegex = /\[합작 스킬\]/g;
-  const devilSkillRegex = /\[악마 스킬\]/g;
-  const bombardmentModeRegex = /\[포격 모드\]/g;
+  const notAwakeningSkillRegex = /<FONT SIZE='12'><FONT COLOR='#B7DEE8'><FONT COLOR='(#[0-9A-Fa-f]{6})'>\[(.*?)\]<\/FONT><\/FONT><\/FONT>/g;
 
   // 추출된 문자열을 반환
-  let result = "";
+  let result = '';
 
-  if (syncSkillRegex.test(input)) {
-      result = '싱크 스킬';
-  } else if (devilSkillRegex.test(input)) {
-      result = '악마 스킬';
-  } else if (bombardmentModeRegex.test(input)) {
-      result = '포격 모드';
-  } else if (awakeningSkillRegex.test(input)) {
-      // result = input.match(awakeningSkillRegex)[0].replace(/<.*?>/g, '');
-      result = '각성기';
-  } else if (normalSkillRegex.test(input)) {
-      result = '일반 스킬';
-  } else if (dronecSkillRegex.test(input)) {
-    result = '드론 스킬';
-  } else if (collaborationSkillRegex.test(input)) {
-    result = '합작 스킬';
+  if(awakeningSkillRegex.test(input)) {
+    result = '각성기';
+  } else {
+    const match = notAwakeningSkillRegex.exec(input);
+    result = match?.[2] || '';
   }
 
   return result;
@@ -283,8 +268,6 @@ export const findAdditionalSkillAttributesExtract = (input: string) => {
       attributes[splitText[0]] = splitText[1];
     }
   }
-
-  // console.log('attributes ', attributes);
 
   return attributes;
 };
