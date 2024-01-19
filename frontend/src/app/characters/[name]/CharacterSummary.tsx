@@ -69,6 +69,7 @@ export default function CharacterSummary({ ArmoryProfile }:CharacterSummaryProps
         }
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
