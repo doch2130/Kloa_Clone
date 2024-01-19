@@ -1,8 +1,8 @@
 'use client'
-import React, { lazy, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 
-import { ArmoryProfile } from '@/types/characters'
+import { ArmoryProfile, SearchCharacter } from '@/types/characters'
 
 import { IconStarEmpty, IconStarFull } from '/public/svgs'
 import { deleteFavoriteDataHandler, localStorageSaveHandler } from '@/components/Header/HeaderSearchUtil'
@@ -54,6 +54,22 @@ export default function CharacterSummary({ ArmoryProfile }:CharacterSummaryProps
     setIsFavoriteCheck((prev) => !prev);
     return ;
   }
+
+  useEffect(() => {
+    const characterName = ArmoryProfile?.CharacterName;
+
+    if(characterName !== undefined) {
+      const favoriteSearchStorage = localStorage.getItem('favoriteCharactersStorage');
+      if(favoriteSearchStorage !== null) {
+        const favoriteSearchStorageJson = JSON.parse(favoriteSearchStorage);
+        const isCheckName = favoriteSearchStorageJson.filter((el:SearchCharacter) => el.name === characterName);
+        
+        if(isCheckName.length > 0) {
+          setIsFavoriteCheck(true);
+        }
+      }
+    }
+  }, []);
 
   return (
     <>
