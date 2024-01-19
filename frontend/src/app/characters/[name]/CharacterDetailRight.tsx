@@ -265,6 +265,9 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
               if(tooltipJson.Element_008?.value.Element_001) {
                 const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_008.value.Element_001);
                 setEffectName = setFindValue;
+              } else if(tooltipJson.Element_007?.value.Element_001) {
+                const setFindValue = await findSetEffectValuesInText(tooltipJson.Element_007.value.Element_001);
+                setEffectName = setFindValue;
               }
             }
 
@@ -667,7 +670,14 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
             />
           </Tab.Panel>
           <Tab.Panel>
-            <SkillsTab />
+            <SkillsTab ArmoryProfileStats={data?.ArmoryProfile?.Stats} ArmoryEngravingEffects={data?.ArmoryEngraving?.Effects} ArmoryEquipment={data?.ArmoryEquipment}
+            ArmoryProfileSkillPoint={
+              {
+                TotalSkillPoint: data?.ArmoryProfile?.TotalSkillPoint || 0,
+                UsingSkillPoint: data?.ArmoryProfile?.UsingSkillPoint || 0
+              }
+            }
+            ArmorySkills={data?.ArmorySkills} />
           </Tab.Panel>
           <Tab.Panel>
             <AvatarTab characterTendencies={data?.ArmoryProfile?.Tendencies} characterName={data?.ArmoryProfile?.CharacterName}

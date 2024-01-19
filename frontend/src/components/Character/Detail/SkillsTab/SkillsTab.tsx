@@ -1,11 +1,70 @@
-import React from 'react'
-import SkillPointCanvas from './SkillPointCanvas'
+import React, { Fragment, useEffect, useState } from 'react'
 import Image from 'next/image'
 
+import { ArmoryEquipment, ArmorySkill, EngravingEffect, Stat } from '@/types/characters'
+
+import SkillPointCanvas from './SkillPointCanvas'
+
 type SkillsTabProps = {
+  ArmoryProfileStats?: Stat[]
+  ArmoryEngravingEffects?: EngravingEffect[]
+  ArmoryEquipment?: ArmoryEquipment[]
+  ArmoryProfileSkillPoint: {
+    TotalSkillPoint: number
+    UsingSkillPoint: number
+  }
+  ArmorySkills?: ArmorySkill[]
 }
 
-export default function SkillsTab({}:SkillsTabProps) {
+type setNameCountType = {
+  [key:string]:number
+}
+
+export default function SkillsTab({ ArmoryProfileStats, ArmoryEngravingEffects, ArmoryEquipment, ArmoryProfileSkillPoint, ArmorySkills }:SkillsTabProps) {
+  const [stats, setStats] = useState<Stat[]>([]);
+  const [setEffect, setSetEffect] = useState<string[][]>([]);
+
+  useEffect(() => {
+    if(ArmoryProfileStats !== undefined) {
+      const updateArmoryProfileStats = ArmoryProfileStats?.filter((el) => el.Type !== '최대 생명력' && el.Type !== '공격력');
+      updateArmoryProfileStats?.sort((a, b) => Number(b.Value) - Number(a.Value));
+      setStats(updateArmoryProfileStats);
+    }
+
+  }, [ArmoryProfileStats]);
+
+  useEffect(() => {
+    if(ArmoryEquipment !== undefined) {
+      const filterArmoryEquipment = ArmoryEquipment.filter((el) => el.Type === '무기' || el.Type === '투구' || el.Type === '상의' || el.Type === '하의' || el.Type === '장갑' || el.Type === '어깨');
+      
+      const setNameList = filterArmoryEquipment.map((el) => {
+        let setName = '';
+        if(el.Type === '무기') {
+          setName = el?.WeaponAttribute?.setEffectName?.setName || '';
+        } else {
+          setName = el?.ArmoryAttribute?.setEffectName?.setName || '';
+        }
+        return setName;
+      });
+
+      const setNameCount:setNameCountType = {};
+      setNameList.forEach((list) => {
+        setNameCount[list] = (setNameCount[list] || 0) + 1
+      })
+
+      const updateSetName: string[][] = [];
+      Object.keys(setNameCount)?.forEach((name) => {
+        if(name !== '') {
+          updateSetName.push([name, setNameCount[name].toString()]);
+        }
+      })
+
+      setSetEffect(updateSetName);
+    }
+
+  }, [ArmoryEquipment]);
+
+  console.log('ArmorySkills ', ArmorySkills);
 
   return (
     <>
@@ -22,7 +81,7 @@ export default function SkillsTab({}:SkillsTabProps) {
                 <path d='M14.32 17.32l3.68 3.68l3 -3l-3.365 -3.365'></path>
                 <path d='M10 5.5l-2 -2.5h-5v5l3 2.5'></path>
               </svg>
-              <p className='font-semibold leading-[15px] text-lg'>특화 1795 · 치명 654</p>
+              <p className='font-semibold leading-[15px] text-lg'>{stats?.[0]?.Type} {stats?.[0]?.Value} · {stats?.[1]?.Type} {stats?.[1]?.Value}</p>
             </div>
             <div className='flex items-center gap-x-2'>
               <svg className='w-6 text-[#7d8395]' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' strokeWidth='2' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
@@ -31,14 +90,15 @@ export default function SkillsTab({}:SkillsTabProps) {
                 <path d='M19 16h-12a2 2 0 0 0 -2 2'></path>
                 <path d='M9 8h6'></path>
               </svg>
-              <p className='font-semibold leading-[15px] text-lg'>돌바아예원진</p>
+              <p className='font-semibold leading-[15px] text-lg'>{ArmoryEngravingEffects?.map((effect, index:number) => <Fragment key={index}>{effect.Name.slice(0, 1)}</Fragment>)}</p>
             </div>
             <div className='flex items-center gap-x-2'>
               <svg className='w-6 text-[#7d8395]' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' strokeWidth='2' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
                 <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
                 <path d='M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0'></path>
               </svg>
-              <p className='font-semibold leading-[15px] text-lg'>6 환각</p>
+              <p className='font-semibold leading-[15px] text-lg'>{setEffect.length <= 1 ? `${setEffect?.[0]?.[1] || ''} ${setEffect?.[0]?.[0] || ''}`
+              : setEffect.map((list, index:number) => <Fragment key={index}>{`${list[1]}${list[0].slice(0, 1)} `}</Fragment>)}</p>
             </div>
           </div>
         </div>
@@ -62,10 +122,10 @@ export default function SkillsTab({}:SkillsTabProps) {
       <div className='px-[17px] py-4 w-[146px] bg-white dark:bg-[#33353a] dark:border-[#4d4f55] rounded-xl border box-border shadow-[1px_1px_10px_0_rgba(72,75,108,.08)] flex flex-col justify-between'>
         <p className='text-lg font-semibold text-center'>스킬 포인트</p>
         <div className='w-28 h-28 relative'>
-          <SkillPointCanvas usePoint={416} maxPoint={420} />
+          <SkillPointCanvas usePoint={ArmoryProfileSkillPoint.UsingSkillPoint} maxPoint={ArmoryProfileSkillPoint.TotalSkillPoint} />
           <div className='absolute left-0 right-0 top-2 bottom-0 w-fit h-fit m-auto text-center'>
-            <p className='text-2xl leading-6 font-bold'>416</p>
-            <p className='mt-1 ml-2 text-lg leading-5 font-semibold text-[#7d8395]'>/ 420</p>
+            <p className='text-2xl leading-6 font-bold'>{ArmoryProfileSkillPoint.UsingSkillPoint}</p>
+            <p className='mt-1 ml-2 text-lg leading-5 font-semibold text-[#7d8395]'>/ {ArmoryProfileSkillPoint.TotalSkillPoint}</p>
           </div>
         </div>
       </div>
