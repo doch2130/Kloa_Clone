@@ -11,7 +11,7 @@ type TopTriadSpotlightProps = {
 
 export default function TopTriadSpotlight({ topRankList }:TopTriadSpotlightProps) {
   return (
-    <div className='flex justify-center items-end'>
+    <div className='flex justify-center items-end mmlg:hidden'>
       <Link href={`./characters/${topRankList?.[1]?.name === undefined ? '' : topRankList?.[1]?.name}`} className='group w-[260px] h-[200px] rounded-[10px] bg-[#15181d] overflow-hidden'>
         <div className='relative w-full h-full opacity-100 translate-x-0'>
           <div className='absolute w-[450px] -left-[90px] group-hover:scale-105 transition-transform duration-700 ease-out -top-[60px]'>

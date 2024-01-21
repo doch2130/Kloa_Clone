@@ -82,8 +82,8 @@ export default function CharacterNavigator({ queryFilter, setQueryFilter }:Chara
 
   
   return (
-    <div className='w-full h-[54px] bg-white dark:bg-[#33353a] rounded-[10px] flex justify-between items-center px-[10px] mt-[28px]'>
-      <div className='flex items-center space-x-5'>
+    <div className='w-full h-[54px] bg-white dark:bg-[#33353a] rounded-[10px] flex justify-between items-center px-[10px] mt-[28px] md:flex-wrap md:h-[92px] md:m-0 md:py-[2px]'>
+      <div className='flex items-center'>
         <div className='relative w-[150px] h-[38px]'>
           <ListBoxSelect buttonClass={buttonClass} listData={serverList}
             type={'server'} setQueryFilter={setQueryFilter} initData={queryFilter.server} />
@@ -101,7 +101,7 @@ export default function CharacterNavigator({ queryFilter, setQueryFilter }:Chara
         }
       </div>
       {/* Level Range Option */}
-      <div className='flex items-center space-x-5'>
+      <div className='flex items-center md:flex-auto md:w-full md:mt-1'>
         <input type='number' value={rangeMinValue}
           className='w-[68px] h-[38px] flex justify-center items-center border-2 border-[#e6e8ec] dark:border-[#4d4f55] rounded-[10px] font-base text-[#7d8395] dark:text-[#eaf0ec] text-center outline-none bg-white dark:bg-[#33353a]'
           onChange={(e) => {

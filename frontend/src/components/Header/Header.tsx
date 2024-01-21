@@ -30,7 +30,7 @@ export default function Header() {
             <Link href='/characters' as='/characters' className={`drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc] ${pathName.includes('/characters') ? 'text-[#8045dd] dark:text-[#a36bfc] drop-in-underline-active' : 'text-[#7d8395]'}`}>전투정보실</Link>
             <Link href='/merchant' as='/merchant' className={`drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc] ${pathName.includes('/merchant') ? 'text-[#8045dd] dark:text-[#a36bfc] drop-in-underline-active' : 'text-[#7d8395]'}`}>떠돌이 상인</Link>
             <Link href='/sell' as='/sell' className={`drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc] ${pathName.includes('/sell') ? 'text-[#8045dd] dark:text-[#a36bfc] drop-in-underline-active' : 'text-[#7d8395]'}`}>아이템 거래</Link>
-            <Link href='/crow' as='/crow' className={`drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc] ${pathName.includes('/crow') ? 'text-[#8045dd] dark:text-[#a36bfc] drop-in-underline-active' : 'text-[#7d8395]'}`}>계산기</Link>
+            {/* <Link href='/crow' as='/crow' className={`drop-in-underline duration-300 dark:text-[#B9BBBE] dark:hover:text-[#a36bfc] ${pathName.includes('/crow') ? 'text-[#8045dd] dark:text-[#a36bfc] drop-in-underline-active' : 'text-[#7d8395]'}`}>계산기</Link> */}
           </div>
           <HeaderSearchForm />
         </div>

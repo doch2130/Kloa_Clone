@@ -28,6 +28,7 @@ const config: Config = {
       // => @media (min-width: 960px) { ... }
       'mlg': {'max': '1069px'},
       // max-width: 1069px
+      'mmlg': {'max': '1120px'},
       'lg': '1440px',
       // => @media (min-width: 1440px) { ... }
     },
