@@ -24,6 +24,8 @@ import IconOne from './Number/one.svg';
 import IconTwo from './Number/two.svg';
 import IconThree from './Number/three.svg';
 
+import IconScrollTopButton from './Icon/scrollTopButton.svg';
+
 export {
   IconAlert,
   IconClose,
@@ -48,5 +50,6 @@ export {
   IconUpArrow,
   IconOne,
   IconTwo,
-  IconThree
+  IconThree,
+  IconScrollTopButton
 };
