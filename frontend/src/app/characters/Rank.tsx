@@ -6,6 +6,7 @@ import { queryFilterType, rankListType, rankResponseInfiniteQueryType, rankRespo
 import TopTriadSpotlight from './TopTriadSpotlight'
 import CharacterNavigator from './CharacterNavigator'
 import CharacterList from './CharacterList'
+import ScrollTopButton from '@/components/UI/ScrollTopButton'
 
 export default function Rank() {
   const [queryFilter, setQueryFilter] = useState<queryFilterType>({
@@ -57,6 +58,7 @@ export default function Rank() {
       <TopTriadSpotlight topRankList={rankingData?.pages[0]?.data?.slice(0, 3)} />
       <CharacterNavigator queryFilter={queryFilter} setQueryFilter={setQueryFilter} />
       <CharacterList rankingList={rankingData?.pages?.flatMap(page => page.data) || []} rankFetchNextPage={rankFetchNextPage} rankIsFetchingNextPage={rankIsFetchingNextPage} />
+      <ScrollTopButton />
     </>
   )
 }
