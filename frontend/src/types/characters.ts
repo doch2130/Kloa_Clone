@@ -295,3 +295,13 @@ export interface characterInfoUpdateResponseType {
   message: string;
   status: number;
 }
+
+
+export interface characterVisitCountResponseType {
+  data: undefined | {
+    todayCount: number
+    totalCount: number
+  };
+  message: string;
+  status: number;
+}

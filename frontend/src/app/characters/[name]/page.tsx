@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation'
 import { Tab } from '@headlessui/react'
 
 import { useQuery } from '@tanstack/react-query'
-import { getCharacter } from './utils'
+import { getCharacter, getVisitCount, updateVisitCount } from './utils'
 
 import CharacterDetailLeft from './CharacterDetailLeft'
 import CharacterDetailRight from './CharacterDetailRight'
@@ -21,6 +21,7 @@ export default function CharacterDetail() {
   // 페이지를 넘겨준 후 API를 호출해서 데이터가 있으면 로컬스토리지 저장도 같이 한다.
   // 여기서 1번하면 페이지 이동 후 또 해야하는 현상이 생기기 때문에 여기서는 하지 않는다.
   const { data, isLoading } = useQuery({ queryKey: ['character', name], queryFn: () => getCharacter(name) });
+  const { data:countData } = useQuery({ queryKey: ['characterVisitCount', name], queryFn: () => getVisitCount(name) });
   // console.log('data ', data);
 
   useEffect(() => {
@@ -34,10 +35,16 @@ export default function CharacterDetail() {
       };
       
       localStorageSaveHandler('recently', searchData);
-
+      
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isLoading]);
+
+  useEffect(() => {
+    if(name.trim() !== '') {
+      updateVisitCount(decodeURIComponent(name));
+    }
+  }, [name]);
 
   if(isLoading) {
     return (
@@ -59,7 +66,7 @@ export default function CharacterDetail() {
     <div className='w-full min-h-full bg-lightGrey dark:bg-[#2b2d31] text-[#353945] dark:text-[#eaf0ec] min-[1260px]:flex min-[1260px]:justify-center relative'>
       <div className='shrink-0 w-[1200px] flex justify-between relative m-auto'>
         <Tab.Group>
-          <CharacterDetailLeft ArmoryProfile={data?.data?.ArmoryProfile} ArmoryEquipment={data?.data?.ArmoryEquipment} />
+          <CharacterDetailLeft ArmoryProfile={data?.data?.ArmoryProfile} ArmoryEquipment={data?.data?.ArmoryEquipment} visitCountData={countData?.data} />
           <CharacterDetailRight data={data?.data} />
         </Tab.Group>
       </div>

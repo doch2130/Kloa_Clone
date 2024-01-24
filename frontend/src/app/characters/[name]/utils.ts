@@ -1,4 +1,4 @@
-import { characterInfoUpdateResponseType, characterResponseType } from "@/types/characters";
+import { characterInfoUpdateResponseType, characterResponseType, characterVisitCountResponseType } from "@/types/characters";
 
 export async function getCharacter(characterName:string):Promise<characterResponseType> {
   const response = await fetch(`/api/lostark/characters?characterName=${characterName}`);
@@ -35,6 +35,33 @@ export async function getCharacter(characterName:string):Promise<characterRespon
 //     return ;
 //   }
 // }
+
+export async function getRank(characterName:string) {
+  const response = await fetch(`/api/lostark/characters?characterName=${characterName}`);
+  const character = (await response.json()) as characterResponseType;
+  return character;
+}
+
+export async function getVisitCount(characterName:string):Promise<characterVisitCountResponseType> {
+  const response = await fetch(`/api/character/visit?characterName=${characterName}`);
+  const visitCount = (await response.json()) as characterVisitCountResponseType;
+  return visitCount;
+}
+
+export async function updateVisitCount(characterName:string) {
+  const response = await fetch(`/api/character/visit`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      characterName: characterName
+    })
+  });
+
+  const visitCount = (await response.json()) as characterVisitCountResponseType;
+
+  console.log('visitCount ', visitCount);
+
+  return ;
+}
 
 // export async function updateCharacterInfo(characterName:string):Promise<characterInfoUpdateResponseType> {
 export async function updateCharacterInfo(characterName:string, characterImage:string, engravingList:string[], weapon:string, battleLevel:number):Promise<characterInfoUpdateResponseType> {

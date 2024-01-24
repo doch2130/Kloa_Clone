@@ -2,16 +2,20 @@
 import React from 'react'
 import CharacterSummary from './CharacterSummary'
 import { Tab } from '@headlessui/react'
-import { ArmoryEquipment, ArmoryProfile } from '@/types/characters';
+import { ArmoryEquipment, ArmoryProfile, characterVisitCountResponseType } from '@/types/characters';
 
 const categories:string[] = ['아바타', '수집형 포인트', '보유 캐릭터'];
 
 interface CharacterDetailLeftProps {
   ArmoryProfile?: ArmoryProfile
   ArmoryEquipment?: ArmoryEquipment[]
+  visitCountData?: {
+    todayCount: number
+    totalCount: number
+  }
 }
 
-export default function CharacterDetailLeft({ ArmoryProfile, ArmoryEquipment }:CharacterDetailLeftProps) {
+export default function CharacterDetailLeft({ ArmoryProfile, ArmoryEquipment, visitCountData }:CharacterDetailLeftProps) {
   return (
     <section className='shrink-0 w-[400px] bg-white dark:bg-[#33353a] border-l dark:border-l-[#4d4f55] shadow-[5px_1px_8px_0_rgba(0,0,0,.06)] z-[1]'>
       <CharacterSummary ArmoryProfile={ArmoryProfile} ArmoryEquipment={ArmoryEquipment} />
@@ -99,9 +103,9 @@ export default function CharacterDetailLeft({ ArmoryProfile, ArmoryEquipment }:C
         </Tab.List>
         <hr className='w-full h-[1px] dark:border-[#4d4f55]' />
         <p className='text-xs font-light text-center text-[#7d8395] pb-5'>
-          <span>TODAY : 12</span>
+          <span>TODAY : {visitCountData !== undefined ? visitCountData.todayCount : 0}</span>
           <span className='inline-block mx-2 w-[1px] h-[9px] bg-[#e6e8ec] dark:bg-[#4d4f55]'></span>
-          <span>TOTAL : 83</span>
+          <span>TOTAL : {visitCountData !== undefined ? visitCountData.totalCount : 0}</span>
         </p>
       </div>
     </section>
