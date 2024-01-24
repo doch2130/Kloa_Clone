@@ -22,6 +22,7 @@ import ImgMainImage1 from './SlideImage/main_image_1.webp';
 import ImgMainImage2 from './SlideImage/main_image_2.webp';
 import ImgMainImage3 from './SlideImage/main_image_3.webp';
 import ImgMainImage4 from './SlideImage/main_image_4.webp';
+import ImgMainImage5 from './SlideImage/main_image_5.webp';
 
 
 import IconIslandCoinbox from './Item/ico_island_coinbox.png'
@@ -231,6 +232,7 @@ export {
   ImgMainImage2,
   ImgMainImage3,
   ImgMainImage4,
+  ImgMainImage5,
   guildMaster,
 };
 
@@ -336,7 +338,7 @@ export const characterFullImageList:characterJobIconListType = {
   '아르카나': IconFullImageArcana,
   '소서리스': IconFullImageSorceress,
   '블레이드': IconFullImageBlade,
-  '데모닉': IconFullImageBlaster,
+  '데모닉': IconFullImageDemonic,
   '리퍼': IconFullImageReaper,
   '소울이터': IconFullImageSoulEater,
   '도화가': IconFullImageWeatherArtist,
