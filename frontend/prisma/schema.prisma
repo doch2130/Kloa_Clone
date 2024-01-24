@@ -60,4 +60,6 @@ model characterinfo {
   jobEngraving        String?   @default("")
   itemLevelUpdateDate DateTime? @default(now()) @db.DateTime(0)
   imgAddress          String?   @db.Text
+  todayCount          Int       @default(0)
+  totalCount          Int       @default(0)
 }

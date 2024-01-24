@@ -61,6 +61,16 @@ const CharacterInfo = (Sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      todayCount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      totalCount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
     },
     {
       tableName: 'characterinfo',
