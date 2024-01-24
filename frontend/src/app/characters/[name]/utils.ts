@@ -56,10 +56,6 @@ export async function updateVisitCount(characterName:string) {
     })
   });
 
-  const visitCount = (await response.json()) as characterVisitCountResponseType;
-
-  console.log('visitCount ', visitCount);
-
   return ;
 }
 
