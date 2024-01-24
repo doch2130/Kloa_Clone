@@ -4,6 +4,7 @@ const port = 12500;
 const cors = require('cors');
 const config = require('./config/key');
 const lostarkSchedule = require("./controller/schedule");
+const characterSchedule = require("./controller/character");
 const { lostarkCharacterUpdateCrawling } = require('./controller/crawling');
 
 const corsOption = {
@@ -32,4 +33,7 @@ app.listen(port, () => {
   // 로스트아크 공지사항 자동 스케줄
   lostarkSchedule.noticesSchedule();
   lostarkSchedule.adventureIslandSchedule();
+
+  // 캐릭터 일일 방문 초기화
+  characterSchedule.todayVisitInitScheduler();
 });
