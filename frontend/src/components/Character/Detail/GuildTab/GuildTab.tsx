@@ -17,7 +17,7 @@ type GuildTabProps = {
 const jobArray = Object.keys(characterEmblemList);
 
 export default function GuildTab({ characterName, guildName }:GuildTabProps) {
-  const { data:guildInfoList, isLoading:isGuildInfoListLoading } = useQuery({ queryKey: ['guildInfoList', characterName, guildName], queryFn: () => getGuildInfo(guildName) });
+  const { data:guildInfoList, isLoading:isGuildInfoListLoading } = useQuery({ queryKey: ['guildInfoList', characterName, guildName], staleTime: 3 * (60 * 1000), queryFn: () => getGuildInfo(guildName) });
   const [levelRange, setLevelRange] = useState<number[]>([0, 1655]);
 
   useEffect(() => {

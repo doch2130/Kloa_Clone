@@ -20,8 +20,8 @@ export default function CharacterDetail() {
   // 여기서는 데이터 호출하지 않고 페이지만 넘겨준다.
   // 페이지를 넘겨준 후 API를 호출해서 데이터가 있으면 로컬스토리지 저장도 같이 한다.
   // 여기서 1번하면 페이지 이동 후 또 해야하는 현상이 생기기 때문에 여기서는 하지 않는다.
-  const { data, isLoading } = useQuery({ queryKey: ['character', name], queryFn: () => getCharacter(name) });
-  const { data:countData } = useQuery({ queryKey: ['characterVisitCount', name], queryFn: () => getVisitCount(name) });
+  const { data, isLoading, refetch } = useQuery({ queryKey: ['character', name], staleTime: 3 * (60 * 1000), queryFn: () => getCharacter(name) });
+  const { data:countData, refetch:countRefetch } = useQuery({ queryKey: ['characterVisitCount', name], staleTime: 3 * (60 * 1000), queryFn: () => getVisitCount(name) });
   // console.log('data ', data);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function CharacterDetail() {
       <div className='shrink-0 w-[1200px] flex justify-between relative m-auto'>
         <Tab.Group>
           <CharacterDetailLeft ArmoryProfile={data?.data?.ArmoryProfile} ArmoryEquipment={data?.data?.ArmoryEquipment} visitCountData={countData?.data} />
-          <CharacterDetailRight data={data?.data} />
+          <CharacterDetailRight data={data?.data} characterRefetch={refetch} countRefetch={countRefetch} />
         </Tab.Group>
       </div>
     </div>

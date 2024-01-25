@@ -6,6 +6,13 @@ export async function getCharacter(characterName:string):Promise<characterRespon
   return character;
 }
 
+export const refetchFunction = async (characterRefetch:Function, countRefetch:Function, setTime:Function) => {
+  // refetch 함수를 호출하여 데이터를 강제로 다시 불러옴
+  characterRefetch();
+  countRefetch();
+  setTime(0)
+};
+
 // const dataLoadHandler = async (name:string) => {
 //   const characterName = decodeURIComponent(name.trim());
 //   try {

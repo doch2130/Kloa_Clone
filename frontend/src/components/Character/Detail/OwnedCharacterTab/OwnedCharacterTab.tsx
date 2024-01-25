@@ -106,7 +106,7 @@ export default function OwnedCharacterTab() {
   const [totalGold, setTotalGold] = useState<number>(0);
   const [goldCharacterList, setGoldCharacterList] = useState<characterDungeonListResultType[]>([]);
 
-  const { data:haveCharacterList, isLoading:isHavaCharacterListLoading } = useQuery({ queryKey: ['havaCharacterList', name], queryFn: () => getOwnedCharacter(name) });
+  const { data:haveCharacterList, isLoading:isHavaCharacterListLoading } = useQuery({ queryKey: ['havaCharacterList', name], staleTime: 3 * (60 * 1000), queryFn: () => getOwnedCharacter(name) });
 
   useEffect(() => {
     if(haveCharacterList !== undefined) {

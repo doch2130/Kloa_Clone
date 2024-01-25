@@ -13,12 +13,15 @@ import OwnedCharacterTab from '@/components/Character/Detail/OwnedCharacterTab/O
 import GuildTab from '@/components/Character/Detail/GuildTab/GuildTab'
 import CollectablePointsTab from '@/components/Character/Detail/CollectablePointsTab/CollectablePointsTab'
 import SkillsTab from '@/components/Character/Detail/SkillsTab/SkillsTab'
+import RefetchButton from './RefetchButton'
 
 interface CharacterDetailRightProps {
   data?: CharacterArmories | null | undefined
+  characterRefetch: Function
+  countRefetch: Function
 }
 
-export default function CharacterDetailRight({ data }:CharacterDetailRightProps) {
+export default function CharacterDetailRight({ data, characterRefetch, countRefetch }:CharacterDetailRightProps) {
   const [updatedArmoryGemData, setUpdatedArmoryGemData] = useState<ArmoryGem  | undefined>(data?.ArmoryGem);
   const transcendanceTotalRef = useRef<number>(0);
   const transcendanceAverageRef = useRef<number>(0);
@@ -690,15 +693,7 @@ export default function CharacterDetailRight({ data }:CharacterDetailRightProps)
     <section className='grow pb-[50px]'>
       <div className='pl-[60px] pt-[25px] h-full'>
         <div className='flex justify-end select-none'>
-          <div className='flex justify-end items-center gap-x-1.5 mb-[10px] mr-[1px]'>
-            {/* 갱신 2분 이후부터 활성화 되는 방식 */}
-            {/* 1분 이내면 몇 초 전, 1분 이후부터는 X분전 */}
-            <p className='text-sm'>0분전</p>
-            {/* 임시로 disabled 즐겨찾기 변수 사용 */}
-            <button type='button' disabled={true} className='w-16 h-6 bg-[#dadada] dark:bg-[#44474d] disabled:bg-[#ececec] dark:disabled:bg-[#33353a] disabled:text-[#7d8395] rounded-lg flex items-center justify-center select-none'>
-              <p className='text-sm'>갱신하기</p>
-            </button>
-          </div>
+          <RefetchButton characterRefetch={characterRefetch} countRefetch={countRefetch} />
         </div>
         {/* 탭에 따른 데이터 출력 위치 */}
         {isLoading &&
