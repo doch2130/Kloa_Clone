@@ -383,3 +383,7 @@ input::-webkit-inner-spin-button {
     padding: 0;
   }
 }
+
+.exchangeBuy {
+  margin: 0 !important;
+}
