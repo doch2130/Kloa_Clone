@@ -15,6 +15,7 @@ import ImgGhostShipOff from './Icon/ghostShip_off.png';
 import ImgGhostShipOn from './Icon/ghostShip_on.png';
 import Imgkloa1 from './Logo/kloa1.webp';
 import Imgkloa2 from './Logo/kloa2.webp';
+import ImgAuctionEmpty from './Mococo/img_auction_empty.png';
 import ImgAuctionEmpty2 from './Mococo/img_auction_empty2.png';
 import guildMaster from './Icon/guildMaster.webp';
 
@@ -227,6 +228,7 @@ export {
   ImgGhostShipOn,
   Imgkloa1,
   Imgkloa2,
+  ImgAuctionEmpty,
   ImgAuctionEmpty2,
   ImgMainImage1,
   ImgMainImage2,
