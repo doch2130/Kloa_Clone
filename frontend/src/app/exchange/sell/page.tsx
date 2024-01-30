@@ -84,7 +84,7 @@ export default function Sell() {
   // }, []);
 
   console.log('session ', session);
-  if(session.data === null) {
+  if(session?.data === null) {
     return (
       <div className='flex items-center justify-between w-full bg-white dark:bg-[#2b2d31]' style={{height: 'calc(100vh - 70px)'}}>
         <div className='items-center self-center justify-center mx-auto text-center'>
