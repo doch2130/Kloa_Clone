@@ -62,7 +62,7 @@ export default function ListBoxSelect({ buttonClass, listData, type, initData, s
                 key={listIndex}
                 value={list}
                 className={({ active }) =>
-                  `text-head dark:text-[#eaf0ec] rounded-md px-[7px] py-[7px] cursor-pointer ${ active && `${styled.listActiveText} ${styled.listActiveBackground}` }`
+                  `text-[#353945] dark:text-[#eaf0ec] rounded-md px-[7px] py-[7px] cursor-pointer ${ active && `${styled.listActiveText} ${styled.listActiveBackground}` }`
                 }
               >
                 {({ selected }) => (
