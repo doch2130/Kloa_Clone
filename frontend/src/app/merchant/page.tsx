@@ -27,7 +27,7 @@ export default function Merchant() {
     <div className='w-full h-full bg-lightGrey dark:bg-[#2b2d31]'>
       <div className='w-full h-full flex justify-center overflow-y-scroll'>
         <div className='flex flex-col max-w-[1120px] w-full min-h-full mt-[30px]'>
-          <button type='button' onClick={topScrollEvent} className='fixed bottom-[30px] right-[1rem] h-[48px] w-[48px] z-[30] flex justify-center items-center bg-white dark:bg-[#2b2d31] border-2 border-[#e6e8ec] rounded-[10px] dark:border-[#42464D]'>
+          <button type='button' onClick={() => topScrollEvent()} className='fixed bottom-[30px] right-[1rem] h-[48px] w-[48px] z-[30] flex justify-center items-center bg-white dark:bg-[#2b2d31] border-2 border-[#e6e8ec] rounded-[10px] dark:border-[#42464D]'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true" className="heroicon-sw-1.5 h-7 w-7 text-[#7d8395]">
               <path strokeLinecap="round" strokeLinejoin="round" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
             </svg>
