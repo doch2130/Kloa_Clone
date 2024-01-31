@@ -12,6 +12,11 @@ const Merchant = (Sequelize, DataTypes) => {
         type: DataTypes.STRING(191),
         allowNull: false,
       },
+      location: {
+        type: DataTypes.STRING(191),
+        allowNull: true,
+        defaultValue: '',
+      },
       npcName: {
         type: DataTypes.STRING(191),
         allowNull: true,

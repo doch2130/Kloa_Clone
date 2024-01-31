@@ -67,6 +67,7 @@ model characterinfo {
 model merchant {
   id         Int      @id @default(autoincrement())
   server     String
+  location   String   @default("")
   npcName    String   @default("")
   informant  String   @default("")
   itemList   String   @default("")
