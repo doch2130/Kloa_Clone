@@ -20,8 +20,8 @@ const buttonClass = 'w-full h-full border-2 border-[#e6e8ec] dark:border-[#4d4f5
 export default function CharacterNavigator({ queryFilter, setQueryFilter }:CharacterNavigatorProps) {
   const [rangeMinValue, setRangeMinValue] = useState<number>(queryFilter.minLevel); 
   const [rangeMaxValue, setRangeMaxValue] = useState<number>(queryFilter.maxLevel);
-  const [rangeMinPercent, setRangeMinPercent] = useState<number>((queryFilter.minLevel / 1655) * 100);
-  const [rangeMaxPercent, setRangeMaxPercent] = useState<number>(100 - (queryFilter.maxLevel / 1655) * 100);
+  const [rangeMinPercent, setRangeMinPercent] = useState<number>((queryFilter.minLevel / 1700) * 100);
+  const [rangeMaxPercent, setRangeMaxPercent] = useState<number>(100 - (queryFilter.maxLevel / 1700) * 100);
 
   const levelBar = useRef<HTMLDivElement>(null);
 
@@ -46,8 +46,8 @@ export default function CharacterNavigator({ queryFilter, setQueryFilter }:Chara
   }
 
   const rangeValueHandler = () => {
-    setRangeMinPercent((rangeMinValue / 1655) * 100);
-    setRangeMaxPercent(100 - (rangeMaxValue / 1655) * 100);
+    setRangeMinPercent((rangeMinValue / 1700) * 100);
+    setRangeMaxPercent(100 - (rangeMaxValue / 1700) * 100);
     return;
   }
 
@@ -114,14 +114,14 @@ export default function CharacterNavigator({ queryFilter, setQueryFilter }:Chara
           <div className={`flex items-center justify-center h-[8px] w-full rounded ${styled.levelWrap}`}>
             <div ref={levelBar} className={`h-[8px] rounded absolute ${styled.levelBar}`}></div>
             <div className={`flex items-center h-[8px] w-full rounded relative`}>
-              <input type='range' step={1} min={0} max={1655}
+              <input type='range' step={1} min={0} max={1700}
                 value={rangeMinValue} className={`w-full h-6 absolute ${styled.levelBarInput} ${styled.levelBarInputLeft}`}
                 onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
                   levelMinValueHandler(e);
                   rangeValueHandler();
                 }}
               />
-              <input type='range' step={1} min={0} max={1655}
+              <input type='range' step={1} min={0} max={1700}
                 value={rangeMaxValue} className={`w-full h-6 absolute ${styled.levelBarInput} ${styled.levelBarInputRight}`}
                 onChange={(e) => {
                   levelMaxValueHandler(e);

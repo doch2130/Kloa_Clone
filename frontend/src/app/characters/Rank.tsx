@@ -14,7 +14,7 @@ export default function Rank() {
     job: '전체 클래스',
     engraving: '전체',
     minLevel: 0,
-    maxLevel: 1655,
+    maxLevel: 1700,
   });
 
   const {
