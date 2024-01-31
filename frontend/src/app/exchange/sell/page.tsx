@@ -75,7 +75,7 @@ export default function Sell() {
     });
     // console.log('test ', response);
     const result = await response.json();
-    console.log('test ', result);
+    // console.log('test ', result);
   }
 
   // useEffect(() => {
@@ -83,7 +83,7 @@ export default function Sell() {
   //   test();
   // }, []);
 
-  console.log('session ', session);
+  // console.log('session ', session);
   if(session?.data === null) {
     return (
       <div className='flex items-center justify-between w-full bg-white dark:bg-[#2b2d31]' style={{height: 'calc(100vh - 70px)'}}>

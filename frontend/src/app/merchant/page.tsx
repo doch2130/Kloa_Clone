@@ -35,8 +35,6 @@ export default function Merchant() {
     )
   }
 
-  console.log('data ', data?.merchantList);
-
   return (
     <div className='w-full h-full bg-lightGrey dark:bg-[#2b2d31]'>
       <div className='w-full h-full flex justify-center overflow-y-scroll'>
@@ -119,7 +117,6 @@ export default function Merchant() {
               <div className='mb-[30px]'>
                 {data?.merchantList?.map((merchant:merchantListType, index:number) => {
                   const merchantReportTime = new Date(merchant.reportTime);
-                  console.log('merchantReportTime.getHours() ', merchantReportTime.getHours());
                   const reportTime = `${merchantReportTime.getHours()}:${merchantReportTime.getMinutes()}`;
                   return (
                   <div key={`${merchant}_${index}`} className='first:rounded-t-[10px] last:rounded-b-[10px] w-full relative flex px-[30px] border-t border-l-2 border-r-2 border-[#e6e8ec] first:border-t-2 last:border-b-2 dark:border-[#42464D] h-[70px] bg-white dark:bg-[#33353a]'>
