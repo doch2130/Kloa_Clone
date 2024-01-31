@@ -63,3 +63,12 @@ model characterinfo {
   todayCount          Int       @default(0)
   totalCount          Int       @default(0)
 }
+
+model merchant {
+  id         Int      @id @default(autoincrement())
+  server     String
+  npcName    String   @default("")
+  informant  String   @default("")
+  itemList   String   @default("")
+  reportTime DateTime @default(now())
+}
