@@ -2,19 +2,24 @@
 import React, { useState, Fragment } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useQuery } from '@tanstack/react-query'
 
 import { Listbox, Transition } from '@headlessui/react'
+
+import { getMerchant } from './utils'
 
 import { serverList } from '@/data/ServerListData';
 import { IconDownArrow } from '/public/svgs'
 
 import styled from '@/styles/ListBoxSelect.module.css'
+import { merchantListType } from '@/types/merchant'
 
+const buttonClass = 'flex items-center w-full px-4 py-[11px]';
 export default function Merchant() {
   const [initData, setInitData] = useState<string>('전 서버');
+  const { data, isLoading, refetch } = useQuery({ queryKey: ['merchant', initData], staleTime: 3 * (60 * 1000), queryFn: () => getMerchant(initData) });
 
   const onChangeHandler = (value:string) => {
-    // console.log('e ', value);
     setInitData(value);
   }
 
@@ -22,7 +27,16 @@ export default function Merchant() {
     window.scrollTo({top : 0, behavior: 'smooth'});
   }
 
-  const buttonClass = 'flex items-center w-full px-4 py-[11px]';
+  if(isLoading) {
+    return (
+      <div className='w-full h-full min-h-[700px] relative z-[150] flex items-center justify-center opacity-[0.9]'>
+        <h1 className='text-5xl font-bold'>Loading...</h1>
+      </div>
+    )
+  }
+
+  console.log('data ', data?.merchantList);
+
   return (
     <div className='w-full h-full bg-lightGrey dark:bg-[#2b2d31]'>
       <div className='w-full h-full flex justify-center overflow-y-scroll'>
@@ -103,12 +117,15 @@ export default function Merchant() {
             {/* 본문 */}
             <div className='mt-[30px]'>
               <div className='mb-[30px]'>
-                {[0, 1, 2,3,4,5,6,7,8,9,10].map((el, index:number) => {
+                {data?.merchantList?.map((merchant:merchantListType, index:number) => {
+                  const merchantReportTime = new Date(merchant.reportTime);
+                  console.log('merchantReportTime.getHours() ', merchantReportTime.getHours());
+                  const reportTime = `${merchantReportTime.getHours()}:${merchantReportTime.getMinutes()}`;
                   return (
-                  <div key={`${el}_${index}`} className='first:rounded-t-[10px] last:rounded-b-[10px] w-full relative flex px-[30px] border-t border-l-2 border-r-2 border-[#e6e8ec] first:border-t-2 last:border-b-2 dark:border-[#42464D] h-[70px] bg-white dark:bg-[#33353a]'>
+                  <div key={`${merchant}_${index}`} className='first:rounded-t-[10px] last:rounded-b-[10px] w-full relative flex px-[30px] border-t border-l-2 border-r-2 border-[#e6e8ec] first:border-t-2 last:border-b-2 dark:border-[#42464D] h-[70px] bg-white dark:bg-[#33353a]'>
                     <div className='flex grow'>
                       <div className='flex justify-center shrink-0 w-[76px] max-h-[22px] bg-[#8045dd] dark:bg-[#DECFF6] bg-opacity-[26%] text-[#8045dd] rounded-[4px] self-center text-center mr-[20px]'>
-                        <span className="self-center leading-5 text-[0.85rem] font-semibold">아브렐슈드</span>
+                        <span className="self-center leading-5 text-[0.85rem] font-semibold">{merchant.server}</span>
                       </div>
                       <div className='flex flex-col justify-center grow gap-y-1'>
                         <div className='flex justify-between'>
@@ -118,7 +135,7 @@ export default function Merchant() {
                                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path>
                               </svg>
                               <span className="self-center text-sm text-[#353945] dark:text-[#eaf0ec] font-semibold leading-[22px] transition-all duration-200 ease-in-out">
-                                아르데타인&nbsp;<span className="ml-0.5 font-semibold">녹스</span>
+                                {merchant.location}&nbsp;<span className="ml-0.5 font-semibold">{merchant.npcName}</span>
                               </span>
                             </div>
                           </div>
@@ -132,25 +149,31 @@ export default function Merchant() {
                                     </svg>
                                     <div className="flex opacity-0 group-hover:opacity-100 absolute -top-8 -left-[2px] justify-center items-center w-16 h-6 text-xs text-white rounded-[4px] bg-[#121212] after:absolute after:content-[&quot;&quot;] after:top-[80%] after:left-[18%] after:bg-[#121212] after:-translate-x-1/2 after:w-0 after:h-0 after:border-[4px] after:rotate-45 after:border-solid after:border-transparent after:border-top-[4px] after:border-[#353945] transition-opacity duration-100 ease-linear">떠상마스터</div>
                                   </div>
-                                  <span className="truncate transition-colors duration-200 ease-in group-hover:text-[#8045dd] dark:group-hover:text-[#a36bfc] text-sm">헤헤누워있을게요</span>
+                                  <span className="truncate transition-colors duration-200 ease-in group-hover:text-[#8045dd] dark:group-hover:text-[#a36bfc] text-sm">{merchant.informant}</span>
                                 </button>
                               </div>
                             </div>
-                            <span className="self-center w-[48px]">16:19</span>
+                            <span className="self-center w-[48px]">{reportTime}</span>
                             <div className="relative group">
                               <div className="flex opacity-0 group-hover:opacity-100 absolute -top-10 -left-[2px] justify-center items-center w-6 h-8 text-xs text-white rounded-[4px] bg-[#353945] after:absolute after:content-[&quot;&quot;] after:top-[80%] after:left-[50%] after:-translate-x-1/2 after:w-0 after:h-0 after:border-[5px] after:rotate-45 after:border-solid after:border-transparent after:border-top-[5px] after:border-[#353945] transition-opacity duration-100 ease-linear">0</div>
                             </div>
                           </div>
                         </div>
                         <p className='flex items-center text-sm text-[#353945] dark:text-[#eaf0ec] font-semibold leading-[22px] pl-[4px]'>
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="shrink-0 w-[20px] h-[20px] text-[#cbcdd4] dark:text-[#646870] self-center">
-                            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
-                          </svg>
-                          <span className="px-[4px] leading-[22px] shrink-0">슈테른 네리아 카드</span>
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="shrink-0 w-[20px] h-[20px] text-[#cbcdd4] dark:text-[#646870] self-center">
-                            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
-                          </svg>
-                          <span className="text-[#EB9500] dark:text-[#FFC766] px-[4px] leading-[22px] shrink-0">전설 호감도</span>
+                          {merchant.itemList.split(',').map((item, itemIndex:number) => {
+                            let gradeClass = 'px-[4px] leading-[22px] shrink-0';
+                            if(item.trim() === '전설 호감도') {
+                              gradeClass += ' text-[#EB9500] dark:text-[#FFC766]';
+                            }
+                            return (
+                              <Fragment key={`${item}_${itemIndex}`}>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="shrink-0 w-[20px] h-[20px] text-[#cbcdd4] dark:text-[#646870] self-center">
+                                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path>
+                                </svg>
+                                <span className={gradeClass}>{item}</span>
+                              </Fragment>
+                            )
+                          })}
                         </p>
                       </div>
                     </div>
