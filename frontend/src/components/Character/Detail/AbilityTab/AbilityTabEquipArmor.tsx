@@ -92,6 +92,15 @@ export default function AbilityTabEquipArmor({ ArmoryEquipment, armorType, elixi
             </div>
           </div>
         </div>
+        {/* 상급 제련 효과 */}
+        {ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.advancedSmelting !== undefined && ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.advancedSmelting !== '' &&
+        <>
+          <hr className="w-full h-[1px] my-4 dark:border-[#4d4f55]" />
+          <div className='w-full'>
+            <p className='text-[0.8rem] leading-5 font-semibold'><span className='text-[#87e033] dark:text-[#A8EA6C]'>상급 제련</span> {ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.advancedSmelting}</p>
+          </div>
+        </>
+        }
         {/* 장비 Hover 기본 효과 */}
         <div className='mt-4 w-full'>
           <pre className='text-[0.75rem] leading-5 font-semibold'>{ArmoryEquipment?.[armorIndex]?.ArmoryAttribute?.basicEffect.join('\n')}</pre>

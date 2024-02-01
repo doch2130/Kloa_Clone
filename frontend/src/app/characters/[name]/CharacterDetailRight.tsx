@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Tab } from '@headlessui/react'
 import { ArmoryEquipment, ArmoryEquipmentPoint, ArmoryGem, ArmorySkill, CharacterArmories, Gem } from '@/types/characters'
 
-import { findValuesInText, findSetEffectValuesInText, findElixirEffectValuesInText, findTranscendenceData, tooltipJsonChange, abilityStoneExtractedData, updateCharacterInfo, findSkillTypeExtracted, findAdditionalSkillAttributesExtract } from './utils'
+import { findValuesInText, findSetEffectValuesInText, findElixirEffectValuesInText, findTranscendenceData, tooltipJsonChange, abilityStoneExtractedData, updateCharacterInfo, findSkillTypeExtracted, findAdditionalSkillAttributesExtract, findAdvancedSmeltingText } from './utils'
 import { elixirSpecialOptionDescript } from '@/data/ElixirSpecialOptionDescript'
 import { jobEngravingDescriptionList } from '@/data/EngravingsData'
 
@@ -319,6 +319,8 @@ export default function CharacterDetailRight({ data, characterRefetch, countRefe
 
             let elixirEffect = [];
             let transcendance: (string | number)[] = [];
+
+            let advancedSmelting = '';
             
             const tooltipJson = await tooltipJsonChange(armoryEquipment.Tooltip);
 
@@ -333,14 +335,23 @@ export default function CharacterDetailRight({ data, characterRefetch, countRefe
                 qualityValue = tooltipJson.Element_001.value.qualityValue;
               }
 
+              // 상급 제련
+              if(typeof tooltipJson.Element_005.value === 'string' && tooltipJson.Element_005.value.includes('[상급 재련]')) {
+                advancedSmelting = findAdvancedSmeltingText(tooltipJson.Element_005.value);
+              } 
+
               // 기본 효과
-              if(tooltipJson.Element_005.value.Element_001) {
+              if(typeof tooltipJson.Element_005.value.Element_001 === 'string' && tooltipJson.Element_005.value.Element_001.includes('물리 방어력')) {
                 basicEffect = tooltipJson.Element_005.value.Element_001.split('<BR>');
+              } else if (typeof tooltipJson.Element_006.value.Element_001 === 'string' && tooltipJson.Element_006.value.Element_001.includes('물리 방어력')) {
+                basicEffect = tooltipJson.Element_006.value.Element_001.split('<BR>');
               }
 
               // 추가 효과
-              if(tooltipJson.Element_006.value.Element_001) {
+              if(typeof tooltipJson.Element_006.value.Element_000 === 'string' && tooltipJson.Element_006.value.Element_000.includes('추가 효과')) {
                 addEffect = tooltipJson.Element_006.value.Element_001;
+              } else if(typeof tooltipJson.Element_007.value.Element_000 === 'string' && tooltipJson.Element_007.value.Element_000.includes('추가 효과')) {
+                addEffect = tooltipJson.Element_007.value.Element_001;
               }
 
               // 세트 효과
@@ -416,7 +427,7 @@ export default function CharacterDetailRight({ data, characterRefetch, countRefe
               }
             }
 
-            return { itemTear, qualityValue, basicEffect, addEffect, itemLevel, setEffectName, elixirEffect, elixirTotal, elixirSpecialOption, transcendance };
+            return { itemTear, qualityValue, basicEffect, addEffect, itemLevel, setEffectName, elixirEffect, elixirTotal, elixirSpecialOption, transcendance, advancedSmelting };
           })
         );
 
@@ -436,6 +447,7 @@ export default function CharacterDetailRight({ data, characterRefetch, countRefe
               itemLevel: updateArmoryEquipmentArmors[armorIndex].itemLevel,
               setEffectName: updateArmoryEquipmentArmors[armorIndex].setEffectName,
               transcendance: updateArmoryEquipmentArmors[armorIndex].transcendance,
+              advancedSmelting: updateArmoryEquipmentArmors[armorIndex].advancedSmelting,
             }
 
             transcendanceTotalRef.current += Number(updateArmoryEquipmentArmors[armorIndex].transcendance[1]);

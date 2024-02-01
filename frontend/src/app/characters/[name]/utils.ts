@@ -223,6 +223,13 @@ export const findValuesInText = (str: string) => {
   return match ? { skilName: match[1].trim(), skilEffect: match[2].trim() } : { skilName: '', skilEffect: '' };
 };
 
+export const findAdvancedSmeltingText = (str: string) => {
+  const regex = /<FONT SIZE='14'><FONT COLOR='#A8EA6C'>\[상급 재련\]<\/FONT> <FONT COLOR='#FFD200'>(\d+)<\/FONT>단계<\/FONT>/;
+  const match = str.match(regex);
+
+  return match ? `${match[1]}단계` : '';
+};
+
 export const findSetEffectValuesInText = async (str: string) => {
   const regex = /([^<]+)\s<FONT COLOR='#FFD200'>([^<]+)<\/FONT>/;
   const match = str.match(regex);

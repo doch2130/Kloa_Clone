@@ -76,6 +76,7 @@ export interface ArmoryEquipmentArmor {
     setLevel: string
   }
   transcendance: (string | number)[]
+  advancedSmelting: string
 }
 
 export interface ElixirEffect {
