@@ -24,6 +24,8 @@ export const dungeonGoldList:dungeonGoldListType = {
   '혼돈의 상아탑 노말': 9000,
   '카멘 노말 1~3': 13000,
   '혼돈의 상아탑 하드': 14500,
+  '에키드나 노말 1~2': 14500,
+  '에키드나 하드 1~2': 18500,
   '카멘 하드 1~3': 20000,
   '카멘 하드 4': 21000,
 }
@@ -34,9 +36,11 @@ export const dungeonLevelList = (itemLevel:number) => {
   if(itemLevel >= 1630) {
     result.push('카멘 하드 1~3');
     result.push('카멘 하드 4');
+    result.push('에키드나 하드 1~2');
   }
   if(itemLevel >= 1620) {
     result.push('혼돈의 상아탑 하드');
+    result.push('에키드나 노말 1~2');
   }
   if(itemLevel >= 1610 && !result.includes('카멘 하드 1~3')) {
     result.push('카멘 노말 1~3');
