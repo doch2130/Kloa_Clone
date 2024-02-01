@@ -8,7 +8,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
-import SlideImageData from '@/data/SlideImageData'
+import { slideImageList } from '/public/images'
 
 export default function SlideImage() {
   // Swiper의 경우 create element 기능을 사용하기 때문에 use client를 설정해줘야 한다.
@@ -38,11 +38,11 @@ export default function SlideImage() {
       modules={[Autoplay, Pagination, Navigation]}
       className="mySwiper"
     >
-      {SlideImageData.map((el) => {
+      {slideImageList.map((el, index:number) => {
         return (
-          <SwiperSlide key={el.id}>
+          <SwiperSlide key={index}>
             <Link href={el.url} target='_blank' as={el.url}>
-              <Image src={el.src} alt={el.alt} placeholder='blur' priority={true} />
+              <Image src={el.img} alt={`main_image_${index}`} placeholder='blur' priority={true} />
             </Link>
           </SwiperSlide>
         )

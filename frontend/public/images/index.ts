@@ -24,6 +24,7 @@ import ImgMainImage2 from './SlideImage/main_image_2.webp';
 import ImgMainImage3 from './SlideImage/main_image_3.webp';
 import ImgMainImage4 from './SlideImage/main_image_4.webp';
 import ImgMainImage5 from './SlideImage/main_image_5.webp';
+import ImgMainImage6 from './SlideImage/main_image_6.webp';
 
 
 import IconIslandCoinbox from './Item/ico_island_coinbox.png'
@@ -212,6 +213,33 @@ export const islandIconList = {
   IconIslandLylaitoy3
 }
 
+export const slideImageList = [
+  {
+    img: ImgMainImage1,
+    url: 'https://lostark.game.onstove.com/Promotion/Update/240131/Echidna',
+  },
+  {
+    img: ImgMainImage2,
+    url: 'https://lostark.game.onstove.com/Promotion/Update/231220/Breaker',
+  },
+  {
+    img: ImgMainImage3,
+    url: 'https://lostark.game.onstove.com/Promotion/Update/230913',
+  },
+  {
+    img: ImgMainImage4,
+    url: 'https://lostark.game.onstove.com/Promotion/Reservation/230705',
+  },
+  {
+    img: ImgMainImage5,
+    url: 'https://lostark.game.onstove.com/Promotion/Update/230222/Ivorytower',
+  },
+  {
+    img: ImgMainImage6,
+    url: 'https://lostark.game.onstove.com/Promotion/Update/230222/Gargadis',
+  }
+];
+
 export {
   ImgSonabelArt,
   ImgNaverBtnDark,
@@ -230,11 +258,6 @@ export {
   Imgkloa2,
   ImgAuctionEmpty,
   ImgAuctionEmpty2,
-  ImgMainImage1,
-  ImgMainImage2,
-  ImgMainImage3,
-  ImgMainImage4,
-  ImgMainImage5,
   guildMaster,
 };
 
