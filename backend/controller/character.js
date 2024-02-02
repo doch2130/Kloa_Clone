@@ -1,4 +1,5 @@
-const { CharacterInfo } = require('../model/characterinfo');
+const { Op } = require('sequelize');
+const { CharacterInfo } = require('../model/index');
 const schedule = require('node-schedule');
 
 // 캐릭터 일일 방문 Count 초기화
@@ -7,8 +8,18 @@ exports.todayVisitInitScheduler = () => {
   schedule.scheduleJob(' 30 1 0 * * *', async () => {
     try {
       console.log(new Date() + ' Character Visit Count Scheduler Running!');
-      const VistCountResp = await CharacterInfo.update({ todayVisit: 0 }, { where: {} });
-      
+
+      const VistCountResp = await CharacterInfo.update(
+        { todayCount: 0 },
+        {
+          where: {
+            todayCount: {
+              [Op.gt]: 0,
+            },
+          },
+        }
+      );
+
       if(VistCountResp) {
         console.log(new Date() + ' Character Visit Count Scheduler Suceess!');
       } else {
@@ -16,7 +27,7 @@ exports.todayVisitInitScheduler = () => {
       }
       return ;
     } catch (err) {
-      console.log(new Date() + ' Character Visit Count Scheduler Failed!');
+      console.log(err + ' Character Visit Count Scheduler Failed!');
     }
   })
 }
