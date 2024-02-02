@@ -9,7 +9,7 @@ type RefetchButtonType = {
 
 export default function RefetchButton({ characterRefetch, countRefetch }:RefetchButtonType) {
   const [time, setTime] = useState(0);
-  const [viewText, setViewText] = useState('0초전');
+  const [viewText, setViewText] = useState('1분전');
 
   useEffect(() => {
     const timeIntervel = setInterval(() => {
@@ -23,7 +23,7 @@ export default function RefetchButton({ characterRefetch, countRefetch }:Refetch
 
   useEffect(() => {
     if(time < 60) {
-      const updateText = `${time}초전`;
+      const updateText = '1분전';
       setViewText(updateText);
     } else if(time >= 60) {
       const timeCheck = Math.floor(time / 60) + 1;

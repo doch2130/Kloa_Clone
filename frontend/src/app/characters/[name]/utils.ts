@@ -10,7 +10,7 @@ export const refetchFunction = async (characterRefetch:Function, countRefetch:Fu
   // refetch 함수를 호출하여 데이터를 강제로 다시 불러옴
   characterRefetch();
   countRefetch();
-  setTime(0)
+  setTime(0);
 };
 
 // const dataLoadHandler = async (name:string) => {
